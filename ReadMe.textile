@@ -1,0 +1,21 @@
+Core module of the IntensiCode game engine. The build system is not included.
+
+h1. Description
+
+IntensiGame is a simple framework with a 'game engine' at its core. This engine knows how to render 'frames' and keep track of time and issue the proper number of 'control ticks'.
+
+The application has to "only" separate the drawing of the state and advancing the state. Everything else is handled by the framework.
+
+h1. Usage
+
+Please see the example screens to understand the separation of frames and ticks.
+
+See an example application/game to understand how to initialize the system. (Extend the IntensiGame class and your done.. :)
+
+h1. License
+
+This is open source software. See the gpl.txt file for more infomation.
+
+Note that some files are included for which different licenses may apply.
+
+Note that for all files that are probably 'mine', the GPL applies.
