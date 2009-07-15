@@ -13,7 +13,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/devices/NOKIA.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/json.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
