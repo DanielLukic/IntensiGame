@@ -1,8 +1,8 @@
-Core module of the IntensiCode game engine. The build system is not included.
+Core module of the IntensiCode J2ME and J2SE game engine. The build system is not included.
 
 h1. Description
 
-IntensiGame is a simple framework with a 'game engine' at its core. This engine knows how to render 'frames' and keep track of time and issue the proper number of 'control ticks'.
+IntensiGame is a simple J2ME and J2SE game framework with a 'game engine' at its core. This engine knows how to render 'frames' and keep track of time and issue the proper number of 'control ticks'.
 
 The application has to "only" separate the drawing of the state and advancing the state. Everything else is handled by the framework.
 
