@@ -1,3 +1,5 @@
+//#condition CLDC11
+
 package net.intensicode.util;
 
 public class MathExtended

@@ -1,3 +1,5 @@
+//#condition CLDC11
+
 package net.intensicode.util;
 
 public abstract class ThreadedRunner implements Runnable

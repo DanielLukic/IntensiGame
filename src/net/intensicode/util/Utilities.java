@@ -1,16 +1,7 @@
 package net.intensicode.util;
 
-import net.intensicode.net.Response;
-
-import javax.microedition.io.Connection;
-import javax.microedition.io.HttpConnection;
+import javax.microedition.io.*;
 import java.io.*;
-import java.util.Enumeration;
-import java.util.Hashtable;
-
-import org.json.me.JSONException;
-import org.json.me.JSONObject;
-import org.json.me.JSONArray;
 
 public class Utilities
     {
@@ -75,6 +66,8 @@ public class Utilities
         return aLatitude >= -90 && aLatitude <= 90;
         }
 
+    //#if CLDC11
+
     public static String getCombinedStringOrNull( final String aFirstOrNull, final String aDelimiter, final String aLastOrNull )
         {
         final StringBuffer realName = new StringBuffer();
@@ -90,6 +83,8 @@ public class Utilities
         if ( realName.length() == 0 ) return null;
         return realName.toString();
         }
+
+    //#endif
 
     public static String httpEscape( final String aUnescapedUrl )
         {
@@ -124,76 +119,6 @@ public class Utilities
         if ( delimiterPosition < charsetPosition ) return aContentType.substring( charsetStart );
 
         return aContentType.substring( charsetStart, delimiterPosition );
-        }
-
-    public static void copyHeaderFields( final HttpConnection aConnection, final Response aResponse, final int aIndex ) throws IOException
-        {
-        final String data = aConnection.getHeaderField( aIndex );
-        if ( data == null ) return;
-
-        final String key = aConnection.getHeaderFieldKey( aIndex );
-        final String value = aConnection.getHeaderField( aIndex );
-        if ( key != null && value != null )
-            {
-            copyHeaderField( aResponse, key, value );
-            }
-        else if ( aIndex == 0 && value != null )
-            {
-            aResponse.setParameter( "Status", value );
-            }
-        else
-            {
-            Log.debug( "Unexpected null header at index {}", aIndex );
-            }
-
-        copyHeaderFields( aConnection, aResponse, aIndex + 1 );
-        }
-
-    public static void copyHeaderField( final Response aResponse, final String aKey, final String aValue )
-        {
-        if ( aKey.toLowerCase().equals( "set-cookie" ) )
-            {
-            final String cookieKey = aValue.substring( 0, aValue.indexOf( '=' ) );
-            final String cookieValue = aValue.substring( aValue.indexOf( '=' ) + 1, aValue.indexOf( ';' ) );
-            aResponse.setParameter( cookieKey, cookieValue );
-            //#ifdef HTTP_DEBUG
-            //# Log.debug( "cookie: {} => {}", cookieKey, cookieValue );
-            //#endif
-            }
-        else
-            {
-            aResponse.setParameter( aKey, aValue );
-            //#ifdef HTTP_DEBUG
-            //# Log.debug( "headerField: {} => {}", key, value );
-            //#endif
-            }
-        }
-
-    public static void setCookies( final HttpConnection aConnection, final Hashtable aCookiesHash ) throws IOException
-        {
-        final String cookies = createCookiesString( aCookiesHash );
-        aConnection.setRequestProperty( "cookie", cookies );
-
-        //#ifdef HTTP_DEBUG
-        //# Log.debug( "Cookies: {}", cookies );
-        //#endif
-        }
-
-    public static String createCookiesString( final Hashtable aCookies ) throws IOException
-        {
-        final StringBuffer buffer = new StringBuffer();
-
-        final Enumeration keys = aCookies.keys();
-        while ( keys.hasMoreElements() )
-            {
-            final Object key = keys.nextElement();
-            final Object value = aCookies.get( key );
-            buffer.append( key );
-            buffer.append( '=' );
-            buffer.append( value );
-            buffer.append( ';' );
-            }
-        return buffer.toString();
         }
 
     public static ByteArrayOutputStream readIntoByteArray( final InputStream aInputStream ) throws IOException
@@ -271,38 +196,8 @@ public class Utilities
             Log.error( "Utilities#closeSafely - ignoring exception", t );
             }
         }
-    public static void processJsonResponse( final Response aResponse, final String aResponseString ) throws IOException
-        {
-        try
-            {
-            // Temporary(?) fix for broken insomnia /mobile/spots/bounding_box service:
-            if ( aResponseString.equals( "[]" ) )
-                {
-                aResponse.setParameter( "spots", new JSONArray() );
-                return;
-                }
 
-            final JSONObject jsonObject = new JSONObject( aResponseString );
-            //#ifdef HTTP_DEBUG
-            //# Log.debug( "JSON response:\n{}", jsonObject.toString( 2 ) );
-            //#endif
-
-            final Enumeration keys = jsonObject.keys();
-            while ( keys.hasMoreElements() )
-                {
-                final String key = (String) keys.nextElement();
-                final Object value = jsonObject.get( key );
-                aResponse.setParameter( key, value );
-                }
-            }
-        catch ( final JSONException e )
-            {
-            //#ifdef DEBUG
-            e.printStackTrace();
-            //#endif
-            throw new IOException( e.toString() );
-            }
-        }
+    //#if CLDC11
 
     public static boolean hasPimApi()
         {
@@ -320,6 +215,8 @@ public class Utilities
             }
         return true;
         }
+
+    //#endif
 
     public static boolean hasWmApi()
         {
