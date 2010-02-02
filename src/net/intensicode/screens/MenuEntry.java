@@ -1,26 +1,20 @@
-/************************************************************************/
-/* {{PROJECT_NAME}}             {{COMPANY}}             {{DATE_CREATE}} */
-/************************************************************************/
-
 package net.intensicode.screens;
 
-import net.intensicode.core.AbstractScreen;
-import net.intensicode.core.DirectScreen;
-import net.intensicode.core.Engine;
-import net.intensicode.util.FontGen;
-import net.intensicode.util.Position;
+import net.intensicode.core.*;
+import net.intensicode.graphics.FontGenerator;
+import net.intensicode.util.*;
 
-import javax.microedition.lcdui.Graphics;
-
-
-
-public final class MenuEntry extends AbstractScreen
+public final class MenuEntry extends ScreenBase
     {
     public static int selectorColor = 0xFF7F0000;
 
-    public final Position position;
+    //#if TOUCH_SUPPORTED
+    public final TouchableArea touchable = new TouchableArea();
+    //#endif
 
-    public final FontGen fontGen;
+    public final FontGenerator fontGen;
+
+    public final Position position;
 
     public final String text;
 
@@ -29,39 +23,56 @@ public final class MenuEntry extends AbstractScreen
     public int id;
 
 
-
-    MenuEntry( final FontGen aCharGen, final String aText, final Position aPosition )
+    public MenuEntry( final FontGenerator aCharGen, final String aText, final Position aPosition )
         {
         fontGen = aCharGen;
         text = aText;
         position = aPosition;
+        //#if TOUCH_SUPPORTED
+        touchable.associatedObject = this;
+        updateTouchable();
+        //#endif
         }
 
-    final void setSelected( boolean aSelectedFlag )
+    public final void setSelected( boolean aSelectedFlag )
         {
         selectedState = aSelectedFlag;
         }
 
-    // From AbstractScreen
+    //#if TOUCH_SUPPORTED
 
-    public final void onControlTick( final Engine aEngine ) throws Exception
+    public final void updateTouchable()
+        {
+        final Rectangle rectangle = touchable.rectangle;
+        rectangle.width = fontGen.stringWidth( text );
+        rectangle.height = fontGen.charHeight();
+        rectangle.x = position.x - rectangle.width / 2;
+        rectangle.y = position.y - rectangle.height / 2;
+        rectangle.applyOutsets( 1 + rectangle.height / 4 );
+        }
+
+    //#endif
+
+    // From ScreenBase
+
+    public final void onControlTick() throws Exception
         {
         }
 
-    public final void onDrawFrame( final DirectScreen aScreen )
+    public final void onDrawFrame()
         {
-        final Graphics gc = aScreen.graphics();
+        final DirectGraphics graphics = graphics();
 
         if ( selectedState )
             {
             final int x = 0;
             final int y = position.y - fontGen.charHeight() / 2;
-            final int width = aScreen.width();
+            final int width = screen().width();
             final int height = fontGen.charHeight();
-            gc.setColor( selectorColor );
-            gc.fillRect( x, y, width, height );
+            graphics.setColorRGB24( selectorColor );
+            graphics.fillRect( x, y, width, height );
             }
 
-        fontGen.blitString( gc, text, position, FontGen.CENTER );
+        fontGen.blitString( graphics, text, position, FontGenerator.CENTER );
         }
     }

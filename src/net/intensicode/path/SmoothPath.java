@@ -1,16 +1,8 @@
-/************************************************************************/
-/* {{PROJECT_NAME}}             {{COMPANY}}             {{DATE_CREATE}} */
-/************************************************************************/
-
 package net.intensicode.path;
 
 import net.intensicode.util.FixedMath;
 import net.intensicode.util.Position;
 
-
-/**
- * TODO: Describe this!
- */
 public class SmoothPath implements PathWithDirection, PositionList
     {
     public final void close()

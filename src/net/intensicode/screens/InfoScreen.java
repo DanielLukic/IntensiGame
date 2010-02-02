@@ -1,26 +1,15 @@
 package net.intensicode.screens;
 
-import net.intensicode.SystemConfiguration;
-import net.intensicode.PlatformConfiguration;
-import net.intensicode.core.DirectScreen;
-import net.intensicode.core.Engine;
-import net.intensicode.core.Keys;
-import net.intensicode.core.MultiScreen;
-import net.intensicode.util.DynamicArray;
-import net.intensicode.util.FontGen;
-import net.intensicode.util.Position;
+import net.intensicode.ReleaseProperties;
+import net.intensicode.core.*;
+import net.intensicode.graphics.FontGenerator;
+import net.intensicode.util.*;
 
-import javax.microedition.lcdui.Graphics;
 import javax.microedition.media.Manager;
 
-
-
-/**
- * TODO: Describe this!
- */
 public final class InfoScreen extends MultiScreen
     {
-    public InfoScreen( final FontGen aTitleFont, final FontGen aTextFont )
+    public InfoScreen( final FontGenerator aTitleFont, final FontGenerator aTextFont )
         {
         myTitleFont = aTitleFont;
         myTextFont = aTextFont;
@@ -34,41 +23,41 @@ public final class InfoScreen extends MultiScreen
 
     // From AbstractScreen
 
-    public final void onInitOnce( final Engine aEngine, final DirectScreen aScreen ) throws Exception
+    public final void onInitOnce() throws Exception
         {
-        addScreen( new ColorScreen() );
+        addScreen( new ClearScreen() );
         addScreen( mySoftkeys );
 
-        myHelpPos.x = aScreen.width() / 2;
+        myHelpPos.x = screen().width() / 2;
         myHelpPos.y = myTitleFont.charHeight();
         }
 
-    public final void onInitEverytime( final Engine aEngine, final DirectScreen aScreen ) throws Exception
+    public final void onInitEverytime() throws Exception
         {
-        final Keys keys = aEngine.keys;
-        keys.keyRepeatDelayInTicks = Engine.ticksPerSecond * 25 / 100;
-        keys.keyRepeatIntervalInTicks = Engine.ticksPerSecond * 10 / 100;
+        final KeysHandler keys = keys();
+        keys.keyRepeatDelayInTicks = timing().ticksPerSecond * 25 / 100;
+        keys.keyRepeatIntervalInTicks = timing().ticksPerSecond * 10 / 100;
 
         mySoftkeys.setSoftkeys( "", "BACK" );
 
         myTextLines.clear();
 
         myTextLines.add( "RELEASE" );
-        myTextLines.add( "version " + SystemConfiguration.VERSION );
-        myTextLines.add( "date " + SystemConfiguration.DATE );
+        myTextLines.add( "version " + ReleaseProperties.VERSION );
+        myTextLines.add( "date " + ReleaseProperties.DATE );
 
         myTextLines.add( "" );
         myTextLines.add( "SCREEN" );
-        myTextLines.add( "real width " + aScreen.getWidth() );
-        myTextLines.add( "real height " + aScreen.getHeight() );
-        myTextLines.add( "width " + aScreen.width() );
-        myTextLines.add( "height " + aScreen.height() );
+        myTextLines.add( "real width " + screen().width() );
+        myTextLines.add( "real height " + screen().height() );
+        myTextLines.add( "width " + screen().width() );
+        myTextLines.add( "height " + screen().height() );
 
         myTextLines.add( "" );
         myTextLines.add( "SOUND FORMAT" );
-        myTextLines.add( SystemConfiguration.SOUND_FORMAT_SUFFIX );
-        myTextLines.add( SystemConfiguration.SOUND_FORMAT_MIME_TYPE );
-        final String[] soundProtocols = Manager.getSupportedProtocols( SystemConfiguration.SOUND_FORMAT_MIME_TYPE );
+        myTextLines.add( ReleaseProperties.SOUND_FORMAT_SUFFIX );
+        myTextLines.add( ReleaseProperties.SOUND_FORMAT_MIME_TYPE );
+        final String[] soundProtocols = Manager.getSupportedProtocols( ReleaseProperties.SOUND_FORMAT_MIME_TYPE );
         for ( int idx = 0; idx < soundProtocols.length; idx++ )
             {
             myTextLines.add( soundProtocols[ idx ] );
@@ -76,9 +65,9 @@ public final class InfoScreen extends MultiScreen
 
         myTextLines.add( "" );
         myTextLines.add( "MUSIC FORMAT" );
-        myTextLines.add( SystemConfiguration.MUSIC_FORMAT_SUFFIX );
-        myTextLines.add( SystemConfiguration.MUSIC_FORMAT_MIME_TYPE );
-        final String[] musicProtocols = Manager.getSupportedProtocols( SystemConfiguration.MUSIC_FORMAT_MIME_TYPE );
+        myTextLines.add( ReleaseProperties.MUSIC_FORMAT_SUFFIX );
+        myTextLines.add( ReleaseProperties.MUSIC_FORMAT_MIME_TYPE );
+        final String[] musicProtocols = Manager.getSupportedProtocols( ReleaseProperties.MUSIC_FORMAT_MIME_TYPE );
         for ( int idx = 0; idx < musicProtocols.length; idx++ )
             {
             myTextLines.add( musicProtocols[ idx ] );
@@ -86,9 +75,9 @@ public final class InfoScreen extends MultiScreen
 
         myTextLines.add( "" );
         myTextLines.add( "HISCORE ID" );
-        myTextLines.add( SystemConfiguration.HISCORE_ID );
+        myTextLines.add( ReleaseProperties.HISCORE_ID );
 
-        final PlatformConfiguration config = keys.platformConfiguration;
+        final KeysConfiguration config = keys.platformKeysConfiguration;
         myTextLines.add( "" );
         myTextLines.add( "PLATFORM/KEYCODES" );
         myTextLines.add( config.platformName );
@@ -114,12 +103,12 @@ public final class InfoScreen extends MultiScreen
             }
         }
 
-    public final void onControlTick( final Engine aEngine ) throws Exception
+    public final void onControlTick() throws Exception
         {
-        final Keys keys = aEngine.keys;
-        if ( keys.checkRightSoftAndConsume() ) aEngine.popScreen( this );
+        final KeysHandler keys = keys();
+        if ( keys.checkRightSoftAndConsume() ) stack().popScreen( this );
 
-        super.onControlTick( aEngine );
+        super.onControlTick();
 
         if ( keys.checkUpAndConsume() ) myLineOffset--;
         if ( keys.checkDownAndConsume() ) myLineOffset++;
@@ -129,12 +118,12 @@ public final class InfoScreen extends MultiScreen
         if ( myLineOffset < 0 ) myLineOffset = 0;
         }
 
-    public final void onDrawFrame( final DirectScreen aScreen )
+    public final void onDrawFrame()
         {
-        super.onDrawFrame( aScreen );
+        super.onDrawFrame();
 
-        final Graphics gc = aScreen.graphics();
-        myTitleFont.blitString( gc, "INFO", myHelpPos, FontGen.CENTER );
+        final DirectGraphics gc = graphics();
+        myTitleFont.blitString( gc, "INFO", myHelpPos, FontGenerator.CENTER );
 
         if ( myTextLines.size < 1 ) return;
 
@@ -146,43 +135,42 @@ public final class InfoScreen extends MultiScreen
             if ( myLineOffset + idx >= myTextLines.size ) break;
 
             final String line = (String) lines[ myLineOffset + idx ];
-            myBlitPos.x = aScreen.width() / 2;
+            myBlitPos.x = screen().width() / 2;
             myBlitPos.y = titleHeight() + idx * lineHeight();
-            myTextFont.blitString( gc, line, myBlitPos, FontGen.CENTER );
+            myTextFont.blitString( gc, line, myBlitPos, FontGenerator.CENTER );
             }
 
         myBlitPos.x = 0;
         myBlitPos.y = 0;
-        myTextFont.blitNumber( gc, myBlitPos, engine().keys.lastCode, FontGen.TOP_LEFT );
+        myTextFont.blitNumber( gc, myBlitPos, keys().lastCode, FontGenerator.TOP_LEFT );
         myBlitPos.y = myTextFont.charHeight();
-        myTextFont.blitNumber( gc, myBlitPos, engine().keys.lastAction, FontGen.TOP_LEFT );
+        myTextFont.blitNumber( gc, myBlitPos, keys().lastAction, FontGenerator.TOP_LEFT );
         }
 
-    private final int linesOnScreen()
+    private int linesOnScreen()
         {
-        final int textHeight = (screen().height() - titleHeight());
-        return (textHeight / lineHeight() - 1);
+        final int textHeight = ( screen().height() - titleHeight() );
+        return ( textHeight / lineHeight() - 1 );
         }
 
-    private final int lineHeight()
+    private int lineHeight()
         {
         return myTextFont.charHeight() * 3 / 2;
         }
 
-    private final int titleHeight()
+    private int titleHeight()
         {
         return myTitleFont.charHeight() * 3;
         }
-
 
 
     private int myLineOffset = 0;
 
     private SoftkeysScreen mySoftkeys;
 
-    private final FontGen myTextFont;
+    private final FontGenerator myTextFont;
 
-    private final FontGen myTitleFont;
+    private final FontGenerator myTitleFont;
 
     private final Position myBlitPos = new Position();
 

@@ -1,8 +1,5 @@
 package net.intensicode.util;
 
-/**
- * TODO: Describe this!
- */
 public final class Random
     {
     public static final Random INSTANCE = new Random( 1704 );
@@ -29,15 +26,15 @@ public final class Random
         myCurrentSeed = aSeed;
         }
 
+    public final int nextInt()
+        {
+        return (int) ( myCurrentSeed = ( myCurrentSeed * MULTIPLIER + ADDEND ) % MASK );
+        }
+
     public final int nextInt( final int aExclusiveMaxValue )
         {
         final int value = nextInt() & 0x7FFFFFFF;
         return value % aExclusiveMaxValue;
-        }
-
-    private final int nextInt()
-        {
-        return (int) (myCurrentSeed = (myCurrentSeed * MULTIPLIER + ADDEND) % MASK);
         }
 
 

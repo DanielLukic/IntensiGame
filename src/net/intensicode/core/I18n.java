@@ -1,16 +1,16 @@
 package net.intensicode.core;
 
-import net.intensicode.util.Log;
+import net.intensicode.util.*;
 
 public final class I18n
     {
-    public static final String _( final String aString )
+    public static String _( final String aString )
         {
         final I18n strings = getInstance();
         return strings.lookup( aString );
         }
 
-    public static final void setTo( final Configuration aLanguage )
+    public static void setTo( final Configuration aLanguage )
         {
         //#if DEBUG
         Log.debug( "I18n configuration setTo {}", aLanguage );
@@ -18,7 +18,7 @@ public final class I18n
         theInstance = new I18n( aLanguage );
         }
 
-    public static final I18n getInstance()
+    public static I18n getInstance()
         {
         if ( theInstance == null ) theInstance = new I18n();
         return theInstance;
@@ -30,13 +30,15 @@ public final class I18n
         if ( result != null ) return result;
 
         //#if DEBUG
-        if ( myConfiguration.isEmpty() == false )
+        if ( !myConfiguration.isEmpty() )
             {
-            Engine.showException( new RuntimeException( "Missing translation for " + aString ) );
+            final StringBuffer message = StringUtils.format( "Missing translation for {}", new Object[]{ aString } );
+            GameSystem.showException( new RuntimeException( message.toString() ) );
             Log.debug( "Missing translation for {}", aString );
             myConfiguration.store( aString, aString );
             }
         //#endif
+
         return aString;
         }
 

@@ -1,20 +1,13 @@
 package net.intensicode.screens;
 
-import net.intensicode.core.DirectScreen;
-import net.intensicode.core.Engine;
-import net.intensicode.core.Keys;
-import net.intensicode.core.MultiScreen;
-import net.intensicode.util.FontGen;
+import net.intensicode.core.DirectGraphics;
+import net.intensicode.core.KeysHandler;
+import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.Position;
 
-import javax.microedition.lcdui.Graphics;
-
-/**
- * TODO: Describe this!
- */
 public final class StringEntryScreen extends MultiScreen
     {
-    public StringEntryScreen( final FontGen aTitleFont, final FontGen aTextFont )
+    public StringEntryScreen( final FontGenerator aTitleFont, final FontGenerator aTextFont )
         {
         myTitleFont = aTitleFont;
         myTextFont = aTextFont;
@@ -48,58 +41,58 @@ public final class StringEntryScreen extends MultiScreen
         return myCurrentValue;
         }
 
-    // From AbstractScreen
+    // From ScreenBase
 
-    public final void onInitOnce( final Engine aEngine, final DirectScreen aScreen ) throws Exception
+    public final void onInitOnce() throws Exception
         {
         if ( mySoftkeys == null ) mySoftkeys = new SoftkeysScreen( myTextFont );
 
         addScreen( mySoftkeys );
 
-        myTitlePos.x = aScreen.width() / 2;
+        myTitlePos.x = screen().width() / 2;
         myTitlePos.y = myTitleFont.charHeight();
         }
 
-    public final void onInitEverytime( final Engine aEngine, final DirectScreen aScreen ) throws Exception
+    public final void onInitEverytime() throws Exception
         {
         myCurrentCharIndex = 'A';
 
-        final int tps = Engine.ticksPerSecond;
+        final int tps = system().timing.ticksPerSecond;
 
-        final Keys keys = aEngine.keys;
+        final KeysHandler keys = system().keys;
         keys.reset( tps );
 
         keys.keyRepeatDelayInTicks = tps * 50 / 100;
         keys.keyRepeatIntervalInTicks = tps * 10 / 100;
-        keys.dontRepeatFlags[ Keys.UP ] = true;
-        keys.dontRepeatFlags[ Keys.DOWN ] = true;
-        keys.dontRepeatFlags[ Keys.FIRE1 ] = true;
-        keys.dontRepeatFlags[ Keys.FIRE2 ] = true;
-        keys.dontRepeatFlags[ Keys.STICK_DOWN ] = true;
-        keys.dontRepeatFlags[ Keys.LEFT_SOFT ] = true;
-        keys.dontRepeatFlags[ Keys.RIGHT_SOFT ] = true;
+        keys.dontRepeatFlags[ KeysHandler.UP ] = true;
+        keys.dontRepeatFlags[ KeysHandler.DOWN ] = true;
+        keys.dontRepeatFlags[ KeysHandler.FIRE1 ] = true;
+        keys.dontRepeatFlags[ KeysHandler.FIRE2 ] = true;
+        keys.dontRepeatFlags[ KeysHandler.STICK_DOWN ] = true;
+        keys.dontRepeatFlags[ KeysHandler.LEFT_SOFT ] = true;
+        keys.dontRepeatFlags[ KeysHandler.RIGHT_SOFT ] = true;
 
         mySoftkeys.setSoftkeys( "OK", "CANCEL" );
         }
 
-    public final void onControlTick( final Engine aEngine ) throws Exception
+    public final void onControlTick() throws Exception
         {
-        final Keys keys = aEngine.keys;
+        final KeysHandler keys = keys();
 
         mySoftkeys.setSoftkeys( nameValid() ? "OK" : "", "CANCEL" );
 
         if ( nameValid() && keys.checkLeftSoftAndConsume() )
             {
-            engine().popScreen( this );
+            stack().popScreen( this );
             }
         if ( keys.checkRightSoftAndConsume() )
             {
             myCurrentValue = myInitialValue;
-            engine().popScreen( this );
+            stack().popScreen( this );
             }
 
         if ( myCurrentCharIndex == MAX_CHAR_INDEX && keys.checkFireAndConsume() ) removeLastChar();
-        else if ( nameMaxLength() == false && keys.checkFireAndConsume() ) addCurrentChar();
+        else if ( !nameMaxLength() && keys.checkFireAndConsume() ) addCurrentChar();
 
         if ( keys.checkLeftAndConsume() ) myCurrentCharIndex--;
         if ( keys.checkRightAndConsume() ) myCurrentCharIndex++;
@@ -107,34 +100,34 @@ public final class StringEntryScreen extends MultiScreen
         if ( myCurrentCharIndex < MIN_CHAR_INDEX ) myCurrentCharIndex = MAX_CHAR_INDEX;
         else if ( myCurrentCharIndex > MAX_CHAR_INDEX ) myCurrentCharIndex = MIN_CHAR_INDEX;
 
-        super.onControlTick( aEngine );
+        super.onControlTick();
         }
 
-    public final void onDrawFrame( final DirectScreen aScreen )
+    public final void onDrawFrame()
         {
-        super.onDrawFrame( aScreen );
+        super.onDrawFrame();
 
-        final Graphics gc = aScreen.graphics();
+        final DirectGraphics graphics = graphics();
 
         myBlitPos.setTo( myTitlePos );
-        myTitleFont.blitString( gc, myTitle, myBlitPos, FontGen.CENTER );
+        myTitleFont.blitString( graphics, myTitle, myBlitPos, FontGenerator.CENTER );
 
         myBlitPos.y += myTitleFont.charHeight();
-        myTextFont.blitString( gc, myInfo, myBlitPos, FontGen.CENTER );
+        myTextFont.blitString( graphics, myInfo, myBlitPos, FontGenerator.CENTER );
 
         final int refWidth = myTitleFont.stringWidth( "X" );
 
-        final int x = aScreen.width() / 2 - refWidth * 2 / 3;
-        final int y = aScreen.height() / 2 - myTitleFont.charHeight() / 2;
+        final int x = screen().width() / 2 - refWidth * 2 / 3;
+        final int y = screen().height() / 2 - myTitleFont.charHeight() / 2;
         final int width = refWidth * 3 / 2 - refWidth / 4;
         final int height = myTitleFont.charHeight();
 
-        gc.setColor( 0x800000 );
-        gc.fillRect( x, y, width, height );
-        gc.setColor( 0xC04040 );
-        gc.drawRect( x, y, width, height );
+        graphics.setColorRGB24( 0x800000 );
+        graphics.fillRect( x, y, width, height );
+        graphics.setColorRGB24( 0xC04040 );
+        graphics.drawRect( x, y, width, height );
 
-        myBlitPos.y = aScreen.height() / 2 - myTitleFont.charHeight();
+        myBlitPos.y = screen().height() / 2 - myTitleFont.charHeight();
 
         for ( int idx = -10; idx < 10; idx++ )
             {
@@ -145,41 +138,41 @@ public final class StringEntryScreen extends MultiScreen
 
             final int yOffset = Math.abs( idx ) * myTitleFont.charHeight() / 25;
 
-            myBlitPos.x = aScreen.width() / 2 + idx * refWidth * 3 / 2;
-            myBlitPos.y = aScreen.height() / 2 + yOffset * yOffset;
+            myBlitPos.x = screen().width() / 2 + idx * refWidth * 3 / 2;
+            myBlitPos.y = screen().height() / 2 + yOffset * yOffset;
 
-            final FontGen font = (idx != 1000) ? myTitleFont : myTextFont;
-            font.blitChar( gc, myBlitPos.x - refWidth / 2, myBlitPos.y - font.charHeight() / 2, charCode );
+            final FontGenerator font = ( idx != 1000 ) ? myTitleFont : myTextFont;
+            font.blitChar( graphics, myBlitPos.x - refWidth / 2, myBlitPos.y - font.charHeight() / 2, charCode );
             }
 
-        myBlitPos.x = aScreen.width() / 2;
-        myBlitPos.y = aScreen.height() * 3 / 4;
+        myBlitPos.x = screen().width() / 2;
+        myBlitPos.y = screen().height() * 3 / 4;
 
-        myTitleFont.blitString( gc, myCurrentValue, myBlitPos, FontGen.CENTER );
+        myTitleFont.blitString( graphics, myCurrentValue, myBlitPos, FontGenerator.CENTER );
         }
 
     // Implementation
 
-    private final void addCurrentChar()
+    private void addCurrentChar()
         {
         final StringBuffer buffer = new StringBuffer( myCurrentValue );
         buffer.append( (char) myCurrentCharIndex );
         myCurrentValue = buffer.toString();
         }
 
-    private final void removeLastChar()
+    private void removeLastChar()
         {
         if ( myCurrentValue.length() == 0 ) return;
         myCurrentValue = myCurrentValue.substring( 0, myCurrentValue.length() - 1 );
         }
 
-    private final boolean nameValid()
+    private boolean nameValid()
         {
         final int length = myCurrentValue.length();
         return length >= myMinLength && length <= myMaxLength;
         }
 
-    private final boolean nameMaxLength()
+    private boolean nameMaxLength()
         {
         return myCurrentValue.length() == myMaxLength;
         }
@@ -203,9 +196,9 @@ public final class StringEntryScreen extends MultiScreen
     private SoftkeysScreen mySoftkeys;
 
 
-    private final FontGen myTextFont;
+    private final FontGenerator myTextFont;
 
-    private final FontGen myTitleFont;
+    private final FontGenerator myTitleFont;
 
     private final Position myBlitPos = new Position();
 

@@ -1,74 +1,71 @@
 package net.intensicode.util;
 
-/**
- * TODO: Describe this!
- */
 public final class IntegerSquareRoot
-{
-    public static final int sqrt( final int x )
     {
+    public static int sqrt( final int x )
+        {
         int xn;
 
         if ( x >= 0x10000 )
-        {
-            if ( x >= 0x1000000 )
             {
-                if ( x >= 0x10000000 )
+            if ( x >= 0x1000000 )
                 {
+                if ( x >= 0x10000000 )
+                    {
                     if ( x >= 0x40000000 ) xn = SQRT_TABLE[ x >> 24 ] << 8;
                     else xn = SQRT_TABLE[ x >> 22 ] << 7;
-                }
+                    }
                 else
-                {
+                    {
                     if ( x >= 0x4000000 ) xn = SQRT_TABLE[ x >> 20 ] << 6;
                     else xn = SQRT_TABLE[ x >> 18 ] << 5;
-                }
+                    }
 
-                xn = (xn + 1 + (x / xn)) >> 1;
-                xn = (xn + 1 + (x / xn)) >> 1;
-                return ((xn * xn) > x) ? --xn : xn;
-            }
+                xn = ( xn + 1 + ( x / xn ) ) >> 1;
+                xn = ( xn + 1 + ( x / xn ) ) >> 1;
+                return ( ( xn * xn ) > x ) ? --xn : xn;
+                }
             else
-            {
-                if ( x >= 0x100000 )
                 {
+                if ( x >= 0x100000 )
+                    {
                     if ( x >= 0x400000 ) xn = SQRT_TABLE[ x >> 16 ] << 4;
                     else xn = SQRT_TABLE[ x >> 14 ] << 3;
-                }
+                    }
                 else
-                {
+                    {
                     if ( x >= 0x40000 ) xn = SQRT_TABLE[ x >> 12 ] << 2;
                     else xn = SQRT_TABLE[ x >> 10 ] << 1;
-                }
+                    }
 
-                xn = (xn + 1 + (x / xn)) >> 1;
-                return ((xn * xn) > x) ? --xn : xn;
+                xn = ( xn + 1 + ( x / xn ) ) >> 1;
+                return ( ( xn * xn ) > x ) ? --xn : xn;
+                }
             }
-        }
         else
-        {
+            {
             if ( x >= 0x100 )
-            {
+                {
                 if ( x >= 0x1000 )
-                {
-                    if ( x >= 0x4000 ) xn = (SQRT_TABLE[ x >> 8 ]) + 1;
-                    else xn = (SQRT_TABLE[ x >> 6 ] >> 1) + 1;
-                }
+                    {
+                    if ( x >= 0x4000 ) xn = ( SQRT_TABLE[ x >> 8 ] ) + 1;
+                    else xn = ( SQRT_TABLE[ x >> 6 ] >> 1 ) + 1;
+                    }
                 else
-                {
-                    if ( x >= 0x400 ) xn = (SQRT_TABLE[ x >> 4 ] >> 2) + 1;
-                    else xn = (SQRT_TABLE[ x >> 2 ] >> 3) + 1;
-                }
+                    {
+                    if ( x >= 0x400 ) xn = ( SQRT_TABLE[ x >> 4 ] >> 2 ) + 1;
+                    else xn = ( SQRT_TABLE[ x >> 2 ] >> 3 ) + 1;
+                    }
 
-                return ((xn * xn) > x) ? --xn : xn;
-            }
+                return ( ( xn * xn ) > x ) ? --xn : xn;
+                }
             else
-            {
+                {
                 if ( x >= 0 ) return SQRT_TABLE[ x ] >> 4;
+                }
             }
-        }
         return 0;
-    }
+        }
 
 
 
@@ -81,4 +78,4 @@ public final class IntegerSquareRoot
             199, 200, 201, 201, 202, 203, 203, 204, 204, 205, 206, 206, 207, 208, 208, 209, 209, 210, 211, 211, 212, 212, 213, 214, 214, 215, 215, 216, 217, 217, 218, 218, 219, 219, 220, 221, 221, 222, 222, 223, 224, 224,
             225, 225, 226, 226, 227, 227, 228, 229, 229, 230, 230, 231, 231, 232, 232, 233, 234, 234, 235, 235, 236, 236, 237, 237, 238, 238, 239, 240, 240, 241, 241, 242, 242, 243, 243, 244, 244, 245, 245, 246, 246, 247,
             247, 248, 248, 249, 249, 250, 250, 251, 251, 252, 252, 253, 253, 254, 254, 255 };
-}
+    }

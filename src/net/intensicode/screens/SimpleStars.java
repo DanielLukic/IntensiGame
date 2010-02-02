@@ -1,165 +1,152 @@
-/************************************************************************/
-/* {{PROJECT_NAME}}             {{COMPANY}}             {{DATE_CREATE}} */
-/************************************************************************/
-
 package net.intensicode.screens;
 
-import net.intensicode.core.AbstractScreen;
-import net.intensicode.core.Color;
-import net.intensicode.core.DirectScreen;
-import net.intensicode.core.Engine;
-import net.intensicode.util.FixedMath;
-import net.intensicode.util.Sinus;
+import net.intensicode.core.GameSystem;
+import net.intensicode.util.*;
 
-import javax.microedition.lcdui.Graphics;
-import java.util.Random;
-
-
-
-public final class SimpleStars extends AbstractScreen
+public final class SimpleStars extends ScreenBase
     {
-    public static final SimpleStars instance()
+    public static SimpleStars instance()
         {
-        if ( theInstance == null ) theInstance = new SimpleStars( DEFAULT_NUMBER_OF_STARS );
+        if ( theInstance == null ) theInstance = new SimpleStars( 128 );
         return theInstance;
         }
 
     public SimpleStars( final int aNumberOfStars )
         {
-        iNumberOfStars = aNumberOfStars;
-        iStarsX = new int[iNumberOfStars];
-        iStarsY = new int[iNumberOfStars];
-        iStarsZ = new int[iNumberOfStars];
+        myNumberOfStars = aNumberOfStars;
+        myStarsX = new int[myNumberOfStars];
+        myStarsY = new int[myNumberOfStars];
+        myStarsZ = new int[myNumberOfStars];
 
         final Random random = new Random();
-        for ( int idx = 0; idx < iNumberOfStars; idx++ )
+        for ( int idx = 0; idx < myNumberOfStars; idx++ )
             {
-            iStarsX[ idx ] = random.nextInt() % UNIVERSE_HALF;
-            iStarsY[ idx ] = random.nextInt() % UNIVERSE_HALF;
-            iStarsZ[ idx ] = random.nextInt() % UNIVERSE_HALF;
+            myStarsX[ idx ] = random.nextInt() % UNIVERSE_HALF;
+            myStarsY[ idx ] = random.nextInt() % UNIVERSE_HALF;
+            myStarsZ[ idx ] = random.nextInt() % UNIVERSE_HALF;
             }
 
-        SetAxes( true, true, true );
+        setAnimatedAxes( true, true, true );
         }
 
-    public final void SetAxes( final boolean aX, final boolean aY, final boolean aZ )
+    public final void setAnimatedAxes( final boolean aX, final boolean aY, final boolean aZ )
         {
-        iMoveX = aX;
-        iMoveY = aY;
-        iMoveZ = aZ;
+        myMoveX = aX;
+        myMoveY = aY;
+        myMoveZ = aZ;
         }
 
-    // From AbstractScreen
+    // From ScreenBase
 
-    public final void onInit( final Engine aEngine, final DirectScreen aScreen ) throws Exception
+    public final void onInit( final GameSystem aGameSystem ) throws Exception
         {
-        super.onInit( aEngine, aScreen );
+        super.onInit( aGameSystem );
 
-        iScreenWidth = aScreen.width();
-        iScreenHeight = aScreen.height();
-        iScreenCenterX = iScreenWidth / 2;
-        iScreenCenterY = iScreenHeight / 2;
+        myScreenWidth = screen().width();
+        myScreenHeight = screen().height();
+        myScreenCenterX = myScreenWidth / 2;
+        myScreenCenterY = myScreenHeight / 2;
         }
 
-    public final void onControlTick( final Engine aEngine )
+    public final void onControlTick()
         {
-        final int tps = Engine.ticksPerSecond * 64;
-        iAnimCounter += FixedMath.toFixed( Sinus.SIN_TABLE_SIZE ) / tps;
+        final int tps = timing().ticksPerSecond * 64;
+        myAnimCounter += FixedMath.toFixed( Sinus.SIN_TABLE_SIZE ) / tps;
 
-        final int anim = FixedMath.toInt( iAnimCounter );
-        if ( anim > Sinus.SIN_TABLE_SIZE ) iAnimCounter = 0;
+        final int anim = FixedMath.toInt( myAnimCounter );
+        if ( anim > Sinus.SIN_TABLE_SIZE ) myAnimCounter = 0;
 
-        iViewerX = iViewerY = iViewerZ = 0;
-        if ( iMoveX ) iViewerX = mySinus.sin( anim, UNIVERSE_SIZE / 2 );
-        if ( iMoveY ) iViewerY = mySinus.sin( anim * 3, UNIVERSE_SIZE / 5 );
-        if ( iMoveZ ) iViewerZ = mySinus.sin( anim * 2, UNIVERSE_SIZE / 3 );
+        myViewerX = myViewerY = myViewerZ = 0;
+        if ( myMoveX ) myViewerX = mySinus.sin( anim, UNIVERSE_SIZE / 2 );
+        if ( myMoveY ) myViewerY = mySinus.sin( anim * 3, UNIVERSE_SIZE / 5 );
+        if ( myMoveZ ) myViewerZ = mySinus.sin( anim * 2, UNIVERSE_SIZE / 3 );
         }
 
-    public final void onDrawFrame( final DirectScreen aScreen )
+    public final void onDrawFrame()
         {
-        final int screenWidth = aScreen.width();
-        final int screenHeight = aScreen.height();
+        final int screenWidth = screen().width();
+        final int screenHeight = screen().height();
 
-        final int maxIntensity = Color.COLOR_CHANNEL_VALUES - 1;
-        for ( int idx = 0; idx < iNumberOfStars; idx++ )
+        final int maxIntensity = 255;
+        for ( int idx = 0; idx < myNumberOfStars; idx++ )
             {
-            myPosition3d[ 0 ] = iStarsX[ idx ] + iViewerX;
-            myPosition3d[ 1 ] = iStarsY[ idx ] + iViewerY;
-            myPosition3d[ 2 ] = iStarsZ[ idx ] + iViewerZ;
+            myPosition3d[ 0 ] = myStarsX[ idx ] + myViewerX;
+            myPosition3d[ 1 ] = myStarsY[ idx ] + myViewerY;
+            myPosition3d[ 2 ] = myStarsZ[ idx ] + myViewerZ;
 
-            final int zNew = GetProjected( myPosition3d, myPosition2d );
+            final int[] xyz2d = doProjection( myPosition3d );
 
-            final int x2d = myPosition2d[ 0 ];
-            final int y2d = myPosition2d[ 1 ];
+            final int x2d = xyz2d[ 0 ];
+            final int y2d = xyz2d[ 1 ];
             if ( x2d < 0 || x2d >= screenWidth ) continue;
             if ( y2d < 0 || y2d >= screenHeight ) continue;
 
-            final int starIntensity = (zNew * maxIntensity * 2 / 3) >> UNIVERSE_SHIFT;
+            final int zNew = xyz2d[ 2 ];
+            final int starIntensity = ( zNew * maxIntensity * 2 / 3 ) >> UNIVERSE_SHIFT;
             int intensity = maxIntensity / 5 + starIntensity;
             intensity = Math.max( 0, Math.min( maxIntensity, intensity ) );
 
-            final Graphics gc = aScreen.graphics();
-            gc.setColor( 255 << 24 | intensity << 16 | intensity << 8 | intensity );
+            graphics().setColorRGB24( 255 << 24 | intensity << 16 | intensity << 8 | intensity );
 
             final int starSize = 1 + starIntensity / 64;
-            gc.fillRect( x2d - starSize / 2, y2d - starSize / 2, starSize, starSize );
+            graphics().fillRect( x2d - starSize / 2, y2d - starSize / 2, starSize, starSize );
             }
         }
 
     // Implementation
 
-    private final int GetProjected( final int[] aPosition3D, final int[] aPosition2D )
+    private int[] doProjection( final int[] aPosition3D )
         {
-        final int iTempX = aPosition3D[ 0 ] & UNIVERSE_MASK;
-        final int iTempY = aPosition3D[ 1 ] & UNIVERSE_MASK;
-        final int iTempZ = aPosition3D[ 2 ] & UNIVERSE_MASK;
+        final int xTemp = aPosition3D[ 0 ] & UNIVERSE_MASK;
+        final int yTemp = aPosition3D[ 1 ] & UNIVERSE_MASK;
+        final int zTemp = aPosition3D[ 2 ] & UNIVERSE_MASK;
 
-        int z = (iTempZ - UNIVERSE_HALF) - VIEW_PLANE;
+        int z = ( zTemp - UNIVERSE_HALF ) - VIEW_PLANE;
         if ( z == 0 ) z = 1;
 
-        final int x = (iTempX - UNIVERSE_HALF) * iScreenWidth;
-        final int y = (iTempY - UNIVERSE_HALF) * iScreenHeight;
-        aPosition2D[ 0 ] = x / z + iScreenCenterX;
-        aPosition2D[ 1 ] = y / z + iScreenCenterY;
-
-        return iTempZ;
+        final int x = ( xTemp - UNIVERSE_HALF ) * myScreenWidth;
+        final int y = ( yTemp - UNIVERSE_HALF ) * myScreenHeight;
+        myPosition2dPlusNewZ[ 0 ] = x / z + myScreenCenterX;
+        myPosition2dPlusNewZ[ 1 ] = y / z + myScreenCenterY;
+        myPosition2dPlusNewZ[ 2 ] = zTemp;
+        return myPosition2dPlusNewZ;
         }
 
 
 
-    private int iAnimCounter;
+    private int myAnimCounter;
 
-    private int iViewerX;
+    private int myViewerX;
 
-    private int iViewerY;
+    private int myViewerY;
 
-    private int iViewerZ;
+    private int myViewerZ;
 
-    private boolean iMoveX;
+    private boolean myMoveX;
 
-    private boolean iMoveY;
+    private boolean myMoveY;
 
-    private boolean iMoveZ;
+    private boolean myMoveZ;
 
-    private int iNumberOfStars;
+    private int myNumberOfStars;
 
-    private final int[] iStarsX;
+    private final int[] myStarsX;
 
-    private final int[] iStarsY;
+    private final int[] myStarsY;
 
-    private final int[] iStarsZ;
+    private final int[] myStarsZ;
 
-    private static int iScreenWidth;
+    private static int myScreenWidth;
 
-    private static int iScreenHeight;
+    private static int myScreenHeight;
 
-    private static int iScreenCenterX;
+    private static int myScreenCenterX;
 
-    private static int iScreenCenterY;
+    private static int myScreenCenterY;
 
     private final int[] myPosition3d = new int[3];
 
-    private final int[] myPosition2d = new int[2];
+    private final int[] myPosition2dPlusNewZ = new int[3];
 
     private static final Sinus mySinus = Sinus.instance();
 
@@ -174,12 +161,4 @@ public final class SimpleStars extends AbstractScreen
     private static final int UNIVERSE_MASK = UNIVERSE_SIZE - 1;
 
     private static final int VIEW_PLANE = UNIVERSE_SIZE * 2 / 3;
-
-    //#if MIDP1
-    //# private static final int DEFAULT_NUMBER_OF_STARS = 32;
-    //#else
-
-    private static final int DEFAULT_NUMBER_OF_STARS = 256;
-
-    //#endif
     }

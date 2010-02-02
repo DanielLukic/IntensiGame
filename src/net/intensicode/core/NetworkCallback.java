@@ -1,8 +1,5 @@
 package net.intensicode.core;
 
-/**
- * TODO: Describe this!
- */
 public interface NetworkCallback
     {
     void onReceived( byte[] aBytes );

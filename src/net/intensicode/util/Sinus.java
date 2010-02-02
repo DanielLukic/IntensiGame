@@ -1,10 +1,4 @@
-/************************************************************************/
-/* {{PROJECT_NAME}}             {{COMPANY}}             {{DATE_CREATE}} */
-/************************************************************************/
-
 package net.intensicode.util;
-
-
 
 public final class Sinus
     {
@@ -20,7 +14,7 @@ public final class Sinus
 
 
 
-    public final static Sinus instance()
+    public static Sinus instance()
         {
         if ( iInstance == null ) iInstance = new Sinus();
         return iInstance;

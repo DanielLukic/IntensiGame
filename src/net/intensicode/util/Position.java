@@ -1,7 +1,3 @@
-/************************************************************************/
-/* {{PROJECT_NAME}}             {{COMPANY}}             {{DATE_CREATE}} */
-/************************************************************************/
-
 package net.intensicode.util;
 
 public class Position
@@ -64,8 +60,11 @@ public class Position
         return x != 0 || y != 0;
         }
 
+    // From Object
+
     public final boolean equals( final Object aObject )
         {
+        if ( !( aObject instanceof Position ) ) return false;
         final Position that = (Position) aObject;
         return x == that.x && y == that.y;
         }

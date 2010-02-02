@@ -1,23 +1,14 @@
-/************************************************************************/
-/* {{PROJECT_NAME}}             {{COMPANY}}             {{DATE_CREATE}} */
-/************************************************************************/
-
 package net.intensicode.core;
 
-import javax.microedition.lcdui.Display;
+import net.intensicode.screens.ScreenBase;
 
-/**
- * TODO: Describe this!
- */
 public interface SystemContext
     {
-    void exit();
+    ScreenBase createMainScreen( GameSystem aGameSystem ) throws Exception;
 
-    void pause();
+    void onApplicationShouldPause( GameSystem aGameSystem );
 
-    Display getDisplay();
+    void onFramesDropped( GameSystem aGameSystem );
 
-    ResourceLoader getResourceLoader();
-
-    AbstractScreen initMainController() throws Exception;
+    void terminateApplication();
     }

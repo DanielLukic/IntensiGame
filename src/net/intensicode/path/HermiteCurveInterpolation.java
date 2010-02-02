@@ -138,7 +138,7 @@ public final class HermiteCurveInterpolation implements Interpolation, PositionL
 
     // Implementation
 
-    private final Position calcIncomingTangent( final int aSegmentIndex )
+    private Position calcIncomingTangent( final int aSegmentIndex )
         {
         if ( myInputSize < 2 ) throw new IllegalStateException();
 
@@ -160,7 +160,7 @@ public final class HermiteCurveInterpolation implements Interpolation, PositionL
             }
         }
 
-    private final Position calcOutgoingTangent( final int aSegmentIndex )
+    private Position calcOutgoingTangent( final int aSegmentIndex )
         {
         if ( myInputSize < 2 ) throw new IllegalStateException();
 
@@ -182,21 +182,21 @@ public final class HermiteCurveInterpolation implements Interpolation, PositionL
             }
         }
 
-    private final Position calcIncomingKochanekBartelsTangent( final int aSegmentIndex )
+    private Position calcIncomingKochanekBartelsTangent( final int aSegmentIndex )
         {
         final int ts1 = FixedMath.mul( tMinus, FixedMath.mul( cMinus, bPlus ) ) / 2;
         final int ts2 = FixedMath.mul( tMinus, FixedMath.mul( cPlus, bMinus ) ) / 2;
         return calcKochanekBartelsTangent( aSegmentIndex, ts1, ts2 );
         }
 
-    private final Position calcOutgoingKochanekBartelsTangent( final int aSegmentIndex )
+    private Position calcOutgoingKochanekBartelsTangent( final int aSegmentIndex )
         {
         final int ts1 = FixedMath.mul( tMinus, FixedMath.mul( cPlus, bPlus ) ) / 2;
         final int ts2 = FixedMath.mul( tMinus, FixedMath.mul( cMinus, bMinus ) ) / 2;
         return calcKochanekBartelsTangent( aSegmentIndex, ts1, ts2 );
         }
 
-    private final Position calcKochanekBartelsTangent( final int aSegmentIndex, final int aTangent1, final int aTangent2 )
+    private Position calcKochanekBartelsTangent( final int aSegmentIndex, final int aTangent1, final int aTangent2 )
         {
         final Position before = getInputPosition( aSegmentIndex - 1 );
         final Position around = getInputPosition( aSegmentIndex );
@@ -215,7 +215,7 @@ public final class HermiteCurveInterpolation implements Interpolation, PositionL
         return myTempDirection;
         }
 
-    private final Position calcIncomingCardinalTangent( final int aSegmentIndex )
+    private Position calcIncomingCardinalTangent( final int aSegmentIndex )
         {
         final Position from = getInputPosition( aSegmentIndex );
         final Position to = getInputPosition( aSegmentIndex + 1 );
@@ -228,7 +228,7 @@ public final class HermiteCurveInterpolation implements Interpolation, PositionL
         return myTempDirection;
         }
 
-    private final Position calcOutgoingCardinalTangent( final int aSegmentIndex )
+    private Position calcOutgoingCardinalTangent( final int aSegmentIndex )
         {
         final Position from = getInputPosition( aSegmentIndex );
         final Position to = getInputPosition( aSegmentIndex + 1 );

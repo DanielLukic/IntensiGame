@@ -2,11 +2,6 @@ package net.intensicode.path;
 
 import net.intensicode.util.Position;
 
-
-
-/**
- * TODO: Describe this!
- */
 public interface PathWithDirection extends Path
     {
     Position getStartPosition();

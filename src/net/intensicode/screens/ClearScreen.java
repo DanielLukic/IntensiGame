@@ -1,32 +1,27 @@
 package net.intensicode.screens;
 
-import net.intensicode.core.AbstractScreen;
-import net.intensicode.core.DirectScreen;
-import net.intensicode.core.Engine;
-
-import javax.microedition.lcdui.Graphics;
-
-
-
-public final class ClearScreen extends AbstractScreen
-{
-    public ClearScreen( final int aARGB32 )
+public final class ClearScreen extends ScreenBase
     {
-        myARGB32 = aARGB32;
+    public ClearScreen()
+        {
+        this( 0x000000 );
+        }
+
+    public ClearScreen( final int aRGB24 )
+        {
+        myRGB24 = aRGB24;
+        }
+
+    // From ScreenBase
+
+    public final void onControlTick()
+        {
+        }
+
+    public final void onDrawFrame()
+        {
+        graphics().clearRGB24( myRGB24 );
+        }
+
+    private final int myRGB24;
     }
-
-    // From AbstractScreen
-
-    public final void onControlTick( final Engine aEngine )
-    {
-    }
-
-    public final void onDrawFrame( final DirectScreen aScreen )
-    {
-        final Graphics gc = aScreen.graphics();
-        gc.setColor( myARGB32 );
-        gc.fillRect( 0, 0, aScreen.width(), aScreen.height() );
-    }
-
-    private final int myARGB32;
-}

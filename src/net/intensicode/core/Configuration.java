@@ -1,27 +1,23 @@
 package net.intensicode.core;
 
-import net.intensicode.util.DynamicArray;
-import net.intensicode.util.Log;
+import net.intensicode.util.*;
 
 import java.util.Hashtable;
 
-
-
-/**
- * TODO: Describe this!
- */
 public final class Configuration
     {
+    public static final Configuration NULL_CONFIGURATION = new Configuration();
+
     public Configuration()
         {
         }
 
     public Configuration( final String aConfigurationData )
         {
-        final DynamicArray lines = splitString( aConfigurationData, true );
+        final DynamicArray lines = StringUtils.splitString( aConfigurationData, true );
         for ( int idx = 0; idx < lines.size; idx++ )
             {
-            final String line = ((String) lines.objects[ idx ]);
+            final String line = ( (String) lines.objects[ idx ] );
             if ( line.length() < 3 ) continue;
             if ( line.startsWith( "//" ) ) continue;
             if ( line.startsWith( "#" ) ) continue;
@@ -42,7 +38,7 @@ public final class Configuration
     public final String[] readList( final String aEntry, final String aDefault, final String aDelimiterList )
         {
         final String value = readString( aEntry, aDefault );
-        final DynamicArray entries = splitString( value, aDelimiterList, true );
+        final DynamicArray entries = StringUtils.splitString( value, aDelimiterList, true );
         final String[] strings = new String[entries.size];
         for ( int idx = 0; idx < entries.size; idx++ )
             {
@@ -110,63 +106,18 @@ public final class Configuration
             }
         }
 
-    public static final DynamicArray splitString( final String aString, final boolean aTrimLines )
+    public static String makeKey( final String aPrefix, final int aIndex )
         {
-        return splitString( aString, "\n\r", aTrimLines );
-        }
-
-    public static final DynamicArray splitString( final String aString, final String aDelimiterList, final boolean aTrimLines )
-        {
-        int start = 0;
-        int end = 0;
-
-        final DynamicArray lines = new DynamicArray();
-
-        final int length = aString.length();
-        while ( end < length )
-            {
-            end = findDelimiter( aString, aDelimiterList, start );
-            if ( end == -1 ) end = length;
-            if ( end == start ) start++;
-            if ( end < start ) continue;
-
-            final String line = aString.substring( start, end );
-            lines.add( aTrimLines ? line.trim() : line );
-
-            start = end;
-            }
-
-        return lines;
-        }
-
-    public static final int findDelimiter( final String aString, final String aDelimiterList, final int aStart )
-        {
-        final int numberOfDelimiters = aDelimiterList.length();
-
-        int closestMatch = -1;
-        for ( int idx = 0; idx < numberOfDelimiters; idx++ )
-            {
-            final int pos = aString.indexOf( aDelimiterList.charAt( idx ), aStart );
-            if ( pos == -1 ) continue;
-            if ( closestMatch == -1 ) closestMatch = pos;
-            if ( pos < closestMatch ) closestMatch = pos;
-            }
-
-        return closestMatch;
-        }
-
-    public static final String makeKey( final String aPrefix, final int aIndex )
-        {
-        SHARED_BUFFER.setLength( 0 );
-        SHARED_BUFFER.append( aPrefix );
-        SHARED_BUFFER.append( '.' );
-        SHARED_BUFFER.append( aIndex );
-        return SHARED_BUFFER.toString();
+        theSharedBuffer.setLength( 0 );
+        theSharedBuffer.append( aPrefix );
+        theSharedBuffer.append( '.' );
+        theSharedBuffer.append( aIndex );
+        return theSharedBuffer.toString();
         }
 
     // Implementation
 
-    private final void consume( final String aLine )
+    private void consume( final String aLine )
         {
         final int assignmentIndex = aLine.indexOf( '=' );
 
@@ -190,19 +141,18 @@ public final class Configuration
         if ( key.length() > 0 && value.length() > 0 ) myEntries.put( key, value );
         }
 
-    private final String extractValue( final String aEntry, final String aSubEntry )
+    private String extractValue( final String aEntry, final String aSubEntry )
         {
         if ( aSubEntry == null ) return (String) myEntries.get( aEntry );
-        SHARED_BUFFER.setLength( 0 );
-        SHARED_BUFFER.append( aEntry );
-        SHARED_BUFFER.append( '.' );
-        SHARED_BUFFER.append( aSubEntry );
-        return (String) myEntries.get( SHARED_BUFFER.toString() );
+        theSharedBuffer.setLength( 0 );
+        theSharedBuffer.append( aEntry );
+        theSharedBuffer.append( '.' );
+        theSharedBuffer.append( aSubEntry );
+        return (String) myEntries.get( theSharedBuffer.toString() );
         }
-
 
 
     private final Hashtable myEntries = new Hashtable();
 
-    private static final StringBuffer SHARED_BUFFER = new StringBuffer();
+    private static final StringBuffer theSharedBuffer = new StringBuffer();
     }

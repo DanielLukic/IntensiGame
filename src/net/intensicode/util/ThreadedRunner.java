@@ -28,19 +28,21 @@ public abstract class ThreadedRunner implements Runnable
         {
         try
             {
-            runInterrupptible();
+            runInterruptible();
             }
         catch ( final InterruptedException e )
             {
             // We can simply leave here..
             }
 
+        //#if DEBUG
         Log.debug( "ThreadedRunner {} terminated", myName );
+        //#endif
         }
 
     // Abstract Interface
 
-    protected abstract void runInterrupptible() throws InterruptedException;
+    protected abstract void runInterruptible() throws InterruptedException;
 
 
 
