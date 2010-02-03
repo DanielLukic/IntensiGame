@@ -88,6 +88,7 @@ public final class SkinManager implements Runnable
 
     public final boolean allImagesLoaded()
         {
+        if ( myImageIDs == null ) myImageIDs = new String[0];
         for ( int idx = 0; idx < myImageIDs.length; idx++ )
             {
             if ( !isImageLoaded( myImageIDs[ idx ], true ) ) return false;
