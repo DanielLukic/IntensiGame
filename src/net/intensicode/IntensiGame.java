@@ -10,6 +10,11 @@ public abstract class IntensiGame implements SystemContext
 
     // From SystemContext
 
+    public GameSystem getGameSystem()
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
     public void onFramesDropped( final GameSystem aGameSystem )
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
