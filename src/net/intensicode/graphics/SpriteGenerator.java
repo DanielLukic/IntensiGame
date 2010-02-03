@@ -30,6 +30,7 @@ public final class SpriteGenerator
 
     public final int getFrameSequenceLength()
         {
+        if ( myFrameSequence == null ) return getRawFrameCount();
         return myFrameSequence.length;
         }
 
