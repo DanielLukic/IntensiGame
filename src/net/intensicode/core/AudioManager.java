@@ -4,6 +4,8 @@ import java.io.IOException;
 
 public interface AudioManager
     {
+    String ERROR_NO_SOUND_DEVICE_AVAILABLE = "no sound device available";
+
     boolean supportsMusicPlusSound();
 
     boolean supportsMultiSound();
