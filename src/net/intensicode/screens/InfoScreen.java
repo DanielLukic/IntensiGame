@@ -5,8 +5,6 @@ import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.*;
 
-import javax.microedition.media.Manager;
-
 public final class InfoScreen extends MultiScreen
     {
     public InfoScreen( final FontGenerator aTitleFont, final FontGenerator aTextFont )
@@ -57,21 +55,11 @@ public final class InfoScreen extends MultiScreen
         myTextLines.add( "SOUND FORMAT" );
         myTextLines.add( ReleaseProperties.SOUND_FORMAT_SUFFIX );
         myTextLines.add( ReleaseProperties.SOUND_FORMAT_MIME_TYPE );
-        final String[] soundProtocols = Manager.getSupportedProtocols( ReleaseProperties.SOUND_FORMAT_MIME_TYPE );
-        for ( int idx = 0; idx < soundProtocols.length; idx++ )
-            {
-            myTextLines.add( soundProtocols[ idx ] );
-            }
 
         myTextLines.add( "" );
         myTextLines.add( "MUSIC FORMAT" );
         myTextLines.add( ReleaseProperties.MUSIC_FORMAT_SUFFIX );
         myTextLines.add( ReleaseProperties.MUSIC_FORMAT_MIME_TYPE );
-        final String[] musicProtocols = Manager.getSupportedProtocols( ReleaseProperties.MUSIC_FORMAT_MIME_TYPE );
-        for ( int idx = 0; idx < musicProtocols.length; idx++ )
-            {
-            myTextLines.add( musicProtocols[ idx ] );
-            }
 
         myTextLines.add( "" );
         myTextLines.add( "HISCORE ID" );
@@ -85,22 +73,6 @@ public final class InfoScreen extends MultiScreen
         myTextLines.add( Integer.toString( config.softKeyRight ) );
         myTextLines.add( Integer.toString( config.softKeyDelete ) );
         myTextLines.add( Integer.toString( config.softKeyBack ) );
-
-        myTextLines.add( "" );
-        myTextLines.add( "FORMATS" );
-        final String[] protocols = Manager.getSupportedProtocols( null );
-        for ( int idx = 0; idx < protocols.length; idx++ )
-            {
-            myTextLines.add( protocols[ idx ] );
-            }
-
-        myTextLines.add( "" );
-        myTextLines.add( "TYPES" );
-        final String[] types = Manager.getSupportedContentTypes( null );
-        for ( int idx = 0; idx < types.length; idx++ )
-            {
-            myTextLines.add( types[ idx ] );
-            }
         }
 
     public final void onControlTick() throws Exception
