@@ -67,7 +67,20 @@ public abstract class GameSystem
         mySystemContext.terminateApplication();
         }
 
-    // Package Interface
+    // Internal API
+
+    public final void resume()
+        {
+        audio.resumePlayback();
+        engine.startThreaded();
+        }
+
+    public final void pause()
+        {
+        mySystemContext.onApplicationShouldPause( this );
+        audio.haltPlayback();
+        engine.stopThreaded();
+        }
 
     final void onFramesDropped()
         {

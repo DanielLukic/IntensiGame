@@ -16,11 +16,13 @@ public abstract class GameEngine implements Runnable
         myGameSystem = aGameSystem;
         }
 
+    // Internal API
+
     /**
      * Call this to start the engine in threaded mode. The engine will then issue control ticks and draw frames
      * continously. It expects a GameView with proper beginFrame and endFrame implementation.
      */
-    public final void showNotify()
+    public final void startThreaded()
         {
         if ( !engineThreadCreated() ) createEngineThread();
         startEngineThread();
@@ -29,7 +31,7 @@ public abstract class GameEngine implements Runnable
     /**
      * Call this to stop the engine in threaded mode after it has been started by a call to showNotify.
      */
-    public final void hideNotify()
+    public final void stopThreaded()
         {
         stopAndReleaseEngineThread();
         }
