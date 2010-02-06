@@ -10,11 +10,11 @@ public interface AudioResource
 
     void unmute();
 
-    void play();
+    void start();
 
     void stop();
 
-    void pause();
-
     void resume();
+
+    void pause();
     }

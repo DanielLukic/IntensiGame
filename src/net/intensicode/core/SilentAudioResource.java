@@ -26,7 +26,7 @@ public final class SilentAudioResource implements AudioResourceEx
         {
         }
 
-    public final void play()
+    public final void start()
         {
         }
 
