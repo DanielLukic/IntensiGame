@@ -28,6 +28,17 @@ public class SoftkeysScreen extends ScreenBase
         myOffsetY = aY;
         }
 
+    public void placeImage( final ImageResource aImageResource, final int aX, final int aY )
+        {
+        myPlacedImage = aImageResource;
+        myImagePosition.x = aX;
+        myImagePosition.y = aY;
+        }
+
+    private ImageResource myPlacedImage;
+
+    private final Position myImagePosition = new Position();
+
     // From ScreenBase
 
     public final void onTop()
@@ -59,11 +70,15 @@ public class SoftkeysScreen extends ScreenBase
         {
         final DirectGraphics gc = graphics();
 
+        if ( myPlacedImage != null )
+            {
+            gc.drawImage( myPlacedImage, myImagePosition.x, myImagePosition.y );
+            }
+
         if ( myLeftButton != null )
             {
             myBlitPosition.x = myOffsetX;
             myBlitPosition.y = screen().height() - myOffsetY;
-
             myFontGen.blitString( gc, myLeftButton, myBlitPosition, FontGenerator.LEFT | FontGenerator.BOTTOM );
             }
 
@@ -71,7 +86,6 @@ public class SoftkeysScreen extends ScreenBase
             {
             myBlitPosition.x = screen().width() - myOffsetX;
             myBlitPosition.y = screen().height() - myOffsetY;
-
             myFontGen.blitString( gc, myRightButton, myBlitPosition, FontGenerator.RIGHT | FontGenerator.BOTTOM );
             }
         }
