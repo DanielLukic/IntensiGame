@@ -2,8 +2,6 @@ package net.intensicode.core;
 
 import net.intensicode.util.*;
 
-import java.io.IOException;
-
 public abstract class AudioManager
     {
     public static final String ERROR_NO_SOUND_DEVICE_AVAILABLE = "no sound device available";
@@ -127,7 +125,7 @@ public abstract class AudioManager
         setVolume( mySoundResources, aVolumeInPercent );
         }
 
-    public final AudioResource loadMusic( final String aMusicName ) throws IOException
+    public final AudioResource loadMusic( final String aMusicName )
         {
         try
             {
@@ -148,7 +146,7 @@ public abstract class AudioManager
             }
         }
 
-    public final AudioResource loadSound( final String aSoundName ) throws IOException
+    public final AudioResource loadSound( final String aSoundName )
         {
         try
             {
