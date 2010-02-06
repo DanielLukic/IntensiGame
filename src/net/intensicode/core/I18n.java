@@ -32,10 +32,9 @@ public final class I18n
         //#if DEBUG
         if ( !myConfiguration.isEmpty() )
             {
-            final StringBuffer message = StringUtils.format( "Missing translation for {}", new Object[]{ aString } );
-            GameSystem.showException( new RuntimeException( message.toString() ) );
             Log.debug( "Missing translation for {}", aString );
-            myConfiguration.store( aString, aString );
+            myConfiguration.store( aString, "MISSING TRANSLATION" );
+            return lookup( "MISSING TRANSLATION" );
             }
         //#endif
 
