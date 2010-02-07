@@ -59,6 +59,9 @@ class IntensiGameHelper
 
         // TODO: Move to BitmapFontGenerator#apply(Configuration)                
         BitmapFontGenerator.buffered = aConfiguration.readBoolean( "BitmapFontGenerator.buffered", BitmapFontGenerator.buffered );
+
+        // Register ResourcesManager with BitmapFontGenerator to make buffered blitting possible.
+        BitmapFontGenerator.resources = myGameSystem.resources;
         }
 
     void applySkinConfiguration( final Configuration aConfiguration )

@@ -89,6 +89,8 @@ public final class BitmapFontGenerator extends FontGenerator
             {
             blitStringUnbuffered( aGraphics, aText, aStart, aEnd, aX, aY );
             }
+
+        if ( !buffered ) myBlittedStrings.clear();
         }
 
     // Protected Interface
@@ -122,8 +124,6 @@ public final class BitmapFontGenerator extends FontGenerator
 
     private void blitStringUnbuffered( final DirectGraphics aGraphics, final String aText, final int aStart, final int aEnd, final int aX, final int aY )
         {
-        myBlittedStrings.clear();
-
         int x = aX;
         for ( int idx = aStart; idx < aEnd; idx++ )
             {
@@ -141,11 +141,11 @@ public final class BitmapFontGenerator extends FontGenerator
 
     private ImageResource createBufferedString( final String aPart )
         {
+        if ( aPart == null ) return getEmptyImage();
+
         //#if DEBUG
         Log.debug( "Buffering {}", aPart );
         //#endif
-
-        final int partLength = aPart.length();
 
         // Fix for #84: Using MIN_BUFFER_WIDTH to avoid empty/black image instead of small character.
         // So far this happens only in the RunME version!?
@@ -160,15 +160,16 @@ public final class BitmapFontGenerator extends FontGenerator
         final DirectGraphics gc = buffer.getGraphics();
         gc.clearRGB24( 0 );
 
-        int x = 0;
-        for ( int idx = 0; idx < partLength; idx++ )
-            {
-            final char code = aPart.charAt( idx );
-            blitChar( gc, x, 0, code );
-            x += charWidth( code );
-            }
+        final int partLength = aPart.length();
+        blitStringUnbuffered( gc, aPart, 0, partLength, 0, 0 );
 
         return buffer;
+        }
+
+    private ImageResource getEmptyImage()
+        {
+        if ( myEmptyImage == null ) myEmptyImage = resources.createImageResource( 4, 4 );
+        return myEmptyImage;
         }
 
 
@@ -177,6 +178,8 @@ public final class BitmapFontGenerator extends FontGenerator
     private final byte[] myCharWidths;
 
     private final CharGenerator myCharGen;
+
+    private static ImageResource myEmptyImage;
 
     private static final Hashtable myBlittedStrings = new Hashtable();
 
