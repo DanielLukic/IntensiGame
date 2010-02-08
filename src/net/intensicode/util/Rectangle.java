@@ -26,6 +26,14 @@ public class Rectangle
         height = aHeight;
         }
 
+    public void setTo( final Rectangle aRectangle )
+        {
+        x = aRectangle.x;
+        y = aRectangle.y;
+        width = aRectangle.width;
+        height = aRectangle.height;
+        }
+
     public void applyOutsets( final int aOutsetSizeInPixels )
         {
         x -= aOutsetSizeInPixels;
