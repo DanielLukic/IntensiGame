@@ -119,7 +119,7 @@ public final class BitmapFontGenerator extends FontGenerator
             }
 
         final ImageResource buffer = (ImageResource) myBlittedStrings.get( part );
-        aGraphics.drawImage( buffer, aX, aY, TOP_LEFT );
+        aGraphics.drawImage( buffer, aX, aY );
         }
 
     private void blitStringUnbuffered( final DirectGraphics aGraphics, final String aText, final int aStart, final int aEnd, final int aX, final int aY )
