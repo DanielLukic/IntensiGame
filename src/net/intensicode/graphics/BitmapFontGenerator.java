@@ -73,8 +73,11 @@ public final class BitmapFontGenerator extends FontGenerator
 
     public final void blitChar( final DirectGraphics aGraphics, final int aX, final int aY, final int aAsciiCode )
         {
-        final int width = myCharWidths[ aAsciiCode - MIN_ASCII_CODE ];
-        myCharGen.blit( aGraphics, aX, aY, aAsciiCode - MIN_ASCII_CODE, width );
+        final int index = aAsciiCode - MIN_ASCII_CODE;
+        if ( index < 0 || index >= myCharWidths.length ) return;
+
+        final int width = myCharWidths[ index ];
+        myCharGen.blit( aGraphics, aX, aY, index, width );
         }
 
     public final void blitString( final DirectGraphics aGraphics, final String aText, final int aStart, final int aEnd, final int aX, final int aY )
