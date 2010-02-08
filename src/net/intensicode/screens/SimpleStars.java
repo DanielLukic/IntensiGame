@@ -1,6 +1,6 @@
 package net.intensicode.screens;
 
-import net.intensicode.core.GameSystem;
+import net.intensicode.core.*;
 import net.intensicode.util.*;
 
 public final class SimpleStars extends ScreenBase
@@ -64,6 +64,8 @@ public final class SimpleStars extends ScreenBase
 
     public final void onDrawFrame()
         {
+        final DirectGraphics gc = graphics();
+
         final int screenWidth = screen().width();
         final int screenHeight = screen().height();
 
@@ -86,10 +88,10 @@ public final class SimpleStars extends ScreenBase
             int intensity = maxIntensity / 5 + starIntensity;
             intensity = Math.max( 0, Math.min( maxIntensity, intensity ) );
 
-            graphics().setColorRGB24( 255 << 24 | intensity << 16 | intensity << 8 | intensity );
+            gc.setColorRGB24( 255 << 24 | intensity << 16 | intensity << 8 | intensity );
 
             final int starSize = 1 + starIntensity / 64;
-            graphics().fillRect( x2d - starSize / 2, y2d - starSize / 2, starSize, starSize );
+            gc.fillRect( x2d - starSize / 2, y2d - starSize / 2, starSize, starSize );
             }
         }
 
