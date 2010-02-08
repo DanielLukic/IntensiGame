@@ -39,6 +39,20 @@ public class SoftkeysScreen extends ScreenBase
 
     private final Position myImagePosition = new Position();
 
+    //#if TOUCH_SUPPORTED
+
+    public void setTouchableAreas( final Rectangle aLeft, final Rectangle aRight )
+        {
+        myLeftTouchableRect = aLeft;
+        myRightTouchableRect = aRight;
+        }
+
+    private Rectangle myLeftTouchableRect;
+
+    private Rectangle myRightTouchableRect;
+
+    //#endif
+
     // From ScreenBase
 
     public final void onTop()
@@ -127,6 +141,13 @@ public class SoftkeysScreen extends ScreenBase
         rectangle.y = screen().height() - myOffsetY - rectangle.height;
         applyOutsets( rectangle );
 
+        //#if TOUCH_SUPPORTED
+        if ( myLeftTouchableRect != null )
+            {
+            rectangle.setTo( myLeftTouchableRect );
+            }
+        //#endif
+
         myLeftTouchRect.associatedKeyID = KeysHandler.LEFT_SOFT;
         system().touch.addLocalControl( myLeftTouchRect );
         }
@@ -143,6 +164,13 @@ public class SoftkeysScreen extends ScreenBase
         rectangle.x = screen().width() - myOffsetX - rectangle.width;
         rectangle.y = screen().height() - myOffsetY - rectangle.height;
         applyOutsets( rectangle );
+
+        //#if TOUCH_SUPPORTED
+        if ( myRightTouchableRect != null )
+            {
+            rectangle.setTo( myRightTouchableRect );
+            }
+        //#endif
 
         myRightTouchRect.associatedKeyID = KeysHandler.RIGHT_SOFT;
         system().touch.addLocalControl( myRightTouchRect );
