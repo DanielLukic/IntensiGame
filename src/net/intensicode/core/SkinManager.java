@@ -118,6 +118,12 @@ public final class SkinManager implements Runnable
         Log.debug( "Skin purging image data for {}", aImageID );
         //#endif
 
+        if ( myCachedImages.containsKey( aImageID ) )
+            {
+            final ImageResource resource = (ImageResource) myCachedImages.get( aImageID );
+            resource.purge();
+            }
+
         myCachedCharGens.remove( aImageID );
         myCachedFontGens.remove( aImageID );
         myCachedSprites.remove( aImageID );
