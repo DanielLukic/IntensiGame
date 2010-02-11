@@ -76,8 +76,8 @@ public abstract class AudioManager
         {
         for ( int idx = 0; idx < aResources.size; idx++ )
             {
-            final AudioResource resource = (AudioResource) aResources.get( idx );
-            resource.resume();
+            final AudioResourceEx resource = (AudioResourceEx) aResources.get( idx );
+            resource.enable();
             }
         }
 
@@ -91,8 +91,8 @@ public abstract class AudioManager
         {
         for ( int idx = 0; idx < aResources.size; idx++ )
             {
-            final AudioResource resource = (AudioResource) aResources.get( idx );
-            resource.pause();
+            final AudioResourceEx resource = (AudioResourceEx) aResources.get( idx );
+            resource.disable();
             }
         }
 
