@@ -44,7 +44,7 @@ class IntensiGameHelper
         {
         // TODO: Move to GameTiming#apply(Configuration)
         final GameTiming timing = myGameSystem.timing;
-        timing.ticksPerSecond = aConfiguration.readInt( "timing.ticksPerSecond", timing.ticksPerSecond );
+        timing.ticksPerSecond = aConfiguration.readInt( "GameTiming.ticksPerSecond", timing.ticksPerSecond );
         timing.maxFramesPerSecond = aConfiguration.readInt( "GameTiming.maxFramesPerSecond", timing.maxFramesPerSecond );
         timing.minFramesPerSecond = aConfiguration.readInt( "GameTiming.minFramesPerSecond", timing.minFramesPerSecond );
 
@@ -53,15 +53,16 @@ class IntensiGameHelper
         final int height = aConfiguration.readInt( "DirectScreen.height", 320 );
         myGameSystem.screen.setTargetSize( width, height );
 
-        //#if DEBUG
-        Log.debug( "DirectScreen: {}x{}", width, height );
-        //#endif
-
         // TODO: Move to BitmapFontGenerator#apply(Configuration)                
         BitmapFontGenerator.buffered = aConfiguration.readBoolean( "BitmapFontGenerator.buffered", BitmapFontGenerator.buffered );
 
         // Register ResourcesManager with BitmapFontGenerator to make buffered blitting possible.
         BitmapFontGenerator.resources = myGameSystem.resources;
+
+        //#if DEBUG
+        Log.debug( "GameTiming: tps={} fps={}", timing.ticksPerSecond, timing.maxFramesPerSecond );
+        Log.debug( "DirectScreen: {}x{}", width, height );
+        //#endif
         }
 
     void applySkinConfiguration( final Configuration aConfiguration )
