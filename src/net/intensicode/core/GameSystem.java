@@ -74,15 +74,16 @@ public abstract class GameSystem
         return myInitializedFlag;
         }
 
-    public final void resume()
+    public final void start()
         {
-        audio.resumePlayback();
         engine.startThreaded();
+        audio.resumePlayback();
         }
 
-    public final void pause()
+    public final void stop()
         {
         mySystemContext.onApplicationShouldPause( this );
+
         audio.haltPlayback();
         engine.stopThreaded();
         }
