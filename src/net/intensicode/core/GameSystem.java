@@ -69,6 +69,11 @@ public abstract class GameSystem
 
     // Internal API
 
+    public final boolean isInitialized()
+        {
+        return myInitializedFlag;
+        }
+
     public final void resume()
         {
         audio.resumePlayback();

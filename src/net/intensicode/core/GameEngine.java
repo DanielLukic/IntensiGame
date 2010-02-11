@@ -131,7 +131,7 @@ public abstract class GameEngine implements Runnable
     private void runOneLoop() throws InterruptedException
         {
         doControlTicks();
-        doDrawFrame();
+        if ( myGameSystem.isInitialized() ) doDrawFrame();
         waitMinimumFrameTime();
         updateTimingStatsIfPossible();
         }
