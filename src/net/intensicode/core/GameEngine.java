@@ -51,6 +51,7 @@ public abstract class GameEngine implements Runnable
 
     public final void run()
         {
+        myGameSystem.screen.initialize();
         try
             {
             runInterruptible();
@@ -63,6 +64,7 @@ public abstract class GameEngine implements Runnable
             {
             myGameSystem.showCriticalError( "critical game engine failure", t );
             }
+        myGameSystem.screen.cleanup();
         }
 
     // Protected Interface

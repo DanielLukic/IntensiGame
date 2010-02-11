@@ -35,7 +35,13 @@ public interface DirectScreen
      */
     Position toTarget( int aNativeX, int aNativeY );
 
+    // Internal API - TODO: Move the next methods to an internal API..
+
     void beginFrame();
 
     void endFrame();
+
+    void initialize();
+
+    void cleanup();
     }
