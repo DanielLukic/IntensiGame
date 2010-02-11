@@ -36,17 +36,6 @@ public abstract class GameEngine implements Runnable
         stopAndReleaseEngineThread();
         }
 
-    /**
-     * Call this to render a single frame after issuing control ticks for the time passed since the previous call to
-     * this function.
-     */
-    public void runSingleLoop()
-        {
-        doControlTicks();
-        doDrawFrame();
-        updateTimingStatsIfPossible();
-        }
-
     // From Runnable
 
     public final void run()
