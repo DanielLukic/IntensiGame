@@ -42,7 +42,7 @@ public final class ReleaseProperties
     //# public static final String MUSIC_FORMAT_SUFFIX = "${target.music_suffix}";
     //#else
 
-    public static final String MUSIC_FORMAT_SUFFIX = ".ogg";
+    public static final String MUSIC_FORMAT_SUFFIX = ".mod";
 
     //#endif
 
@@ -50,7 +50,7 @@ public final class ReleaseProperties
     //# public static final String MUSIC_FORMAT_MIME_TYPE = "${target.music_type}";
     //#else
 
-    public static final String MUSIC_FORMAT_MIME_TYPE = "audio/ogg";
+    public static final String MUSIC_FORMAT_MIME_TYPE = "audio/mod";
 
     //#endif
 
