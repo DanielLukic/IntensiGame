@@ -96,6 +96,15 @@ public final class BitmapFontGenerator extends FontGenerator
         if ( !buffered ) myBlittedStrings.clear();
         }
 
+    public final void blendChar( final DirectGraphics aGraphics, final int aX, final int aY, final char aAsciiCode, final int aAlpha8 )
+        {
+        final int index = aAsciiCode - MIN_ASCII_CODE;
+        if ( index < 0 || index >= myCharWidths.length ) return;
+
+        final int width = myCharWidths[ index ];
+        myCharGen.blend( aGraphics, aX, aY, index, width, aAlpha8 );
+        }
+
     // Protected Interface
 
     protected final int maxCharWidth()

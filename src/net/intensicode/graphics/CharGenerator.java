@@ -3,7 +3,6 @@ package net.intensicode.graphics;
 import net.intensicode.core.*;
 
 
-
 public final class CharGenerator
     {
     public final int charWidth;
@@ -13,7 +12,6 @@ public final class CharGenerator
     public final int charsPerRow;
 
     public final int charsPerColumn;
-
 
 
     public static CharGenerator fromLayout( final ImageResource aCharBitmap, final int aCharsPerRow, final int aCharsPerColumn )
@@ -66,6 +64,16 @@ public final class CharGenerator
         data.blit( aGraphics, aX, aY, aWidth );
         }
 
+    public final void blend( final DirectGraphics aGraphics, final int aX, final int aY, final int aCharCode, final int aWidth, final int aAlpha8 )
+        {
+        if ( aCharCode == 0 ) return;
+
+        final CharData data = getCharData( aCharCode );
+        if ( data == null ) return;
+        data.blend( aGraphics, aX, aY, aWidth, aAlpha8 );
+        }
+
+
     // Implementation
 
     private CharGenerator( final ImageResource aCharBitmap, final int aCharWidth, final int aCharHeight )
@@ -90,7 +98,6 @@ public final class CharGenerator
         charsPerRow = charsInRow;
         charsPerColumn = charsInColumn;
         }
-
 
 
     private final CharData[] myDataCache;

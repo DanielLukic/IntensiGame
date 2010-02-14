@@ -3,7 +3,6 @@ package net.intensicode.graphics;
 import net.intensicode.core.*;
 
 
-
 public final class SystemFontGenerator extends FontGenerator
     {
     public SystemFontGenerator( final FontResource aSystemFont )
@@ -48,6 +47,13 @@ public final class SystemFontGenerator extends FontGenerator
         aGraphics.drawChar( (char) aAsciiCode, aX, aY );
         }
 
+    public final void blendChar( final DirectGraphics aGraphics, final int aX, final int aY, final char aAsciiCode, final int aAlpha8 )
+        {
+        final int rgb24 = aGraphics.getColorRGB24();
+        aGraphics.setColorARGB32( aAlpha8 << 24 | rgb24 );
+        aGraphics.drawChar( (char) aAsciiCode, aX, aY );
+        }
+
     // Protected Interface
 
     protected final int maxCharWidth()
@@ -59,7 +65,6 @@ public final class SystemFontGenerator extends FontGenerator
         {
         return myMaxDigitWidth;
         }
-
 
 
     private final int myMaxDigitWidth;

@@ -27,6 +27,13 @@ public final class CharData
         myCharRect.width = originalWidth;
         }
 
+    public final void blend( final DirectGraphics aGraphics, final int aX, final int aY, final int aWidth, final int aAlpha8 )
+        {
+        final int originalWidth = myCharRect.width;
+        myCharRect.width = aWidth;
+        aGraphics.blendImage( myCharSet, myCharRect, aX, aY, aAlpha8 );
+        myCharRect.width = originalWidth;
+        }
 
 
     private final ImageResource myCharSet;

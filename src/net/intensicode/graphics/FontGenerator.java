@@ -22,7 +22,6 @@ public abstract class FontGenerator
     public static final int CENTER = HCENTER | VCENTER;
 
 
-
     public static Position getAlignedPosition( final Position aPosition, final int aWidth, final int aHeight, final int aAlignment )
         {
         myBlitPos.x = aPosition.x;
@@ -143,6 +142,8 @@ public abstract class FontGenerator
     public abstract void blitChar( DirectGraphics aGraphics, int aX, int aY, int aAsciiCode );
 
     public abstract void blitString( DirectGraphics aGraphics, String aText, int aStart, int aEnd, int aX, int aY );
+
+    public abstract void blendChar( DirectGraphics aGraphics, int aX, int aY, char aAsciiCode, int aAlpha8 );
 
     // Protected Interface
 
