@@ -131,6 +131,16 @@ public final class SkinManager implements Runnable
         if ( aRightNow ) System.gc();
         }
 
+    public final void purgeImage( final Object aSkinObject, final boolean aRightNow )
+        {
+        //#if DEBUG
+        Log.debug( "Skin purging data for {}", aSkinObject );
+        //#endif
+
+        final String id = findObjectID( aSkinObject );
+        purgeImage( id, aRightNow );
+        }
+
     public final ImageResource image( final String aImageID ) throws IOException
         {
         if ( !myCachedImages.containsKey( aImageID ) )
@@ -259,6 +269,26 @@ public final class SkinManager implements Runnable
         }
 
     // Implementation
+
+    private String findObjectID( final Object aSkinObject )
+        {
+        if ( myCachedImages.contains( aSkinObject ) ) return findId( myCachedImages, aSkinObject );
+        if ( myCachedCharGens.contains( aSkinObject ) ) return findId( myCachedCharGens, aSkinObject );
+        if ( myCachedFontGens.contains( aSkinObject ) ) return findId( myCachedFontGens, aSkinObject );
+        if ( myCachedSprites.contains( aSkinObject ) ) return findId( myCachedSprites, aSkinObject );
+        throw new IllegalArgumentException( String.valueOf( aSkinObject ) );
+        }
+
+    private String findId( final Hashtable aHashtable, final Object aObject )
+        {
+        final Enumeration keys = aHashtable.keys();
+        while ( keys.hasMoreElements() )
+            {
+            final Object key = keys.nextElement();
+            if ( aHashtable.get( key ) == aObject ) return (String) key;
+            }
+        throw new IllegalArgumentException( String.valueOf( aObject ) );
+        }
 
     private String getCharWidthsResourcePath( final String aFontID )
         {
