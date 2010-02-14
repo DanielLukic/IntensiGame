@@ -39,13 +39,17 @@ public abstract class DirectGraphics
         return theAlignedXY;
         }
 
-    public abstract void clearRGB24( int aRGB24 );
+    public abstract int getColorRGB24();
+
+    public abstract int getColorARGB32();
 
     public abstract void setColorRGB24( int aRGB24 );
 
     public abstract void setColorARGB32( int aARGB32 );
 
     public abstract void setFont( FontResource aFont );
+
+    public abstract void clearRGB24( int aRGB24 );
 
     public abstract void drawLine( int aX1, int aY1, int aX2, int aY2 );
 
@@ -58,6 +62,8 @@ public abstract class DirectGraphics
     public abstract void fillTriangle( int aX1, int aY1, int aX2, int aY2, int aX3, int aY3 );
 
     public abstract void blendImage( ImageResource aImage, int aX, int aY, int aAlpha256 );
+
+    public abstract void blendImage( ImageResource aImage, Rectangle aSourceRect, int aX, int aY, int aAlpha256 );
 
     public abstract void drawImage( ImageResource aImage, int aX, int aY );
 
