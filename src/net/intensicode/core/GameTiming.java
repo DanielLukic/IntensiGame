@@ -144,5 +144,5 @@ public final class GameTiming
 
     private static final int MIN_TIME_FOR_STATS_IN_MS = ONE_SECOND_IN_MS;
 
-    private static final int MIN_TIME_FOR_AVERAGING_IN_MS = ONE_SECOND_IN_MS;
+    private static final int MIN_TIME_FOR_AVERAGING_IN_MS = ONE_SECOND_IN_MS * 2;
     }
