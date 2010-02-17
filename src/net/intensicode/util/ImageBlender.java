@@ -1,6 +1,6 @@
 package net.intensicode.util;
 
-import javax.microedition.lcdui.Image;
+import net.intensicode.core.ImageResource;
 
 public final class ImageBlender
     {
@@ -11,7 +11,7 @@ public final class ImageBlender
     public int[] buffer;
 
 
-    public final void blend(final Image aSourceImage, final int aAlpha8)
+    public final void blend(final ImageResource aSourceImage, final int aAlpha8)
         {
         width = aSourceImage.getWidth();
         height = aSourceImage.getHeight();
@@ -20,7 +20,7 @@ public final class ImageBlender
         applyAlpha(aAlpha8);
         }
 
-    public final void blend(final Image aSourceImage, final Rectangle aSourceRect, final int aAlpha8)
+    public final void blend(final ImageResource aSourceImage, final Rectangle aSourceRect, final int aAlpha8)
         {
         width = aSourceRect.width;
         height = aSourceRect.height;
