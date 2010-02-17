@@ -4,8 +4,6 @@ import net.intensicode.util.*;
 
 public abstract class AudioManager
     {
-    public static final String ERROR_NO_SOUND_DEVICE_AVAILABLE = "no sound device available";
-
     public final boolean isMusicEnabled()
         {
         return myMusicEnabled;
@@ -141,7 +139,7 @@ public abstract class AudioManager
             }
         catch ( final Exception e )
             {
-            if ( !isExpectedException( e ) ) Log.error( e );
+            Log.error( e );
             return new SilentAudioResource();
             }
         }
@@ -161,7 +159,7 @@ public abstract class AudioManager
             }
         catch ( final Exception e )
             {
-            if ( !isExpectedException( e ) ) Log.error( e );
+            Log.error( e );
             return new SilentAudioResource();
             }
         }
@@ -180,12 +178,6 @@ public abstract class AudioManager
     protected abstract AudioResourceEx loadSoundUnsafe( final String aSoundName ) throws Exception;
 
     // Implementation
-
-    private boolean isExpectedException( final Exception aException )
-        {
-        final String message = aException.getMessage();
-        return message.equalsIgnoreCase( ERROR_NO_SOUND_DEVICE_AVAILABLE );
-        }
 
     private void registerMusicResource( final AudioResourceEx aMusicResource )
         {
