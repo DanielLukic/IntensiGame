@@ -160,6 +160,9 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
         //#endif
         addScreen( newEntry );
         entries.add( newEntry );
+
+        updateSelectedEntry();
+
         return newEntry;
         }
 
