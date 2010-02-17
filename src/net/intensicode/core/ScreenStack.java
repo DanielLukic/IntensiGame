@@ -13,6 +13,7 @@ public final class ScreenStack
 
     public final void addGlobalHandler( final ScreenBase aGlobalHandler ) throws Exception
         {
+        myGlobalHandler.onInit( myGameSystem );
         myGlobalHandler.addScreen( aGlobalHandler );
         aGlobalHandler.onInit( myGameSystem );
         }
