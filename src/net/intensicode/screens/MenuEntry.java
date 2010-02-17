@@ -6,7 +6,7 @@ import net.intensicode.util.*;
 
 public final class MenuEntry extends ScreenBase
     {
-    public static int selectorColor = 0xFF7F0000;
+    public static int selectorColor = 0x807F0000;
 
     //#if TOUCH_SUPPORTED
     public final TouchableArea touchable = new TouchableArea();
@@ -69,7 +69,7 @@ public final class MenuEntry extends ScreenBase
             final int y = position.y - fontGen.charHeight() / 2;
             final int width = screen().width();
             final int height = fontGen.charHeight();
-            graphics.setColorRGB24( selectorColor );
+            graphics.setColorARGB32( selectorColor );
             graphics.fillRect( x, y, width, height );
             }
 
