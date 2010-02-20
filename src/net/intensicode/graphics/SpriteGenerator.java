@@ -62,6 +62,13 @@ public final class SpriteGenerator
         myFrameGenerator.blit( aGraphics, x, y, myFrameIndex );
         }
 
+    public final void paint( final DirectGraphics aGraphics, final int aX, final int aY, final int aFrameIndex )
+        {
+        final int x = aX - myRefOffset.x;
+        final int y = aY - myRefOffset.y;
+        myFrameGenerator.blit( aGraphics, x, y, aFrameIndex );
+        }
+
     private int myFrameIndex;
 
     private int[] myFrameSequence;
