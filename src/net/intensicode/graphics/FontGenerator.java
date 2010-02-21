@@ -47,6 +47,16 @@ public abstract class FontGenerator
         return digits;
         }
 
+    public final int maxCharWidth( final String aString )
+        {
+        int maxWidth = 0;
+        for ( int idx = 0; idx < aString.length(); idx++ )
+            {
+            maxWidth = Math.max( maxWidth, charWidth( aString.charAt( idx ) ) );
+            }
+        return maxWidth;
+        }
+
     public final int stringWidth( final String aString )
         {
         return substringWidth( aString, 0, aString.length() );
@@ -137,6 +147,10 @@ public abstract class FontGenerator
 
     public abstract int charWidth( char aCharCode );
 
+    public abstract int maxCharWidth();
+
+    public abstract int maxDigitCharWidth();
+
     public abstract int substringWidth( String aString, int aOffset, int aLength );
 
     public abstract void blitChar( DirectGraphics aGraphics, int aX, int aY, int aAsciiCode );
@@ -144,12 +158,6 @@ public abstract class FontGenerator
     public abstract void blitString( DirectGraphics aGraphics, String aText, int aStart, int aEnd, int aX, int aY );
 
     public abstract void blendChar( DirectGraphics aGraphics, int aX, int aY, char aAsciiCode, int aAlpha8 );
-
-    // Protected Interface
-
-    protected abstract int maxCharWidth();
-
-    protected abstract int maxDigitCharWidth();
 
     private static final Position myBlitPos = new Position();
     }

@@ -61,6 +61,16 @@ public final class BitmapFontGenerator extends FontGenerator
         return myCharWidths[ aCharCode - MIN_ASCII_CODE ];
         }
 
+    public final int maxCharWidth()
+        {
+        return myCharGen.charWidth;
+        }
+
+    public final int maxDigitCharWidth()
+        {
+        return myCharGen.charWidth;
+        }
+
     public final int substringWidth( final String aString, final int aOffset, final int aLength )
         {
         int length = 0;
@@ -103,18 +113,6 @@ public final class BitmapFontGenerator extends FontGenerator
 
         final int width = myCharWidths[ index ];
         myCharGen.blend( aGraphics, aX, aY, index, width, aAlpha8 );
-        }
-
-    // Protected Interface
-
-    protected final int maxCharWidth()
-        {
-        return myCharGen.charWidth;
-        }
-
-    protected final int maxDigitCharWidth()
-        {
-        return myCharGen.charWidth;
         }
 
     // Implementation

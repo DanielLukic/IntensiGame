@@ -14,8 +14,14 @@ public final class SystemFontGenerator extends FontGenerator
             {
             maxDigitWidth = Math.max( maxDigitWidth, mySystemFont.charWidth( idx ) );
             }
-
         myMaxDigitWidth = maxDigitWidth;
+
+        int maxCharWidth = 0;
+        for ( char idx = 32; idx < 128; idx++ )
+            {
+            maxCharWidth = Math.max( maxCharWidth, mySystemFont.charWidth( idx ) );
+            }
+        myMaxCharWidth = maxCharWidth;
         }
 
     // From FontGenerator
@@ -28,6 +34,16 @@ public final class SystemFontGenerator extends FontGenerator
     public final int charWidth( final char aCharCode )
         {
         return mySystemFont.charWidth( aCharCode );
+        }
+
+    public final int maxCharWidth()
+        {
+        return myMaxCharWidth;
+        }
+
+    public final int maxDigitCharWidth()
+        {
+        return myMaxDigitWidth;
         }
 
     public final int substringWidth( final String aString, final int aOffset, final int aLength )
@@ -54,18 +70,8 @@ public final class SystemFontGenerator extends FontGenerator
         aGraphics.drawChar( (char) aAsciiCode, aX, aY );
         }
 
-    // Protected Interface
 
-    protected final int maxCharWidth()
-        {
-        return myMaxDigitWidth;
-        }
-
-    protected final int maxDigitCharWidth()
-        {
-        return myMaxDigitWidth;
-        }
-
+    private final int myMaxCharWidth;
 
     private final int myMaxDigitWidth;
 
