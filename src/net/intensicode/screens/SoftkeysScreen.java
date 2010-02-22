@@ -113,6 +113,19 @@ public class SoftkeysScreen extends ScreenBase
         return myFontGen.charHeight();
         }
 
+    protected void blitTextString( final String aText, final int aAlignment )
+        {
+        final int alignWidth = getAlignWidth( aText );
+        final int alignHeight = getAlignHeight( aText );
+        final int x = myPosition.x;
+        final int y = myPosition.y;
+        final Position aligned = DirectGraphics.getAlignedPosition( x, y, alignWidth, alignHeight, aAlignment );
+        final int xOffset = getOffsetX( aText );
+        final int yOffset = getOffsetY();
+        final DirectGraphics graphics = graphics();
+        myFontGen.blitString( graphics, aText, 0, aText.length(), aligned.x + xOffset, aligned.y + yOffset );
+        }
+
     // Implementation
 
     private boolean hasLeftText()
@@ -133,19 +146,6 @@ public class SoftkeysScreen extends ScreenBase
             }
         final int availableHeight = screen().height() - aObjectHeight;
         return availableHeight * myVerticalPositionValue / ONE_HUNDRED_PERCENT;
-        }
-
-    private void blitTextString( final String aText, final int aAlignment )
-        {
-        final int alignWidth = getAlignWidth( aText );
-        final int alignHeight = getAlignHeight( aText );
-        final int x = myPosition.x;
-        final int y = myPosition.y;
-        final Position aligned = DirectGraphics.getAlignedPosition( x, y, alignWidth, alignHeight, aAlignment );
-        final int xOffset = getOffsetX( aText );
-        final int yOffset = getOffsetY();
-        final DirectGraphics graphics = graphics();
-        myFontGen.blitString( graphics, aText, 0, aText.length(), aligned.x + xOffset, aligned.y + yOffset );
         }
 
     private int getOffsetX( final String aText )
