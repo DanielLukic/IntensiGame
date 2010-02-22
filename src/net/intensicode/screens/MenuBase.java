@@ -65,22 +65,6 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
 
     // From ScreenBase
 
-    public final void onTop()
-        {
-        //#if TOUCH_SUPPORTED
-        addTouchableAreas();
-        //#endif
-        super.onTop();
-        }
-
-    public final void onPop()
-        {
-        //#if TOUCH_SUPPORTED
-        removeTouchableAreas();
-        //#endif
-        super.onPop();
-        }
-
     public final void onInitEverytime() throws Exception
         {
         beforeInitEverytime();
@@ -88,15 +72,15 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
         setOffsetToVerticallyCentered();
         updateEntryPositions();
 
-        //#if TOUCH_SUPPORTED
-        addTouchableAreas();
-        //#endif
-
         afterInitEverytime();
         }
 
     public final void onControlTick() throws Exception
         {
+        //#if TOUCH_SUPPORTED
+        addTouchableAreas();
+        //#endif
+
         final KeysHandler keys = system().keys;
         if ( keys.checkUpAndConsume() )
             {
@@ -201,16 +185,6 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
         for ( int idx = 0; idx < numberOfMenuEntries; idx++ )
             {
             touch.addLocalControl( getEntry( idx ).touchable );
-            }
-        }
-
-    private void removeTouchableAreas()
-        {
-        final TouchHandler touch = touch();
-        final int numberOfMenuEntries = entries.size;
-        for ( int idx = 0; idx < numberOfMenuEntries; idx++ )
-            {
-            touch.removeLocalControl( getEntry( idx ).touchable );
             }
         }
 
