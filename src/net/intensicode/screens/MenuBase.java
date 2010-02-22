@@ -70,6 +70,7 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
         //#if TOUCH_SUPPORTED
         addTouchableAreas();
         //#endif
+        super.onTop();
         }
 
     public final void onPop()
@@ -77,6 +78,7 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
         //#if TOUCH_SUPPORTED
         removeTouchableAreas();
         //#endif
+        super.onPop();
         }
 
     public final void onInitEverytime() throws Exception
