@@ -91,21 +91,26 @@ public class SoftkeysScreen extends ScreenBase
 
     protected void setPosition( final int aHorizontalPosition, final String aText )
         {
-        final int height = getAlignHeight();
+        final int height = getAlignHeight( aText );
         myPosition.x = aHorizontalPosition;
         myPosition.y = calcVerticalPosition( height );
         }
 
-    protected final int getAlignWidth( final String aText )
+    protected int getAlignWidth( final String aText )
         {
         if ( myButtonImage != null ) return myButtonImage.getWidth();
         return myFontGen.stringWidth( aText ) + myInsetX * 2;
         }
 
-    protected final int getAlignHeight()
+    protected int getAlignHeight( final String aText )
         {
         if ( myButtonImage != null ) return myButtonImage.getHeight();
         return myFontGen.charHeight() + myInsetY * 2;
+        }
+
+    protected int getTextHeight( final String aText )
+        {
+        return myFontGen.charHeight();
         }
 
     // Implementation
@@ -118,11 +123,6 @@ public class SoftkeysScreen extends ScreenBase
     private boolean hasRightText()
         {
         return myRightText != null && myRightText.length() > 0;
-        }
-
-    private int getTextHeight( final String aText )
-        {
-        return myFontGen.charHeight();
         }
 
     private int calcVerticalPosition( final int aObjectHeight )
@@ -138,14 +138,14 @@ public class SoftkeysScreen extends ScreenBase
     private void blitTextString( final String aText, final int aAlignment )
         {
         final int alignWidth = getAlignWidth( aText );
-        final int alignHeight = getAlignHeight();
+        final int alignHeight = getAlignHeight( aText );
         final int x = myPosition.x;
         final int y = myPosition.y;
         final Position aligned = DirectGraphics.getAlignedPosition( x, y, alignWidth, alignHeight, aAlignment );
         final int xOffset = getOffsetX( aText );
         final int yOffset = getOffsetY();
         final DirectGraphics graphics = graphics();
-        myFontGen.blitString( graphics,  aText, 0, aText.length(), aligned.x + xOffset, aligned.y + yOffset );
+        myFontGen.blitString( graphics, aText, 0, aText.length(), aligned.x + xOffset, aligned.y + yOffset );
         }
 
     private int getOffsetX( final String aText )
@@ -187,7 +187,7 @@ public class SoftkeysScreen extends ScreenBase
             aTouchableArea.rectangle.x = myPosition.x;
             aTouchableArea.rectangle.y = myPosition.y;
             aTouchableArea.rectangle.width = getAlignWidth( aText );
-            aTouchableArea.rectangle.height = getAlignHeight();
+            aTouchableArea.rectangle.height = getAlignHeight( aText );
             touch().addLocalControl( aTouchableArea );
             }
         }
@@ -201,15 +201,15 @@ public class SoftkeysScreen extends ScreenBase
     //#endif
 
 
-    private int myInsetX = 4;
+    protected int myInsetX = 4;
 
-    private int myInsetY = 2;
+    protected int myInsetY = 2;
 
     private String myLeftText;
 
     private String myRightText;
 
-    private ImageResource myButtonImage;
+    protected ImageResource myButtonImage;
 
     private int myVerticalPositionMode;
 
@@ -218,9 +218,9 @@ public class SoftkeysScreen extends ScreenBase
     private boolean mySomethingChanged;
 
 
-    private final FontGenerator myFontGen;
+    protected final FontGenerator myFontGen;
 
-    private final Position myPosition = new Position();
+    protected final Position myPosition = new Position();
 
     //#if TOUCH_SUPPORTED
 

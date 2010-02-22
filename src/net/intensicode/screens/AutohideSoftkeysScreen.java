@@ -14,7 +14,7 @@ public final class AutohideSoftkeysScreen extends SoftkeysScreen
         {
         setSoftkeys( aLeftButton, aRightButton );
         resetAnimation();
-        myAutoHide = true;
+        myAutoHide = aAutoHide;
         }
 
     // From ScreenBase
@@ -51,7 +51,7 @@ public final class AutohideSoftkeysScreen extends SoftkeysScreen
         final int maxOffset = getAlignWidth( aText );
         if ( isCompletetlyHidden() ) return 0;
 
-        return maxOffset / 2 - myHideTick * maxOffset / myHideTicks / 2;
+        return maxOffset - myHideTick * maxOffset / myHideTicks;
         }
 
     private boolean isCompletetlyHidden()
