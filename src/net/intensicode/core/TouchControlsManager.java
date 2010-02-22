@@ -20,6 +20,11 @@ public final class TouchControlsManager
             }
         }
 
+    public final void removeAll()
+        {
+        myTouchables.clear();
+        }
+
     public final void remove( final Touchable aTouchable )
         {
         myTouchables.removeAll( aTouchable );

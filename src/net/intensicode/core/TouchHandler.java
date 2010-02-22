@@ -46,6 +46,7 @@ public abstract class TouchHandler
         {
         if ( globalControlsActive ) myGlobalControls.processQueuedTouchEvents();
         myLocalControls.processQueuedTouchEvents();
+        myLocalControls.removeAll();
         }
 
     public final void onDrawFrame()
