@@ -25,7 +25,7 @@ public abstract class IntensiGame implements SystemContext
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
 
-    public final void terminateApplication()
+    public void terminateApplication()
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
