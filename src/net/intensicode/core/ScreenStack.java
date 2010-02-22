@@ -87,6 +87,7 @@ public final class ScreenStack
         {
         final ScreenBase activeHandler = activeScreen();
         if ( activeHandler == aScreen ) popScreen();
+        else throw new IllegalArgumentException();
         }
 
     public final void popScreen() throws Exception
