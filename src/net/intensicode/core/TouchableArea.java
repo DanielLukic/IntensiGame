@@ -15,8 +15,9 @@ public final class TouchableArea extends Touchable
         // Not visible..
 
         //#if DEBUG
-        //# aGraphics.setColorARGB32( 0x3000FF00 );
-        //# aGraphics.fillRect( rectangle.x, rectangle.y, rectangle.width, rectangle.height );
+        aGraphics.setColorARGB32( 0x3000FF00 );
+        aGraphics.fillRect( rectangle.x, rectangle.y, rectangle.width, rectangle.height );
+        aGraphics.setColorARGB32( 0xFF000000 );
         //#endif
         }
 

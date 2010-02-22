@@ -33,9 +33,9 @@ public final class TouchableImage extends Touchable
         aGraphics.blendImage( image, myTouchableRect.x, myTouchableRect.y, alpha256 );
 
         //#if DEBUG
-        //# aGraphics.setColorARGB32( 0x3000FF00 );
-        //# aGraphics.fillRect( myTouchableRect.x, myTouchableRect.y, myTouchableRect.width, myTouchableRect.height );
-        //# aGraphics.setColorARGB32( 0xFF000000 );
+        aGraphics.setColorARGB32( 0x3000FF00 );
+        aGraphics.fillRect( myTouchableRect.x, myTouchableRect.y, myTouchableRect.width, myTouchableRect.height );
+        aGraphics.setColorARGB32( 0xFF000000 );
         //#endif
         }
 
