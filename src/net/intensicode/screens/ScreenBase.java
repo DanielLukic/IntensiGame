@@ -126,7 +126,7 @@ public abstract class ScreenBase
         return myGameSystem.stack;
         }
 
-    //#if TOUCH_SUPPORTED
+    //#if TOUCH
     protected final TouchHandler touch()
         {
         //#if DEBUG

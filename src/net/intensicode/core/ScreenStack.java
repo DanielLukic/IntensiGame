@@ -78,7 +78,7 @@ public final class ScreenStack
 
         // TODO: Move this to a registered 'handler'?
         BitmapFontGenerator.purgeCaches();
-        //#if TOUCH_SUPPORTED
+        //#if TOUCH
         myGameSystem.touch.purgePendingEvents();
         //#endif
         }
@@ -111,7 +111,7 @@ public final class ScreenStack
 
         // TODO: Move this to a registered 'handler'?
         BitmapFontGenerator.purgeCaches();
-        //#if TOUCH_SUPPORTED
+        //#if TOUCH
         myGameSystem.touch.purgePendingEvents();
         //#endif
         }

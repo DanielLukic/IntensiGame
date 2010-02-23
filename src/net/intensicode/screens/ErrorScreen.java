@@ -53,13 +53,13 @@ public final class ErrorScreen extends ScreenBase
         else mySoftkeys.setSoftkeys( "CONTINUE", "EXIT" );
         }
 
-    //#if TOUCH_SUPPORTED
+    //#if TOUCH
     private boolean myPreviousGlobalControlsState;
     //#endif
 
     public final void onTop()
         {
-        //#if TOUCH_SUPPORTED
+        //#if TOUCH
         myPreviousGlobalControlsState = touch().globalControlsActive;
         touch().globalControlsActive = false;
         //#endif
@@ -69,7 +69,7 @@ public final class ErrorScreen extends ScreenBase
     public final void onPop()
         {
         mySoftkeys.onPop();
-        //#if TOUCH_SUPPORTED
+        //#if TOUCH
         touch().globalControlsActive = myPreviousGlobalControlsState;
         //#endif
         }

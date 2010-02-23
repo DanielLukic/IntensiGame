@@ -8,7 +8,7 @@ public final class MenuEntry extends ScreenBase
     {
     public static int selectorColor = 0x807F0000;
 
-    //#if TOUCH_SUPPORTED
+    //#if TOUCH
     public final TouchableArea touchable = new TouchableArea();
     //#endif
 
@@ -28,7 +28,7 @@ public final class MenuEntry extends ScreenBase
         fontGen = aCharGen;
         text = aText;
         position = aPosition;
-        //#if TOUCH_SUPPORTED
+        //#if TOUCH
         touchable.associatedObject = this;
         updateTouchable();
         //#endif
@@ -39,7 +39,7 @@ public final class MenuEntry extends ScreenBase
         selectedState = aSelectedFlag;
         }
 
-    //#if TOUCH_SUPPORTED
+    //#if TOUCH
 
     public final void updateTouchable()
         {

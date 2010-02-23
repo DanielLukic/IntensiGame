@@ -1,4 +1,4 @@
-//#condition TOUCH_SUPPORTED
+//#condition TOUCH
 
 package net.intensicode.core;
 

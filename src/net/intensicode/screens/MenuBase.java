@@ -34,13 +34,13 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
             {
             final MenuEntry entry = getEntry( idx );
             entry.position.y = yOffset + FixedMath.toInt( idx * font.charHeight() * ySpacingFixed );
-            //#if TOUCH_SUPPORTED
+            //#if TOUCH
             entry.updateTouchable();
             //#endif
             }
         }
 
-    //#ifdef TOUCH_SUPPORTED
+    //#ifdef TOUCH
 
     // From TouchableHandler
 
@@ -77,7 +77,7 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
 
     public final void onControlTick() throws Exception
         {
-        //#if TOUCH_SUPPORTED
+        //#if TOUCH
         addTouchableAreas();
         //#endif
 
@@ -141,7 +141,7 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
 
         final MenuEntry newEntry = new MenuEntry( font, aText, new Position( x, y ) );
         newEntry.id = aID;
-        //#if TOUCH_SUPPORTED
+        //#if TOUCH
         newEntry.touchable.associatedHandler = this;
         //#endif
         addScreen( newEntry );
@@ -176,7 +176,7 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
 
     // Implementation
 
-    //#if TOUCH_SUPPORTED
+    //#if TOUCH
 
     private void addTouchableAreas()
         {

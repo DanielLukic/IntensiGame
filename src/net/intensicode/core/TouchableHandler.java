@@ -2,7 +2,7 @@ package net.intensicode.core;
 
 public interface TouchableHandler
     {
-    //#ifdef TOUCH_SUPPORTED
+    //#ifdef TOUCH
     void onPressed( Object aTouchable );
 
     void onReleased( Object aTouchable );

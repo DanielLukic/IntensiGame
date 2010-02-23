@@ -20,7 +20,7 @@ public abstract class GameSystem
 
     public DirectScreen screen;
 
-    //#ifdef TOUCH_SUPPORTED
+    //#ifdef TOUCH
     public TouchHandler touch;
     //#endif
 
@@ -135,7 +135,7 @@ public abstract class GameSystem
         {
         if ( !myInitializedFlag ) initialize();
 
-        //#if TOUCH_SUPPORTED
+        //#if TOUCH
         touch.onControlTick();
         //#endif
         keys.onControlTick();
@@ -156,7 +156,7 @@ public abstract class GameSystem
             {
             screen.beginFrame();
             stack.onDrawFrame( this );
-            //#if TOUCH_SUPPORTED
+            //#if TOUCH
             touch.onDrawFrame();
             //#endif
             }

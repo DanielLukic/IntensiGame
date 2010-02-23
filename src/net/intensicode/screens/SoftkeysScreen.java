@@ -10,7 +10,7 @@ public class SoftkeysScreen extends ScreenBase
     public SoftkeysScreen( final FontGenerator aFont )
         {
         myFontGen = aFont;
-        //#if TOUCH_SUPPORTED
+        //#if TOUCH
         myLeftTouchRect.associatedKeyID = KeysHandler.LEFT_SOFT;
         myRightTouchRect.associatedKeyID = KeysHandler.RIGHT_SOFT;
         //#endif
@@ -55,7 +55,7 @@ public class SoftkeysScreen extends ScreenBase
 
     public void onControlTick()
         {
-        //#if TOUCH_SUPPORTED
+        //#if TOUCH
         if ( mySomethingChanged ) updateTouchableAreas();
         else tickTouchableAreas();
         //#endif
@@ -160,7 +160,7 @@ public class SoftkeysScreen extends ScreenBase
         else return myInsetX;
         }
 
-    //#if TOUCH_SUPPORTED
+    //#if TOUCH
 
     private void updateTouchableAreas()
         {
@@ -222,7 +222,7 @@ public class SoftkeysScreen extends ScreenBase
 
     protected final Position myPosition = new Position();
 
-    //#if TOUCH_SUPPORTED
+    //#if TOUCH
 
     private final TouchableArea myLeftTouchRect = new TouchableArea();
 
