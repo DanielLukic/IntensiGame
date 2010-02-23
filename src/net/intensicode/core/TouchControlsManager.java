@@ -4,7 +4,7 @@ package net.intensicode.core;
 
 import net.intensicode.util.*;
 
-public final class TouchControlsManager
+public class TouchControlsManager
     {
     public TouchControlsManager( final GameSystem aGameSystem )
         {
@@ -20,23 +20,23 @@ public final class TouchControlsManager
             }
         }
 
-    public final void removeAll()
+    public void removeAll()
         {
         myTouchables.clear();
         }
 
-    public final void remove( final Touchable aTouchable )
+    public void remove( final Touchable aTouchable )
         {
         myTouchables.removeAll( aTouchable );
         }
 
-    public final void add( final Touchable aTouchable )
+    public void add( final Touchable aTouchable )
         {
         remove( aTouchable );
         myTouchables.add( aTouchable );
         }
 
-    public final void drawAllTouchables()
+    public void drawAllTouchables()
         {
         for ( int idx = 0; idx < myTouchables.size; idx++ )
             {
@@ -74,7 +74,7 @@ public final class TouchControlsManager
         return myCurrentTouchEvent.isRelease();
         }
 
-    public final void checkForTriggeredTouchables()
+    public void checkForTriggeredTouchables()
         {
         for ( int idx = 0; idx < myTouchables.size; idx++ )
             {
@@ -87,7 +87,7 @@ public final class TouchControlsManager
             }
         }
 
-    public final void checkForActivatedTouchables()
+    public void checkForActivatedTouchables()
         {
         for ( int idx = 0; idx < myTouchables.size; idx++ )
             {
@@ -99,7 +99,7 @@ public final class TouchControlsManager
             }
         }
 
-    public final void checkForReleasedTouchables()
+    public void checkForReleasedTouchables()
         {
         for ( int idx = 0; idx < myTouchables.size; idx++ )
             {
@@ -112,7 +112,7 @@ public final class TouchControlsManager
             }
         }
 
-    public final void resetAllTouchables()
+    public void resetAllTouchables()
         {
         for ( int idx = 0; idx < myTouchables.size; idx++ )
             {

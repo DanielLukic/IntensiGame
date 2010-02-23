@@ -42,7 +42,7 @@ public abstract class TouchHandler
 
     // TODO: Move Internal API into internal class hidden from framework user.
 
-    public final synchronized void onControlTick() throws Exception
+    public final void onControlTick() throws Exception
         {
         if ( globalControlsActive ) myGlobalControls.processQueuedTouchEvents();
         myLocalControls.processQueuedTouchEvents();
@@ -60,7 +60,7 @@ public abstract class TouchHandler
     protected TouchHandler( final GameSystem aGameSystem )
         {
         myGameSystem = aGameSystem;
-        myLocalControls = new TouchControlsManager( aGameSystem );
+        myLocalControls = new GuardedTouchControlsManager( aGameSystem );
         myGlobalControls = new TouchControlsManager( aGameSystem );
         }
 
@@ -83,7 +83,7 @@ public abstract class TouchHandler
 
     protected final GameSystem myGameSystem;
 
-    private final TouchControlsManager myLocalControls;
-
     private final TouchControlsManager myGlobalControls;
+
+    private final GuardedTouchControlsManager myLocalControls;
     }
