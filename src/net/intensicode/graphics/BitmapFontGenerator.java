@@ -151,7 +151,7 @@ public final class BitmapFontGenerator extends FontGenerator
 
     private ImageResource createBufferedString( final String aPart )
         {
-        if ( aPart == null ) return getEmptyImage();
+        if ( aPart == null ) return getSharedEmptyImage();
 
         //#if DEBUG
         Log.debug( "Buffering {}", aPart );
@@ -166,6 +166,8 @@ public final class BitmapFontGenerator extends FontGenerator
         //# final int bufferWidth = stringWidth( aPart );
         //#endif
 
+        if ( bufferWidth == 0 ) return getSharedEmptyImage();
+
         final ImageResource buffer = resources.createImageResource( bufferWidth, myCharHeight );
         final DirectGraphics gc = buffer.getGraphics();
         gc.clearRGB24( 0 );
@@ -176,7 +178,7 @@ public final class BitmapFontGenerator extends FontGenerator
         return buffer;
         }
 
-    private ImageResource getEmptyImage()
+    private ImageResource getSharedEmptyImage()
         {
         if ( myEmptyImage == null ) myEmptyImage = resources.createImageResource( 4, 4 );
         return myEmptyImage;
