@@ -1,8 +1,8 @@
 package net.intensicode.screens;
 
+import net.intensicode.core.DirectGraphics;
 import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.Position;
-import net.intensicode.core.DirectGraphics;
 
 public final class EngineStats extends ScreenBase
     {
@@ -28,26 +28,29 @@ public final class EngineStats extends ScreenBase
 
         final int width = screen().width();
 
-        myBlitPos.y = 0;
-
-        myBlitPos.x = width - myFontGen.maxCharWidth() * 3;
-        myFontGen.blitNumber( graphics, myBlitPos, timing().measuredFramesPerSecond, FontGenerator.RIGHT );
-
-        myBlitPos.x = width - myFontGen.maxCharWidth() * 3;
-        myFontGen.blitChar( graphics, myBlitPos.x, myBlitPos.y, '/' );
-
-        myBlitPos.x = width;
-        myFontGen.blitNumber( graphics, myBlitPos, timing().maxFramesPerSecond, FontGenerator.RIGHT );
+        graphics.setColorARGB32( 0x80000000 );
+        graphics.fillRect( width - myFontGen.maxCharWidth() * 7, 0, myFontGen.maxCharWidth() * 7, myFontGen.charHeight() * 4 );
 
         myBlitPos.y = myFontGen.charHeight();
 
-        myBlitPos.x = width - myFontGen.maxCharWidth() * 3;
-        myFontGen.blitNumber( graphics, myBlitPos, timing().measuredTicksPerSecond, FontGenerator.RIGHT );
+        myBlitPos.x = width - myFontGen.maxCharWidth() * 4;
+        myFontGen.blitNumber( graphics, myBlitPos, timing().measuredFramesPerSecond, FontGenerator.RIGHT );
 
-        myBlitPos.x = width - myFontGen.maxCharWidth() * 3;
+        myBlitPos.x = width - myFontGen.maxCharWidth() * 4;
         myFontGen.blitChar( graphics, myBlitPos.x, myBlitPos.y, '/' );
 
-        myBlitPos.x = width;
+        myBlitPos.x = width - myFontGen.maxCharWidth();
+        myFontGen.blitNumber( graphics, myBlitPos, timing().maxFramesPerSecond, FontGenerator.RIGHT );
+
+        myBlitPos.y = myFontGen.charHeight() * 2;
+
+        myBlitPos.x = width - myFontGen.maxCharWidth() * 4;
+        myFontGen.blitNumber( graphics, myBlitPos, timing().measuredTicksPerSecond, FontGenerator.RIGHT );
+
+        myBlitPos.x = width - myFontGen.maxCharWidth() * 4;
+        myFontGen.blitChar( graphics, myBlitPos.x, myBlitPos.y, '/' );
+
+        myBlitPos.x = width - myFontGen.maxCharWidth();
         myFontGen.blitNumber( graphics, myBlitPos, timing().ticksPerSecond, FontGenerator.RIGHT );
         }
 
