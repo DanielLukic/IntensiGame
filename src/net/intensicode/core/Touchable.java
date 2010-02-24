@@ -14,6 +14,8 @@ public abstract class Touchable
 
     public static final int RELEASE_ON_UP = 2;
 
+    public static final int RELEASE_ON_OUT = 4;
+
     public boolean cancelTriggerOnUpWhenMovedOut = true;
 
     public int triggerMode = TRIGGER_ON_UP;
@@ -53,9 +55,25 @@ public abstract class Touchable
 
     public boolean isReleasedBy( final TouchEvent aTouchEvent )
         {
-        if ( triggered && releaseMode == RELEASE_IMMEDIATELY ) return true;
-        if ( triggered && releaseMode == RELEASE_ON_UP && aTouchEvent.isRelease() ) return true;
+        if ( triggered && releaseImmediately() ) return true;
+        if ( triggered && releaseOnOut() && !isInside( aTouchEvent ) ) return true;
+        if ( triggered && releaseOnUp() && aTouchEvent.isRelease() ) return true;
         return false;
+        }
+
+    private boolean releaseImmediately()
+        {
+        return ( releaseMode & RELEASE_IMMEDIATELY ) != 0;
+        }
+
+    private boolean releaseOnOut()
+        {
+        return ( releaseMode & RELEASE_ON_OUT ) != 0;
+        }
+
+    private boolean releaseOnUp()
+        {
+        return ( releaseMode & RELEASE_ON_UP ) != 0;
         }
 
     public abstract void onDraw( DirectGraphics aGraphics );
