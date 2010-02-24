@@ -38,6 +38,8 @@ public abstract class TouchHandler
         myLocalControls.purgePendingEvents();
         }
 
+    public abstract boolean supportsMultiTouch();
+
     // Internal API
 
     // TODO: Move Internal API into internal class hidden from framework user.
