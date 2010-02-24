@@ -5,12 +5,12 @@ import net.intensicode.util.Position;
 public interface DirectScreen
     {
     /**
-     * The width of the screen as defined by setTargetSize (or the native resolution if no target size has been set).
+     * The width of the screen as defined by setTargetSize or the native resolution if no target size has been set.
      */
     int width();
 
     /**
-     * The height of the screen as defined by setTargetSize (or the native resolution if no target size has been set).
+     * The height of the screen as defined by setTargetSize or the native resolution if no target size has been set.
      */
     int height();
 
@@ -29,13 +29,11 @@ public interface DirectScreen
      */
     void setTargetSize( int aWidth, int aHeight );
 
-    /**
-     * This will translate a native x/y coordinate into the target coordinate space defined by setTargetSize. Used
-     * primarly by IntensiGame itself to convert for example touch event coordinates.
-     */
-    Position toTarget( int aNativeX, int aNativeY );
-
     // Internal API - TODO: Move the next methods to an internal API..
+
+    int getNativeWidth();
+
+    int getNativeHeight();
 
     void beginFrame();
 
@@ -44,4 +42,10 @@ public interface DirectScreen
     void initialize();
 
     void cleanup();
+
+    /**
+     * This will translate a native x/y coordinate into the target coordinate space defined by setTargetSize. Used
+     * primarly by IntensiGame itself to convert for example touch event coordinates.
+     */
+    Position toTarget( int aNativeX, int aNativeY );
     }

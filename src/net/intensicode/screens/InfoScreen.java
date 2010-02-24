@@ -46,10 +46,12 @@ public final class InfoScreen extends MultiScreen
 
         myTextLines.add( "" );
         myTextLines.add( "SCREEN" );
-        myTextLines.add( "real width " + screen().width() );
-        myTextLines.add( "real height " + screen().height() );
         myTextLines.add( "width " + screen().width() );
         myTextLines.add( "height " + screen().height() );
+        myTextLines.add( "target width " + screen().getTargetWidth() );
+        myTextLines.add( "target height " + screen().getTargetHeight() );
+        myTextLines.add( "native width " + screen().getNativeWidth() );
+        myTextLines.add( "native height " + screen().getNativeHeight() );
 
         myTextLines.add( "" );
         myTextLines.add( "SOUND FORMAT" );
