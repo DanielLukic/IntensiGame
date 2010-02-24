@@ -71,10 +71,19 @@ public final class InfoScreen extends MultiScreen
         myTextLines.add( "" );
         myTextLines.add( "PLATFORM/KEYCODES" );
         myTextLines.add( config.platformName );
-        myTextLines.add( Integer.toString( config.softKeyLeft ) );
-        myTextLines.add( Integer.toString( config.softKeyRight ) );
-        myTextLines.add( Integer.toString( config.softKeyDelete ) );
-        myTextLines.add( Integer.toString( config.softKeyBack ) );
+        myTextLines.add( "left soft " + Integer.toString( config.softKeyLeft ) );
+        myTextLines.add( "right soft " + Integer.toString( config.softKeyRight ) );
+        myTextLines.add( "delete " + Integer.toString( config.softKeyDelete ) );
+        myTextLines.add( "back " + Integer.toString( config.softKeyBack ) );
+
+        myTextLines.add( "" );
+        myTextLines.add( "SYSTEM INFORMATION" );
+
+        final DynamicArray informationStrings = system().getInformationStrings();
+        for ( int idx = 0; idx < informationStrings.size; idx++ )
+            {
+            myTextLines.add( informationStrings.get( idx ) );
+            }
         }
 
     public final void onControlTick() throws Exception

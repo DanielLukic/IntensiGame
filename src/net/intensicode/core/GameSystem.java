@@ -69,6 +69,12 @@ public abstract class GameSystem
 
     // Internal API
 
+    public final DynamicArray getInformationStrings()
+        {
+        if ( myInformationStrings.size == 0 ) fillInformationStrings();
+        return myInformationStrings;
+        }
+
     public final boolean isInitialized()
         {
         return myInitializedFlag;
@@ -168,6 +174,8 @@ public abstract class GameSystem
 
     protected abstract void throwWrappedExceptionToTellCallingSystemAboutBrokenGameSystem( final Exception aException );
 
+    protected abstract void fillInformationStrings();
+
     // Implementation
 
     private void updateAndShowErrorScreen( final String aMessage, final Throwable aOptionalThrowable )
@@ -226,6 +234,8 @@ public abstract class GameSystem
     private ErrorScreen myErrorScreen;
 
     private final SystemContext mySystemContext;
+
+    protected final DynamicArray myInformationStrings = new DynamicArray();
 
     private static final DynamicArray myQueuedThrowables = new DynamicArray();
     }
