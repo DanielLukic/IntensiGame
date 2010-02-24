@@ -2,6 +2,7 @@ package net.intensicode.screens;
 
 import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.Position;
+import net.intensicode.core.DirectGraphics;
 
 public final class EngineStats extends ScreenBase
     {
@@ -23,13 +24,31 @@ public final class EngineStats extends ScreenBase
         {
         if ( !show ) return;
 
-        myBlitPos.x = screen().width();
-        myBlitPos.y = 0;
-        myFontGen.blitNumber( graphics(), myBlitPos, timing().measuredFramesPerSecond, FontGenerator.RIGHT );
+        final DirectGraphics graphics = graphics();
 
-        myBlitPos.x = screen().width();
+        final int width = screen().width();
+
+        myBlitPos.y = 0;
+
+        myBlitPos.x = width - myFontGen.maxCharWidth() * 3;
+        myFontGen.blitNumber( graphics, myBlitPos, timing().measuredFramesPerSecond, FontGenerator.RIGHT );
+
+        myBlitPos.x = width - myFontGen.maxCharWidth() * 3;
+        myFontGen.blitChar( graphics, myBlitPos.x, myBlitPos.y, '/' );
+
+        myBlitPos.x = width;
+        myFontGen.blitNumber( graphics, myBlitPos, timing().maxFramesPerSecond, FontGenerator.RIGHT );
+
         myBlitPos.y = myFontGen.charHeight();
-        myFontGen.blitNumber( graphics(), myBlitPos, timing().measuredTicksPerSecond, FontGenerator.RIGHT );
+
+        myBlitPos.x = width - myFontGen.maxCharWidth() * 3;
+        myFontGen.blitNumber( graphics, myBlitPos, timing().measuredTicksPerSecond, FontGenerator.RIGHT );
+
+        myBlitPos.x = width - myFontGen.maxCharWidth() * 3;
+        myFontGen.blitChar( graphics, myBlitPos.x, myBlitPos.y, '/' );
+
+        myBlitPos.x = width;
+        myFontGen.blitNumber( graphics, myBlitPos, timing().ticksPerSecond, FontGenerator.RIGHT );
         }
 
 
