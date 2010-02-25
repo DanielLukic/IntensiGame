@@ -12,6 +12,8 @@ public final class TouchableImage extends Touchable
 
     public ImageResource image;
 
+    public ImageResource imageHover;
+
 
     public final void updateTouchableRect()
         {
@@ -30,15 +32,25 @@ public final class TouchableImage extends Touchable
 
     public final void onDraw( final DirectGraphics aGraphics )
         {
-        aGraphics.blendImage( image, myTouchableRect.x, myTouchableRect.y, alpha256 );
+        if ( activated && imageHover != null )
+            {
+            aGraphics.blendImage( imageHover, myTouchableRect.x, myTouchableRect.y, alpha256 );
+            onDrawDebug( aGraphics, myTouchableRect );
+            }
+        if ( !activated || imageHover == null )
+            {
+            aGraphics.blendImage( image, myTouchableRect.x, myTouchableRect.y, alpha256 );
+            }
+        if ( activated && imageHover == null )
+            {
+            onDrawActivated( aGraphics, myTouchableRect );
+            }
+        onDrawDebug( aGraphics, myTouchableRect );
+        }
 
-        //#if DEBUG
-        aGraphics.setColorARGB32( 0x3000FF00 );
-        aGraphics.fillRect( myTouchableRect.x, myTouchableRect.y, myTouchableRect.width, myTouchableRect.height );
-        aGraphics.setColorARGB32( 0xFF000000 );
-        //#endif
-
-        if ( activated ) onDrawActivated( aGraphics, myTouchableRect );
+    protected void onDrawActivated( final DirectGraphics aGraphics, final Rectangle aRectangle )
+        {
+        super.onDrawActivated( aGraphics, aRectangle );
         }
 
     // From Object
