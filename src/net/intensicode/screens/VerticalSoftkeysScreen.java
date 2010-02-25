@@ -1,9 +1,8 @@
 package net.intensicode.screens;
 
-import net.intensicode.core.*;
+import net.intensicode.core.DirectGraphics;
 import net.intensicode.graphics.FontGenerator;
-import net.intensicode.screens.*;
-import net.intensicode.util.*;
+import net.intensicode.util.Position;
 
 public class VerticalSoftkeysScreen extends SoftkeysScreen
     {
@@ -38,17 +37,31 @@ public class VerticalSoftkeysScreen extends SoftkeysScreen
         final int charHeight = myFontGen.charHeight();
         final int x = myPosition.x;
         final int y = myPosition.y;
+        final int xOffset = getOffsetX( aText );
+        final int yOffset = getOffsetY( aText );
         final Position aligned = DirectGraphics.getAlignedPosition( x, y, alignWidth, charHeight, aAlignment );
 
         final DirectGraphics graphics = graphics();
         for ( int idx = 0; idx < aText.length(); idx++ )
             {
-            final int yPos = aligned.y + myInsetY + charHeight * idx;
+            final int yPos = aligned.y + yOffset + charHeight * idx;
 
             final char charCode = aText.charAt( idx );
 
-            final int xCentered = aligned.x + ( alignWidth - myFontGen.charWidth( charCode ) ) / 2;
+            final int xCentered = aligned.x + xOffset;
             myFontGen.blitChar( graphics, xCentered, yPos, charCode );
             }
+        }
+
+    protected int getOffsetX( final String aText )
+        {
+        if ( myButtonImage != null ) return ( myButtonImage.getWidth() - myFontGen.maxCharWidth( aText )) / 2;
+        else return myInsetX;
+        }
+
+    protected int getOffsetY( final String aText )
+        {
+        if ( myButtonImage != null ) return ( myButtonImage.getHeight() - getTextHeight( aText ) ) / 2;
+        else return myInsetY;
         }
     }
