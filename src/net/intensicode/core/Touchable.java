@@ -129,6 +129,18 @@ public abstract class Touchable
         aGraphics.fillRect( aRectangle.x, aRectangle.y, aRectangle.width, aRectangle.height );
         }
 
+    protected void onDrawDebug( final DirectGraphics aGraphics, final Rectangle aRectangle )
+        {
+        //#if DEBUG
+        aGraphics.setColorARGB32( 0x3000FF00 );
+        aGraphics.fillRect( aRectangle.x, aRectangle.y, 4, aRectangle.height );
+        aGraphics.fillRect( aRectangle.x, aRectangle.y, aRectangle.width, 4 );
+        aGraphics.fillRect( aRectangle.x + aRectangle.width - 4, aRectangle.y, 4, aRectangle.height );
+        aGraphics.fillRect( aRectangle.x, aRectangle.y + aRectangle.height - 4, aRectangle.width, 4 );
+        aGraphics.setColorARGB32( 0xFF000000 );
+        //#endif
+        }
+
     // Implementation
 
     private boolean triggeredOnDown( final TouchEvent aTouchEvent )
