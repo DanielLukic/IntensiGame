@@ -99,6 +99,18 @@ public class TouchControlsManager
             }
         }
 
+    public void checkForDeactivatedTouchables()
+        {
+        for ( int idx = 0; idx < myTouchables.size; idx++ )
+            {
+            final Touchable touchable = (Touchable) myTouchables.get( idx );
+            if ( touchable.isDeactivatedBy( myCurrentTouchEvent ) )
+                {
+                touchable.activated = false;
+                }
+            }
+        }
+
     public void checkForReleasedTouchables()
         {
         for ( int idx = 0; idx < myTouchables.size; idx++ )

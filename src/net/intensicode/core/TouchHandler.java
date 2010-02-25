@@ -79,6 +79,7 @@ public abstract class TouchHandler
         aTouchControlsManager.setCurrentTouchEvent( aTouchEvent );
         aTouchControlsManager.checkForTriggeredTouchables();
         aTouchControlsManager.checkForActivatedTouchables();
+        aTouchControlsManager.checkForDeactivatedTouchables();
         aTouchControlsManager.checkForReleasedTouchables();
         if ( aTouchControlsManager.isReleaseEvent() ) aTouchControlsManager.resetAllTouchables();
         }

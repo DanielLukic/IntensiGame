@@ -46,6 +46,11 @@ public final class GuardedTouchControlsManager extends TouchControlsManager
         super.checkForActivatedTouchables();
         }
 
+    public final synchronized void checkForDeactivatedTouchables()
+        {
+        super.checkForDeactivatedTouchables();
+        }
+
     public final synchronized void checkForReleasedTouchables()
         {
         super.checkForReleasedTouchables();

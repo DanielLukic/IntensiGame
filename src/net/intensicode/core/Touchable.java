@@ -2,6 +2,8 @@
 
 package net.intensicode.core;
 
+import net.intensicode.util.*;
+
 public abstract class Touchable
     {
     public static final int TRIGGER_ON_DOWN = 1;
@@ -16,11 +18,17 @@ public abstract class Touchable
 
     public static final int RELEASE_ON_OUT = 4;
 
+    public static final int DEACTIVATE_ON_RELEASE = 1;
+
+    public static final int DEACTIVATE_ON_OUT = 2;
+
     public boolean cancelTriggerOnUpWhenMovedOut = true;
 
     public int triggerMode = TRIGGER_ON_UP;
 
     public int releaseMode = RELEASE_IMMEDIATELY;
+
+    public int deactivateMode = DEACTIVATE_ON_RELEASE | DEACTIVATE_ON_OUT;
 
     public int alpha256 = DirectGraphics.FULLY_OPAQUE;
 
@@ -51,6 +59,23 @@ public abstract class Touchable
     public boolean isActivatedBy( TouchEvent aTouchEvent )
         {
         return isInside( aTouchEvent );
+        }
+
+    public boolean isDeactivatedBy( TouchEvent aTouchEvent )
+        {
+        if ( deactivateOnRelease() && aTouchEvent.isRelease() ) return true;
+        if ( deactivateOnOut() && !isInside( aTouchEvent ) ) return true;
+        return false;
+        }
+
+    private boolean deactivateOnRelease()
+        {
+        return ( deactivateMode & DEACTIVATE_ON_RELEASE ) != 0;
+        }
+
+    private boolean deactivateOnOut()
+        {
+        return ( deactivateMode & DEACTIVATE_ON_OUT ) != 0;
         }
 
     public boolean isReleasedBy( final TouchEvent aTouchEvent )
@@ -97,6 +122,12 @@ public abstract class Touchable
     // Protected Interface
 
     protected abstract boolean isInside( TouchEvent aTouchEvent );
+
+    protected void onDrawActivated( final DirectGraphics aGraphics, final Rectangle aRectangle )
+        {
+        aGraphics.setColorARGB32( 0x60FFFFFF );
+        aGraphics.fillRect( aRectangle.x, aRectangle.y, aRectangle.width, aRectangle.height );
+        }
 
     // Implementation
 

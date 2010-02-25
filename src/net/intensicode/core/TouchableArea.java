@@ -19,6 +19,8 @@ public final class TouchableArea extends Touchable
         aGraphics.fillRect( rectangle.x, rectangle.y, rectangle.width, rectangle.height );
         aGraphics.setColorARGB32( 0xFF000000 );
         //#endif
+
+        if ( activated ) onDrawActivated( aGraphics, rectangle );
         }
 
     // From Object

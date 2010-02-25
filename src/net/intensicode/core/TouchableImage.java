@@ -37,6 +37,8 @@ public final class TouchableImage extends Touchable
         aGraphics.fillRect( myTouchableRect.x, myTouchableRect.y, myTouchableRect.width, myTouchableRect.height );
         aGraphics.setColorARGB32( 0xFF000000 );
         //#endif
+
+        if ( activated ) onDrawActivated( aGraphics, myTouchableRect );
         }
 
     // From Object
