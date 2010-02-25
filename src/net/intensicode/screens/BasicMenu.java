@@ -1,7 +1,7 @@
 package net.intensicode.screens;
 
 import net.intensicode.core.*;
-import net.intensicode.graphics.FontGenerator;
+import net.intensicode.graphics.*;
 import net.intensicode.util.*;
 
 public class BasicMenu extends MultiScreen implements TouchableHandler
@@ -24,27 +24,29 @@ public class BasicMenu extends MultiScreen implements TouchableHandler
         setOffsetToTopAligned();
         }
 
-    public final MenuEntry getEntry( final int aIndex )
+    public final void setEntryImage( final SpriteGenerator aSpriteGenerator )
         {
-        return (MenuEntry) myEntries.get( aIndex );
+        myEntryImageGenerator = aSpriteGenerator;
         }
 
-    public final MenuEntry addMenuEntry( final int aID, final String aText ) throws Exception
+    public final BasicMenuEntry getEntry( final int aIndex )
         {
-        final int x = 0;
-        final int y = myVerticalOffset + myFont.charHeight() * FixedMath.toInt( myEntries.size * lineSpacingFixed );
+        return (BasicMenuEntry) myEntries.get( aIndex );
+        }
 
-        final MenuEntry newEntry = new MenuEntry( myFont, aText, new Position( x, y ) );
-        newEntry.id = aID;
+    public final BasicMenuEntry addMenuEntry( final int aID, final String aText ) throws Exception
+        {
+        final BasicMenuEntry entry = new BasicMenuEntry( aID, aText, myFont );
+        entry.imageGenerator = myEntryImageGenerator;
         //#if TOUCH
-        newEntry.touchable.associatedHandler = this;
+        entry.touchable.associatedHandler = this;
         //#endif
-        addScreen( newEntry );
-        myEntries.add( newEntry );
+        addScreen( entry );
+        myEntries.add( entry );
 
         updateSelectedEntry();
 
-        return newEntry;
+        return entry;
         }
 
     public final void removeAllEntries()
@@ -68,7 +70,7 @@ public class BasicMenu extends MultiScreen implements TouchableHandler
 
         for ( int idx = 0; idx < numberOfEntries; idx++ )
             {
-            final MenuEntry menuEntry = getEntry( idx );
+            final BasicMenuEntry menuEntry = getEntry( idx );
             menuEntry.setSelected( idx == mySelectedEntryIndex );
             }
         }
@@ -81,7 +83,7 @@ public class BasicMenu extends MultiScreen implements TouchableHandler
         {
         try
             {
-            final MenuEntry selected = (MenuEntry) aTouchable;
+            final BasicMenuEntry selected = (BasicMenuEntry) aTouchable;
             myMenuHandler.onSelected( selected );
             }
         catch ( final Exception e )
@@ -139,7 +141,7 @@ public class BasicMenu extends MultiScreen implements TouchableHandler
 
     // Protected Interface
 
-    protected void onLeftSoftKey( final MenuEntry aSelectedEntry ) throws Exception
+    protected void onLeftSoftKey( final BasicMenuEntry aSelectedEntry ) throws Exception
         {
         if ( myMenuHandler instanceof MenuHandlerEx )
             {
@@ -152,7 +154,7 @@ public class BasicMenu extends MultiScreen implements TouchableHandler
             }
         }
 
-    protected void onRightSoftKey( final MenuEntry aSelectedEntry ) throws Exception
+    protected void onRightSoftKey( final BasicMenuEntry aSelectedEntry ) throws Exception
         {
         if ( myMenuHandler instanceof MenuHandlerEx )
             {
@@ -183,7 +185,7 @@ public class BasicMenu extends MultiScreen implements TouchableHandler
         final int xCenter = screen().width() / 2;
         for ( int idx = 0; idx < myEntries.size; idx++ )
             {
-            final MenuEntry entry = getEntry( idx );
+            final BasicMenuEntry entry = getEntry( idx );
             entry.position.x = xCenter;
             entry.position.y = myVerticalOffset + FixedMath.toInt( idx * myFont.charHeight() * lineSpacingFixed );
             //#if TOUCH
@@ -216,4 +218,6 @@ public class BasicMenu extends MultiScreen implements TouchableHandler
     private final MenuHandler myMenuHandler;
 
     private final DynamicArray myEntries = new DynamicArray();
+
+    private SpriteGenerator myEntryImageGenerator;
     }
