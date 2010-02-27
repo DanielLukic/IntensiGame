@@ -44,16 +44,38 @@ public final class Assert
         isNotNull( aMessage, aObject );
         }
 
+    public static void isSame( final String aMessage, final Object aExpected, final Object aActual )
+        {
+        if ( aExpected == aActual ) return;
+        fail( aMessage, "are not the same", aExpected, aActual );
+        }
+
+    public static void same( final String aMessage, final Object aExpected, final Object aActual )
+        {
+        isSame( aMessage, aExpected, aActual );
+        }
+
+    public static void isNotSame( final String aMessage, final Object aExpected, final Object aActual )
+        {
+        if ( aExpected != aActual ) return;
+        fail( aMessage, "are the same", aExpected, aActual );
+        }
+
+    public static void notSame( final String aMessage, final Object aExpected, final Object aActual )
+        {
+        isNotSame( aMessage, aExpected, aActual );
+        }
+
     public static void equals( final String aMessage, final Object aExpected, final Object aActual )
         {
         if ( aExpected == aActual || aExpected.equals( aActual ) ) return;
-        fail( aMessage, "are not the same", aExpected, aActual );
+        fail( aMessage, "are not equal", aExpected, aActual );
         }
 
     public static void notEquals( final String aMessage, final Object aExpected, final Object aActual )
         {
         if ( aExpected != aActual && !aExpected.equals( aActual ) ) return;
-        fail( aMessage, "are the same", aExpected, aActual );
+        fail( aMessage, "are equal", aExpected, aActual );
         }
 
     public static void fail( final String aMessage, final String aErrorCondition, final Object aFirst, final Object aSecond )
