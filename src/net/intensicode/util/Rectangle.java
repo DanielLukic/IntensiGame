@@ -87,6 +87,14 @@ public class Rectangle
 
     // From Object
 
+    public final boolean equals( final Object aThat )
+        {
+        if ( !( aThat instanceof Rectangle ) ) return false;
+
+        final Rectangle that = (Rectangle) aThat;
+        return this.x == that.x && this.y == that.y && this.width == that.width && this.height == that.height;
+        }
+
     //#if DEBUG
 
     public String toString()
