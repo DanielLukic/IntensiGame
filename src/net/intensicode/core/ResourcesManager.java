@@ -1,11 +1,9 @@
 package net.intensicode.core;
 
-import net.intensicode.graphics.*;
+import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.Log;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 public abstract class ResourcesManager
     {
@@ -67,7 +65,7 @@ public abstract class ResourcesManager
             }
         catch ( final IOException e )
             {
-            Log.error( "failed loading {} configuration", aResourcePath, e );
+            Log.error( "Failed loading {} configuration. Returning empty configuration.", aResourcePath, e );
             return Configuration.NULL_CONFIGURATION;
             }
         }
@@ -77,7 +75,7 @@ public abstract class ResourcesManager
         if ( aStream == null ) throw new NullPointerException();
 
         final ByteArrayOutputStream output = new ByteArrayOutputStream();
-        final byte[] buffer = new byte[4096];
+        final byte[] buffer = new byte[STREAM_COPY_BUFFER_SIZE_IN_BYTES];
         while ( true )
             {
             final int newBytes = aStream.read( buffer );
@@ -89,4 +87,6 @@ public abstract class ResourcesManager
 
         return output.toByteArray();
         }
+
+    private static final int STREAM_COPY_BUFFER_SIZE_IN_BYTES = 4096;
     }
