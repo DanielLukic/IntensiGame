@@ -176,7 +176,10 @@ public final class BitmapFontGenerator extends FontGenerator
 
         final ImageResource buffer = resources.createImageResource( bufferWidth, myCharHeight );
         final DirectGraphics gc = buffer.getGraphics();
-        gc.clearRGB24( 0 );
+        //#if J2ME
+        //# // J2ME will create images with white background. We don't want this here!
+        //# gc.clearRGB24( 0 );
+        //#endif
 
         final int partLength = aPart.length();
         blitStringUnbuffered( gc, aPart, 0, partLength, 0, 0 );
