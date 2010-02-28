@@ -4,8 +4,6 @@ import net.intensicode.core.*;
 import net.intensicode.graphics.BitmapFontGenerator;
 import net.intensicode.util.Log;
 
-import java.io.IOException;
-
 class IntensiGameHelper
     {
     static void initGameSystemFromConfigurationFile( final GameSystem aGameSystem )
@@ -32,12 +30,12 @@ class IntensiGameHelper
 
     Configuration loadEngineConfiguration()
         {
-        return loadConfiguration( "engine.properties" );
+        return myGameSystem.resources.loadConfigurationOrUseDefaults( "engine.properties" );
         }
 
     Configuration loadSkinConfiguration()
         {
-        return loadConfiguration( "skin.properties" );
+        return myGameSystem.resources.loadConfigurationOrUseDefaults( "skin.properties" );
         }
 
     void applyEngineConfiguration( final Configuration aConfiguration )
@@ -49,8 +47,8 @@ class IntensiGameHelper
         timing.minFramesPerSecond = aConfiguration.readInt( "GameTiming.minFramesPerSecond", timing.minFramesPerSecond );
 
         // TODO: Move to DirectScreen#apply(Configuration)        
-        final int width = aConfiguration.readInt( "DirectScreen.width", 240 );
-        final int height = aConfiguration.readInt( "DirectScreen.height", 320 );
+        final int width = aConfiguration.readInt( "DirectScreen.width", DEFAULT_SCREEN_WIDTH );
+        final int height = aConfiguration.readInt( "DirectScreen.height", DEFAULT_SCREEN_HEIGHT );
         myGameSystem.screen.setTargetSize( width, height );
 
         // TODO: Move to BitmapFontGenerator#apply(Configuration)                
@@ -70,23 +68,9 @@ class IntensiGameHelper
         myGameSystem.skin.apply( aConfiguration );
         }
 
-    // Implementation
-
-    private Configuration loadConfiguration( final String aResourcePath )
-        {
-        try
-            {
-            final String configurationData = myGameSystem.resources.loadString( aResourcePath );
-            return new Configuration( configurationData );
-            }
-        catch ( final IOException e )
-            {
-            //#if DEBUG
-            Log.debug( "Failed loading {}. Ignored. Using defaults.", aResourcePath );
-            //#endif
-            return new Configuration();
-            }
-        }
-
     private GameSystem myGameSystem;
+
+    private static final int DEFAULT_SCREEN_WIDTH = 240;
+
+    private static final int DEFAULT_SCREEN_HEIGHT = 320;
     }
