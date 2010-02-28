@@ -3,7 +3,7 @@ package net.intensicode.graphics;
 import net.intensicode.core.*;
 import net.intensicode.util.Log;
 
-import java.util.Hashtable;
+import java.util.*;
 
 public final class BitmapFontGenerator extends FontGenerator
     {
@@ -20,6 +20,12 @@ public final class BitmapFontGenerator extends FontGenerator
         Log.debug( "Purging {} cached text strings", myBlittedStrings.size() );
         //#endif
 
+        final Enumeration bufferImages = myBlittedStrings.elements();
+        while ( bufferImages.hasMoreElements() )
+            {
+            final ImageResource bufferImage = (ImageResource) bufferImages.nextElement();
+            bufferImage.purge();
+            }
         myBlittedStrings.clear();
         }
 
@@ -103,7 +109,7 @@ public final class BitmapFontGenerator extends FontGenerator
             blitStringUnbuffered( aGraphics, aText, aStart, aEnd, aX, aY );
             }
 
-        if ( !buffered ) myBlittedStrings.clear();
+        if ( !buffered ) purgeCaches();
         }
 
     public final void blendChar( final DirectGraphics aGraphics, final int aX, final int aY, final char aAsciiCode, final int aAlpha8 )
