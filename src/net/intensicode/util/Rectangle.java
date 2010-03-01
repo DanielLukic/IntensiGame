@@ -85,6 +85,33 @@ public class Rectangle
         return true;
         }
 
+    public final boolean isAdjacent( final Rectangle that )
+        {
+        if ( this.x == that.x && this.width == that.width )
+            {
+            if ( this.y == that.y + that.height ) return true;
+            if ( this.y + this.height == that.y ) return true;
+            }
+        if ( this.y == that.y && this.height == that.height )
+            {
+            if ( this.x == that.x + that.width ) return true;
+            if ( this.x + this.width == that.x ) return true;
+            }
+        return false;
+        }
+
+    public final void uniteWith( final Rectangle that )
+        {
+        final int left = Math.min( this.x, that.x );
+        final int top = Math.min( this.y, that.y );
+        final int right = Math.max( this.x + this.width, that.x + that.width );
+        final int bottom = Math.max( this.y + this.height, that.y + that.height );
+        x = left;
+        y = top;
+        width = right - left;
+        height = bottom - top;
+        }
+
     // From Object
 
     public final boolean equals( final Object aThat )
