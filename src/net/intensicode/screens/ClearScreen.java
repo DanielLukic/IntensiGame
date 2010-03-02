@@ -2,14 +2,16 @@ package net.intensicode.screens;
 
 public final class ClearScreen extends ScreenBase
     {
+    public int clearColorARGB32;
+
     public ClearScreen()
         {
         this( 0x000000 );
         }
 
-    public ClearScreen( final int aRGB24 )
+    public ClearScreen( final int aARGB32 )
         {
-        myRGB24 = aRGB24;
+        clearColorARGB32 = aARGB32;
         }
 
     // From ScreenBase
@@ -20,8 +22,6 @@ public final class ClearScreen extends ScreenBase
 
     public final void onDrawFrame()
         {
-        graphics().clearRGB24( myRGB24 );
+        graphics().clearARGB32( clearColorARGB32 );
         }
-
-    private final int myRGB24;
     }
