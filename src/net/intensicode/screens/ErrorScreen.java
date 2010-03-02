@@ -38,6 +38,10 @@ public final class ErrorScreen extends ScreenBase
 
     public final void onInit( final GameSystem aGameSystem ) throws Exception
         {
+        //#if DEBUG
+        DebugScreen.visible = false;
+        //#endif
+
         final DirectScreen screen = aGameSystem.screen;
         myBorderWidth = screen.width() / 32;
         myMessageOffset = myBorderWidth * 2;
