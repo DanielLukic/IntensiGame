@@ -51,6 +51,8 @@ public abstract class DirectGraphics
 
     public abstract void clearRGB24( int aRGB24 );
 
+    public abstract void clearARGB32( int aARGB32 );
+
     public abstract void drawLine( int aX1, int aY1, int aX2, int aY2 );
 
     public abstract void drawRect( int aX, int aY, int aWidth, int aHeight );
