@@ -69,6 +69,11 @@ public abstract class GameSystem
         context.terminateApplication();
         }
 
+    public final void setErrorScreenFont( final FontGenerator aFontGenerator )
+        {
+        myErrorScreen.changeFont( aFontGenerator );
+        }
+
     // Internal API
 
     public final DynamicArray getInformationStrings()

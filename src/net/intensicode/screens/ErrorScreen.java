@@ -13,7 +13,12 @@ public final class ErrorScreen extends ScreenBase
 
     public ErrorScreen( final FontGenerator aFont )
         {
-        myFont = aFont;
+        changeFont( aFont );
+        }
+
+    public final void changeFont( final FontGenerator aFontGenerator )
+        {
+        myFont = aFontGenerator;
         }
 
     public final void reset()
@@ -138,10 +143,9 @@ public final class ErrorScreen extends ScreenBase
 
     private String myCauseOrNull;
 
+    private FontGenerator myFont;
+
     private SoftkeysScreen mySoftkeys;
-
-
-    private final FontGenerator myFont;
 
     private final Rectangle myTextRect = new Rectangle();
     }
