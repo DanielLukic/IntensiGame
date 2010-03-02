@@ -10,12 +10,12 @@ public abstract class IntensiGame implements SystemContext
 
     // From SystemContext
 
-    public boolean useOpenglIfPossible()
+    public GameSystem system()
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
 
-    public GameSystem getGameSystem()
+    public boolean useOpenglIfPossible()
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
