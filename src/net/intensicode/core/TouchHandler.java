@@ -2,6 +2,8 @@
 
 package net.intensicode.core;
 
+import net.intensicode.util.*;
+
 public abstract class TouchHandler
     {
     public boolean globalControlsActive = true;
@@ -38,6 +40,8 @@ public abstract class TouchHandler
         myLocalControls.purgePendingEvents();
         }
 
+    // Abstract API
+
     public abstract boolean supportsMultiTouch();
 
     // Internal API
@@ -46,8 +50,12 @@ public abstract class TouchHandler
 
     public final void onControlTick() throws Exception
         {
-        if ( globalControlsActive ) myGlobalControls.processQueuedTouchEvents();
-        myLocalControls.processQueuedTouchEvents();
+        while ( myQueuedEvents.size > 0 )
+            {
+            final TouchEvent queuedEvent = (TouchEvent) myQueuedEvents.remove( 0 );
+            processQueuedEvent( queuedEvent );
+            }
+
         myLocalControls.removeAll();
         }
 
@@ -66,13 +74,27 @@ public abstract class TouchHandler
         myGlobalControls = new TouchControlsManager( aGameSystem );
         }
 
-    protected final void processTouchEvent( final TouchEvent aTouchEvent )
+    protected synchronized final void processTouchEvent( final TouchEvent aTouchEvent )
         {
-        passEventToControlsManager( myLocalControls, aTouchEvent );
-        if ( globalControlsActive ) passEventToControlsManager( myGlobalControls, aTouchEvent );
+        if ( isSameEventAgain( aTouchEvent ) ) return;
+
+        if ( myQueuedEvents.size == MAX_QUEUED_EVENTS ) myQueuedEvents.remove( 0 );
+        myQueuedEvents.add( new ClonedTouchEvent( aTouchEvent ) );
         }
 
     // Implementation
+
+    private void processQueuedEvent( final TouchEvent aQueuedEvent )
+        {
+        if ( globalControlsActive ) updateControls( aQueuedEvent, myGlobalControls );
+        updateControls( aQueuedEvent, myLocalControls );
+        }
+
+    private void updateControls( final TouchEvent aQueuedEvent, final TouchControlsManager aControls )
+        {
+        passEventToControlsManager( aControls, aQueuedEvent );
+        aControls.processQueuedTouchEvents();
+        }
 
     private void passEventToControlsManager( final TouchControlsManager aTouchControlsManager, final TouchEvent aTouchEvent )
         {
@@ -84,9 +106,30 @@ public abstract class TouchHandler
         if ( aTouchControlsManager.isReleaseEvent() ) aTouchControlsManager.resetAllTouchables();
         }
 
+    private boolean isSameEventAgain( final TouchEvent aTouchEvent )
+        {
+        if ( myQueuedEvents.size == 0 ) return false;
+
+        final Object lastEvent = myQueuedEvents.last();
+        if ( !lastEvent.equals( aTouchEvent ) ) return false;
+
+        //#if DEBUG
+        Log.debug( "same touch event ignored" );
+        Log.debug( "last: {}", lastEvent );
+        Log.debug( "new: {}", aTouchEvent );
+        //#endif
+
+        return true;
+        }
+
+
     protected final GameSystem myGameSystem;
 
     private final TouchControlsManager myGlobalControls;
 
     private final GuardedTouchControlsManager myLocalControls;
+
+    private final DynamicArray myQueuedEvents = new DynamicArray( MAX_QUEUED_EVENTS, 0 );
+
+    private static final int MAX_QUEUED_EVENTS = 32;
     }
