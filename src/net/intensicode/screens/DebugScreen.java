@@ -5,13 +5,11 @@ package net.intensicode.screens;
 import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.*;
 
-// TODO: Move this into GameSystem#debug and avoid static(s)!
-
 public final class DebugScreen extends MultiScreen
     {
-    public static boolean visible = false;
+    public boolean visible = false;
 
-    public static boolean autoVisible = false;
+    public boolean autoVisible = false;
 
     public boolean clearBackground = false;
 
@@ -27,7 +25,7 @@ public final class DebugScreen extends MultiScreen
         myFont = aFont;
         }
 
-    public static DebugInfo giveEmptyDebugInfo()
+    public DebugInfo giveEmptyDebugInfo()
         {
         if ( autoVisible ) visible = true;
 
@@ -46,6 +44,11 @@ public final class DebugScreen extends MultiScreen
         final DebugInfo newInfo = new DebugInfo();
         theDebugInfos.add( newInfo );
         return newInfo;
+        }
+
+    public final void changeFont( final FontGenerator aFontGenerator )
+        {
+        myFont = aFontGenerator;
         }
 
     // From ScreenBase
@@ -105,9 +108,9 @@ public final class DebugScreen extends MultiScreen
         }
 
 
+    private FontGenerator myFont;
+
     private ClearScreen myBackground;
 
-    private final FontGenerator myFont;
-
-    private static final DynamicArray theDebugInfos = new DynamicArray();
+    private final DynamicArray theDebugInfos = new DynamicArray();
     }

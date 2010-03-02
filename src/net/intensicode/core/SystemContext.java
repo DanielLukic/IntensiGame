@@ -7,7 +7,7 @@ public interface SystemContext
     /**
      * Helper method to make the game system available to everyone who has access to the system context object.
      */
-    GameSystem getGameSystem();
+    GameSystem system();
 
     /**
      * Return true here if you want the game system to render everything with OpenGL/EGL (if this is available on the

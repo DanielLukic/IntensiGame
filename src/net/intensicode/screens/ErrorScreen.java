@@ -39,7 +39,7 @@ public final class ErrorScreen extends ScreenBase
     public final void onInit( final GameSystem aGameSystem ) throws Exception
         {
         //#if DEBUG
-        DebugScreen.visible = false;
+        system().debug.visible = false;
         //#endif
 
         final DirectScreen screen = aGameSystem.screen;

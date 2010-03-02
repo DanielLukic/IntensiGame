@@ -1,7 +1,7 @@
 package net.intensicode.core;
 
 import net.intensicode.graphics.FontGenerator;
-import net.intensicode.screens.ErrorScreen;
+import net.intensicode.screens.*;
 import net.intensicode.util.*;
 
 public abstract class GameSystem
@@ -33,6 +33,10 @@ public abstract class GameSystem
     public NetworkIO network;
 
     public KeysHandler keys;
+
+    //#if DEBUG
+    public DebugScreen debug;
+    //#endif
 
 
     public GameSystem( final SystemContext aSystemContext )
@@ -69,9 +73,10 @@ public abstract class GameSystem
         context.terminateApplication();
         }
 
-    public final void setErrorScreenFont( final FontGenerator aFontGenerator )
+    public final void setSystemFont( final FontGenerator aFontGenerator )
         {
         myErrorScreen.changeFont( aFontGenerator );
+        debug.changeFont( aFontGenerator );
         }
 
     // Internal API
@@ -206,6 +211,10 @@ public abstract class GameSystem
 
     private void initialize() throws Exception
         {
+        //#if DEBUG
+        debug = new DebugScreen( resources.getSmallDefaultFont() );
+        stack.addGlobalHandler( debug );
+        //#endif
         initializeErrorScreen();
         initializeMainController();
         myInitializedFlag = true;
