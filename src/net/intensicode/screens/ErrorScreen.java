@@ -11,7 +11,6 @@ public final class ErrorScreen extends ScreenBase
     public String message;
 
 
-
     public ErrorScreen( final FontGenerator aFont )
         {
         myFont = aFont;
@@ -47,12 +46,6 @@ public final class ErrorScreen extends ScreenBase
         super.onInit( aGameSystem );
         }
 
-    public final void onInitEverytime() throws Exception
-        {
-        if ( critical ) mySoftkeys.setSoftkeys( null, "EXIT" );
-        else mySoftkeys.setSoftkeys( "CONTINUE", "EXIT" );
-        }
-
     //#if TOUCH
     private boolean myPreviousGlobalControlsState;
     //#endif
@@ -76,6 +69,9 @@ public final class ErrorScreen extends ScreenBase
 
     public final void onControlTick() throws Exception
         {
+        if ( critical ) mySoftkeys.setSoftkeys( null, "EXIT" );
+        else mySoftkeys.setSoftkeys( "CONTINUE", "EXIT" );
+
         myAnimCounter++;
         if ( myAnimCounter >= timing().ticksPerSecond * 2 ) myAnimCounter = 0;
 
@@ -130,7 +126,6 @@ public final class ErrorScreen extends ScreenBase
 
         mySoftkeys.onDrawFrame();
         }
-
 
 
     private int myAnimCounter;
