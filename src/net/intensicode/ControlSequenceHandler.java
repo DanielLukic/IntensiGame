@@ -6,7 +6,10 @@ import net.intensicode.core.*;
 import net.intensicode.screens.ScreenBase;
 import net.intensicode.util.*;
 
-public final class TouchSequenceHandler extends ScreenBase implements TouchEventListener
+public final class ControlSequenceHandler extends ScreenBase
+//#if TOUCH
+        implements TouchEventListener
+//#endif
     {
     public static final int MAX_SEQUENCE_LENGTH = 16;
 
@@ -24,7 +27,13 @@ public final class TouchSequenceHandler extends ScreenBase implements TouchEvent
             final int sequenceIndex = myCellSequence.length - aSequence.length + idx;
             if ( myCellSequence[ sequenceIndex ] != aSequence[ idx ] ) return false;
             }
+        reset();
         return true;
+        }
+
+    public final void reset()
+        {
+        for ( int idx = 0; idx < myCellSequence.length; idx++ ) myCellSequence[ idx ] = UNUSED_SEQUENCE_INDEX;
         }
 
     // From ScreenBase
@@ -38,22 +47,51 @@ public final class TouchSequenceHandler extends ScreenBase implements TouchEvent
         {
         myCellWidth = screen().width() / GRID_SIZE;
         myCellHeight = screen().height() / GRID_SIZE;
-        for ( int idx = 0; idx < myCellSequence.length; idx++ ) myCellSequence[ idx ] = UNUSED_SEQUENCE_INDEX;
+        reset();
         }
 
     public final void onControlTick() throws Exception
         {
+        processLastKeyCode();
+
+        final boolean debugMatched = isSequenceMatched( debugSequence );
+        if ( debugMatched ) system().context.onDebugTriggered();
+
+        final boolean cheatMatched = isSequenceMatched( cheatSequence );
+        if ( cheatMatched ) system().context.onCheatTriggered();
+        }
+
+    private void processLastKeyCode()
+        {
+        final int code = keys().lastCode;
+        if ( code == myLastCodeSeen ) return;
+
+        final KeysConfiguration configuration = keys().platformKeysConfiguration;
+        if ( code == configuration.keyNum1 ) appendToCellSequence( 0 );
+        if ( code == configuration.keyNum2 ) appendToCellSequence( 1 );
+        if ( code == configuration.keyNum3 ) appendToCellSequence( 2 );
+        if ( code == configuration.keyNum4 ) appendToCellSequence( 3 );
+        if ( code == configuration.keyNum5 ) appendToCellSequence( 4 );
+        if ( code == configuration.keyNum6 ) appendToCellSequence( 5 );
+        if ( code == configuration.keyNum7 ) appendToCellSequence( 6 );
+        if ( code == configuration.keyNum8 ) appendToCellSequence( 7 );
+        if ( code == configuration.keyNum9 ) appendToCellSequence( 8 );
+
+        myLastCodeSeen = code;
         }
 
     public final void onDrawFrame()
         {
-        //#if DEBUG_TOUCH
+        //#if DEBUG
         drawCellSequence();
+        //#endif
+        //#if TOUCH && DEBUG_TOUCH
         drawTouchEvents();
         //#endif
         }
 
-    //#if DEBUG_TOUCH
+    //#if DEBUG
+
     private void drawCellSequence()
         {
         final DirectGraphics graphics = graphics();
@@ -69,6 +107,10 @@ public final class TouchSequenceHandler extends ScreenBase implements TouchEvent
             }
         }
 
+    //#endif
+
+    //#if TOUCH && DEBUG_TOUCH
+
     private void drawTouchEvents()
         {
         final DirectGraphics graphics = graphics();
@@ -79,11 +121,14 @@ public final class TouchSequenceHandler extends ScreenBase implements TouchEvent
             graphics.fillRect( position.x - 1, position.y - 1, 3, 3 );
             }
         }
+
     //#endif
 
     // From TouchEventListener
 
-    public synchronized final void onTouchEvent( final TouchEvent aTouchEvent )
+    //#if TOUCH
+
+    public final void onTouchEvent( final TouchEvent aTouchEvent )
         {
         //#if DEBUG_TOUCH
         if ( myTouches.size > MAX_QUEUE_SIZE ) myTouches.remove( 0 );
@@ -93,21 +138,17 @@ public final class TouchSequenceHandler extends ScreenBase implements TouchEvent
         final int cellX = aTouchEvent.getX() / myCellWidth;
         final int cellY = aTouchEvent.getY() / myCellHeight;
         final int cellIndex = cellX + cellY * GRID_SIZE;
-        if ( cellIndex == myCellSequence[ myCellSequence.length - 1 ] ) return;
-
         appendToCellSequence( cellIndex );
-
-        final boolean debugMatched = isSequenceMatched( debugSequence );
-        if ( debugMatched ) system().context.onDebugTriggered();
-
-        final boolean cheatMatched = isSequenceMatched( cheatSequence );
-        if ( cheatMatched ) system().context.onCheatTriggered();
         }
+
+    //#endif
 
     // Implementation
 
     private void appendToCellSequence( final int aCellIndex )
         {
+        if ( aCellIndex == myCellSequence[ myCellSequence.length - 1 ] ) return;
+
         // manual copy because some J2ME System.arraycopy implementations are broken..
         for ( int idx = 0; idx < myCellSequence.length - 1; idx++ )
             {
@@ -122,7 +163,9 @@ public final class TouchSequenceHandler extends ScreenBase implements TouchEvent
 
     private int myCellHeight;
 
-    //#if DEBUG_TOUCH
+    private int myLastCodeSeen;
+
+    //#if TOUCH && DEBUG_TOUCH
     private final DynamicArray myTouches = new DynamicArray();
     //#endif
 
