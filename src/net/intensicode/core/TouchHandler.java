@@ -40,6 +40,11 @@ public abstract class TouchHandler
         myLocalControls.purgePendingEvents();
         }
 
+    public final void addListener( final TouchEventListener aListener )
+        {
+        myListeners.add( aListener );
+        }
+
     // Abstract API
 
     public abstract boolean supportsMultiTouch();
@@ -86,8 +91,19 @@ public abstract class TouchHandler
 
     private void processQueuedEvent( final TouchEvent aQueuedEvent )
         {
+        broadcastEvent( aQueuedEvent );
+
         if ( globalControlsActive ) updateControls( aQueuedEvent, myGlobalControls );
         updateControls( aQueuedEvent, myLocalControls );
+        }
+
+    private void broadcastEvent( final TouchEvent aQueuedEvent )
+        {
+        for ( int idx = 0; idx < myListeners.size; idx++ )
+            {
+            final TouchEventListener listener = (TouchEventListener) myListeners.get( idx );
+            listener.onTouchEvent( aQueuedEvent );
+            }
         }
 
     private void updateControls( final TouchEvent aQueuedEvent, final TouchControlsManager aControls )
@@ -128,6 +144,8 @@ public abstract class TouchHandler
     private final TouchControlsManager myGlobalControls;
 
     private final GuardedTouchControlsManager myLocalControls;
+
+    private final DynamicArray myListeners = new DynamicArray();
 
     private final DynamicArray myQueuedEvents = new DynamicArray( MAX_QUEUED_EVENTS, 0 );
 
