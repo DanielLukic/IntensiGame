@@ -6,6 +6,8 @@ import net.intensicode.util.*;
 
 public abstract class GameSystem
     {
+    public final SystemContext context;
+
     public final GameTiming timing;
 
     public final ScreenStack stack;
@@ -35,7 +37,7 @@ public abstract class GameSystem
 
     public GameSystem( final SystemContext aSystemContext )
         {
-        mySystemContext = aSystemContext;
+        context = aSystemContext;
         stack = new ScreenStack( this );
         skin = new SkinManager( this );
         timing = new GameTiming();
@@ -64,7 +66,7 @@ public abstract class GameSystem
 
     public final void shutdownAndExit()
         {
-        mySystemContext.terminateApplication();
+        context.terminateApplication();
         }
 
     // Internal API
@@ -88,7 +90,7 @@ public abstract class GameSystem
 
     public final void stop()
         {
-        mySystemContext.onApplicationShouldPause( this );
+        context.onApplicationShouldPause( this );
 
         audio.haltPlayback();
         engine.stopThreaded();
@@ -96,7 +98,7 @@ public abstract class GameSystem
 
     final void onFramesDropped()
         {
-        mySystemContext.onFramesDropped( this );
+        context.onFramesDropped( this );
         }
 
     final void doSystemTick()
@@ -107,7 +109,7 @@ public abstract class GameSystem
             }
         catch ( final Exception e )
             {
-            showCriticalError( "critical game system failure", e );
+            showError( "critical game system failure", e );
             }
         }
 
@@ -212,7 +214,7 @@ public abstract class GameSystem
 
     private void initializeMainController() throws Exception
         {
-        stack.pushScreen( mySystemContext.createMainScreen( this ) );
+        stack.pushScreen( context.createMainScreen( this ) );
         }
 
     private void showNextQueuedThrowable()
@@ -232,8 +234,6 @@ public abstract class GameSystem
     private boolean myInitializedFlag;
 
     private ErrorScreen myErrorScreen;
-
-    private final SystemContext mySystemContext;
 
     protected final DynamicArray myInformationStrings = new DynamicArray();
 
