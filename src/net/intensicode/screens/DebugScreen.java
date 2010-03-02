@@ -71,8 +71,6 @@ public final class DebugScreen extends MultiScreen
 
         super.onControlTick();
 
-        if ( theDebugInfos.size > 0 ) Log.debug( "ticking {} debug infos", theDebugInfos.size );
-
         boolean atLeastOneActive = false;
         for ( int idx = 0; idx < theDebugInfos.size; idx++ )
             {
@@ -89,8 +87,6 @@ public final class DebugScreen extends MultiScreen
         if ( !visible ) return;
 
         super.onDrawFrame();
-
-        if ( theDebugInfos.size > 0 ) Log.debug( "drawing {} debug infos", theDebugInfos.size );
 
         for ( int idx = 0; idx < theDebugInfos.size; idx++ )
             {
