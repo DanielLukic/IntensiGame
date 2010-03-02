@@ -6,7 +6,15 @@ public final class ReleaseProperties
     //# public static final String VERSION = "${version}";
     //#else
 
-    public static final String VERSION = "1.1.1";
+    public static final String VERSION = "0.0.0";
+
+    //#endif
+
+    //#if "${build}"
+    //# public static final String BUILD = "${build}";
+    //#else
+
+    public static final String BUILD = "0";
 
     //#endif
 
@@ -14,7 +22,7 @@ public final class ReleaseProperties
     //# public static final String DATE = "${date}";
     //#else
 
-    public static final String DATE = "2008-02-07 20:56:10";
+    public static final String DATE = "0000-00-00 00:00:00";
 
     //#endif
 
