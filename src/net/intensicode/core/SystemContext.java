@@ -36,6 +36,10 @@ public interface SystemContext
      */
     void onFramesDropped( GameSystem aGameSystem );
 
+    void onDebugTriggered();
+
+    void onCheatTriggered();
+
     /**
      * This should terminate the application asap. You should not call this directly.
      * Use GameSystem#shutdownAndExit instead.
