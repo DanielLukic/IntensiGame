@@ -20,6 +20,10 @@ public abstract class GameSystem
 
     public StorageManager storage;
 
+    //#if SENSORS
+    public SensorsManager sensors;
+    //#endif
+
     public DirectScreen screen;
 
     //#ifdef TOUCH
@@ -153,6 +157,9 @@ public abstract class GameSystem
         {
         if ( !myInitializedFlag ) initialize();
 
+        //#if SENSORS
+        sensors.onControlTick();
+        //#endif
         //#if TOUCH
         touch.onControlTick();
         //#endif
