@@ -15,9 +15,19 @@ public final class ControlSequenceHandler extends ScreenBase
 
     public static final int GRID_SIZE = 3;
 
+    //#if CHEAT
     public int[] cheatSequence = { GRID_SIZE * 2, GRID_SIZE + 2, 0, GRID_SIZE + 2, GRID_SIZE + 1, GRID_SIZE };
+    //#endif
+
+    //#if DEBUG
 
     public int[] debugSequence = { 0, GRID_SIZE + 2, GRID_SIZE * 2, 1, GRID_SIZE + 1, GRID_SIZE * 2 + 1 };
+    //#endif
+
+    //#if TIMING
+
+    public int[] timingSequence = { 0, 1, 2, 3, 1 };
+    //#endif
 
 
     public final boolean isSequenceMatched( final int[] aSequence )
@@ -54,11 +64,25 @@ public final class ControlSequenceHandler extends ScreenBase
         {
         processLastKeyCode();
 
-        final boolean debugMatched = isSequenceMatched( debugSequence );
-        if ( debugMatched ) system().context.onDebugTriggered();
-
+        //#if CHEAT
         final boolean cheatMatched = isSequenceMatched( cheatSequence );
         if ( cheatMatched ) system().context.onCheatTriggered();
+        //#endif
+
+        //#if DEBUG
+        final boolean debugMatched = isSequenceMatched( debugSequence );
+        if ( debugMatched ) system().context.onDebugTriggered();
+        //#endif
+
+        //#if TIMING
+        final boolean timingMatched = isSequenceMatched( timingSequence );
+        if ( timingMatched )
+            {
+            final StringBuffer buffer = new StringBuffer();
+            Timing.dumpInto( buffer );
+            System.out.println( buffer );
+            }
+        //#endif
         }
 
     private void processLastKeyCode()
@@ -82,32 +106,10 @@ public final class ControlSequenceHandler extends ScreenBase
 
     public final void onDrawFrame()
         {
-        //#if DEBUG
-        drawCellSequence();
-        //#endif
         //#if TOUCH && DEBUG_TOUCH
         drawTouchEvents();
         //#endif
         }
-
-    //#if DEBUG
-
-    private void drawCellSequence()
-        {
-        final DirectGraphics graphics = graphics();
-        graphics.setColorARGB32( CELL_SEQUENCE_COLOR_ARGB32 );
-        for ( int idx = 0; idx < myCellSequence.length; idx++ )
-            {
-            if ( myCellSequence[ idx ] == UNUSED_SEQUENCE_INDEX ) continue;
-            final int cellIndex = myCellSequence[ idx ];
-            final int x = ( cellIndex % GRID_SIZE ) * myCellWidth;
-            final int y = ( cellIndex / GRID_SIZE ) * myCellHeight;
-            graphics.fillRect( x, y, myCellWidth, myCellHeight );
-            graphics.fillRect( x, y, myCellWidth, myCellHeight * idx / myCellSequence.length );
-            }
-        }
-
-    //#endif
 
     //#if TOUCH && DEBUG_TOUCH
 
@@ -172,11 +174,9 @@ public final class ControlSequenceHandler extends ScreenBase
     private final int[] myCellSequence = new int[MAX_SEQUENCE_LENGTH];
 
 
-    private static final int MAX_QUEUE_SIZE = 100;
+    private static final int MAX_QUEUE_SIZE = 16;
 
     private static final int UNUSED_SEQUENCE_INDEX = -1;
-
-    private static final int CELL_SEQUENCE_COLOR_ARGB32 = 0x10008000;
 
     private static final int TOUCH_EVENTS_COLOR_ARGB32 = 0x10FFFFFF;
     }
