@@ -29,20 +29,28 @@ public final class DebugScreen extends MultiScreen
         {
         if ( autoVisible ) visible = true;
 
-        for ( int idx = 0; idx < theDebugInfos.size; idx++ )
+        for ( int idx = 0; idx < myDebugInfos.size; idx++ )
             {
-            final DebugInfo info = (DebugInfo) theDebugInfos.get( idx );
+            final DebugInfo info = (DebugInfo) myDebugInfos.get( idx );
             if ( info == null )
                 {
                 final DebugInfo newInfo = new DebugInfo();
-                theDebugInfos.set( idx, newInfo );
+                myDebugInfos.set( idx, newInfo );
                 return newInfo;
                 }
             if ( !info.active ) return info;
             }
 
+        if ( myDebugInfos.size == MAX_DEBUG_INFOS )
+            {
+            //#if DEBUG
+            Log.debug( "max debug info count reached: {}", MAX_DEBUG_INFOS );
+            //#endif
+            myDebugInfos.remove( Random.INSTANCE.nextInt( MAX_DEBUG_INFOS ) );
+            }
+
         final DebugInfo newInfo = new DebugInfo();
-        theDebugInfos.add( newInfo );
+        myDebugInfos.add( newInfo );
         return newInfo;
         }
 
@@ -60,6 +68,7 @@ public final class DebugScreen extends MultiScreen
 
     public final void onInitEverytime() throws Exception
         {
+        myDebugInfos.clear();
         }
 
     public final void onControlTick() throws Exception
@@ -72,9 +81,9 @@ public final class DebugScreen extends MultiScreen
         super.onControlTick();
 
         boolean atLeastOneActive = false;
-        for ( int idx = 0; idx < theDebugInfos.size; idx++ )
+        for ( int idx = 0; idx < myDebugInfos.size; idx++ )
             {
-            final DebugInfo info = (DebugInfo) theDebugInfos.get( idx );
+            final DebugInfo info = (DebugInfo) myDebugInfos.get( idx );
             info.onControlTick();
             atLeastOneActive |= info.active;
             }
@@ -84,13 +93,17 @@ public final class DebugScreen extends MultiScreen
 
     public final void onDrawFrame()
         {
-        if ( !visible ) return;
+        if ( !visible )
+            {
+            myDebugInfos.clear();
+            return;
+            }
 
         super.onDrawFrame();
 
-        for ( int idx = 0; idx < theDebugInfos.size; idx++ )
+        for ( int idx = 0; idx < myDebugInfos.size; idx++ )
             {
-            final DebugInfo info = (DebugInfo) theDebugInfos.get( idx );
+            final DebugInfo info = (DebugInfo) myDebugInfos.get( idx );
             info.onDrawFrame( graphics(), myFont );
             }
 
@@ -108,5 +121,7 @@ public final class DebugScreen extends MultiScreen
 
     private ClearScreen myBackground;
 
-    private final DynamicArray theDebugInfos = new DynamicArray();
+    private final DynamicArray myDebugInfos = new DynamicArray();
+
+    private static final int MAX_DEBUG_INFOS = 256;
     }
