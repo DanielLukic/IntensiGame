@@ -129,12 +129,6 @@ public abstract class TouchHandler
         final Object lastEvent = myQueuedEvents.last();
         if ( !lastEvent.equals( aTouchEvent ) ) return false;
 
-        //#if DEBUG
-        Log.debug( "same touch event ignored" );
-        Log.debug( "last: {}", lastEvent );
-        Log.debug( "new: {}", aTouchEvent );
-        //#endif
-
         return true;
         }
 
