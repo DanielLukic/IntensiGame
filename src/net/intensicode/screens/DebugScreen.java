@@ -73,7 +73,11 @@ public final class DebugScreen extends MultiScreen
 
     public final void onControlTick() throws Exception
         {
-        if ( !visible ) return;
+        if ( !visible )
+            {
+            myDebugInfos.clear();
+            return;
+            }
 
         setVisibility( myBackground, clearBackground );
         myBackground.clearColorARGB32 = clearColorARGB32;
