@@ -23,22 +23,36 @@ class IntensiGameHelper
             }
         }
 
-    IntensiGameHelper( final GameSystem aGameSystem )
+    static void toggleDebugScreen( final GameSystem aGameSystem )
+        {
+        //#if DEBUG
+        aGameSystem.debug.visible = !aGameSystem.debug.visible;
+        //#endif
+        }
+
+    static void toggleCheatScreen( final GameSystem aGameSystem )
+        {
+        // TODO: Toggle system.cheat screen visibility..
+        }
+
+    // Implementation
+
+    private IntensiGameHelper( final GameSystem aGameSystem )
         {
         myGameSystem = aGameSystem;
         }
 
-    Configuration loadEngineConfiguration()
+    private Configuration loadEngineConfiguration()
         {
         return myGameSystem.resources.loadConfigurationOrUseDefaults( "engine.properties" );
         }
 
-    Configuration loadSkinConfiguration()
+    private Configuration loadSkinConfiguration()
         {
         return myGameSystem.resources.loadConfigurationOrUseDefaults( "skin.properties" );
         }
 
-    void applyEngineConfiguration( final Configuration aConfiguration )
+    private void applyEngineConfiguration( final Configuration aConfiguration )
         {
         // TODO: Move to GameTiming#apply(Configuration)
         final GameTiming timing = myGameSystem.timing;
@@ -63,10 +77,11 @@ class IntensiGameHelper
         //#endif
         }
 
-    void applySkinConfiguration( final Configuration aConfiguration )
+    private void applySkinConfiguration( final Configuration aConfiguration )
         {
         myGameSystem.skin.apply( aConfiguration );
         }
+
 
     private GameSystem myGameSystem;
 
