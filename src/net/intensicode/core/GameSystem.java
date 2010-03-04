@@ -168,6 +168,7 @@ public abstract class GameSystem
 
     final void doSystemTick()
         {
+        Timing.start( "doSystemTick" );
         try
             {
             doSystemTickUnsafe();
@@ -176,10 +177,15 @@ public abstract class GameSystem
             {
             showError( "critical game system failure", e );
             }
+        finally
+            {
+            Timing.end( "doSystemTick" );
+            }
         }
 
     final void doControlTick()
         {
+        Timing.start( "doControlTick" );
         try
             {
             doControlTickUnsafe();
@@ -188,10 +194,15 @@ public abstract class GameSystem
             {
             showError( "active handler control tick failure", e );
             }
+        finally
+            {
+            Timing.end( "doControlTick" );
+            }
         }
 
     final void doDrawFrame()
         {
+        Timing.start( "doDrawFrame" );
         try
             {
             doDrawFrameUnsafe();
@@ -199,6 +210,10 @@ public abstract class GameSystem
         catch ( final Exception e )
             {
             showError( "active handler draw frame failure", e );
+            }
+        finally
+            {
+            Timing.end( "doDrawFrame" );
             }
         }
 
