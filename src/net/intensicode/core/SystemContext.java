@@ -24,13 +24,6 @@ public interface SystemContext
     ScreenBase createMainScreen( GameSystem aGameSystem ) throws Exception;
 
     /**
-     * The game system will call this method if it has determined that your application should enter a pause mode
-     * because of external system events. For example when your application is being pushed to the background. Incoming
-     * phone calls can cause this, for example.
-     */
-    void onApplicationShouldPause( GameSystem aGameSystem );
-
-    /**
      * This will be called whenever frames have been dropped. Possible causes: Your frame drawing or your
      * control ticks take too long. Or the system is overloaded.
      */
@@ -39,6 +32,8 @@ public interface SystemContext
     void onDebugTriggered();
 
     void onCheatTriggered();
+
+    void onStopApplication( GameSystem aGameSystem );
 
     /**
      * This should terminate the application asap. You should not call this directly.

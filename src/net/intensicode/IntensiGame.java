@@ -20,7 +20,7 @@ public abstract class IntensiGame implements SystemContext
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
 
-    public void onApplicationShouldPause( final GameSystem aGameSystem )
+    public void onStopApplication( final GameSystem aGameSystem )
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
