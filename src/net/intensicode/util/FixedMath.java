@@ -22,6 +22,8 @@ public final class FixedMath
 
     public static final int FIXED_5 = FIXED_ONE * 5;
 
+    public static final int FIXED_10 = FIXED_ONE * 10;
+
     public static final int FIXED_25 = FIXED_ONE * 25;
 
     public static final int FIXED_30 = FIXED_ONE * 30;
