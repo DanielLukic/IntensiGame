@@ -14,6 +14,8 @@ public abstract class GameSystem
 
     public final SkinManager skin;
 
+    public AnalogController analog;
+
     public ResourcesManager resources;
 
     public DirectGraphics graphics;
@@ -212,6 +214,7 @@ public abstract class GameSystem
         //#if TOUCH
         touch.onControlTick();
         //#endif
+        analog.onControlTick();
         keys.onControlTick();
 
         if ( stack.empty() ) throw new IllegalStateException( "no screen on stack" );
