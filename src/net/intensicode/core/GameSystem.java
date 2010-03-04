@@ -1,6 +1,6 @@
 package net.intensicode.core;
 
-import net.intensicode.graphics.FontGenerator;
+import net.intensicode.graphics.*;
 import net.intensicode.screens.*;
 import net.intensicode.util.*;
 
@@ -80,7 +80,9 @@ public abstract class GameSystem
     public final void setSystemFont( final FontGenerator aFontGenerator )
         {
         myErrorScreen.changeFont( aFontGenerator );
+        //#if DEBUG
         debug.changeFont( aFontGenerator );
+        //#endif
         }
 
     // Internal API
@@ -98,16 +100,63 @@ public abstract class GameSystem
 
     public final void start()
         {
+        if ( myRunningFlag ) return;
+
         engine.startThreaded();
         audio.resumePlayback();
+        //#if SENSORS
+        sensors.enable();
+        //#endif
+
+        myRunningFlag = true;
         }
+
+    private boolean myRunningFlag;
 
     public final void stop()
         {
-        context.onApplicationShouldPause( this );
+        if ( !myRunningFlag ) return;
 
+        //#if SENSORS
+        sensors.disable();
+        //#endif
         audio.haltPlayback();
         engine.stopThreaded();
+
+        context.onStopApplication( this );
+
+        cleanUp();
+        dumpAndDisposeTiming();
+
+        myRunningFlag = false;
+        }
+
+    private void cleanUp()
+        {
+        BitmapFontGenerator.purgeCaches();
+        BitmapFontGenerator.resources = null;
+
+        skin.destroy();
+
+        // I18n..
+        // ConsoleOverlay has static methods..
+        // EngineStats..
+        // ..
+
+        System.gc();
+        }
+
+    private void dumpAndDisposeTiming()
+        {
+        //#if TIMING
+        final StringBuffer buffer = new StringBuffer();
+        Timing.dumpInto( buffer );
+        System.out.println( buffer );
+        //#endif
+
+        Timing.reset();
+
+        System.gc();
         }
 
     final void onFramesDropped()
