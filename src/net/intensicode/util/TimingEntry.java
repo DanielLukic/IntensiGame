@@ -22,6 +22,13 @@ public final class TimingEntry
         tag = aTag;
         }
 
+    public final void reset()
+        {
+        accumulated = minimum = maximum = count = myStartTime = 0;
+        myStartCount = 0;
+        myChildEntries.clear();
+        }
+
     public final TimingEntry getOrCreateChild( final String aTag )
         {
         final TimingEntry entry = (TimingEntry) myChildEntries.get( aTag );

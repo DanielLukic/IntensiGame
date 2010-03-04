@@ -1,38 +1,14 @@
 package net.intensicode.util;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.*;
 
 public final class Timing
     {
-    public static final int INDENT_OFFSET = 60;
-
-    public static final String INSERT_STRING = "        ";
-
-    public static final int INSERT_WIDTH = INSERT_STRING.length();
-
-
-
-    public static void insertFixed( final StringBuffer aBuffer )
+    public static void reset()
         {
         //#if TIMING
-        aBuffer.append( INSERT_STRING );
-        //#endif
-        }
-
-    public static void insertFixed( final StringBuffer aBuffer, final String aString )
-        {
-        //#if TIMING
-        final String string = aString.length() <= INSERT_WIDTH ? aString : aString.substring( 0, INSERT_WIDTH );
-        aBuffer.append( INSERT_STRING.substring( 0, INSERT_WIDTH - string.length() ) );
-        aBuffer.append( string );
-        //#endif
-        }
-
-    public static void insertFixed( final StringBuffer aBuffer, final long aValue )
-        {
-        //#if TIMING
-        insertFixed( aBuffer, Long.toString( aValue ) );
+        theGlobalRootEntry.reset();
+        theTimingsByThread.clear();
         //#endif
         }
 
@@ -120,6 +96,33 @@ public final class Timing
         //#endif
         }
 
+    // Package Interface
+
+    static final int INDENT_OFFSET = 60;
+
+    static void insertFixed( final StringBuffer aBuffer )
+        {
+        //#if TIMING
+        aBuffer.append( INSERT_STRING );
+        //#endif
+        }
+
+    static void insertFixed( final StringBuffer aBuffer, final String aString )
+        {
+        //#if TIMING
+        final String string = aString.length() <= INSERT_WIDTH ? aString : aString.substring( 0, INSERT_WIDTH );
+        aBuffer.append( INSERT_STRING.substring( 0, INSERT_WIDTH - string.length() ) );
+        aBuffer.append( string );
+        //#endif
+        }
+
+    static void insertFixed( final StringBuffer aBuffer, final long aValue )
+        {
+        //#if TIMING
+        insertFixed( aBuffer, Long.toString( aValue ) );
+        //#endif
+        }
+
     // Implementation
 
     //#if TIMING
@@ -158,7 +161,6 @@ public final class Timing
         }
 
 
-
     private DynamicArray myEntryStack = new DynamicArray();
 
     private final TimingEntry myRootEntry = new TimingEntry( "ROOT" );
@@ -168,6 +170,10 @@ public final class Timing
     private static final Hashtable theTimingsByThread = new Hashtable();
 
     private static final TimingEntry theGlobalRootEntry = new TimingEntry( ID_GLOBAL );
+
+    private static final String INSERT_STRING = "        ";
+
+    private static final int INSERT_WIDTH = INSERT_STRING.length();
 
     //#endif
     }
