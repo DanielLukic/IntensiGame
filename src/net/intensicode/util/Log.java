@@ -4,57 +4,71 @@ public class Log
     {
     public static Log theLog = new Log();
 
-    //#ifdef DEBUG
-
     public static void trace()
         {
+        //#if DEBUG
         theLog.doTrace();
+        //#endif
         }
 
     public static void debug( final String aMessage )
         {
+        //#if DEBUG
         debug( aMessage, NO_PARAMETERS );
+        //#endif
         }
 
     public static void debug( final String aMessage, final long aValue1 )
         {
+        //#if DEBUG
         debug( aMessage, new Object[]{ new Long( aValue1 ) } );
+        //#endif
         }
 
     public static void debug( final String aMessage, final Object aValue1 )
         {
+        //#if DEBUG
         debug( aMessage, new Object[]{ aValue1 } );
+        //#endif
         }
 
     public static void debug( final String aMessage, final Object aValue1, final Object aValue2 )
         {
+        //#if DEBUG
         debug( aMessage, new Object[]{ aValue1, aValue2 } );
+        //#endif
         }
 
     public static void debug( final String aMessage, final int aValue1, final int aValue2 )
         {
+        //#if DEBUG
         debug( aMessage, new Object[]{ new Integer( aValue1 ), new Integer( aValue2 ) } );
+        //#endif
         }
 
     public static void debug( final String aMessage, final long aValue1, final long aValue2 )
         {
+        //#if DEBUG
         debug( aMessage, new Object[]{ new Long( aValue1 ), new Long( aValue2 ) } );
+        //#endif
         }
 
     //#if CLDC11
     public static void debug( final String aMessage, final double aValue1, final double aValue2 )
         {
+        //#if DEBUG
         debug( aMessage, new Object[]{ new Double( aValue1 ), new Double( aValue2 ) } );
+        //#endif
         }
     //#endif
 
     public static void debug( final String aMessage, final Object[] aObjects )
         {
+        //#if DEBUG
         final StringBuffer buffer = StringUtils.format( aMessage, aObjects );
         theLog.doDebug( buffer );
+        //#endif
         }
-
-    //#endif
 
     public static void error( final Throwable aThrowable )
         {
