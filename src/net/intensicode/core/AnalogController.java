@@ -1,5 +1,7 @@
 package net.intensicode.core;
 
+import net.intensicode.util.FixedMath;
+
 public abstract class AnalogController
     {
     //#if SENSORS
@@ -13,6 +15,10 @@ public abstract class AnalogController
     public int xDeltaFixed;
 
     public int yDeltaFixed;
+
+    public int xSensitivityFixed = FixedMath.FIXED_1;
+
+    public int ySensitivityFixed = FixedMath.FIXED_1;
 
 
     public final void onControlTick()
