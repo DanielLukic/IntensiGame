@@ -4,9 +4,9 @@ package net.intensicode.core;
 
 public class Acceleration
     {
-    public float x;
+    public int xFixed;
 
-    public float y;
+    public int yFixed;
 
-    public float z;
+    public int zFixed;
     }
