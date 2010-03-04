@@ -132,12 +132,12 @@ public abstract class Touchable
     protected void onDrawDebug( final DirectGraphics aGraphics, final Rectangle aRectangle )
         {
         //#if DEBUG && DEBUG_TOUCH
-        aGraphics.setColorARGB32( 0x3000FF00 );
-        aGraphics.fillRect( aRectangle.x, aRectangle.y, 4, aRectangle.height );
-        aGraphics.fillRect( aRectangle.x, aRectangle.y, aRectangle.width, 4 );
-        aGraphics.fillRect( aRectangle.x + aRectangle.width - 4, aRectangle.y, 4, aRectangle.height );
-        aGraphics.fillRect( aRectangle.x, aRectangle.y + aRectangle.height - 4, aRectangle.width, 4 );
-        aGraphics.setColorARGB32( 0xFF000000 );
+        //# aGraphics.setColorARGB32( 0x3000FF00 );
+        //# aGraphics.fillRect( aRectangle.x, aRectangle.y, 4, aRectangle.height );
+        //# aGraphics.fillRect( aRectangle.x, aRectangle.y, aRectangle.width, 4 );
+        //# aGraphics.fillRect( aRectangle.x + aRectangle.width - 4, aRectangle.y, 4, aRectangle.height );
+        //# aGraphics.fillRect( aRectangle.x, aRectangle.y + aRectangle.height - 4, aRectangle.width, 4 );
+        //# aGraphics.setColorARGB32( 0xFF000000 );
         //#endif
         }
 
