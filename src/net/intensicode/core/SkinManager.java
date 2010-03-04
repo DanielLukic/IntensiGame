@@ -84,6 +84,7 @@ public final class SkinManager implements Runnable
             {
             myLoadQueue.notifyAll();
             }
+        purgeAll();
         }
 
     public final boolean allImagesLoaded()
@@ -110,6 +111,16 @@ public final class SkinManager implements Runnable
                 }
             }
         return false;
+        }
+
+    public final void purgeAll()
+        {
+        final Enumeration keys = myCachedImages.keys();
+        while ( keys.hasMoreElements() )
+            {
+            purgeImage( (String) keys.nextElement(), false );
+            }
+        System.gc();
         }
 
     public final void purgeImage( final String aImageID, final boolean aRightNow )
