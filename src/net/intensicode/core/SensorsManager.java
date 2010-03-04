@@ -14,4 +14,8 @@ public abstract class SensorsManager
     public abstract boolean hasAcceleration();
 
     public abstract void onControlTick();
+
+    public abstract void enable();
+
+    public abstract void disable();
     }
