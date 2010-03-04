@@ -106,13 +106,13 @@ public final class Configuration
             }
         }
 
-    public static String makeKey( final String aPrefix, final int aIndex )
+    public String makeKey( final String aPrefix, final int aIndex )
         {
-        theSharedBuffer.setLength( 0 );
-        theSharedBuffer.append( aPrefix );
-        theSharedBuffer.append( '.' );
-        theSharedBuffer.append( aIndex );
-        return theSharedBuffer.toString();
+        mySharedBuffer.setLength( 0 );
+        mySharedBuffer.append( aPrefix );
+        mySharedBuffer.append( '.' );
+        mySharedBuffer.append( aIndex );
+        return mySharedBuffer.toString();
         }
 
     // Implementation
@@ -144,15 +144,15 @@ public final class Configuration
     private String extractValue( final String aEntry, final String aSubEntry )
         {
         if ( aSubEntry == null ) return (String) myEntries.get( aEntry );
-        theSharedBuffer.setLength( 0 );
-        theSharedBuffer.append( aEntry );
-        theSharedBuffer.append( '.' );
-        theSharedBuffer.append( aSubEntry );
-        return (String) myEntries.get( theSharedBuffer.toString() );
+        mySharedBuffer.setLength( 0 );
+        mySharedBuffer.append( aEntry );
+        mySharedBuffer.append( '.' );
+        mySharedBuffer.append( aSubEntry );
+        return (String) myEntries.get( mySharedBuffer.toString() );
         }
 
 
     private final Hashtable myEntries = new Hashtable();
 
-    private static final StringBuffer theSharedBuffer = new StringBuffer();
+    private final StringBuffer mySharedBuffer = new StringBuffer();
     }
