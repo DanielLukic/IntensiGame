@@ -20,12 +20,7 @@ public abstract class IntensiGame implements SystemContext
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
 
-    public void onStopApplication( final GameSystem aGameSystem )
-        {
-        throw new RuntimeException( PLACEHOLDER_MESSAGE );
-        }
-
-    public void onFramesDropped( final GameSystem aGameSystem )
+    public void onFramesDropped()
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
@@ -36,6 +31,16 @@ public abstract class IntensiGame implements SystemContext
         }
 
     public void onCheatTriggered()
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
+    public void onPauseApplication()
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
+    public void onDestroyApplication()
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }

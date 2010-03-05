@@ -21,19 +21,21 @@ public interface SystemContext
      * You have to return your main screen or main controller object in here. The game system will call this method
      * after it has setup everything.
      */
-    ScreenBase createMainScreen( GameSystem aGameSystem ) throws Exception;
+    ScreenBase createMainScreen() throws Exception;
 
     /**
      * This will be called whenever frames have been dropped. Possible causes: Your frame drawing or your
      * control ticks take too long. Or the system is overloaded.
      */
-    void onFramesDropped( GameSystem aGameSystem );
+    void onFramesDropped();
 
     void onDebugTriggered();
 
     void onCheatTriggered();
 
-    void onStopApplication( GameSystem aGameSystem );
+    void onPauseApplication();
+
+    void onDestroyApplication();
 
     /**
      * This should terminate the application asap. You should not call this directly.

@@ -119,18 +119,25 @@ public abstract class GameSystem
         {
         if ( !myRunningFlag ) return;
 
+        context.onPauseApplication();
+
         //#if SENSORS
         sensors.disable();
         //#endif
         audio.haltPlayback();
         engine.stopThreaded();
 
-        context.onStopApplication( this );
+        myRunningFlag = false;
+        }
+
+    public final void destroy()
+        {
+        stop();
+
+        context.onDestroyApplication();
 
         cleanUp();
         dumpAndDisposeTiming();
-
-        myRunningFlag = false;
         }
 
     private void cleanUp()
@@ -163,7 +170,7 @@ public abstract class GameSystem
 
     final void onFramesDropped()
         {
-        context.onFramesDropped( this );
+        context.onFramesDropped();
         }
 
     final void doSystemTick()
@@ -302,7 +309,7 @@ public abstract class GameSystem
 
     private void initializeMainController() throws Exception
         {
-        stack.pushScreen( context.createMainScreen( this ) );
+        stack.pushScreen( context.createMainScreen() );
         }
 
     private void showNextQueuedThrowable()
