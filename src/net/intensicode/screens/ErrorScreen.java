@@ -38,10 +38,6 @@ public final class ErrorScreen extends ScreenBase
 
     public final void onInit( final GameSystem aGameSystem ) throws Exception
         {
-        //#if DEBUG
-        system().debug.visible = false;
-        //#endif
-
         final DirectScreen screen = aGameSystem.screen;
         myBorderWidth = screen.width() / 32;
         myMessageOffset = myBorderWidth * 2;
@@ -53,6 +49,10 @@ public final class ErrorScreen extends ScreenBase
 
         // Call this last because we need mySoftkeys in onInitEverytime..
         super.onInit( aGameSystem );
+
+        //#if DEBUG
+        system().debug.visible = false;
+        //#endif
         }
 
     //#if TOUCH
