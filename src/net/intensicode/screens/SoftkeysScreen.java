@@ -98,6 +98,7 @@ public class SoftkeysScreen extends ScreenBase
     protected int getAlignWidth( final String aText )
         {
         if ( myButtonImage != null ) return myButtonImage.getWidth();
+        if ( aText == null ) return myInsetX * 2;
         return myFontGen.stringWidth( aText ) + myInsetX * 2;
         }
 
