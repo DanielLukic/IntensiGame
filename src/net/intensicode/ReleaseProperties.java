@@ -32,7 +32,7 @@ public final class ReleaseProperties
     //# public static final String SOUND_FORMAT_SUFFIX = "${target.sound_suffix}";
     //#else
 
-    public static final String SOUND_FORMAT_SUFFIX = ".ogg";
+    public static String SOUND_FORMAT_SUFFIX = ".ogg";
 
     //#endif
 
@@ -40,17 +40,17 @@ public final class ReleaseProperties
     //# public static final String SOUND_FORMAT_MIME_TYPE = "${target.sound_type}";
     //#else
 
-    public static final String SOUND_FORMAT_MIME_TYPE = "audio/ogg";
+    public static String SOUND_FORMAT_MIME_TYPE = "audio/ogg";
 
     //#endif
 
-    public static final String MUSIC_FOLDER = "music";
+    public static String MUSIC_FOLDER = "music";
 
     //#if "${target.music_suffix}"
     //# public static final String MUSIC_FORMAT_SUFFIX = "${target.music_suffix}";
     //#else
 
-    public static final String MUSIC_FORMAT_SUFFIX = ".mod";
+    public static String MUSIC_FORMAT_SUFFIX = ".mod";
 
     //#endif
 
@@ -58,7 +58,7 @@ public final class ReleaseProperties
     //# public static final String MUSIC_FORMAT_MIME_TYPE = "${target.music_type}";
     //#else
 
-    public static final String MUSIC_FORMAT_MIME_TYPE = "audio/mod";
+    public static String MUSIC_FORMAT_MIME_TYPE = "audio/mod";
 
     //#endif
 
