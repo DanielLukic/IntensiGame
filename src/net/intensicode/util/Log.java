@@ -4,12 +4,78 @@ public class Log
     {
     public static Log theLog = new Log();
 
+
     public static void trace()
         {
-        //#if DEBUG
+        //#if TRACE
         theLog.doTrace();
         //#endif
         }
+
+
+
+
+    public static void info( final String aMessage )
+        {
+        //#if INFO
+        info( aMessage, NO_PARAMETERS );
+        //#endif
+        }
+
+    public static void info( final String aMessage, final long aValue1 )
+        {
+        //#if INFO
+        info( aMessage, new Object[]{ new Long( aValue1 ) } );
+        //#endif
+        }
+
+    public static void info( final String aMessage, final Object aValue1 )
+        {
+        //#if INFO
+        info( aMessage, new Object[]{ aValue1 } );
+        //#endif
+        }
+
+    public static void info( final String aMessage, final Object aValue1, final Object aValue2 )
+        {
+        //#if INFO
+        info( aMessage, new Object[]{ aValue1, aValue2 } );
+        //#endif
+        }
+
+    public static void info( final String aMessage, final int aValue1, final int aValue2 )
+        {
+        //#if INFO
+        info( aMessage, new Object[]{ new Integer( aValue1 ), new Integer( aValue2 ) } );
+        //#endif
+        }
+
+    public static void info( final String aMessage, final long aValue1, final long aValue2 )
+        {
+        //#if INFO
+        info( aMessage, new Object[]{ new Long( aValue1 ), new Long( aValue2 ) } );
+        //#endif
+        }
+
+    //#if !CLDC10
+    public static void info( final String aMessage, final double aValue1, final double aValue2 )
+        {
+        //#if INFO
+        info( aMessage, new Object[]{ new Double( aValue1 ), new Double( aValue2 ) } );
+        //#endif
+        }
+    //#endif
+
+    public static void info( final String aMessage, final Object[] aObjects )
+        {
+        //#if INFO
+        final StringBuffer buffer = StringUtils.format( aMessage, aObjects );
+        theLog.doInfo( buffer );
+        //#endif
+        }
+
+
+
 
     public static void debug( final String aMessage )
         {
@@ -53,7 +119,7 @@ public class Log
         //#endif
         }
 
-    //#if CLDC11
+    //#if !CLDC10
     public static void debug( final String aMessage, final double aValue1, final double aValue2 )
         {
         //#if DEBUG
@@ -69,6 +135,7 @@ public class Log
         theLog.doDebug( buffer );
         //#endif
         }
+
 
     public static void error( final Throwable aThrowable )
         {
@@ -97,12 +164,26 @@ public class Log
         {
         }
 
-    //#if DEBUG
+    //#if TRACE
 
     protected void doTrace()
         {
         // Not possible with J2ME..
         }
+
+    //#endif
+
+    //#if INFO
+
+    protected void doInfo( final StringBuffer aBufferWithMessage )
+        {
+        aBufferWithMessage.insert( 0, "INFO " );
+        System.out.println( aBufferWithMessage.toString() );
+        }
+
+    //#endif
+
+    //#if DEBUG
 
     protected void doDebug( final StringBuffer aBufferWithMessage )
         {
@@ -119,6 +200,7 @@ public class Log
 
         if ( aThrowable != null ) aThrowable.printStackTrace();
         }
+
 
     private static Object[] NO_PARAMETERS = new Object[0];
     }
