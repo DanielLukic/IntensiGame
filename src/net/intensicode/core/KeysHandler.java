@@ -171,19 +171,20 @@ public abstract class KeysHandler
 
     public final boolean check( final int aKeyID )
         {
-        return myPressedStates[ aKeyID ];
+        return myPressedStates[ aKeyID ] > 0;
         }
 
     public final void consume( final int aKeyID )
         {
-        myPressedStates[ aKeyID ] = false;
+        if ( myPressedStates[ aKeyID ] == 0 ) return;
+        myPressedStates[ aKeyID ]--;
         }
 
     public final boolean someKeyPressed()
         {
         for ( int idx = 0; idx < myPressedStates.length; idx++ )
             {
-            if ( myPressedStates[ idx ] ) return true;
+            if ( myPressedStates[ idx ] > 0 ) return true;
             }
         return myNumberOfQueuedKeyEvents > 0;
         }
@@ -222,8 +223,8 @@ public abstract class KeysHandler
 
         for ( int idx = 0; idx < NUM_KEY_IDS; idx++ )
             {
-            myRepeatTicks[ idx ] = 0;
-            myPressedStates[ idx ] = myRepeatFlags[ idx ] = dontRepeatFlags[ idx ] = false;
+            myPressedStates[ idx ] = myRepeatTicks[ idx ] = 0;
+            myRepeatFlags[ idx ] = dontRepeatFlags[ idx ] = false;
             }
 
         keyRepeatDelayInTicks = aTicksPerSecond * 50 / 100;
@@ -291,7 +292,7 @@ public abstract class KeysHandler
 
     private void tap( final int aKeyID )
         {
-        myPressedStates[ aKeyID ] = true;
+        myPressedStates[ aKeyID ]++;
         }
 
     private void resetRepeat( final int aKeyID, final boolean aStartRepeat )
@@ -321,7 +322,7 @@ public abstract class KeysHandler
 
     private final boolean[] myRepeatFlags = new boolean[NUM_KEY_IDS];
 
-    private final boolean[] myPressedStates = new boolean[NUM_KEY_IDS];
+    private final int[] myPressedStates = new int[NUM_KEY_IDS];
 
     private final int[] myQueuedKeyEvents = new int[MAX_QUEUED_KEY_EVENTS];
 
@@ -330,5 +331,9 @@ public abstract class KeysHandler
 
     private static final int KEYCODE_ID_MASK = 0x0000FFFF;
 
-    private static final int MAX_QUEUED_KEY_EVENTS = 32;
+    //#if MORE_EVENTS
+    private static final int MAX_QUEUED_KEY_EVENTS = 64;
+    //#else
+    //# private static final int MAX_QUEUED_KEY_EVENTS = 32;
+    //#endif
     }
