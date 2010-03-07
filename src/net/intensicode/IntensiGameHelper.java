@@ -64,6 +64,8 @@ class IntensiGameHelper
         final int width = aConfiguration.readInt( "DirectScreen.width", DEFAULT_SCREEN_WIDTH );
         final int height = aConfiguration.readInt( "DirectScreen.height", DEFAULT_SCREEN_HEIGHT );
         myGameSystem.screen.setTargetSize( width, height );
+        final String mode = aConfiguration.readString( "DirectScreen.viewport_scale_mode", DEFAULT_SCREEN_MODE );
+        myGameSystem.screen.setViewportMode( getViewportMode( mode ) );
 
         // TODO: Move to BitmapFontGenerator#apply(Configuration)                
         BitmapFontGenerator.buffered = aConfiguration.readBoolean( "BitmapFontGenerator.buffered", BitmapFontGenerator.buffered );
@@ -71,9 +73,18 @@ class IntensiGameHelper
         // Register ResourcesManager with BitmapFontGenerator to make buffered blitting possible.
         BitmapFontGenerator.resources = myGameSystem.resources;
 
+        Log.info( "GameTiming: tps={} fps={}", timing.ticksPerSecond, timing.maxFramesPerSecond );
+        Log.info( "DirectScreen: {}x{}", width, height );
+        }
+
+    private int getViewportMode( final String aModeName )
+        {
+        if ( aModeName.equalsIgnoreCase( "system" ) ) return DirectScreen.VIEWPORT_MODE_SYSTEM;
+        if ( aModeName.equalsIgnoreCase( "fullscreen" ) ) return DirectScreen.VIEWPORT_MODE_FULLSCREEN;
         //#if DEBUG
-        Log.debug( "GameTiming: tps={} fps={}", timing.ticksPerSecond, timing.maxFramesPerSecond );
-        Log.debug( "DirectScreen: {}x{}", width, height );
+        throw new IllegalArgumentException( aModeName );
+        //#else
+        //# return DirectScreen.VIEWPORT_MODE_SYSTEM;
         //#endif
         }
 
@@ -88,4 +99,6 @@ class IntensiGameHelper
     private static final int DEFAULT_SCREEN_WIDTH = 240;
 
     private static final int DEFAULT_SCREEN_HEIGHT = 320;
+
+    private static final String DEFAULT_SCREEN_MODE = "system";
     }

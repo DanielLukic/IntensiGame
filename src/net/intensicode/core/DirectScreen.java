@@ -4,6 +4,9 @@ import net.intensicode.util.Position;
 
 public interface DirectScreen
     {
+    int VIEWPORT_MODE_SYSTEM = 0;
+    int VIEWPORT_MODE_FULLSCREEN = 1;
+
     /**
      * The width of the screen as defined by setTargetSize or the native resolution if no target size has been set.
      */
@@ -28,6 +31,11 @@ public interface DirectScreen
      * Set a target size for rendering. The DirectScreen will scale this to the native resolution if it should differ.
      */
     void setTargetSize( int aWidth, int aHeight );
+
+    /**
+     * Chooses the mode of scaling the virtual/logic game view size onto the device's real display resolution.
+     */
+    void setViewportMode( int aViewportModeId );
 
     // Internal API - TODO: Move the next methods to an internal API..
 
