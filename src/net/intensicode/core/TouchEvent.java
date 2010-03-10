@@ -4,6 +4,8 @@ package net.intensicode.core;
 
 public abstract class TouchEvent
     {
+    public abstract long timestamp();
+
     public abstract boolean isPress();
 
     public abstract boolean isSwipe();

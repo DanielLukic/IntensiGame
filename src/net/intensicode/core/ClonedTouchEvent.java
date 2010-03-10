@@ -2,6 +2,8 @@ package net.intensicode.core;
 
 final class ClonedTouchEvent extends TouchEvent
     {
+    public long timestamp;
+
     public boolean press;
 
     public boolean swipe;
@@ -15,6 +17,7 @@ final class ClonedTouchEvent extends TouchEvent
 
     public ClonedTouchEvent( final TouchEvent aTouchEvent )
         {
+        timestamp = aTouchEvent.timestamp();
         press = aTouchEvent.isPress();
         swipe = aTouchEvent.isSwipe();
         release = aTouchEvent.isRelease();
@@ -23,6 +26,11 @@ final class ClonedTouchEvent extends TouchEvent
         }
 
     // From TouchEvent
+
+    public final long timestamp()
+        {
+        return timestamp;
+        }
 
     public final boolean isPress()
         {
