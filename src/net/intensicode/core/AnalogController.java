@@ -2,11 +2,11 @@ package net.intensicode.core;
 
 public abstract class AnalogController
     {
-    public static final int DEFAULT_SILENCE_IN_MILLIS = 10;
+    public static final int DEFAULT_SILENCE_IN_MILLIS = 1000/32;
 
-    public static final int DEFAULT_SILENCE_TIMEOUT_IN_MILLIS = 25;
+    public static final int DEFAULT_SILENCE_TIMEOUT_IN_MILLIS = 1000/10;
 
-    public static final int DEFAULT_IGNORE_FACTOR = 2;
+    public static final int DEFAULT_IGNORE_FACTOR = 1;
 
     public int silenceBeforeUpdateInMillis = DEFAULT_SILENCE_IN_MILLIS;
 
