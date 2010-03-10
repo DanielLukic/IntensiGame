@@ -32,10 +32,6 @@ public final class TouchGestures implements TouchEventListener
     public final DynamicArray gesture = new DynamicArray();
 
 
-    public boolean combineGestures = true;
-
-    public int combinedGestureThresholdInMillis = 1000 / 6;
-
     public int breakTimeThresholdInMillis = 1000 / 12;
 
     public int samePositionThresholdInPixels = 10;
@@ -44,12 +40,6 @@ public final class TouchGestures implements TouchEventListener
 
     public int directionIgnoreFactor = 2;
 
-
-    public final boolean couldBeCombinedGesture()
-        {
-        if ( !combineGestures ) return false;
-        return System.currentTimeMillis() - myLastGestureTimestamp < combinedGestureThresholdInMillis;
-        }
 
     public final void reset()
         {
@@ -80,10 +70,7 @@ public final class TouchGestures implements TouchEventListener
     private void start( final TouchEvent aTouchEvent )
         {
         Log.debug( "starting new gesture" );
-
-        if ( !couldBeCombinedGesture() ) resetTemporaries();
-        else Log.debug( "COMBINED" );
-
+        resetTemporaries();
         startStrokePath( aTouchEvent );
         }
 
@@ -167,8 +154,6 @@ public final class TouchGestures implements TouchEventListener
             Log.debug( "adding stroke {}", stroke );
             myStrokes.add( stroke );
             }
-
-        myLastGestureTimestamp = System.currentTimeMillis();
         }
 
     private void determineGesture()
@@ -214,8 +199,6 @@ public final class TouchGestures implements TouchEventListener
         lastEventPosition.y = aTouchEvent.getY();
         }
 
-
-    private long myLastGestureTimestamp;
 
     private final Position myStrokeStart = new Position();
 
