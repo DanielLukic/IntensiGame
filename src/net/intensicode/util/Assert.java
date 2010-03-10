@@ -94,6 +94,42 @@ public final class Assert
         //#endif
         }
 
+    public static void equals( final String aMessage, final int aExpected, final int aActual )
+        {
+        //#if ASSERT
+        if ( aExpected == aActual ) return;
+        fail( aMessage, "are not equal", Integer.toString( aExpected ), Integer.toString( aActual ) );
+        //#endif
+        }
+
+    public static void equals( final String aMessage, final long aExpected, final long aActual )
+        {
+        //#if ASSERT
+        if ( aExpected == aActual ) return;
+        fail( aMessage, "are not equal", Long.toString( aExpected ), Long.toString( aActual ) );
+        //#endif
+        }
+
+    //#if !CLDC10
+
+    public static void equals( final String aMessage, final float aExpected, final float aActual, final float aEpsilon )
+        {
+        //#if ASSERT
+        if ( Math.abs( aExpected - aActual ) <= Math.abs( aEpsilon ) ) return;
+        fail( aMessage, "are not equal", Float.toString( aExpected ), Float.toString( aActual ) );
+        //#endif
+        }
+
+    public static void equals( final String aMessage, final double aExpected, final double aActual, final double aEpsilon )
+        {
+        //#if ASSERT
+        if ( Math.abs( aExpected - aActual ) <= Math.abs( aEpsilon ) ) return;
+        fail( aMessage, "are not equal", Double.toString( aExpected ), Double.toString( aActual ) );
+        //#endif
+        }
+
+    //#endif
+
     public static void notEquals( final String aMessage, final Object aExpected, final Object aActual )
         {
         //#if ASSERT
