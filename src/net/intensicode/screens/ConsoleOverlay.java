@@ -9,6 +9,7 @@ public final class ConsoleOverlay extends ScreenBase
     {
     public static boolean show = true;
 
+    public FontGenerator font;
 
 
     public static void addMessage( final String aMessage )
@@ -18,7 +19,7 @@ public final class ConsoleOverlay extends ScreenBase
 
     public ConsoleOverlay( final FontGenerator aFontGen )
         {
-        myFontGen = aFontGen;
+        font = aFontGen;
         }
 
     // From ScreenBase
@@ -45,7 +46,7 @@ public final class ConsoleOverlay extends ScreenBase
 
         final int width = screen().width();
         final int height = screen().height();
-        final int charHeight = myFontGen.charHeight();
+        final int charHeight = font.charHeight();
 
         final int linesOnScreen = height / charHeight;
         while ( theMessages.size > linesOnScreen ) theMessages.remove( 0 );
@@ -60,13 +61,10 @@ public final class ConsoleOverlay extends ScreenBase
                 graphics().drawLine( 0, y, width, y );
                 }
             final ConsoleEntry entry = (ConsoleEntry) theMessages.get( idx );
-            myFontGen.blitString( graphics(), entry.message, myBlitPos, FontGenerator.TOP_LEFT );
+            font.blitString( graphics(), entry.message, myBlitPos, FontGenerator.TOP_LEFT );
             }
         }
 
-
-
-    private final FontGenerator myFontGen;
 
     private final Position myBlitPos = new Position();
 
@@ -75,7 +73,6 @@ public final class ConsoleOverlay extends ScreenBase
     private static final int TICKS_NOT_SET_YET = -1;
 
     private static final int ENTRY_DISPLAY_TIME_IN_SECONDS = 5;
-
 
 
     public static final class ConsoleEntry

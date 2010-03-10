@@ -44,6 +44,14 @@ public abstract class GameSystem
     public DebugScreen debug;
     //#endif
 
+    //#if CONSOLE
+    public ConsoleOverlay console;
+    //#endif
+
+    //#if STATS
+    public EngineStats stats;
+    //#endif
+
 
     public GameSystem( final SystemContext aSystemContext )
         {
@@ -83,7 +91,13 @@ public abstract class GameSystem
         {
         myErrorScreen.changeFont( aFontGenerator );
         //#if DEBUG
-        debug.changeFont( aFontGenerator );
+        debug.font = aFontGenerator;
+        //#endif
+        //#if CONSOLE
+        console.font = aFontGenerator;
+        //#endif
+        //#if STATS
+        stats.font = aFontGenerator;
         //#endif
         }
 
@@ -295,6 +309,14 @@ public abstract class GameSystem
         //#if DEBUG
         debug = new DebugScreen( resources.getSmallDefaultFont() );
         stack.addGlobalHandler( debug );
+        //#endif
+        //#if CONSOLE
+        console = new ConsoleOverlay( resources.getSmallDefaultFont() );
+        stack.addGlobalHandler( console );
+        //#endif
+        //#if STATS
+        stats = new EngineStats( resources.getSmallDefaultFont() );
+        stack.addGlobalHandler( stats );
         //#endif
         initializeErrorScreen();
         initializeMainController();

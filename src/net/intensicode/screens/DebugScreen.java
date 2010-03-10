@@ -7,6 +7,8 @@ import net.intensicode.util.*;
 
 public final class DebugScreen extends MultiScreen
     {
+    public FontGenerator font;
+
     public boolean visible = false;
 
     public boolean autoVisible = false;
@@ -22,7 +24,7 @@ public final class DebugScreen extends MultiScreen
 
     public DebugScreen( final FontGenerator aFont )
         {
-        myFont = aFont;
+        font = aFont;
         }
 
     public DebugInfo giveEmptyDebugInfo()
@@ -52,11 +54,6 @@ public final class DebugScreen extends MultiScreen
         final DebugInfo newInfo = new DebugInfo();
         myDebugInfos.add( newInfo );
         return newInfo;
-        }
-
-    public final void changeFont( final FontGenerator aFontGenerator )
-        {
-        myFont = aFontGenerator;
         }
 
     // From ScreenBase
@@ -108,20 +105,18 @@ public final class DebugScreen extends MultiScreen
         for ( int idx = 0; idx < myDebugInfos.size; idx++ )
             {
             final DebugInfo info = (DebugInfo) myDebugInfos.get( idx );
-            info.onDrawFrame( graphics(), myFont );
+            info.onDrawFrame( graphics(), font );
             }
 
         if ( !drawBorder ) return;
 
         graphics().setColorARGB32( borderColorARGB32 );
-        graphics().fillRect( 0, 0, screen().width(), myFont.charHeight() );
-        graphics().fillRect( 0, screen().height() - myFont.charHeight(), screen().width(), myFont.charHeight() );
-        graphics().fillRect( 0, 0, myFont.charHeight(), screen().height() );
-        graphics().fillRect( screen().width() - myFont.charHeight(), 0, myFont.charHeight(), screen().height() );
+        graphics().fillRect( 0, 0, screen().width(), font.charHeight() );
+        graphics().fillRect( 0, screen().height() - font.charHeight(), screen().width(), font.charHeight() );
+        graphics().fillRect( 0, 0, font.charHeight(), screen().height() );
+        graphics().fillRect( screen().width() - font.charHeight(), 0, font.charHeight(), screen().height() );
         }
 
-
-    private FontGenerator myFont;
 
     private ClearScreen myBackground;
 
