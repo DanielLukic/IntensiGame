@@ -1,5 +1,3 @@
-//#condition TOUCH
-
 package net.intensicode;
 
 import net.intensicode.core.*;
@@ -16,17 +14,21 @@ public final class ControlSequenceHandler extends ScreenBase
     public static final int GRID_SIZE = 3;
 
     //#if CHEAT
+
     public int[] cheatSequence = { GRID_SIZE * 2, GRID_SIZE + 2, 0, GRID_SIZE + 2, GRID_SIZE + 1, GRID_SIZE };
+
     //#endif
 
     //#if DEBUG
 
     public int[] debugSequence = { 0, GRID_SIZE + 2, GRID_SIZE * 2, 1, GRID_SIZE + 1, GRID_SIZE * 2 + 1 };
+
     //#endif
 
     //#if TIMING
 
     public int[] timingSequence = { 0, 1, 2, 3, 1 };
+
     //#endif
 
 
@@ -178,5 +180,5 @@ public final class ControlSequenceHandler extends ScreenBase
 
     private static final int UNUSED_SEQUENCE_INDEX = -1;
 
-    private static final int TOUCH_EVENTS_COLOR_ARGB32 = 0x10FFFFFF;
+    private static final int TOUCH_EVENTS_COLOR_ARGB32 = 0x40FFFFFF;
     }
