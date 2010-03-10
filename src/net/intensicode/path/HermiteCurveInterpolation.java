@@ -1,19 +1,14 @@
 package net.intensicode.path;
 
-import net.intensicode.util.FixedMath;
-import net.intensicode.util.Position;
-
+import net.intensicode.util.*;
 
 
 /**
- * TODO: Describe this!
- * <p/>
- * http://www.cubic.org/docs/hermite.htm
+ * See http://www.cubic.org/docs/hermite.htm for details.
  */
 public final class HermiteCurveInterpolation implements Interpolation, PositionList
     {
     public static final int MAX_INPUT_POINTS = 32;
-
 
 
     public HermiteCurveInterpolation()
@@ -25,7 +20,7 @@ public final class HermiteCurveInterpolation implements Interpolation, PositionL
             myOutgoingTangents[ idx ] = new Position();
             }
         }
-    
+
     // From PositionList
 
     public final void clear()
@@ -151,13 +146,13 @@ public final class HermiteCurveInterpolation implements Interpolation, PositionL
             return calcIncomingCardinalTangent( aSegmentIndex );
             }
         else if ( aSegmentIndex == myInputSize - 1 )
-            {
-            return calcIncomingCardinalTangent( myInputSize - 2 );
-            }
-        else
-            {
-            throw new IllegalArgumentException();
-            }
+                {
+                return calcIncomingCardinalTangent( myInputSize - 2 );
+                }
+            else
+                {
+                throw new IllegalArgumentException();
+                }
         }
 
     private Position calcOutgoingTangent( final int aSegmentIndex )
@@ -173,13 +168,13 @@ public final class HermiteCurveInterpolation implements Interpolation, PositionL
             return calcOutgoingCardinalTangent( aSegmentIndex );
             }
         else if ( aSegmentIndex == myInputSize - 1 )
-            {
-            return calcOutgoingCardinalTangent( myInputSize - 2 );
-            }
-        else
-            {
-            throw new IllegalArgumentException();
-            }
+                {
+                return calcOutgoingCardinalTangent( myInputSize - 2 );
+                }
+            else
+                {
+                throw new IllegalArgumentException();
+                }
         }
 
     private Position calcIncomingKochanekBartelsTangent( final int aSegmentIndex )
@@ -240,7 +235,6 @@ public final class HermiteCurveInterpolation implements Interpolation, PositionL
         //#endif
         return myTempDirection;
         }
-
 
 
     private int myInputSize;

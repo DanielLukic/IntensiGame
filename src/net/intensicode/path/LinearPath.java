@@ -1,18 +1,8 @@
-/************************************************************************/
-/* {{PROJECT_NAME}}             {{COMPANY}}             {{DATE_CREATE}} */
-/************************************************************************/
-
 package net.intensicode.path;
 
-import net.intensicode.util.DynamicArray;
-import net.intensicode.util.FixedMath;
-import net.intensicode.util.Position;
+import net.intensicode.util.*;
 
 
-
-/**
- * TODO: Describe this!
- */
 public final class LinearPath implements Path, PositionList
     {
     public LinearPath()
@@ -157,7 +147,6 @@ public final class LinearPath implements Path, PositionList
         {
         return (DirectedPosition) myInputPositions.objects[ aLastIndex ];
         }
-
 
 
     private int myPathLength;
