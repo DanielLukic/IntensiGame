@@ -14,6 +14,10 @@ public final class FixedMath
 
     public static final int FIXED_0 = 0;
 
+    public static final int FIXED_0_1 = FIXED_ONE / 10;
+
+    public static final int FIXED_0_2 = FIXED_ONE / 5;
+
     public static final int FIXED_0_25 = FIXED_ONE / 4;
 
     public static final int FIXED_0_5 = FIXED_ONE / 2;
