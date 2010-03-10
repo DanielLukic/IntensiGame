@@ -13,7 +13,6 @@ public final class DynamicArray
     public int size;
 
 
-
     public DynamicArray()
         {
         this( 5, 5 );
@@ -143,6 +142,24 @@ public final class DynamicArray
             }
         aVisitor.done();
         }
+
+    // From Object
+
+    //#if DEBUG
+
+    public String toString()
+        {
+        final StringBuffer buffer = new StringBuffer();
+        for ( int idx = 0; idx < size; idx++ )
+            {
+            buffer.append( objects[ idx ] );
+            buffer.append( ',' );
+            }
+        if ( buffer.length() > 0 ) buffer.setLength( buffer.length() - 1 );
+        return buffer.toString();
+        }
+
+    //#endif
 
     // Implementation
 
