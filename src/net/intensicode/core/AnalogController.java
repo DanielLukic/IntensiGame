@@ -8,14 +8,6 @@ public abstract class AnalogController
 
     public static final int DEFAULT_IGNORE_FACTOR = 2;
 
-    //#if SENSORS
-
-    public boolean useOrientationSensor;
-
-    public boolean useAccelerationSensor;
-
-    //#endif
-
     public int silenceBeforeUpdateInMillis = DEFAULT_SILENCE_IN_MILLIS;
 
     public int silenceTimeoutInMillis = DEFAULT_SILENCE_TIMEOUT_IN_MILLIS;
@@ -77,24 +69,11 @@ public abstract class AnalogController
 
     public final void onControlTick()
         {
-        //#if SENSORS
-        if ( useOrientationSensor ) mapOrientationToMovement();
-        if ( useAccelerationSensor ) mapAccelerationToMovement();
-        //#endif
-
         if ( hasNewData() ) updateDeltaValues();
         else if ( autoClear ) clearDeltaValues();
         }
 
     // Protected Abstract API
-
-    //#if SENSORS
-
-    protected abstract void mapOrientationToMovement();
-
-    protected abstract void mapAccelerationToMovement();
-
-    //#endif
 
     protected abstract boolean hasNewData();
 
