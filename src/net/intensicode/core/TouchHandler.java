@@ -83,6 +83,7 @@ public abstract class TouchHandler
         {
         if ( isSameEventAgain( aTouchEvent ) ) return;
 
+        // TODO: Use pool for these objects..
         if ( myQueuedEvents.size == MAX_QUEUED_EVENTS ) myQueuedEvents.remove( 0 );
         myQueuedEvents.add( new ClonedTouchEvent( aTouchEvent ) );
         }
