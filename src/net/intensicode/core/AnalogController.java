@@ -10,9 +10,9 @@ public abstract class AnalogController
 
     public int silenceBeforeUpdateInMillis = DEFAULT_SILENCE_IN_MILLIS;
 
-    public int silenceTimeoutInMillis = DEFAULT_SILENCE_TIMEOUT_IN_MILLIS;
+    public int multiEventThresholdInMillis = DEFAULT_SILENCE_TIMEOUT_IN_MILLIS;
 
-    public int ignoreFactor = DEFAULT_IGNORE_FACTOR;
+    public int directionIgnoreFactor = DEFAULT_IGNORE_FACTOR;
 
     public boolean autoClear;
 
@@ -52,12 +52,12 @@ public abstract class AnalogController
 
     public final boolean shouldIgnoreDeltaX()
         {
-        return Math.abs( getDeltaY() ) > Math.abs( getDeltaX() ) * ignoreFactor;
+        return Math.abs( getDeltaY() ) > Math.abs( getDeltaX() ) * directionIgnoreFactor;
         }
 
     public final boolean shouldIgnoreDeltaY()
         {
-        return Math.abs( getDeltaX() ) > Math.abs( getDeltaY() ) * ignoreFactor;
+        return Math.abs( getDeltaX() ) > Math.abs( getDeltaY() ) * directionIgnoreFactor;
         }
 
     public final void clearDeltaValues()

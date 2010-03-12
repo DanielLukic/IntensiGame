@@ -30,7 +30,7 @@ public abstract class AnalogControllerBase extends AnalogController
         final long nowInMillis = System.currentTimeMillis();
 
         final long millisSinceFirstEvent = nowInMillis - myFirstDataTimeStamp;
-        if ( millisSinceFirstEvent > silenceTimeoutInMillis ) return myNewDataFlag;
+        if ( millisSinceFirstEvent > multiEventThresholdInMillis ) return myNewDataFlag;
 
         final long millisSinceLastEvent = nowInMillis - myLastDataTimeStamp;
         return millisSinceLastEvent > silenceBeforeUpdateInMillis && myNewDataFlag;
