@@ -33,11 +33,11 @@ public final class TouchGestures implements TouchEventListener
 
     public Rectangle optionalHotzone;
 
-    public int breakTimeThresholdInMillis = 1000 / 12;
+    public int breakTimeThresholdInMillis = 1000 / 15;
 
-    public int samePositionThresholdInPixels = 10;
+    public int samePositionThresholdInPixels = 12;
 
-    public int strokeThresholdInPixels = 5;
+    public int strokeThresholdInPixels = 6;
 
     public int directionIgnoreFactor = 2;
 
