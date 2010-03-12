@@ -31,6 +31,7 @@ public final class TouchGestures implements TouchEventListener
 
     public final DynamicArray gesture = new DynamicArray();
 
+    public Rectangle optionalHotzone;
 
     public int breakTimeThresholdInMillis = 1000 / 12;
 
@@ -60,6 +61,12 @@ public final class TouchGestures implements TouchEventListener
 
     public final void onTouchEvent( final TouchEvent aTouchEvent )
         {
+        if ( optionalHotzone != null )
+            {
+            if ( !optionalHotzone.contains( aTouchEvent.getX(), aTouchEvent.getY() ) ) return;
+            if ( !aTouchEvent.isPress() && myStrokePath.empty() ) return;
+            }
+
         if ( aTouchEvent.isPress() ) start( aTouchEvent );
         else if ( aTouchEvent.isSwipe() ) move( aTouchEvent );
         else if ( aTouchEvent.isRelease() ) end( aTouchEvent );
