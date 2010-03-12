@@ -289,10 +289,6 @@ public abstract class GameSystem
         {
         try
             {
-            if ( stack.activeScreen() == myErrorScreen )
-                {
-                throw new RuntimeException( "error screen is causing errors :)" );
-                }
             myErrorScreen.reset();
             myErrorScreen.message = aMessage;
             if ( aOptionalThrowable != null ) myErrorScreen.setCause( aOptionalThrowable );
@@ -300,6 +296,9 @@ public abstract class GameSystem
             }
         catch ( final Exception e )
             {
+            //#if DEBUG
+            Log.error( "showing error screen failed", e );
+            //#endif
             throwWrappedExceptionToTellCallingSystemAboutBrokenGameSystem( e );
             }
         }
