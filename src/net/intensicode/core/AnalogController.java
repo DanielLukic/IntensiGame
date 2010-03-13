@@ -40,8 +40,21 @@ public abstract class AnalogController
 
     public int downMax;
 
+    public int leftMaxRaw;
+
+    public int rightMaxRaw;
+
+    public int upMaxRaw;
+
+    public int downMaxRaw;
+
     public int accumulationTicks;
 
+
+    public final boolean hasNonZeroData()
+        {
+        return ( leftDelta > 0 || rightDelta > 0 || upDelta > 0 || downDelta > 0 );
+        }
 
     public final int getDeltaX()
         {
@@ -74,6 +87,7 @@ public abstract class AnalogController
         {
         leftDelta = rightDelta = upDelta = downDelta = 0;
         leftMax = rightMax = upMax = downMax = 0;
+        leftMaxRaw = rightMaxRaw = upMaxRaw = downMaxRaw = 0;
         accumulationTicks = 0;
         }
 
