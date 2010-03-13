@@ -4,23 +4,42 @@ public abstract class AnalogControllerBase extends AnalogController
     {
     protected AnalogControllerBase()
         {
+        clearTemporaries();
         }
 
     // Protected API
 
     protected final synchronized void onSystemUpdateEvent( final int aStepsX, final int aStepsY )
         {
+        onSystemUpdateEvent( aStepsX, aStepsY, System.currentTimeMillis() );
+        }
+
+    protected final synchronized void onSystemUpdateEvent( final int aStepsX, final int aStepsY, final long aTimestamp )
+        {
         if ( aStepsX < 0 ) update( INDEX_LEFT, aStepsX );
         if ( aStepsX > 0 ) update( INDEX_RIGHT, aStepsX );
         if ( aStepsY < 0 ) update( INDEX_UP, aStepsY );
         if ( aStepsY > 0 ) update( INDEX_DOWN, aStepsY );
 
-        if ( myAccumulationTicks == 0 ) myFirstDataTimeStamp = System.currentTimeMillis();
-        myLastDataTimeStamp = System.currentTimeMillis();
+        if ( stillZeroMovement() )
+            {
+            myNewDataFlag = false;
+            return;
+            }
 
+        if ( myAccumulationTicks == 0 ) myFirstDataTimeStamp = aTimestamp;
+        myLastDataTimeStamp = aTimestamp;
         myAccumulationTicks++;
-
         myNewDataFlag = true;
+        }
+
+    private boolean stillZeroMovement()
+        {
+        for ( int idx = 0; idx < INDEX_COUNT; idx++ )
+            {
+            if ( myAccumulatedValues[ idx ] != 0 ) return false;
+            }
+        return true;
         }
 
     // From AnalogController
@@ -58,8 +77,18 @@ public abstract class AnalogControllerBase extends AnalogController
     private void update( final int aValueIndex, final int aRawInput )
         {
         final int absoluteInput = Math.abs( aRawInput );
-        myLargestValues[ aValueIndex ] = Math.max( myLargestValues[ aValueIndex ], absoluteInput );
-        myAccumulatedValues[ aValueIndex ] += absoluteInput;
+        if ( myInitialTicksThresholds[ aValueIndex ] > absoluteInput )
+            {
+            myInitialTicksThresholds[ aValueIndex ] -= absoluteInput;
+            }
+        else
+            {
+            final int remainingInput = absoluteInput - myInitialTicksThresholds[ aValueIndex ];
+            myInitialTicksThresholds[ aValueIndex ] = 0;
+
+            myLargestValues[ aValueIndex ] = Math.max( myLargestValues[ aValueIndex ], remainingInput );
+            myAccumulatedValues[ aValueIndex ] += remainingInput;
+            }
         }
 
     private void clearTemporaries()
@@ -67,6 +96,9 @@ public abstract class AnalogControllerBase extends AnalogController
         for ( int idx = 0; idx < INDEX_COUNT; idx++ )
             {
             myLargestValues[ idx ] = myAccumulatedValues[ idx ] = 0;
+            myInitialTicksThresholds[ idx ] = initialTicksThreshold;
+            myMultiTicksThresholds[ idx ] = multiTicksThreshold;
+            myAdditionalMultiTicksThresholds[ idx ] = additionalMultiTicksThreshold;
             }
 
         myFirstDataTimeStamp = myLastDataTimeStamp = 0;
@@ -96,4 +128,10 @@ public abstract class AnalogControllerBase extends AnalogController
     private final int[] myLargestValues = new int[INDEX_COUNT];
 
     private final int[] myAccumulatedValues = new int[INDEX_COUNT];
+
+    private final int[] myInitialTicksThresholds = new int[INDEX_COUNT];
+
+    private final int[] myMultiTicksThresholds = new int[INDEX_COUNT];
+
+    private final int[] myAdditionalMultiTicksThresholds = new int[INDEX_COUNT];
     }
