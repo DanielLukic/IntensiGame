@@ -1,18 +1,26 @@
 package net.intensicode.core;
 
+import net.intensicode.util.FixedMath;
+
 public abstract class AnalogController
     {
     public static final int DEFAULT_SILENCE_IN_MILLIS = 1000/32;
 
     public static final int DEFAULT_SILENCE_TIMEOUT_IN_MILLIS = 1000/10;
 
-    public static final int DEFAULT_IGNORE_FACTOR = 1;
+    public static final int DEFAULT_IGNORE_FACTOR_FIXED = FixedMath.FIXED_1;
 
     public int silenceBeforeUpdateInMillis = DEFAULT_SILENCE_IN_MILLIS;
 
     public int multiEventThresholdInMillis = DEFAULT_SILENCE_TIMEOUT_IN_MILLIS;
 
-    public int directionIgnoreFactor = DEFAULT_IGNORE_FACTOR;
+    public int directionIgnoreFactorFixed = DEFAULT_IGNORE_FACTOR_FIXED;
+
+    public int initialTicksThreshold = 0;
+
+    public int multiTicksThreshold = 3;
+
+    public int additionalMultiTicksThreshold = 1;
 
     public boolean autoClear;
 
@@ -52,12 +60,14 @@ public abstract class AnalogController
 
     public final boolean shouldIgnoreDeltaX()
         {
-        return Math.abs( getDeltaY() ) > Math.abs( getDeltaX() ) * directionIgnoreFactor;
+        final int fixedScaledDeltaX = Math.abs( getDeltaX() ) * directionIgnoreFactorFixed;
+        return Math.abs( getDeltaY() ) > FixedMath.toInt( fixedScaledDeltaX );
         }
 
     public final boolean shouldIgnoreDeltaY()
         {
-        return Math.abs( getDeltaX() ) > Math.abs( getDeltaY() ) * directionIgnoreFactor;
+        final int fixedScaledDeltaY = Math.abs( getDeltaY() ) * directionIgnoreFactorFixed;
+        return Math.abs( getDeltaX() ) > FixedMath.toInt( fixedScaledDeltaY );
         }
 
     public final void clearDeltaValues()
