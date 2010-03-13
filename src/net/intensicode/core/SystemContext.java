@@ -37,6 +37,8 @@ public interface SystemContext
 
     void onDestroyApplication();
 
+    void triggerEngineConfigurationMenu();
+
     /**
      * This should terminate the application asap. You should not call this directly.
      * Use GameSystem#shutdownAndExit instead.
