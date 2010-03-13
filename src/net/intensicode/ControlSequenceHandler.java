@@ -31,6 +31,8 @@ public final class ControlSequenceHandler extends ScreenBase
 
     //#endif
 
+    public int[] configurationSequence = { 6, 8, 1 };
+
 
     public final boolean isSequenceMatched( final int[] aSequence )
         {
@@ -85,6 +87,9 @@ public final class ControlSequenceHandler extends ScreenBase
             System.out.println( buffer );
             }
         //#endif
+
+        final boolean configurationMatched = isSequenceMatched( configurationSequence );
+        if ( configurationMatched ) system().context.triggerEngineConfigurationMenu();
         }
 
     private void processLastKeyCode()
