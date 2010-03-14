@@ -83,11 +83,15 @@ public abstract class AnalogController
         return Math.abs( getDeltaX() ) > FixedMath.toInt( fixedScaledDeltaY );
         }
 
+    public void reset()
+        {
+        clearDeltaValues();
+        }
+
     public final void clearDeltaValues()
         {
         leftDelta = rightDelta = upDelta = downDelta = 0;
         leftMax = rightMax = upMax = downMax = 0;
-        leftMaxRaw = rightMaxRaw = upMaxRaw = downMaxRaw = 0;
         accumulationTicks = 0;
         }
 

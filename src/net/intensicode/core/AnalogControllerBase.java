@@ -2,12 +2,18 @@ package net.intensicode.core;
 
 public abstract class AnalogControllerBase extends AnalogController
     {
-    protected AnalogControllerBase()
+    public void reset()
         {
+        super.reset();
         clearTemporaries();
         }
 
     // Protected API
+
+    protected AnalogControllerBase()
+        {
+        clearTemporaries();
+        }
 
     protected final synchronized void onSystemUpdateEvent( final int aStepsX, final int aStepsY )
         {
