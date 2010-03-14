@@ -4,17 +4,11 @@ import net.intensicode.util.FixedMath;
 
 public abstract class AnalogController
     {
-    public static final int DEFAULT_SILENCE_IN_MILLIS = 1000/32;
+    public int silenceBeforeUpdateInMillis = 1000/8;
 
-    public static final int DEFAULT_SILENCE_TIMEOUT_IN_MILLIS = 1000/10;
+    public int multiEventThresholdInMillis = 1000/8;
 
-    public static final int DEFAULT_IGNORE_FACTOR_FIXED = FixedMath.FIXED_1;
-
-    public int silenceBeforeUpdateInMillis = DEFAULT_SILENCE_IN_MILLIS;
-
-    public int multiEventThresholdInMillis = DEFAULT_SILENCE_TIMEOUT_IN_MILLIS;
-
-    public int directionIgnoreFactorFixed = DEFAULT_IGNORE_FACTOR_FIXED;
+    public int directionIgnoreFactorFixed = FixedMath.FIXED_1;
 
     public int initialTicksThreshold = 0;
 
@@ -40,13 +34,13 @@ public abstract class AnalogController
 
     public int downMax;
 
-    public int leftMaxRaw;
+    public int leftRaw;
 
-    public int rightMaxRaw;
+    public int rightRaw;
 
-    public int upMaxRaw;
+    public int upRaw;
 
-    public int downMaxRaw;
+    public int downRaw;
 
     public int accumulationTicks;
 
