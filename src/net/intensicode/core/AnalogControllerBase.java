@@ -22,6 +22,8 @@ public abstract class AnalogControllerBase extends AnalogController
 
     protected final synchronized void onSystemUpdateEvent( final int aStepsX, final int aStepsY, final long aTimestamp )
         {
+        if ( systemSpecificNowInMillis() - myLastUpdateTimeStamp < forcedSilenceBetweenEventsInMillis ) return;
+
         if ( aStepsX < 0 ) update( INDEX_LEFT, aStepsX );
         if ( aStepsX > 0 ) update( INDEX_RIGHT, aStepsX );
         if ( aStepsY < 0 ) update( INDEX_UP, aStepsY );
@@ -66,6 +68,8 @@ public abstract class AnalogControllerBase extends AnalogController
         rightRaw = myAccumulatedRawValues[ INDEX_RIGHT ];
         upRaw = myAccumulatedRawValues[ INDEX_UP ];
         downRaw = myAccumulatedRawValues[ INDEX_DOWN ];
+
+        myLastUpdateTimeStamp = systemSpecificNowInMillis();
 
         accumulationTicks = myAccumulationTicks;
 
@@ -115,6 +119,8 @@ public abstract class AnalogControllerBase extends AnalogController
     private long myLastDataTimeStamp;
 
     private long myFirstDataTimeStamp;
+
+    private long myLastUpdateTimeStamp;
 
     private static final int INDEX_LEFT = 0;
 
