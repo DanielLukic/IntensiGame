@@ -20,6 +20,21 @@ public abstract class IntensiGame implements SystemContext
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
 
+    public ConfigurationElementsTree getPlatformValues()
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
+    public ConfigurationElementsTree getSystemValues()
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
+    public ConfigurationElementsTree getApplicationValues()
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
     public void onFramesDropped()
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );

@@ -3,6 +3,7 @@ package net.intensicode.core;
 import net.intensicode.graphics.*;
 import net.intensicode.screens.*;
 import net.intensicode.util.*;
+import net.intensicode.SystemContext;
 
 public abstract class GameSystem
     {

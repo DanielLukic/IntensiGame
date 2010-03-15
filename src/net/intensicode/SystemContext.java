@@ -1,6 +1,7 @@
-package net.intensicode.core;
+package net.intensicode;
 
 import net.intensicode.screens.ScreenBase;
+import net.intensicode.core.GameSystem;
 
 public interface SystemContext
     {
@@ -24,20 +25,52 @@ public interface SystemContext
     ScreenBase createMainScreen() throws Exception;
 
     /**
+     * Used internally to access the platform-specific configurable values.
+     */
+    ConfigurationElementsTree getPlatformValues();
+
+    /**
+     * Used internally to access the game system configurable values.
+     */
+    ConfigurationElementsTree getSystemValues();
+
+    /**
+     * Here you should provide your application-specific configurable values.
+     */
+    ConfigurationElementsTree getApplicationValues();
+
+    /**
      * This will be called whenever frames have been dropped. Possible causes: Your frame drawing or your
      * control ticks take too long. Or the system is overloaded.
      */
     void onFramesDropped();
 
+    /**
+     * Called when ControlSequenceHandler detects debug sequence.
+     */
     void onDebugTriggered();
 
+    /**
+     * Called when ControlSequenceHandler detects cheat sequence.
+     */
     void onCheatTriggered();
 
+    /**
+     * Called when game system detects application being paused or sent to background. You should do whatever is
+     * necessary to pause your game logic. Could be as simple as saying gameModel.gameState = PAUSED.
+     */
     void onPauseApplication();
 
+    /**
+     * Called before the application is destroyed.
+     */
     void onDestroyApplication();
 
-    void triggerEngineConfigurationMenu();
+    /**
+     * Call this to trigger the game system configuration menu. This will include all configurable values provided by
+     * getPlatformValues, getSystemValues and getApplicationValues.
+     */
+    void triggerConfigurationMenu();
 
     /**
      * This should terminate the application asap. You should not call this directly.
