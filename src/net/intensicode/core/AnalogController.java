@@ -4,15 +4,17 @@ import net.intensicode.util.FixedMath;
 
 public abstract class AnalogController
     {
-    public int silenceBeforeUpdateInMillis = 1000/8;
+    public int forcedSilenceBetweenEventsInMillis = 50;
 
-    public int multiEventThresholdInMillis = 1000/8;
+    public int silenceBeforeUpdateInMillis = 125;
+
+    public int multiEventThresholdInMillis = 250;
 
     public int directionIgnoreFactorFixed = FixedMath.FIXED_1;
 
-    public int initialTicksThreshold = 0;
+    public int initialTicksThreshold = 1;
 
-    public int multiTicksThreshold = 3;
+    public int multiTicksThreshold = 8;
 
     public int additionalMultiTicksThreshold = 1;
 
