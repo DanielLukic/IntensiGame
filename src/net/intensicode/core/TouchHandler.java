@@ -3,8 +3,9 @@
 package net.intensicode.core;
 
 import net.intensicode.util.*;
+import net.intensicode.screens.ScreenBase;
 
-public abstract class TouchHandler
+public abstract class TouchHandler extends ScreenBase
     {
     public boolean globalControlsActive = true;
 

@@ -268,9 +268,6 @@ public abstract class GameSystem
         //#if SENSORS
         sensors.onControlTick();
         //#endif
-        //#if TOUCH
-        touch.onControlTick();
-        //#endif
         analog.onControlTick();
         keys.onControlTick();
 
@@ -290,9 +287,6 @@ public abstract class GameSystem
             {
             screen.beginFrame();
             stack.onDrawFrame( this );
-            //#if TOUCH
-            touch.onDrawFrame();
-            //#endif
             }
         finally
             {
@@ -326,6 +320,9 @@ public abstract class GameSystem
 
     private void initialize() throws Exception
         {
+        //#if TOUCH
+        stack.addGlobalHandler( touch );
+        //#endif
         //#if DEBUG
         debug = new DebugScreen( resources.getSmallDefaultFont() );
         stack.addGlobalHandler( debug );
