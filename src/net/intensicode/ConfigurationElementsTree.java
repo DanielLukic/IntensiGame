@@ -41,6 +41,16 @@ public final class ConfigurationElementsTree
         return (ConfigurationElementsTree) myEntries.get( aIndex );
         }
 
+    public final ConfigurationElementsTree getEntryByLabel( final String aLabel )
+        {
+        for ( int idx = 0; idx < numberOfEntries(); idx++ )
+            {
+            final ConfigurationElementsTree entry = getEntry( idx );
+            if ( entry.label.equals( aLabel ) ) return entry;
+            }
+        throw new IllegalArgumentException( "entry label not found: " + aLabel );
+        }
+
     public final boolean isLeaf()
         {
         return myEntries.size == 0;
