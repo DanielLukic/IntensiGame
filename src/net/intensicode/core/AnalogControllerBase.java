@@ -118,8 +118,14 @@ public abstract class AnalogControllerBase extends AnalogController
         myAccumulatedValues[ aValueIndex ] -= multiTicksThreshold;
         myAccumulatedValues[ aValueIndex ] += 1;
 
+        if ( additionalMultiTicksThreshold == 0 )
+            {
+            myAccumulatedValues[ aValueIndex ] = 2;
+            return;
+            }
+
         final int additionalMultiTicksRaw = myAccumulatedValues[ aValueIndex ] - 2;
-        final int additionalMultiTicks = additionalMultiTicksRaw / ( additionalMultiTicksThreshold + 1 );
+        final int additionalMultiTicks = additionalMultiTicksRaw / additionalMultiTicksThreshold;
         myAccumulatedValues[ aValueIndex ] = 2 + additionalMultiTicks;
         }
 
