@@ -52,6 +52,7 @@ public abstract class AnalogControllerBase extends AnalogController
 
     protected final synchronized void updateDeltaValues()
         {
+        processValues();
         normalizeValues();
 
         leftDelta = myAccumulatedValues[ INDEX_LEFT ];
@@ -85,6 +86,41 @@ public abstract class AnalogControllerBase extends AnalogController
         myLargestValues[ aValueIndex ] = Math.max( myLargestValues[ aValueIndex ], absoluteInput );
         myAccumulatedRawValues[ aValueIndex ] += absoluteInput;
         myAccumulatedValues[ aValueIndex ] += absoluteInput;
+        }
+
+    private void processValues()
+        {
+        processValue( INDEX_LEFT );
+        processValue( INDEX_RIGHT );
+        processValue( INDEX_UP );
+        processValue( INDEX_DOWN );
+        }
+
+    private void processValue( final int aValueIndex )
+        {
+        if ( myAccumulatedValues[ aValueIndex ] <= initialTicksThreshold )
+            {
+            myAccumulatedValues[ aValueIndex ] = 0;
+            return;
+            }
+
+        // convert the 'initial ticks' into the 'first tick':
+        myAccumulatedValues[ aValueIndex ] -= initialTicksThreshold;
+        myAccumulatedValues[ aValueIndex ] += 1;
+
+        if ( myAccumulatedValues[ aValueIndex ] <= 1 + multiTicksThreshold )
+            {
+            myAccumulatedValues[ aValueIndex ] = 1;
+            return;
+            }
+
+        // convert the 'multi ticks' into the 'second tick':
+        myAccumulatedValues[ aValueIndex ] -= multiTicksThreshold;
+        myAccumulatedValues[ aValueIndex ] += 1;
+
+        final int additionalMultiTicksRaw = myAccumulatedValues[ aValueIndex ] - 2;
+        final int additionalMultiTicks = additionalMultiTicksRaw / ( additionalMultiTicksThreshold + 1 );
+        myAccumulatedValues[ aValueIndex ] = 2 + additionalMultiTicks;
         }
 
     private void normalizeValues()
