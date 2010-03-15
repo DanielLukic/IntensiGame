@@ -45,7 +45,7 @@ public abstract class IntensiGame implements SystemContext
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
 
-    public void triggerEngineConfigurationMenu()
+    public void triggerConfigurationMenu()
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }

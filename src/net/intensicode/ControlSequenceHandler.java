@@ -89,7 +89,7 @@ public final class ControlSequenceHandler extends ScreenBase
         //#endif
 
         final boolean configurationMatched = isSequenceMatched( configurationSequence );
-        if ( configurationMatched ) system().context.triggerEngineConfigurationMenu();
+        if ( configurationMatched ) system().context.triggerConfigurationMenu();
         }
 
     private void processLastKeyCode()
