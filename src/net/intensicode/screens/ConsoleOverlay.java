@@ -9,12 +9,16 @@ public final class ConsoleOverlay extends ScreenBase
     {
     public static boolean show = true;
 
+    public int defaultStayTimeInTicks = TICKS_NOT_SET_YET;
+
+    public int recommendedMaxStayTimeInTicks = TICKS_NOT_SET_YET;
+
     public FontGenerator font;
 
 
     public static void addMessage( final String aMessage )
         {
-        theMessages.insert( 0, new ConsoleEntry( aMessage, TICKS_NOT_SET_YET ) );
+        theMessages.add( new ConsoleOverlayEntry( aMessage, TICKS_NOT_SET_YET ) );
         }
 
     public ConsoleOverlay( final FontGenerator aFontGen )
@@ -24,20 +28,28 @@ public final class ConsoleOverlay extends ScreenBase
 
     // From ScreenBase
 
+    public void onInitEverytime() throws Exception
+        {
+        if ( defaultStayTimeInTicks != TICKS_NOT_SET_YET ) return;
+        defaultStayTimeInTicks = timing().ticksPerSecond * DEFAULT_STAY_TIME_IN_SECONDS;
+        recommendedMaxStayTimeInTicks = timing().ticksPerSecond * MAX_STAY_TIME_IN_SECONDS;
+        }
+
     public final void onControlTick() throws Exception
         {
-        for ( int idx = theMessages.size - 1; idx >= 0; idx-- )
+        for ( int idx = 0; idx < theMessages.size; idx++ )
             {
-            final ConsoleEntry entry = (ConsoleEntry) theMessages.get( idx );
-            if ( entry.tickCounter == TICKS_NOT_SET_YET )
-                {
-                entry.tickCounter = system().timing.ticksPerSecond * ENTRY_DISPLAY_TIME_IN_SECONDS;
-                }
-            if ( --entry.tickCounter == 0 )
-                {
-                theMessages.remove( idx );
-                }
+            final ConsoleOverlayEntry entry = (ConsoleOverlayEntry) theMessages.get( idx );
+            if ( entry.tickCounter == TICKS_NOT_SET_YET ) entry.tickCounter = defaultStayTimeInTicks;
+            if ( entry.active ) entry.onControlTick();
+            else myInactiveMessages.add( entry );
             }
+
+        for ( int idx = 0; idx < myInactiveMessages.size; idx++ )
+            {
+            theMessages.removeAll( myInactiveMessages.get( idx ) );
+            }
+        myInactiveMessages.clear();
         }
 
     public final void onDrawFrame()
@@ -51,16 +63,15 @@ public final class ConsoleOverlay extends ScreenBase
         final int linesOnScreen = height / charHeight;
         while ( theMessages.size > linesOnScreen ) theMessages.remove( 0 );
 
-        graphics().setColorRGB24( 0 );
+        graphics().setColorARGB32( 0x80000000 );
 
         for ( int idx = 0; idx < theMessages.size; idx++ )
             {
             myBlitPos.y = height - ( idx + 1 ) * charHeight;
-            for ( int y = myBlitPos.y; y < myBlitPos.y + charHeight; y += 2 )
-                {
-                graphics().drawLine( 0, y, width, y );
-                }
-            final ConsoleEntry entry = (ConsoleEntry) theMessages.get( idx );
+
+            graphics().fillRect( 0, myBlitPos.y, width, charHeight );
+
+            final ConsoleOverlayEntry entry = (ConsoleOverlayEntry) theMessages.get( theMessages.size - 1 - idx );
             font.blitString( graphics(), entry.message, myBlitPos, FontGenerator.TOP_LEFT );
             }
         }
@@ -68,23 +79,13 @@ public final class ConsoleOverlay extends ScreenBase
 
     private final Position myBlitPos = new Position();
 
+    private final DynamicArray myInactiveMessages = new DynamicArray();
+
     private static final DynamicArray theMessages = new DynamicArray();
 
     private static final int TICKS_NOT_SET_YET = -1;
 
-    private static final int ENTRY_DISPLAY_TIME_IN_SECONDS = 5;
+    private static final int MAX_STAY_TIME_IN_SECONDS = 5;
 
-
-    public static final class ConsoleEntry
-        {
-        public int tickCounter;
-
-        public final String message;
-
-        public ConsoleEntry( final String aMessage, final int aTicksBeforeRemoval )
-            {
-            message = aMessage;
-            tickCounter = aTicksBeforeRemoval;
-            }
-        }
+    private static final int DEFAULT_STAY_TIME_IN_SECONDS = 5;
     }

@@ -108,9 +108,17 @@ public abstract class GameSystem
     public final ConfigurationElementsTree getSystemValues()
         {
         final ConfigurationElementsTree system = new ConfigurationElementsTree( "Game System" );
+
         final ConfigurationElementsTree timing = system.addSubTree( "Timing" );
         timing.addLeaf( new TicksPerSecond( this.timing ) );
         timing.addLeaf( new MaxFramesPerSecond( this.timing ) );
+
+        //#if CONSOLE
+        final ConfigurationElementsTree console = system.addSubTree( "Console" );
+        console.addLeaf( new ShowHideConsole( this.console ) );
+        console.addLeaf( new ConsoleEntryStayTime( this.console ) );
+        //#endif
+
         return system;
         }
 
