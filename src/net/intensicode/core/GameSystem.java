@@ -1,9 +1,10 @@
 package net.intensicode.core;
 
+import net.intensicode.*;
+import net.intensicode.configuration.*;
 import net.intensicode.graphics.*;
 import net.intensicode.screens.*;
 import net.intensicode.util.*;
-import net.intensicode.SystemContext;
 
 public abstract class GameSystem
     {
@@ -46,10 +47,12 @@ public abstract class GameSystem
     //#endif
 
     //#if CONSOLE
+
     public ConsoleOverlay console;
     //#endif
 
     //#if STATS
+
     public EngineStats stats;
     //#endif
 
@@ -100,6 +103,15 @@ public abstract class GameSystem
         //#if STATS
         stats.font = aFontGenerator;
         //#endif
+        }
+
+    public final ConfigurationElementsTree getSystemValues()
+        {
+        final ConfigurationElementsTree system = new ConfigurationElementsTree( "Game System" );
+        final ConfigurationElementsTree timing = system.addSubTree( "Timing" );
+        timing.addLeaf( new TicksPerSecond( this.timing ) );
+        timing.addLeaf( new MaxFramesPerSecond( this.timing ) );
+        return system;
         }
 
     // Internal API

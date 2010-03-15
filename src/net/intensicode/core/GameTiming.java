@@ -1,6 +1,6 @@
 package net.intensicode.core;
 
-import net.intensicode.util.*;
+import net.intensicode.util.Assert;
 
 public final class GameTiming
     {
@@ -14,22 +14,13 @@ public final class GameTiming
      */
     public int maxFramesPerSecond = 32;
 
-    /**
-     * If the system cannot render with at least this performance, it will pause the rendering.
-     */
-    public int minFramesPerSecond = 16;
-
     public int measuredFramesPerSecond;
 
     public int measuredTicksPerSecond;
 
 
-
     final void reset()
         {
-        //#if DEBUG
-        Assert.isTrue( "max fps > min fps", maxFramesPerSecond > minFramesPerSecond );
-        //#endif
         myLastAveragingStart = myLastTimingStart = myLastFrameStart = myLastTickStart = nowInMs();
         myRemainingTickTime = myFrameCount = myAveragingFrameCount = 0;
         }
@@ -45,11 +36,11 @@ public final class GameTiming
         if ( accumulatedFrameTime < MIN_TIME_FOR_AVERAGING_IN_MS ) return false;
 
         final long averageFrameTime = accumulatedFrameTime / myAveragingFrameCount;
-        final long maxFrameTime = ONE_SECOND_IN_MS / minFramesPerSecond;
 
         myLastAveragingStart = now;
         myAveragingFrameCount = 0;
 
+        final long maxFrameTime = ONE_SECOND_IN_MS / maxFramesPerSecond;
         return averageFrameTime > maxFrameTime;
         }
 
@@ -121,7 +112,6 @@ public final class GameTiming
         }
 
 
-
     private int myTickCount;
 
     private int myFrameCount;
@@ -137,8 +127,6 @@ public final class GameTiming
     private long myLastAveragingStart;
 
     private long myRemainingTickTime;
-
-    private int myRemainingSlowDownTicks;
 
     private static final int ONE_SECOND_IN_MS = 1000;
 
