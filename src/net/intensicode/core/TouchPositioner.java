@@ -18,12 +18,16 @@ public final class TouchPositioner implements TouchEventListener
 
     public boolean hasValidPosition;
 
+    public Rectangle optionalHotzone;
+
 
     // From TouchEventListener
 
     public final void onTouchEvent( final TouchEvent aTouchEvent )
         {
-        final boolean touchInside = touchableArea.contains( aTouchEvent.getX(), aTouchEvent.getY() );
+        final Rectangle hotzone = optionalHotzone != null ? optionalHotzone : touchableArea;
+
+        final boolean touchInside = hotzone.contains( aTouchEvent.getX(), aTouchEvent.getY() );
         if ( !touchInside ) return;
 
         saveCurrentCellInfo();
