@@ -76,7 +76,6 @@ public final class TouchGestures implements TouchEventListener
 
     private void start( final TouchEvent aTouchEvent )
         {
-        Log.debug( "starting new gesture" );
         resetTemporaries();
         startStrokePath( aTouchEvent );
         }
@@ -91,10 +90,8 @@ public final class TouchGestures implements TouchEventListener
         {
         if ( isSamePosition( lastEventPosition, aTouchEvent ) )
             {
-            Log.debug( "same position.." );
             if ( breakTimeThresholdReached( aTouchEvent ) )
                 {
-                Log.debug( "breaking stroke" );
                 addStroke( myStrokeStart, aTouchEvent );
                 startStrokePath( aTouchEvent );
                 startTimingBreak( aTouchEvent );
@@ -103,11 +100,9 @@ public final class TouchGestures implements TouchEventListener
             }
         else
             {
-            Log.debug( "position changed.." );
             startTimingBreak( aTouchEvent );
             }
 
-        Log.debug( "continuing current stroke" );
         addToStrokePath( aTouchEvent );
         }
 
@@ -125,7 +120,6 @@ public final class TouchGestures implements TouchEventListener
 
     private void end( final TouchEvent aTouchEvent )
         {
-        Log.debug( "ending gesture" );
         addToStrokePath( aTouchEvent );
 
         addStroke( myStrokeStart, aTouchEvent );
@@ -156,11 +150,7 @@ public final class TouchGestures implements TouchEventListener
         final int xDelta = aTouchEvent.getX() - aStartPosition.x;
         final int yDelta = aTouchEvent.getY() - aStartPosition.y;
         final String stroke = recognize( xDelta, yDelta );
-        if ( stroke != NO_STROKE )
-            {
-            Log.debug( "adding stroke {}", stroke );
-            myStrokes.add( stroke );
-            }
+        if ( stroke != NO_STROKE ) myStrokes.add( stroke );
         }
 
     private void determineGesture()
