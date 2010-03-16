@@ -41,14 +41,17 @@ public class VerticalSoftkeysScreen extends SoftkeysScreen
         final int yOffset = getOffsetY( aText );
         final Position aligned = DirectGraphics.getAlignedPosition( x, y, alignWidth, charHeight, aAlignment );
 
+        final int maxCharWidth = myFontGen.maxCharWidth( aText );
+
         final DirectGraphics graphics = graphics();
         for ( int idx = 0; idx < aText.length(); idx++ )
             {
             final int yPos = aligned.y + yOffset + charHeight * idx;
 
             final char charCode = aText.charAt( idx );
+            final int charWidth = myFontGen.charWidth( charCode );
 
-            final int xCentered = aligned.x + xOffset;
+            final int xCentered = aligned.x + xOffset + ( maxCharWidth - charWidth ) / 2;
             myFontGen.blitChar( graphics, xCentered, yPos, charCode );
             }
         }
