@@ -1,13 +1,13 @@
 package net.intensicode.configuration;
 
 import net.intensicode.ConfigurableIntegerValue;
-import net.intensicode.core.AnalogController;
+import net.intensicode.core.TrackballController;
 
 public final class MultiEventThresholdInMillis implements ConfigurableIntegerValue
     {
-    public MultiEventThresholdInMillis( final AnalogController aAnalogController )
+    public MultiEventThresholdInMillis( final TrackballController aTrackballController )
         {
-        myAnalogController = aAnalogController;
+        myTrackballController = aTrackballController;
         }
 
     // From SeekBarDialogBase
@@ -30,7 +30,7 @@ public final class MultiEventThresholdInMillis implements ConfigurableIntegerVal
 
     public final void setNewValue( final int aConfiguredValue )
         {
-        myAnalogController.multiEventThresholdInMillis = aConfiguredValue;
+        myTrackballController.multiEventThresholdInMillis = aConfiguredValue;
         }
 
     public final int getMaxValue()
@@ -40,7 +40,7 @@ public final class MultiEventThresholdInMillis implements ConfigurableIntegerVal
 
     public final int getCurrentValue()
         {
-        return myAnalogController.multiEventThresholdInMillis;
+        return myTrackballController.multiEventThresholdInMillis;
         }
 
     public final int getStepSize()
@@ -49,7 +49,7 @@ public final class MultiEventThresholdInMillis implements ConfigurableIntegerVal
         }
 
 
-    private final AnalogController myAnalogController;
+    private final TrackballController myTrackballController;
 
     private static final int MAXIMUM_THRESHOLD_IN_MILLIS = 250;
     }

@@ -1,14 +1,14 @@
 package net.intensicode.configuration;
 
 import net.intensicode.ConfigurableIntegerValue;
-import net.intensicode.core.AnalogController;
+import net.intensicode.core.TrackballController;
 import net.intensicode.util.*;
 
 public final class TrackballPreset implements ConfigurableIntegerValue
     {
-    public TrackballPreset( final AnalogController aAnalogController )
+    public TrackballPreset( final TrackballController aTrackballController )
         {
-        myAnalogController = aAnalogController;
+        myTrackballController = aTrackballController;
         }
 
     // From SeekBarDialogBase
@@ -43,68 +43,68 @@ public final class TrackballPreset implements ConfigurableIntegerValue
 
     private void applyDefaultsPreset()
         {
-        myAnalogController.initialTicksThreshold = 0;
-        myAnalogController.multiTicksThreshold = 3;
-        myAnalogController.additionalMultiTicksThreshold = 1;
-        myAnalogController.directionIgnoreFactorFixed = FixedMath.FIXED_1;
-        myAnalogController.forcedSilenceBetweenEventsInMillis = 0;
-        myAnalogController.multiEventThresholdInMillis = 250;
-        myAnalogController.silenceBeforeUpdateInMillis = 50;
+        myTrackballController.initialTicksThreshold = 0;
+        myTrackballController.multiTicksThreshold = 3;
+        myTrackballController.additionalMultiTicksThreshold = 1;
+        myTrackballController.directionIgnoreFactorFixed = FixedMath.FIXED_1;
+        myTrackballController.forcedSilenceBetweenEventsInMillis = 0;
+        myTrackballController.multiEventThresholdInMillis = 250;
+        myTrackballController.silenceBeforeUpdateInMillis = 50;
         }
 
     private void applyDirectPreset()
         {
-        myAnalogController.initialTicksThreshold = 0;
-        myAnalogController.multiTicksThreshold = 0;
-        myAnalogController.additionalMultiTicksThreshold = 1;
-        myAnalogController.directionIgnoreFactorFixed = FixedMath.FIXED_5;
-        myAnalogController.forcedSilenceBetweenEventsInMillis = 0;
-        myAnalogController.multiEventThresholdInMillis = 250;
-        myAnalogController.silenceBeforeUpdateInMillis = 0;
+        myTrackballController.initialTicksThreshold = 0;
+        myTrackballController.multiTicksThreshold = 0;
+        myTrackballController.additionalMultiTicksThreshold = 1;
+        myTrackballController.directionIgnoreFactorFixed = FixedMath.FIXED_5;
+        myTrackballController.forcedSilenceBetweenEventsInMillis = 0;
+        myTrackballController.multiEventThresholdInMillis = 250;
+        myTrackballController.silenceBeforeUpdateInMillis = 0;
         }
 
     private void applySystemPreset()
         {
-        myAnalogController.initialTicksThreshold = 0;
-        myAnalogController.multiTicksThreshold = 6;
-        myAnalogController.additionalMultiTicksThreshold = 6;
-        myAnalogController.directionIgnoreFactorFixed = FixedMath.FIXED_5;
-        myAnalogController.forcedSilenceBetweenEventsInMillis = 0;
-        myAnalogController.multiEventThresholdInMillis = 250;
-        myAnalogController.silenceBeforeUpdateInMillis = 0;
+        myTrackballController.initialTicksThreshold = 0;
+        myTrackballController.multiTicksThreshold = 6;
+        myTrackballController.additionalMultiTicksThreshold = 6;
+        myTrackballController.directionIgnoreFactorFixed = FixedMath.FIXED_5;
+        myTrackballController.forcedSilenceBetweenEventsInMillis = 0;
+        myTrackballController.multiEventThresholdInMillis = 250;
+        myTrackballController.silenceBeforeUpdateInMillis = 0;
         }
 
     private void applyFastPreset()
         {
-        myAnalogController.initialTicksThreshold = 0;
-        myAnalogController.multiTicksThreshold = 4;
-        myAnalogController.additionalMultiTicksThreshold = 2;
-        myAnalogController.directionIgnoreFactorFixed = FixedMath.FIXED_1;
-        myAnalogController.forcedSilenceBetweenEventsInMillis = 25;
-        myAnalogController.multiEventThresholdInMillis = 125;
-        myAnalogController.silenceBeforeUpdateInMillis = 50;
+        myTrackballController.initialTicksThreshold = 0;
+        myTrackballController.multiTicksThreshold = 4;
+        myTrackballController.additionalMultiTicksThreshold = 2;
+        myTrackballController.directionIgnoreFactorFixed = FixedMath.FIXED_1;
+        myTrackballController.forcedSilenceBetweenEventsInMillis = 25;
+        myTrackballController.multiEventThresholdInMillis = 125;
+        myTrackballController.silenceBeforeUpdateInMillis = 50;
         }
 
     private void applyMediumPreset()
         {
-        myAnalogController.initialTicksThreshold = 0;
-        myAnalogController.multiTicksThreshold = 5;
-        myAnalogController.additionalMultiTicksThreshold = 3;
-        myAnalogController.directionIgnoreFactorFixed = FixedMath.FIXED_1;
-        myAnalogController.forcedSilenceBetweenEventsInMillis = 50;
-        myAnalogController.multiEventThresholdInMillis = 200;
-        myAnalogController.silenceBeforeUpdateInMillis = 75;
+        myTrackballController.initialTicksThreshold = 0;
+        myTrackballController.multiTicksThreshold = 5;
+        myTrackballController.additionalMultiTicksThreshold = 3;
+        myTrackballController.directionIgnoreFactorFixed = FixedMath.FIXED_1;
+        myTrackballController.forcedSilenceBetweenEventsInMillis = 50;
+        myTrackballController.multiEventThresholdInMillis = 200;
+        myTrackballController.silenceBeforeUpdateInMillis = 75;
         }
 
     private void applySlowPreset()
         {
-        myAnalogController.initialTicksThreshold = 0;
-        myAnalogController.multiTicksThreshold = 6;
-        myAnalogController.additionalMultiTicksThreshold = 4;
-        myAnalogController.directionIgnoreFactorFixed = FixedMath.FIXED_1;
-        myAnalogController.forcedSilenceBetweenEventsInMillis = 75;
-        myAnalogController.multiEventThresholdInMillis = 250;
-        myAnalogController.silenceBeforeUpdateInMillis = 125;
+        myTrackballController.initialTicksThreshold = 0;
+        myTrackballController.multiTicksThreshold = 6;
+        myTrackballController.additionalMultiTicksThreshold = 4;
+        myTrackballController.directionIgnoreFactorFixed = FixedMath.FIXED_1;
+        myTrackballController.forcedSilenceBetweenEventsInMillis = 75;
+        myTrackballController.multiEventThresholdInMillis = 250;
+        myTrackballController.silenceBeforeUpdateInMillis = 125;
         }
 
     public final int getMaxValue()
@@ -123,7 +123,7 @@ public final class TrackballPreset implements ConfigurableIntegerValue
         }
 
 
-    private final AnalogController myAnalogController;
+    private final TrackballController myTrackballController;
 
     private static final String[] PRESETS = { "KEEP CURRENT", "DEFAULTS", "DIRECT 1:1", "SYSTEM", "FAST", "MEDIUM", "SLOW" };
     }

@@ -1,14 +1,14 @@
 package net.intensicode.configuration;
 
 import net.intensicode.ConfigurableIntegerValue;
-import net.intensicode.core.AnalogController;
+import net.intensicode.core.TrackballController;
 import net.intensicode.util.FixedMath;
 
 public final class DirectionIgnoreFactorFixed implements ConfigurableIntegerValue
     {
-    public DirectionIgnoreFactorFixed( final AnalogController aAnalogController )
+    public DirectionIgnoreFactorFixed( final TrackballController aTrackballController )
         {
-        myAnalogController = aAnalogController;
+        myTrackballController = aTrackballController;
         }
 
     // From SeekBarDialogBase
@@ -38,7 +38,7 @@ public final class DirectionIgnoreFactorFixed implements ConfigurableIntegerValu
         final int fixedRange = FixedMath.FIXED_5 - FixedMath.FIXED_1;
         final int scaled = aConfiguredValue * fixedRange / MAXIMUM_DECI_STEPS;
         final int scaledAndTransposed = scaled + FixedMath.FIXED_1;
-        myAnalogController.directionIgnoreFactorFixed = scaledAndTransposed;
+        myTrackballController.directionIgnoreFactorFixed = scaledAndTransposed;
         }
 
     public final int getMaxValue()
@@ -48,7 +48,7 @@ public final class DirectionIgnoreFactorFixed implements ConfigurableIntegerValu
 
     public final int getCurrentValue()
         {
-        final int valueFixed = myAnalogController.directionIgnoreFactorFixed;
+        final int valueFixed = myTrackballController.directionIgnoreFactorFixed;
         final int deposed = valueFixed - FixedMath.FIXED_1;
         final int fixedRange = FixedMath.FIXED_5 - FixedMath.FIXED_1;
         final int deposedAndDescaled = deposed * MAXIMUM_DECI_STEPS / fixedRange;
@@ -61,7 +61,7 @@ public final class DirectionIgnoreFactorFixed implements ConfigurableIntegerValu
         }
 
 
-    private final AnalogController myAnalogController;
+    private final TrackballController myTrackballController;
 
     private static final int MAXIMUM_DECI_STEPS = 50;
     }

@@ -1,8 +1,10 @@
+//#condition TRACKBALL
+
 package net.intensicode.core;
 
 import net.intensicode.util.FixedMath;
 
-public abstract class AnalogController
+public abstract class TrackballController
     {
     public int forcedSilenceBetweenEventsInMillis = 0;
 

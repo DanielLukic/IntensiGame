@@ -1,6 +1,6 @@
 package net.intensicode.core;
 
-public abstract class AnalogControllerBase extends AnalogController
+public abstract class TrackballControllerBase extends TrackballController
     {
     public void reset()
         {
@@ -10,7 +10,7 @@ public abstract class AnalogControllerBase extends AnalogController
 
     // Protected API
 
-    protected AnalogControllerBase()
+    protected TrackballControllerBase()
         {
         clearTemporaries();
         }
@@ -37,7 +37,7 @@ public abstract class AnalogControllerBase extends AnalogController
 
     protected abstract long systemSpecificNowInMillis();
 
-    // From AnalogController
+    // From TrackballController
 
     protected final boolean hasNewData()
         {

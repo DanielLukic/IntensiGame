@@ -18,7 +18,7 @@ public abstract class GameSystem
 
     public final SkinManager skin;
 
-    public AnalogController analog;
+    public TrackballController trackball;
 
     public ResourcesManager resources;
 
@@ -113,14 +113,14 @@ public abstract class GameSystem
         final ConfigurationElementsTree system = new ConfigurationElementsTree( "Game System" );
 
         final ConfigurationElementsTree trackball = system.addSubTree( "Trackball" );
-        trackball.addLeaf( new TrackballPreset( analog ) );
-        trackball.addLeaf( new InitialTicksThreshold( analog ) );
-        trackball.addLeaf( new MultiTicksThreshold( analog ) );
-        trackball.addLeaf( new AdditionalMultiTicksThreshold( analog ) );
-        trackball.addLeaf( new SilenceBeforeUpdateInMillis( analog ) );
-        trackball.addLeaf( new MultiEventThresholdInMillis( analog ) );
-        trackball.addLeaf( new ForcedSilenceBetweenEventsInMillis( analog ) );
-        trackball.addLeaf( new DirectionIgnoreFactorFixed( analog ) );
+        trackball.addLeaf( new TrackballPreset( this.trackball ) );
+        trackball.addLeaf( new InitialTicksThreshold( this.trackball ) );
+        trackball.addLeaf( new MultiTicksThreshold( this.trackball ) );
+        trackball.addLeaf( new AdditionalMultiTicksThreshold( this.trackball ) );
+        trackball.addLeaf( new SilenceBeforeUpdateInMillis( this.trackball ) );
+        trackball.addLeaf( new MultiEventThresholdInMillis( this.trackball ) );
+        trackball.addLeaf( new ForcedSilenceBetweenEventsInMillis( this.trackball ) );
+        trackball.addLeaf( new DirectionIgnoreFactorFixed( this.trackball ) );
 
         final ConfigurationElementsTree timing = system.addSubTree( "Timing" );
         timing.addLeaf( new TicksPerSecond( this.timing ) );
@@ -287,7 +287,7 @@ public abstract class GameSystem
         //#if SENSORS
         sensors.onControlTick();
         //#endif
-        analog.onControlTick();
+        trackball.onControlTick();
         keys.onControlTick();
 
         if ( stack.empty() ) throw new IllegalStateException( "no screen on stack" );

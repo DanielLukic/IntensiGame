@@ -1,13 +1,13 @@
 package net.intensicode.configuration;
 
 import net.intensicode.ConfigurableIntegerValue;
-import net.intensicode.core.AnalogController;
+import net.intensicode.core.TrackballController;
 
 public final class ForcedSilenceBetweenEventsInMillis implements ConfigurableIntegerValue
     {
-    public ForcedSilenceBetweenEventsInMillis( final AnalogController aAnalogController )
+    public ForcedSilenceBetweenEventsInMillis( final TrackballController aTrackballController )
         {
-        myAnalogController = aAnalogController;
+        myTrackballController = aTrackballController;
         }
 
     // From ConfigurableValue
@@ -29,7 +29,7 @@ public final class ForcedSilenceBetweenEventsInMillis implements ConfigurableInt
 
     public final void setNewValue( final int aConfiguredValue )
         {
-        myAnalogController.forcedSilenceBetweenEventsInMillis = aConfiguredValue;
+        myTrackballController.forcedSilenceBetweenEventsInMillis = aConfiguredValue;
         }
 
     public final int getMinValue()
@@ -44,7 +44,7 @@ public final class ForcedSilenceBetweenEventsInMillis implements ConfigurableInt
 
     public final int getCurrentValue()
         {
-        return myAnalogController.forcedSilenceBetweenEventsInMillis;
+        return myTrackballController.forcedSilenceBetweenEventsInMillis;
         }
 
     public final int getStepSize()
@@ -53,7 +53,7 @@ public final class ForcedSilenceBetweenEventsInMillis implements ConfigurableInt
         }
 
 
-    private final AnalogController myAnalogController;
+    private final TrackballController myTrackballController;
 
     private static final int MAXIMUM_SILENCE_IN_MILLIS = 250;
     }

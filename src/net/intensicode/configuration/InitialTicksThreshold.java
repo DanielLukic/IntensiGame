@@ -1,13 +1,13 @@
 package net.intensicode.configuration;
 
 import net.intensicode.ConfigurableIntegerValue;
-import net.intensicode.core.AnalogController;
+import net.intensicode.core.TrackballController;
 
 public final class InitialTicksThreshold implements ConfigurableIntegerValue
     {
-    public InitialTicksThreshold( final AnalogController aAnalogController )
+    public InitialTicksThreshold( final TrackballController aTrackballController )
         {
-        myAnalogController = aAnalogController;
+        myTrackballController = aTrackballController;
         }
 
     // From SeekBarDialogBase
@@ -30,7 +30,7 @@ public final class InitialTicksThreshold implements ConfigurableIntegerValue
 
     public final void setNewValue( final int aConfiguredValue )
         {
-        myAnalogController.initialTicksThreshold = aConfiguredValue;
+        myTrackballController.initialTicksThreshold = aConfiguredValue;
         }
 
     public final int getMaxValue()
@@ -40,7 +40,7 @@ public final class InitialTicksThreshold implements ConfigurableIntegerValue
 
     public final int getCurrentValue()
         {
-        return myAnalogController.initialTicksThreshold;
+        return myTrackballController.initialTicksThreshold;
         }
 
     public final int getStepSize()
@@ -49,7 +49,7 @@ public final class InitialTicksThreshold implements ConfigurableIntegerValue
         }
 
 
-    private final AnalogController myAnalogController;
+    private final TrackballController myTrackballController;
 
     private static final int MAXIMUM_INITIAL_TICKS_THRESHOLD = 30;
     }
