@@ -8,6 +8,8 @@ import net.intensicode.util.*;
 
 public abstract class GameSystem
     {
+    public final PlatformContext platform;
+
     public final SystemContext context;
 
     public final GameTiming timing;
@@ -57,9 +59,10 @@ public abstract class GameSystem
     //#endif
 
 
-    public GameSystem( final SystemContext aSystemContext )
+    public GameSystem( final SystemContext aSystemContext, final PlatformContext aPlatformContext )
         {
         context = aSystemContext;
+        platform = aPlatformContext;
         stack = new ScreenStack( this );
         skin = new SkinManager( this );
         timing = new GameTiming();
