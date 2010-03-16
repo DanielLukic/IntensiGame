@@ -14,25 +14,29 @@ public final class TouchPositioner implements TouchEventListener
 
     public int lastCellAffinity;
 
+    public long lastChangeTimestamp;
+
     public boolean hasValidPosition;
 
-
-    public final void reset()
-        {
-        lastCellTouched.x = lastCellTouched.y = lastCellAffinity = -1;
-        hasValidPosition = false;
-        }
 
     // From TouchEventListener
 
     public final void onTouchEvent( final TouchEvent aTouchEvent )
         {
         final boolean touchInside = touchableArea.contains( aTouchEvent.getX(), aTouchEvent.getY() );
-        if ( touchInside ) updateTouchedCell( aTouchEvent );
-        else reset();
+        if ( !touchInside ) return;
+
+        saveCurrentCellInfo();
+        updateTouchedCell( aTouchEvent );
+        updateTimestampsAndDelta( aTouchEvent );
         }
 
     // Implementation
+
+    private void saveCurrentCellInfo()
+        {
+        mySavedCellInfo.setTo( lastCellTouched );
+        }
 
     private void updateTouchedCell( final TouchEvent aTouchEvent )
         {
@@ -54,4 +58,13 @@ public final class TouchPositioner implements TouchEventListener
         lastCellAffinity = cellAffinity;
         hasValidPosition = true;
         }
+
+    private void updateTimestampsAndDelta( final TouchEvent aTouchEvent )
+        {
+        if ( mySavedCellInfo.equals( lastCellTouched ) ) return;
+        lastChangeTimestamp = aTouchEvent.timestamp();
+        }
+
+
+    private final Position mySavedCellInfo = new Position();
     }
