@@ -1,9 +1,9 @@
 package net.intensicode.configuration;
 
-import net.intensicode.ConfigurableValue;
+import net.intensicode.ConfigurableIntegerValue;
 import net.intensicode.core.GameTiming;
 
-public final class TicksPerSecond implements ConfigurableValue
+public final class TicksPerSecond implements ConfigurableIntegerValue
     {
     public TicksPerSecond( final GameTiming aGameTiming )
         {
@@ -47,7 +47,7 @@ public final class TicksPerSecond implements ConfigurableValue
 
     public final int getStepSize()
         {
-        return 1;
+        return DEFAULT_STEP_SIZE;
         }
 
 

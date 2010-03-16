@@ -46,13 +46,35 @@ public final class ConfigurationElementsTreeIO extends StorageIO
                 {
                 final int entryId = aInput.read();
                 if ( entryId != ID_LEAF ) throw new IOException( "leaf id expected" );
-                entry.value.setNewValue( aInput.readInt() );
+                load( entry.value, aInput );
                 }
             else
                 {
                 load( entry, aInput );
                 }
             }
+        }
+
+    private static void load( final ConfigurableValue aValue, final DataInputStream aInput ) throws IOException
+        {
+        if ( aValue instanceof ConfigurableIntegerValue )
+            {
+            final ConfigurableIntegerValue value = (ConfigurableIntegerValue) aValue;
+            value.setNewValue( aInput.readInt() );
+            }
+        else if ( aValue instanceof ConfigurableBooleanValue )
+            {
+            final ConfigurableBooleanValue value = (ConfigurableBooleanValue) aValue;
+            value.setNewValue( aInput.readBoolean() );
+            }
+        else if ( aValue instanceof ConfigurableActionValue )
+                {
+                // Nothing to do..
+                }
+            else
+                {
+                throw new RuntimeException( "nyi" );
+                }
         }
 
     private static void save( final ConfigurationElementsTree aTree, final DataOutputStream aOutput ) throws IOException
@@ -67,13 +89,35 @@ public final class ConfigurationElementsTreeIO extends StorageIO
             if ( entry.isLeaf() )
                 {
                 aOutput.write( ID_LEAF );
-                aOutput.writeInt( entry.value.getCurrentValue() );
+                save( entry.value, aOutput );
                 }
             else
                 {
                 save( entry, aOutput );
                 }
             }
+        }
+
+    private static void save( final ConfigurableValue aValue, final DataOutputStream aOutput ) throws IOException
+        {
+        if ( aValue instanceof ConfigurableIntegerValue )
+            {
+            final ConfigurableIntegerValue value = (ConfigurableIntegerValue) aValue;
+            aOutput.writeInt( value.getCurrentValue() );
+            }
+        else if ( aValue instanceof ConfigurableBooleanValue )
+            {
+            final ConfigurableBooleanValue value = (ConfigurableBooleanValue) aValue;
+            aOutput.writeBoolean( value.getCurrentValue() );
+            }
+        else if ( aValue instanceof ConfigurableActionValue )
+                {
+                // Nothing to do..
+                }
+            else
+                {
+                throw new RuntimeException( "nyi" );
+                }
         }
 
 

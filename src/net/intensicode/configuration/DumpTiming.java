@@ -2,10 +2,10 @@
 
 package net.intensicode.configuration;
 
-import net.intensicode.ConfigurableValue;
+import net.intensicode.ConfigurableActionValue;
 import net.intensicode.util.Timing;
 
-public final class DumpTiming implements ConfigurableValue
+public final class DumpTiming implements ConfigurableActionValue
     {
     public final String getTitle()
         {
@@ -17,30 +17,10 @@ public final class DumpTiming implements ConfigurableValue
         return "Dump the current timing stats.";
         }
 
-    public final String getValueAsText( final int aConfiguredValue )
-        {
-        return "DUMP";
-        }
-
-    public final void setNewValue( final int aConfiguredValue )
+    public final void trigger()
         {
         final StringBuffer buffer = new StringBuffer();
         Timing.dumpInto( buffer );
         System.out.println( buffer );
-        }
-
-    public final int getMaxValue()
-        {
-        return 0;
-        }
-
-    public final int getCurrentValue()
-        {
-        return 0;
-        }
-
-    public final int getStepSize()
-        {
-        return 0;
         }
     }

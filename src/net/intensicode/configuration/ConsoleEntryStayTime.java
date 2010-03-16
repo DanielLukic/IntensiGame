@@ -1,9 +1,9 @@
 package net.intensicode.configuration;
 
-import net.intensicode.ConfigurableValue;
+import net.intensicode.ConfigurableIntegerValue;
 import net.intensicode.screens.ConsoleOverlay;
 
-public final class ConsoleEntryStayTime implements ConfigurableValue
+public final class ConsoleEntryStayTime implements ConfigurableIntegerValue
     {
     public ConsoleEntryStayTime( final ConsoleOverlay aConsoleOverlay )
         {
@@ -44,7 +44,7 @@ public final class ConsoleEntryStayTime implements ConfigurableValue
 
     public final int getStepSize()
         {
-        return 1;
+        return DEFAULT_STEP_SIZE;
         }
 
 

@@ -1,9 +1,9 @@
 package net.intensicode.configuration;
 
-import net.intensicode.ConfigurableValue;
+import net.intensicode.ConfigurableIntegerValue;
 import net.intensicode.core.GameTiming;
 
-public final class MaxFramesPerSecond implements ConfigurableValue
+public final class MaxFramesPerSecond implements ConfigurableIntegerValue
     {
     public MaxFramesPerSecond( final GameTiming aGameTiming )
         {
@@ -44,7 +44,7 @@ public final class MaxFramesPerSecond implements ConfigurableValue
 
     public final int getStepSize()
         {
-        return 1;
+        return DEFAULT_STEP_SIZE;
         }
 
 
