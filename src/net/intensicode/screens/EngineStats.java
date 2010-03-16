@@ -1,7 +1,7 @@
 package net.intensicode.screens;
 
 import net.intensicode.core.DirectGraphics;
-import net.intensicode.graphics.FontGenerator;
+import net.intensicode.graphics.*;
 import net.intensicode.util.Position;
 
 public final class EngineStats extends ScreenBase
@@ -25,6 +25,10 @@ public final class EngineStats extends ScreenBase
     public final void onDrawFrame()
         {
         if ( !show ) return;
+
+        //#if ANDROID
+        if ( font instanceof SystemFontGenerator ) return;
+        //#endif
 
         final DirectGraphics graphics = graphics();
 
