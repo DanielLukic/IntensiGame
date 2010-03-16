@@ -112,6 +112,9 @@ public abstract class GameSystem
         final ConfigurationElementsTree timing = system.addSubTree( "Timing" );
         timing.addLeaf( new TicksPerSecond( this.timing ) );
         timing.addLeaf( new MaxFramesPerSecond( this.timing ) );
+        //#if TIMING
+        timing.addLeaf( new DumpTiming() );
+        //#endif
 
         //#if CONSOLE
         final ConfigurationElementsTree console = system.addSubTree( "Console" );
