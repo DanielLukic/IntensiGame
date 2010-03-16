@@ -347,8 +347,6 @@ public abstract class GameSystem
         initializeErrorScreen();
         initializeMainController();
 
-        context.loadConfigurableValues();
-
         myInitializedFlag = true;
         }
 
