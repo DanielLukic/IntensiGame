@@ -122,6 +122,9 @@ public abstract class GameSystem
         console.addLeaf( new ConsoleEntryStayTime( this.console ) );
         //#endif
 
+        system.addLeaf( new LoadConfiguration( context ) );
+        system.addLeaf( new SaveConfiguration( context ) );
+
         return system;
         }
 
