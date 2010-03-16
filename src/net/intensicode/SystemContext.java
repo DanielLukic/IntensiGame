@@ -39,6 +39,10 @@ public interface SystemContext
      */
     ConfigurationElementsTree getApplicationValues();
 
+    void loadConfigurableValues();
+
+    void saveConfigurableValues();
+
     /**
      * This will be called whenever frames have been dropped. Possible causes: Your frame drawing or your
      * control ticks take too long. Or the system is overloaded.

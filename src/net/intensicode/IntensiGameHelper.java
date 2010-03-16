@@ -4,25 +4,10 @@ import net.intensicode.core.*;
 import net.intensicode.graphics.BitmapFontGenerator;
 import net.intensicode.util.Log;
 
+import java.io.IOException;
+
 class IntensiGameHelper
     {
-    static void initGameSystemFromConfigurationFile( final GameSystem aGameSystem )
-        {
-        final IntensiGameHelper helper = new IntensiGameHelper( aGameSystem );
-
-        final Configuration engineConfiguration = helper.loadEngineConfiguration();
-        if ( engineConfiguration != Configuration.NULL_CONFIGURATION )
-            {
-            helper.applyEngineConfiguration( engineConfiguration );
-            }
-
-        final Configuration skinConfiguration = helper.loadSkinConfiguration();
-        if ( skinConfiguration != Configuration.NULL_CONFIGURATION )
-            {
-            helper.applySkinConfiguration( skinConfiguration );
-            }
-        }
-
     static void toggleDebugScreen( final GameSystem aGameSystem )
         {
         //#if DEBUG
@@ -35,12 +20,51 @@ class IntensiGameHelper
         // TODO: Toggle system.cheat screen visibility..
         }
 
-    // Implementation
-
-    private IntensiGameHelper( final GameSystem aGameSystem )
+    IntensiGameHelper( final GameSystem aGameSystem )
         {
         myGameSystem = aGameSystem;
         }
+
+    void initGameSystemFromConfigurationFile()
+        {
+        final Configuration engineConfiguration = loadEngineConfiguration();
+        if ( engineConfiguration != Configuration.NULL_CONFIGURATION )
+            {
+            applyEngineConfiguration( engineConfiguration );
+            }
+
+        final Configuration skinConfiguration = loadSkinConfiguration();
+        if ( skinConfiguration != Configuration.NULL_CONFIGURATION )
+            {
+            applySkinConfiguration( skinConfiguration );
+            }
+        }
+
+    void loadConfiguration( final ConfigurationElementsTree aTree )
+        {
+        try
+            {
+            myGameSystem.storage.load( new ConfigurationElementsTreeIO( aTree ) );
+            }
+        catch ( IOException e )
+            {
+            Log.error( "failed loading configuration elements tree {}", aTree.label, e );
+            }
+        }
+
+    void saveConfiguration( final ConfigurationElementsTree aTree )
+        {
+        try
+            {
+            myGameSystem.storage.save( new ConfigurationElementsTreeIO( aTree ) );
+            }
+        catch ( IOException e )
+            {
+            Log.error( "failed saving configuration elements tree {}", aTree.label, e );
+            }
+        }
+
+    // Implementation
 
     private Configuration loadEngineConfiguration()
         {
