@@ -54,7 +54,9 @@ public final class ControlSequenceHandler extends ScreenBase
 
     public final void onInitOnce() throws Exception
         {
+        //#if TOUCH
         touch().addListener( this );
+        //#endif
         }
 
     public void onInitEverytime() throws Exception

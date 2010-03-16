@@ -1,3 +1,5 @@
+//#condition TOUCH
+
 package net.intensicode.core;
 
 final class ClonedTouchEvent extends TouchEvent
