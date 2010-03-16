@@ -112,6 +112,16 @@ public abstract class GameSystem
         {
         final ConfigurationElementsTree system = new ConfigurationElementsTree( "Game System" );
 
+        final ConfigurationElementsTree trackball = system.addSubTree( "Trackball" );
+        trackball.addLeaf( new TrackballPreset( analog ) );
+        trackball.addLeaf( new InitialTicksThreshold( analog ) );
+        trackball.addLeaf( new MultiTicksThreshold( analog ) );
+        trackball.addLeaf( new AdditionalMultiTicksThreshold( analog ) );
+        trackball.addLeaf( new SilenceBeforeUpdateInMillis( analog ) );
+        trackball.addLeaf( new MultiEventThresholdInMillis( analog ) );
+        trackball.addLeaf( new ForcedSilenceBetweenEventsInMillis( analog ) );
+        trackball.addLeaf( new DirectionIgnoreFactorFixed( analog ) );
+
         final ConfigurationElementsTree timing = system.addSubTree( "Timing" );
         timing.addLeaf( new TicksPerSecond( this.timing ) );
         timing.addLeaf( new MaxFramesPerSecond( this.timing ) );
