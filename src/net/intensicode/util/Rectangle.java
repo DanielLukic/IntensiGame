@@ -26,6 +26,14 @@ public class Rectangle
         height = aHeight;
         }
 
+    public void set( final Position aPosition, final Size aSize )
+        {
+        x = aPosition.x;
+        y = aPosition.y;
+        width = aSize.width;
+        height = aSize.height;
+        }
+
     public void setTo( final Rectangle aRectangle )
         {
         x = aRectangle.x;
