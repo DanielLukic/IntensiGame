@@ -284,7 +284,7 @@ public abstract class GameSystem
 
     protected void doControlTickUnsafe() throws Exception
         {
-        stack.onControlTick( this );
+        stack.onControlTick();
 
         // handle back key if application didn't..
         if ( keys.checkAndConsume( KeysHandler.BACK_KEY ) ) stack.popScreen();
@@ -295,7 +295,7 @@ public abstract class GameSystem
         try
             {
             screen.beginFrame();
-            stack.onDrawFrame( this );
+            stack.onDrawFrame();
             }
         finally
             {

@@ -34,18 +34,22 @@ public final class ScreenStack
         return (ScreenBase) myScreenStack.last();
         }
 
-    public final void onDrawFrame( final GameSystem aGameSystem )
+    public final void onDrawFrame()
         {
         final ScreenBase activeScreen = activeScreen();
         activeScreen.onDrawFrame();
+
+        // Drawing global handlers after the active screen:
         myGlobalHandler.onDrawFrame();
         }
 
-    public final void onControlTick( final GameSystem aGameSystem ) throws Exception
+    public final void onControlTick() throws Exception
         {
+        // Ticking global handlers before the active screen:
+        myGlobalHandler.onControlTick();
+
         final ScreenBase activeScreen = activeScreen();
         activeScreen.onControlTick();
-        myGlobalHandler.onControlTick();
         }
 
     public final void pushOnce( final ScreenBase aScreen ) throws Exception
