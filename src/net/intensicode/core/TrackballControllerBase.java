@@ -1,3 +1,5 @@
+//#condition TRACKBALL
+
 package net.intensicode.core;
 
 public abstract class TrackballControllerBase extends TrackballController

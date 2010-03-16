@@ -1,3 +1,5 @@
+//#condition TRACKBALL
+
 package net.intensicode.configuration;
 
 import net.intensicode.ConfigurableIntegerValue;

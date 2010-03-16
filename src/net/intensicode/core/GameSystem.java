@@ -18,7 +18,9 @@ public abstract class GameSystem
 
     public final SkinManager skin;
 
+    //#if TRACKBALL
     public TrackballController trackball;
+    //#endif
 
     public ResourcesManager resources;
 
@@ -112,6 +114,7 @@ public abstract class GameSystem
         {
         final ConfigurationElementsTree system = new ConfigurationElementsTree( "Game System" );
 
+        //#if TRACKBALL
         final ConfigurationElementsTree trackball = system.addSubTree( "Trackball" );
         trackball.addLeaf( new TrackballPreset( this.trackball ) );
         trackball.addLeaf( new InitialTicksThreshold( this.trackball ) );
@@ -121,6 +124,7 @@ public abstract class GameSystem
         trackball.addLeaf( new MultiEventThresholdInMillis( this.trackball ) );
         trackball.addLeaf( new ForcedSilenceBetweenEventsInMillis( this.trackball ) );
         trackball.addLeaf( new DirectionIgnoreFactorFixed( this.trackball ) );
+        //#endif
 
         final ConfigurationElementsTree timing = system.addSubTree( "Timing" );
         timing.addLeaf( new TicksPerSecond( this.timing ) );
@@ -287,7 +291,9 @@ public abstract class GameSystem
         //#if SENSORS
         sensors.onControlTick();
         //#endif
+        //#if TRACKBALL
         trackball.onControlTick();
+        //#endif
         keys.onControlTick();
 
         if ( stack.empty() ) throw new IllegalStateException( "no screen on stack" );
