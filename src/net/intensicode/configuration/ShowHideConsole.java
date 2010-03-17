@@ -1,3 +1,5 @@
+//#condition CONSOLE
+
 package net.intensicode.configuration;
 
 import net.intensicode.ConfigurableBooleanValue;
