@@ -46,7 +46,7 @@ class IntensiGameHelper
             {
             myGameSystem.storage.load( new ConfigurationElementsTreeIO( aTree ) );
             }
-        catch ( IOException e )
+        catch ( final Exception e )
             {
             Log.error( "failed loading configuration elements tree {}", aTree.label, e );
             }
@@ -58,7 +58,7 @@ class IntensiGameHelper
             {
             myGameSystem.storage.save( new ConfigurationElementsTreeIO( aTree ) );
             }
-        catch ( IOException e )
+        catch ( final Exception e )
             {
             Log.error( "failed saving configuration elements tree {}", aTree.label, e );
             }
