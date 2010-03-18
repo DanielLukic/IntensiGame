@@ -1,10 +1,10 @@
 package net.intensicode;
 
-import net.intensicode.util.DynamicArray;
+import net.intensicode.util.*;
 
 public final class ConfigurationElementsTree
     {
-    public static final ConfigurationElementsTree EMPTY = new ConfigurationElementsTree( "" );
+    public static final ConfigurationElementsTree EMPTY = new ConfigurationElementsTree( "EMPTY" );
 
     public ConfigurableValue value;
 
@@ -13,6 +13,8 @@ public final class ConfigurationElementsTree
 
     public ConfigurationElementsTree( final String aLabel )
         {
+        Assert.notNull( "valid label", aLabel );
+        Assert.notEquals( "valid label", "", aLabel );
         label = aLabel;
         }
 
