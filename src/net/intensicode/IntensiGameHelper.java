@@ -4,8 +4,6 @@ import net.intensicode.core.*;
 import net.intensicode.graphics.BitmapFontGenerator;
 import net.intensicode.util.Log;
 
-import java.io.IOException;
-
 class IntensiGameHelper
     {
     static void toggleDebugScreen( final GameSystem aGameSystem )
@@ -42,6 +40,7 @@ class IntensiGameHelper
 
     void loadConfiguration( final ConfigurationElementsTree aTree )
         {
+        if ( aTree == ConfigurationElementsTree.EMPTY ) return;
         try
             {
             myGameSystem.storage.load( new ConfigurationElementsTreeIO( aTree ) );
@@ -54,6 +53,7 @@ class IntensiGameHelper
 
     void saveConfiguration( final ConfigurationElementsTree aTree )
         {
+        if ( aTree == ConfigurationElementsTree.EMPTY ) return;
         try
             {
             myGameSystem.storage.save( new ConfigurationElementsTreeIO( aTree ) );
