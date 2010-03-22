@@ -188,6 +188,7 @@ public class SoftkeysScreen extends ScreenBase
             aTouchableArea.rectangle.y = myPosition.y;
             aTouchableArea.rectangle.width = getAlignWidth( aText );
             aTouchableArea.rectangle.height = getAlignHeight( aText );
+            aTouchableArea.activateMode = Touchable.ACTIVATE_ONLY_ON_DOWN;
             touch().addLocalControl( aTouchableArea );
             }
         }
