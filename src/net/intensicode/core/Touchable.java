@@ -18,6 +18,10 @@ public abstract class Touchable
 
     public static final int RELEASE_ON_OUT = 4;
 
+    public static final int ACTIVATE_ON_TOUCH = 1;
+
+    public static final int ACTIVATE_ONLY_ON_DOWN = 2;
+
     public static final int DEACTIVATE_ON_RELEASE = 1;
 
     public static final int DEACTIVATE_ON_OUT = 2;
@@ -27,6 +31,8 @@ public abstract class Touchable
     public int triggerMode = TRIGGER_ON_UP;
 
     public int releaseMode = RELEASE_IMMEDIATELY;
+
+    public int activateMode = ACTIVATE_ON_TOUCH;
 
     public int deactivateMode = DEACTIVATE_ON_RELEASE | DEACTIVATE_ON_OUT;
 
@@ -56,12 +62,25 @@ public abstract class Touchable
         return false;
         }
 
-    public boolean isActivatedBy( TouchEvent aTouchEvent )
+    public boolean isActivatedBy( final TouchEvent aTouchEvent )
         {
-        return isInside( aTouchEvent );
+        if ( !isInside( aTouchEvent ) ) return false;
+        if ( activateOnTouch() ) return true;
+        if ( activateOnlyOnDown() ) return aTouchEvent.isPress();
+        return false;
         }
 
-    public boolean isDeactivatedBy( TouchEvent aTouchEvent )
+    private boolean activateOnTouch()
+        {
+        return ( activateMode & ACTIVATE_ON_TOUCH ) != 0;
+        }
+
+    private boolean activateOnlyOnDown()
+        {
+        return ( activateMode & ACTIVATE_ONLY_ON_DOWN ) != 0;
+        }
+
+    public boolean isDeactivatedBy( final TouchEvent aTouchEvent )
         {
         if ( deactivateOnRelease() && aTouchEvent.isRelease() ) return true;
         if ( deactivateOnOut() && !isInside( aTouchEvent ) ) return true;
@@ -161,7 +180,7 @@ public abstract class Touchable
         {
         if ( ( triggerMode & TRIGGER_ON_UP ) == 0 ) return false;
         if ( !aTouchEvent.isRelease() ) return false;
-        if ( isInside( aTouchEvent ) ) return true;
+        if ( isInside( aTouchEvent ) ) return activated;
         return activated && !cancelTriggerOnUpWhenMovedOut;
         }
     }
