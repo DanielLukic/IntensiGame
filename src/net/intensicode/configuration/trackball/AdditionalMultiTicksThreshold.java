@@ -1,6 +1,6 @@
 //#condition TRACKBALL
 
-package net.intensicode.configuration;
+package net.intensicode.configuration.trackball;
 
 import net.intensicode.ConfigurableIntegerValue;
 import net.intensicode.core.TrackballController;

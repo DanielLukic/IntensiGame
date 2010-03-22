@@ -1,6 +1,6 @@
 //#condition CONSOLE
 
-package net.intensicode.configuration;
+package net.intensicode.configuration.console;
 
 import net.intensicode.ConfigurableBooleanValue;
 import net.intensicode.screens.ConsoleOverlay;

@@ -1,13 +1,13 @@
 //#condition TRACKBALL
 
-package net.intensicode.configuration;
+package net.intensicode.configuration.trackball;
 
 import net.intensicode.ConfigurableIntegerValue;
 import net.intensicode.core.TrackballController;
 
-public final class MultiEventThresholdInMillis implements ConfigurableIntegerValue
+public final class MultiTicksThreshold implements ConfigurableIntegerValue
     {
-    public MultiEventThresholdInMillis( final TrackballController aTrackballController )
+    public MultiTicksThreshold( final TrackballController aTrackballController )
         {
         myTrackballController = aTrackballController;
         }
@@ -16,33 +16,33 @@ public final class MultiEventThresholdInMillis implements ConfigurableIntegerVal
 
     public final String getTitle()
         {
-        return "multiEventThresholdInMillis";
+        return "multiTicksThreshold";
         }
 
     public final String getInfoText()
         {
-        return "Milliseconds before the current trackball changes are considered multiple events. " +
-               "This value determines in what interval trackball events are fired if the user continously moves the trackball. ";
+        return "Number of 'ticks' after initial significant tick before considering a trackball event a multi event. " +
+               "The higher this value, the more the trackball has to move before an event triggeres a move value higher than 1. ";
         }
 
     public final String getValueAsText( final int aConfiguredValue )
         {
-        return aConfiguredValue + " ms";
+        return aConfiguredValue + " ticks";
         }
 
     public final void setNewValue( final int aConfiguredValue )
         {
-        myTrackballController.multiEventThresholdInMillis = aConfiguredValue;
+        myTrackballController.multiTicksThreshold = aConfiguredValue;
         }
 
     public final int getMaxValue()
         {
-        return MAXIMUM_THRESHOLD_IN_MILLIS;
+        return MAXIMUM_MULTI_TICKS_THRESHOLD;
         }
 
     public final int getCurrentValue()
         {
-        return myTrackballController.multiEventThresholdInMillis;
+        return myTrackballController.multiTicksThreshold;
         }
 
     public final int getStepSize()
@@ -53,5 +53,5 @@ public final class MultiEventThresholdInMillis implements ConfigurableIntegerVal
 
     private final TrackballController myTrackballController;
 
-    private static final int MAXIMUM_THRESHOLD_IN_MILLIS = 250;
+    private static final int MAXIMUM_MULTI_TICKS_THRESHOLD = 30;
     }

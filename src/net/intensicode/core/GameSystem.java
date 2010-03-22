@@ -2,6 +2,9 @@ package net.intensicode.core;
 
 import net.intensicode.*;
 import net.intensicode.configuration.*;
+import net.intensicode.configuration.gestures.*;
+import net.intensicode.configuration.timing.*;
+import net.intensicode.configuration.trackball.*;
 import net.intensicode.graphics.*;
 import net.intensicode.screens.*;
 import net.intensicode.util.*;
@@ -123,7 +126,7 @@ public abstract class GameSystem
         trackball.addLeaf( new SilenceBeforeUpdateInMillis( this.trackball ) );
         trackball.addLeaf( new MultiEventThresholdInMillis( this.trackball ) );
         trackball.addLeaf( new ForcedSilenceBetweenEventsInMillis( this.trackball ) );
-        trackball.addLeaf( new DirectionIgnoreFactorFixed( this.trackball ) );
+        trackball.addLeaf( new TrackballDirectionIgnoreFactorFixed( this.trackball ) );
         //#endif
 
         final ConfigurationElementsTree timing = system.addSubTree( "Timing" );
@@ -135,8 +138,8 @@ public abstract class GameSystem
 
         //#if CONSOLE
         final ConfigurationElementsTree console = system.addSubTree( "Console" );
-        console.addLeaf( new ShowHideConsole( this.console ) );
-        console.addLeaf( new ConsoleEntryStayTime( this.console ) );
+        console.addLeaf( new net.intensicode.configuration.console.ShowHideConsole( this.console ) );
+        console.addLeaf( new net.intensicode.configuration.console.ConsoleEntryStayTime( this.console ) );
         //#endif
 
         system.addLeaf( new LoadConfiguration( context ) );

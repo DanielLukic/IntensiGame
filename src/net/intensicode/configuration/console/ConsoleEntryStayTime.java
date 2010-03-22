@@ -1,25 +1,27 @@
-package net.intensicode.configuration;
+//#condition CONSOLE
+
+package net.intensicode.configuration.console;
 
 import net.intensicode.ConfigurableIntegerValue;
-import net.intensicode.core.GameTiming;
+import net.intensicode.screens.ConsoleOverlay;
 
-public final class MaxFramesPerSecond implements ConfigurableIntegerValue
+public final class ConsoleEntryStayTime implements ConfigurableIntegerValue
     {
-    public MaxFramesPerSecond( final GameTiming aGameTiming )
+    public ConsoleEntryStayTime( final ConsoleOverlay aConsoleOverlay )
         {
-        myGameTiming = aGameTiming;
+        myConsoleOverlay = aConsoleOverlay;
         }
 
     // From ConfigurableValue
 
     public final String getTitle()
         {
-        return "Max frames per second";
+        return "Console entry stay time";
         }
 
     public final String getInfoText()
         {
-        return "Maximum number of frames drawn.";
+        return "Number of ticks a new console entry will stay visible.";
         }
 
     public final String getValueAsText( final int aConfiguredValue )
@@ -29,17 +31,17 @@ public final class MaxFramesPerSecond implements ConfigurableIntegerValue
 
     public final void setNewValue( final int aConfiguredValue )
         {
-        myGameTiming.maxFramesPerSecond = aConfiguredValue;
+        myConsoleOverlay.defaultStayTimeInTicks = aConfiguredValue;
         }
 
     public final int getMaxValue()
         {
-        return MAX_FRAMES_PER_SECOND;
+        return myConsoleOverlay.recommendedMaxStayTimeInTicks;
         }
 
     public final int getCurrentValue()
         {
-        return myGameTiming.maxFramesPerSecond;
+        return myConsoleOverlay.defaultStayTimeInTicks;
         }
 
     public final int getStepSize()
@@ -48,7 +50,5 @@ public final class MaxFramesPerSecond implements ConfigurableIntegerValue
         }
 
 
-    private final GameTiming myGameTiming;
-
-    private static final int MAX_FRAMES_PER_SECOND = 64;
+    private final ConsoleOverlay myConsoleOverlay;
     }

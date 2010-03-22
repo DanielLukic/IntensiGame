@@ -1,11 +1,11 @@
-package net.intensicode.configuration;
+package net.intensicode.configuration.timing;
 
 import net.intensicode.ConfigurableIntegerValue;
 import net.intensicode.core.GameTiming;
 
-public final class TicksPerSecond implements ConfigurableIntegerValue
+public final class MaxFramesPerSecond implements ConfigurableIntegerValue
     {
-    public TicksPerSecond( final GameTiming aGameTiming )
+    public MaxFramesPerSecond( final GameTiming aGameTiming )
         {
         myGameTiming = aGameTiming;
         }
@@ -14,15 +14,12 @@ public final class TicksPerSecond implements ConfigurableIntegerValue
 
     public final String getTitle()
         {
-        return "Ticks per second";
+        return "Max frames per second";
         }
 
     public final String getInfoText()
         {
-        return "Determines how often, per second, the application logic is executed. " +
-               "This should not be too high, because it will produce too much cpu load. " +
-               "It should not be too low, because the system will feel laggish. " +
-               "Note that changes will be properly applied only after a restart!";
+        return "Maximum number of frames drawn.";
         }
 
     public final String getValueAsText( final int aConfiguredValue )
@@ -32,17 +29,17 @@ public final class TicksPerSecond implements ConfigurableIntegerValue
 
     public final void setNewValue( final int aConfiguredValue )
         {
-        myGameTiming.ticksPerSecond = aConfiguredValue;
+        myGameTiming.maxFramesPerSecond = aConfiguredValue;
         }
 
     public final int getMaxValue()
         {
-        return MAX_TICKS_PER_SECOND;
+        return MAX_FRAMES_PER_SECOND;
         }
 
     public final int getCurrentValue()
         {
-        return myGameTiming.ticksPerSecond;
+        return myGameTiming.maxFramesPerSecond;
         }
 
     public final int getStepSize()
@@ -53,5 +50,5 @@ public final class TicksPerSecond implements ConfigurableIntegerValue
 
     private final GameTiming myGameTiming;
 
-    private static final int MAX_TICKS_PER_SECOND = 64;
+    private static final int MAX_FRAMES_PER_SECOND = 64;
     }

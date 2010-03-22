@@ -1,6 +1,6 @@
 //#condition TIMING
 
-package net.intensicode.configuration;
+package net.intensicode.configuration.timing;
 
 import net.intensicode.ConfigurableActionValue;
 import net.intensicode.util.Timing;

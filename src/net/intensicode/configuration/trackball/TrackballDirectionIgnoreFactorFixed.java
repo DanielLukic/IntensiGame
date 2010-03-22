@@ -1,14 +1,14 @@
 //#condition TRACKBALL
 
-package net.intensicode.configuration;
+package net.intensicode.configuration.trackball;
 
 import net.intensicode.ConfigurableIntegerValue;
 import net.intensicode.core.TrackballController;
 import net.intensicode.util.FixedMath;
 
-public final class DirectionIgnoreFactorFixed implements ConfigurableIntegerValue
+public final class TrackballDirectionIgnoreFactorFixed implements ConfigurableIntegerValue
     {
-    public DirectionIgnoreFactorFixed( final TrackballController aTrackballController )
+    public TrackballDirectionIgnoreFactorFixed( final TrackballController aTrackballController )
         {
         myTrackballController = aTrackballController;
         }

@@ -39,7 +39,7 @@ public final class TouchGestures implements TouchEventListener
 
     public int strokeThresholdInPixels = 6;
 
-    public int directionIgnoreFactor = 2;
+    public int directionIgnoreFactorFixed = FixedMath.FIXED_1 * 2;
 
 
     public final void reset()
@@ -129,8 +129,10 @@ public final class TouchGestures implements TouchEventListener
 
     private String recognize( int aDeltaX, int aDeltaY )
         {
-        if ( Math.abs( aDeltaX ) > Math.abs( aDeltaY ) * directionIgnoreFactor ) aDeltaY = 0;
-        if ( Math.abs( aDeltaY ) > Math.abs( aDeltaX ) * directionIgnoreFactor ) aDeltaX = 0;
+        final int xScaled = FixedMath.toInt( Math.abs( aDeltaX ) * directionIgnoreFactorFixed );
+        final int yScaled = FixedMath.toInt( Math.abs( aDeltaY ) * directionIgnoreFactorFixed );
+        if ( Math.abs( aDeltaX ) > xScaled ) aDeltaY = 0;
+        if ( Math.abs( aDeltaY ) > yScaled ) aDeltaX = 0;
         final int indexX = determineStrokeIndex( aDeltaX );
         final int indexY = determineStrokeIndex( aDeltaY );
         final int strokeIndex = indexY * 3 + indexX;
