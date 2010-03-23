@@ -18,6 +18,10 @@ public final class TouchSlider implements TouchEventListener
 
     public int newSlideStartThresholdInMillis = 1000 / 20;
 
+    public int initialStepThresholdInPixels = 4;
+
+    public int additionalStepThresholdInPixels = 4;
+
     public final Size stepSizeInPixels = new Size( 1, 1 );
 
     public final Position slideSteps = new Position();
@@ -59,8 +63,8 @@ public final class TouchSlider implements TouchEventListener
                 myLastPosition.x = aTouchEvent.getX();
                 myLastPosition.y = aTouchEvent.getY();
 
-                final int slideStepsX = ( mySlideDeltas.x - stepSizeInPixels.width / 2 ) / stepSizeInPixels.width;
-                final int slideStepsY = ( mySlideDeltas.y - stepSizeInPixels.height / 2 ) / stepSizeInPixels.height;
+                final int slideStepsX = processRawDelta( mySlideDeltas.x );
+                final int slideStepsY = processRawDelta( mySlideDeltas.y );
                 slideSteps.x += slideStepsX - myLastSlideSteps.x;
                 slideSteps.y += slideStepsY - myLastSlideSteps.y;
                 myLastSlideSteps.x = slideStepsX;
@@ -119,6 +123,27 @@ public final class TouchSlider implements TouchEventListener
                     }
                 }
             }
+        }
+
+    private int processRawDelta( final int aRawDelta )
+        {
+        final int sign = aRawDelta < 0 ? -1 : +1;
+
+        int rawDelta = Math.abs( aRawDelta ) ;
+        if ( rawDelta <= initialStepThresholdInPixels )
+            {
+            return 0;
+            }
+        rawDelta -= initialStepThresholdInPixels;
+
+        // if more than the initial step size..
+        if ( rawDelta > stepSizeInPixels.width )
+            {
+            // then subtract the additionalStepThresholdInPixels
+            rawDelta = Math.max( stepSizeInPixels.width, rawDelta - additionalStepThresholdInPixels );
+            }
+
+        return sign * rawDelta / stepSizeInPixels.width;
         }
 
 
