@@ -26,7 +26,7 @@ public final class StrokeThresholdInPixels implements ConfigurableIntegerValue
 
     public final String getValueAsText( final int aConfiguredValue )
         {
-        return aConfiguredValue + " ms";
+        return aConfiguredValue + " pixels";
         }
 
     public final void setNewValue( final int aConfiguredValue )
