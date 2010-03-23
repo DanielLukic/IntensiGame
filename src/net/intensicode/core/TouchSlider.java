@@ -14,12 +14,19 @@ public final class TouchSlider implements TouchEventListener
 
     public int slideStartThresholdInPixels = 5;
 
-    public int slideMoveThresholdInPixels = 5;
+    public int slideMoveThresholdInPixels = 3;
 
-    public int newSlideStartThresholdInMillis = 1000 / 10;
+    public int newSlideStartThresholdInMillis = 1000 / 20;
 
-    public final Position slideDeltas = new Position();
+    public final Size stepSizeInPixels = new Size( 1, 1 );
 
+    public final Position slideSteps = new Position();
+
+
+    public final void clearSlideSteps()
+        {
+        slideSteps.x = slideSteps.y = 0;
+        }
 
     // From TouchEventListener
 
@@ -29,16 +36,6 @@ public final class TouchSlider implements TouchEventListener
 
         final boolean touchInside = hotzone.contains( aTouchEvent.getX(), aTouchEvent.getY() );
         if ( !touchInside ) return;
-
-        if ( aTouchEvent.isPress() && myFirstPositionSet )
-            {
-            throw new RuntimeException( "should not be, right? " );
-            }
-
-        if ( !aTouchEvent.isPress() && !myFirstPositionSet )
-            {
-            throw new RuntimeException( "should not be, right? " );
-            }
 
         if ( !myFirstPositionSet || aTouchEvent.isPress() )
             {
@@ -55,12 +52,19 @@ public final class TouchSlider implements TouchEventListener
             {
             if ( Math.abs( deltaX ) >= slideMoveThresholdInPixels || Math.abs( deltaY ) >= slideMoveThresholdInPixels )
                 {
-                slideDeltas.x += deltaX;
-                slideDeltas.y += deltaY;
+                mySlideDeltas.x += deltaX;
+                mySlideDeltas.y += deltaY;
 
                 myLastPositionTimestamp = aTouchEvent.timestamp();
                 myLastPosition.x = aTouchEvent.getX();
                 myLastPosition.y = aTouchEvent.getY();
+
+                final int slideStepsX = ( mySlideDeltas.x - stepSizeInPixels.width / 2 ) / stepSizeInPixels.width;
+                final int slideStepsY = ( mySlideDeltas.y - stepSizeInPixels.height / 2 ) / stepSizeInPixels.height;
+                slideSteps.x += slideStepsX - myLastSlideSteps.x;
+                slideSteps.y += slideStepsY - myLastSlideSteps.y;
+                myLastSlideSteps.x = slideStepsX;
+                myLastSlideSteps.y = slideStepsY;
                 }
             else if ( aTouchEvent.timestamp() - myLastPositionTimestamp > newSlideStartThresholdInMillis )
                 {
@@ -70,6 +74,11 @@ public final class TouchSlider implements TouchEventListener
                 myLastPositionTimestamp = aTouchEvent.timestamp();
                 myLastPosition.x = aTouchEvent.getX();
                 myLastPosition.y = aTouchEvent.getY();
+
+                mySlideDeltas.x = mySlideDeltas.y = 0;
+                myLastSlideSteps.x = myLastSlideSteps.y = 0;
+
+                Log.debug( "new slide started because of newSlideStartThresholdInMillis" );
                 }
             else if ( aTouchEvent.isRelease() )
                     {
@@ -79,6 +88,11 @@ public final class TouchSlider implements TouchEventListener
                     myLastPositionTimestamp = aTouchEvent.timestamp();
                     myLastPosition.x = aTouchEvent.getX();
                     myLastPosition.y = aTouchEvent.getY();
+
+                    mySlideDeltas.x = mySlideDeltas.y = 0;
+                    myLastSlideSteps.x = myLastSlideSteps.y = 0;
+
+                    Log.debug( "new slide started because of isRelease" );
                     }
             }
         else
@@ -87,13 +101,21 @@ public final class TouchSlider implements TouchEventListener
                 {
                 if ( Math.abs( deltaX ) >= slideStartThresholdInPixels || Math.abs( deltaY ) >= slideStartThresholdInPixels )
                     {
-                    slideDeltas.x += deltaX;
-                    slideDeltas.y += deltaY;
-                    mySlideStarted = true;
+                    mySlideStarted = false;
+                    myFirstPositionSet = false;
 
                     myLastPositionTimestamp = aTouchEvent.timestamp();
                     myLastPosition.x = aTouchEvent.getX();
                     myLastPosition.y = aTouchEvent.getY();
+
+                    mySlideDeltas.x = mySlideDeltas.y = 0;
+                    myLastSlideSteps.x = myLastSlideSteps.y = 0;
+
+                    mySlideDeltas.x += deltaX;
+                    mySlideDeltas.y += deltaY;
+                    mySlideStarted = true;
+
+                    Log.debug( "initial slide started" );
                     }
                 }
             }
@@ -106,5 +128,9 @@ public final class TouchSlider implements TouchEventListener
 
     private long myLastPositionTimestamp;
 
+    private final Position mySlideDeltas = new Position();
+
     private final Position myLastPosition = new Position();
+
+    private final Position myLastSlideSteps = new Position();
     }
