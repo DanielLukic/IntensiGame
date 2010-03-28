@@ -87,8 +87,6 @@ class IntensiGameHelper
         final int width = aConfiguration.readInt( "DirectScreen.width", DEFAULT_SCREEN_WIDTH );
         final int height = aConfiguration.readInt( "DirectScreen.height", DEFAULT_SCREEN_HEIGHT );
         myGameSystem.screen.setTargetSize( width, height );
-        final String mode = aConfiguration.readString( "DirectScreen.viewport_scale_mode", DEFAULT_SCREEN_MODE );
-        myGameSystem.screen.setViewportMode( getViewportMode( mode ) );
 
         // TODO: Move to BitmapFontGenerator#apply(Configuration)                
         BitmapFontGenerator.buffered = aConfiguration.readBoolean( "BitmapFontGenerator.buffered", BitmapFontGenerator.buffered );

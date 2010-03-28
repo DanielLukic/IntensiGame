@@ -32,11 +32,6 @@ public interface DirectScreen
      */
     void setTargetSize( int aWidth, int aHeight );
 
-    /**
-     * Chooses the mode of scaling the virtual/logic game view size onto the device's real display resolution.
-     */
-    void setViewportMode( int aViewportModeId );
-
     // Internal API - TODO: Move the next methods to an internal API..
 
     int getNativeWidth();
