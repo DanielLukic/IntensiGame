@@ -16,7 +16,7 @@ public final class SlideMoveThresholdInPixels implements ConfigurableIntegerValu
 
     public final String getTitle()
         {
-        return "Slide Start Sensitivity (px)";
+        return "Slide Move Threshold";
         }
 
     public final String getInfoText()

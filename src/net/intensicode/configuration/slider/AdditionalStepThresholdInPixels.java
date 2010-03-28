@@ -16,7 +16,7 @@ public final class AdditionalStepThresholdInPixels implements ConfigurableIntege
 
     public final String getTitle()
         {
-        return "Slide Start Sensitivity (px)";
+        return "Additional Step Threshold";
         }
 
     public final String getInfoText()

@@ -16,7 +16,7 @@ public final class InitialStepThresholdInPixels implements ConfigurableIntegerVa
 
     public final String getTitle()
         {
-        return "Slide Start Sensitivity (px)";
+        return "Initial Step Threshold";
         }
 
     public final String getInfoText()

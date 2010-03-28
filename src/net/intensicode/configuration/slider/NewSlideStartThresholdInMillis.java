@@ -16,7 +16,7 @@ public final class NewSlideStartThresholdInMillis implements ConfigurableInteger
 
     public final String getTitle()
         {
-        return "New Slide Start Threshold (ms)";
+        return "New Slide Threshold";
         }
 
     public final String getInfoText()
