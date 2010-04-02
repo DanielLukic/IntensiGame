@@ -33,13 +33,13 @@ public final class TouchGestures implements TouchEventListener
 
     public Rectangle optionalHotzone;
 
-    public int breakTimeThresholdInMillis = 1000 / 15;
+    public int breakTimeThresholdInMillis = 80;
 
     public int samePositionThresholdInPixels = 12;
 
     public int strokeThresholdInPixels = 6;
 
-    public int directionIgnoreFactorFixed = FixedMath.FIXED_1 + FixedMath.FIXED_0_5 + FixedMath.FIXED_0_25;
+    public int directionIgnoreFactorFixed = FixedMath.FIXED_1 + FixedMath.FIXED_0_5 + FixedMath.FIXED_0_25 + FixedMath.FIXED_0_1;
 
 
     public final void reset()
@@ -65,13 +65,23 @@ public final class TouchGestures implements TouchEventListener
         {
         if ( optionalHotzone != null )
             {
-            if ( !optionalHotzone.contains( aTouchEvent.getX(), aTouchEvent.getY() ) ) return;
-            if ( !aTouchEvent.isPress() && myStrokePath.empty() ) return;
+            if ( !isInsideHotzone( aTouchEvent ) ) return;
+            if ( isStartedInsideHotzone( aTouchEvent ) ) return;
             }
 
         if ( aTouchEvent.isPress() ) start( aTouchEvent );
         else if ( aTouchEvent.isSwipe() ) move( aTouchEvent );
         else if ( aTouchEvent.isRelease() ) end( aTouchEvent );
+        }
+
+    private boolean isInsideHotzone( final TouchEvent aTouchEvent )
+        {
+        return optionalHotzone.contains( aTouchEvent.getX(), aTouchEvent.getY() );
+        }
+
+    private boolean isStartedInsideHotzone( final TouchEvent aTouchEvent )
+        {
+        return !aTouchEvent.isPress() && myStrokePath.empty();
         }
 
     // Implementation
@@ -80,6 +90,7 @@ public final class TouchGestures implements TouchEventListener
         {
         resetTemporaries();
         startStrokePath( aTouchEvent );
+        startTimingBreak( aTouchEvent );
         }
 
     private void resetTemporaries()
@@ -108,9 +119,17 @@ public final class TouchGestures implements TouchEventListener
         addToStrokePath( aTouchEvent );
         }
 
+    private boolean isSamePosition( final Position aPosition, final TouchEvent aTouchEvent )
+        {
+        if ( Math.abs( aPosition.x - aTouchEvent.getX() ) > samePositionThresholdInPixels ) return false;
+        if ( Math.abs( aPosition.y - aTouchEvent.getY() ) > samePositionThresholdInPixels ) return false;
+        return true;
+        }
+
     private boolean breakTimeThresholdReached( final TouchEvent aTouchEvent )
         {
-        return aTouchEvent.timestamp() - myBreakTimingStart > breakTimeThresholdInMillis;
+        final long timestampDelta = aTouchEvent.timestamp() - myBreakTimingStart;
+        return timestampDelta > breakTimeThresholdInMillis;
         }
 
     private void startTimingBreak( final TouchEvent aTouchEvent )
@@ -123,10 +142,16 @@ public final class TouchGestures implements TouchEventListener
     private void end( final TouchEvent aTouchEvent )
         {
         addToStrokePath( aTouchEvent );
-
         addStroke( myStrokeStart, aTouchEvent );
-
         determineGesture();
+        }
+
+    private void addStroke( final Position aStartPosition, final TouchEvent aTouchEvent )
+        {
+        final int xDelta = aTouchEvent.getX() - aStartPosition.x;
+        final int yDelta = aTouchEvent.getY() - aStartPosition.y;
+        final String stroke = recognize( xDelta, yDelta );
+        if ( stroke != NO_STROKE ) myStrokes.add( stroke );
         }
 
     private String recognize( int aDeltaX, int aDeltaY )
@@ -147,14 +172,6 @@ public final class TouchGestures implements TouchEventListener
         if ( delta < 0 ) return 0;
         if ( delta > 0 ) return 2;
         return 1;
-        }
-
-    private void addStroke( final Position aStartPosition, final TouchEvent aTouchEvent )
-        {
-        final int xDelta = aTouchEvent.getX() - aStartPosition.x;
-        final int yDelta = aTouchEvent.getY() - aStartPosition.y;
-        final String stroke = recognize( xDelta, yDelta );
-        if ( stroke != NO_STROKE ) myStrokes.add( stroke );
         }
 
     private void determineGesture()
@@ -187,13 +204,6 @@ public final class TouchGestures implements TouchEventListener
         {
         updateLastActionPosition( aTouchEvent );
         myStrokePath.add( new Position( aTouchEvent.getX(), aTouchEvent.getY() ) );
-        }
-
-    private boolean isSamePosition( final Position aPosition, final TouchEvent aTouchEvent )
-        {
-        if ( Math.abs( aPosition.x - aTouchEvent.getX() ) > samePositionThresholdInPixels ) return false;
-        if ( Math.abs( aPosition.y - aTouchEvent.getY() ) > samePositionThresholdInPixels ) return false;
-        return true;
         }
 
     private void updateLastActionPosition( final TouchEvent aTouchEvent )
