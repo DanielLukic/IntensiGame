@@ -39,7 +39,7 @@ public final class TouchGestures implements TouchEventListener
 
     public int strokeThresholdInPixels = 6;
 
-    public int directionIgnoreFactorFixed = FixedMath.FIXED_1 * 2;
+    public int directionIgnoreFactorFixed = FixedMath.FIXED_1 + FixedMath.FIXED_0_5;
 
 
     public final void reset()
