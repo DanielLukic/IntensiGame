@@ -56,19 +56,28 @@ public final class TouchSlider implements TouchEventListener
             {
             if ( Math.abs( deltaX ) >= slideMoveThresholdInPixels || Math.abs( deltaY ) >= slideMoveThresholdInPixels )
                 {
-                mySlideDeltas.x += deltaX;
-                mySlideDeltas.y += deltaY;
+                if ( Math.abs( deltaX ) >= slideMoveThresholdInPixels )
+                    {
+                    mySlideDeltas.x += deltaX;
 
-                myLastPositionTimestamp = aTouchEvent.timestamp();
-                myLastPosition.x = aTouchEvent.getX();
-                myLastPosition.y = aTouchEvent.getY();
+                    myLastPositionTimestamp = aTouchEvent.timestamp();
+                    myLastPosition.x = aTouchEvent.getX();
 
-                final int slideStepsX = processRawDelta( mySlideDeltas.x );
-                final int slideStepsY = processRawDelta( mySlideDeltas.y );
-                slideSteps.x += slideStepsX - myLastSlideSteps.x;
-                slideSteps.y += slideStepsY - myLastSlideSteps.y;
-                myLastSlideSteps.x = slideStepsX;
-                myLastSlideSteps.y = slideStepsY;
+                    final int slideStepsX = processRawDelta( mySlideDeltas.x );
+                    slideSteps.x += slideStepsX - myLastSlideSteps.x;
+                    myLastSlideSteps.x = slideStepsX;
+                    }
+                if ( Math.abs( deltaY ) >= slideMoveThresholdInPixels )
+                    {
+                    mySlideDeltas.y += deltaY;
+
+                    myLastPositionTimestamp = aTouchEvent.timestamp();
+                    myLastPosition.y = aTouchEvent.getY();
+
+                    final int slideStepsY = processRawDelta( mySlideDeltas.y );
+                    slideSteps.y += slideStepsY - myLastSlideSteps.y;
+                    myLastSlideSteps.y = slideStepsY;
+                    }
                 }
             else if ( aTouchEvent.timestamp() - myLastPositionTimestamp > newSlideStartThresholdInMillis )
                 {
@@ -129,7 +138,7 @@ public final class TouchSlider implements TouchEventListener
         {
         final int sign = aRawDelta < 0 ? -1 : +1;
 
-        int rawDelta = Math.abs( aRawDelta ) ;
+        int rawDelta = Math.abs( aRawDelta );
         if ( rawDelta <= initialStepThresholdInPixels )
             {
             return 0;
