@@ -10,17 +10,17 @@ public final class TouchSlider implements TouchEventListener
 
     public Rectangle optionalHotzone;
 
-    public int slideStartThresholdInMillis = 1000 / 20;
+    public int slideStartThresholdInMillis = 50;
 
-    public int slideStartThresholdInPixels = 5;
+    public int slideStartThresholdInPixels = 0;
 
-    public int slideMoveThresholdInPixels = 3;
+    public int slideMoveThresholdInPixels = 1;
 
-    public int newSlideStartThresholdInMillis = 1000 / 20;
+    public int newSlideStartThresholdInMillis = 50;
 
-    public int initialStepThresholdInPixels = 4;
+    public int initialStepThresholdInPixels = 5;
 
-    public int additionalStepThresholdInPixels = 4;
+    public int additionalStepThresholdInPixels = 20;
 
     public final Size stepSizeInPixels = new Size( 1, 1 );
 
