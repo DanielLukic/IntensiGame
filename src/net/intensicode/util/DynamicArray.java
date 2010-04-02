@@ -145,8 +145,6 @@ public final class DynamicArray
 
     // From Object
 
-    //#if DEBUG
-
     public String toString()
         {
         final StringBuffer buffer = new StringBuffer();
@@ -158,8 +156,6 @@ public final class DynamicArray
         if ( buffer.length() > 0 ) buffer.setLength( buffer.length() - 1 );
         return buffer.toString();
         }
-
-    //#endif
 
     // Implementation
 
