@@ -133,8 +133,8 @@ public final class TouchGestures implements TouchEventListener
         {
         final int xScaled = FixedMath.toInt( Math.abs( aDeltaX ) * directionIgnoreFactorFixed );
         final int yScaled = FixedMath.toInt( Math.abs( aDeltaY ) * directionIgnoreFactorFixed );
-        if ( Math.abs( aDeltaX ) > xScaled ) aDeltaY = 0;
-        if ( Math.abs( aDeltaY ) > yScaled ) aDeltaX = 0;
+        if ( Math.abs( aDeltaX ) > yScaled ) aDeltaY = 0;
+        if ( Math.abs( aDeltaY ) > xScaled ) aDeltaX = 0;
         final int indexX = determineStrokeIndex( aDeltaX );
         final int indexY = determineStrokeIndex( aDeltaY );
         final int strokeIndex = indexY * 3 + indexX;
