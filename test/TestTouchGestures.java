@@ -18,6 +18,54 @@ public final class TestTouchGestures extends TestCase
             }
         }
 
+    public final void testUpRightGestureIsRecognized() throws IOException
+        {
+        loadGestureData( "gesture_data_up_right.txt" );
+        for ( int idx = 0; idx < numberOfDataEntries(); idx++ )
+            {
+            setGestureDataEntry( idx );
+            createTouchGesturesObject();
+            sendGestureDataToObject();
+            assertEquals( "up-right gesture - index " + idx, "NORTH_EAST", resultingGesture() );
+            }
+        }
+
+    public final void testUpLeftGestureIsRecognized() throws IOException
+        {
+        loadGestureData( "gesture_data_up_left.txt" );
+        for ( int idx = 0; idx < numberOfDataEntries(); idx++ )
+            {
+            setGestureDataEntry( idx );
+            createTouchGesturesObject();
+            sendGestureDataToObject();
+            assertEquals( "up-left gesture - index " + idx, "NORTH_WEST", resultingGesture() );
+            }
+        }
+
+    public final void testRightGestureIsRecognized() throws IOException
+        {
+        loadGestureData( "gesture_data_right.txt" );
+        for ( int idx = 0; idx < numberOfDataEntries(); idx++ )
+            {
+            setGestureDataEntry( idx );
+            createTouchGesturesObject();
+            sendGestureDataToObject();
+            assertEquals( "right gesture - index " + idx, "EAST", resultingGesture() );
+            }
+        }
+
+    public final void testLeftGestureIsRecognized() throws IOException
+        {
+        loadGestureData( "gesture_data_left.txt" );
+        for ( int idx = 0; idx < numberOfDataEntries(); idx++ )
+            {
+            setGestureDataEntry( idx );
+            createTouchGesturesObject();
+            sendGestureDataToObject();
+            assertEquals( "left gesture - index " + idx, "WEST", resultingGesture() );
+            }
+        }
+
     private void loadGestureData( final String aResourcePath ) throws IOException
         {
         final String data = loadResourceIntoString( aResourcePath );
