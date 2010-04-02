@@ -49,12 +49,14 @@ public final class TouchGestures implements TouchEventListener
 
     public final void onDrawFrame( final DirectGraphics aGraphics )
         {
+        //#if DEBUG_TOUCH
         aGraphics.setColorARGB32( 0x40FF00FF );
         for ( int idx = 0; idx < myStrokePath.size; idx++ )
             {
             final Position position = (Position) myStrokePath.get( idx );
             aGraphics.fillRect( position.x - 1, position.y - 1, 3, 3 );
             }
+        //#endif
         }
 
     // From TouchEventListener
@@ -164,7 +166,9 @@ public final class TouchGestures implements TouchEventListener
             gesture.add( myStrokes.objects[ idx ] );
             }
 
-        Log.debug( "new gesture: {}", gesture );
+        //#if DEBUG_TOUCH
+        Log.info( "GESTURE: {}", gesture );
+        //#endif
         }
 
     private void startStrokePath( final TouchEvent aTouchEvent )

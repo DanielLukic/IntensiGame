@@ -93,6 +93,10 @@ public abstract class TouchHandler extends ScreenBase
 
     private void processQueuedEvent( final TouchEvent aQueuedEvent )
         {
+        //#if DEBUG_TOUCH
+        Log.info( "TOUCHEVENT {}", aQueuedEvent );
+        //#endif
+
         broadcastEvent( aQueuedEvent );
 
         if ( globalControlsActive ) updateControls( aQueuedEvent, myGlobalControls );
