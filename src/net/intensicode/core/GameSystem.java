@@ -144,6 +144,7 @@ public abstract class GameSystem
 
         system.addLeaf( new LoadConfiguration( context ) );
         system.addLeaf( new SaveConfiguration( context ) );
+        system.addLeaf( new DeleteConfiguration( context ) );
 
         return system;
         }

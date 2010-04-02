@@ -4,7 +4,7 @@ import net.intensicode.core.*;
 import net.intensicode.graphics.BitmapFontGenerator;
 import net.intensicode.util.Log;
 
-class IntensiGameHelper
+public final class IntensiGameHelper
     {
     static void toggleDebugScreen( final GameSystem aGameSystem )
         {
@@ -18,12 +18,12 @@ class IntensiGameHelper
         // TODO: Toggle system.cheat screen visibility..
         }
 
-    IntensiGameHelper( final GameSystem aGameSystem )
+    public IntensiGameHelper( final GameSystem aGameSystem )
         {
         myGameSystem = aGameSystem;
         }
 
-    void initGameSystemFromConfigurationFile()
+    public void initGameSystemFromConfigurationFile()
         {
         final Configuration engineConfiguration = loadEngineConfiguration();
         if ( engineConfiguration != Configuration.NULL_CONFIGURATION )
@@ -38,7 +38,20 @@ class IntensiGameHelper
             }
         }
 
-    void loadConfiguration( final ConfigurationElementsTree aTree )
+    public void deleteConfiguration( final ConfigurationElementsTree aTree )
+        {
+        if ( aTree == ConfigurationElementsTree.EMPTY ) return;
+        try
+            {
+            myGameSystem.storage.erase( new ConfigurationElementsTreeIO( aTree ) );
+            }
+        catch ( final Exception e )
+            {
+            Log.error( "failed deleting configuration elements tree {}", aTree.label, e );
+            }
+        }
+
+    public void loadConfiguration( final ConfigurationElementsTree aTree )
         {
         if ( aTree == ConfigurationElementsTree.EMPTY ) return;
         try
@@ -51,7 +64,7 @@ class IntensiGameHelper
             }
         }
 
-    void saveConfiguration( final ConfigurationElementsTree aTree )
+    public void saveConfiguration( final ConfigurationElementsTree aTree )
         {
         if ( aTree == ConfigurationElementsTree.EMPTY ) return;
         try
