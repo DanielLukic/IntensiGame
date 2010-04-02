@@ -167,7 +167,7 @@ public final class TouchGestures implements TouchEventListener
             }
 
         //#if DEBUG_TOUCH
-        Log.info( "GESTURE: {}", gesture );
+        //# Log.info( "GESTURE: {}", gesture );
         //#endif
         }
 
