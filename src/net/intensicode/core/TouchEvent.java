@@ -34,15 +34,13 @@ public abstract class TouchEvent
         {
         final StringBuffer buffer = new StringBuffer();
         buffer.append( "TouchEvent(" );
-        buffer.append( isPress() );
-        buffer.append( ',' );
-        buffer.append( isSwipe() );
-        buffer.append( ',' );
-        buffer.append( isRelease() );
+        buffer.append( isPress() ? "press" : isSwipe() ? "swipe" : isRelease() ? "release" : "unknown" );
         buffer.append( ',' );
         buffer.append( getX() );
         buffer.append( ',' );
         buffer.append( getY() );
+        buffer.append( ',' );
+        buffer.append( timestamp() );
         buffer.append( ")" );
         return buffer.toString();
         }
