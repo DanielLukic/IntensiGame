@@ -8,61 +8,43 @@ public final class TestTouchGestures extends TestCase
     {
     public final void testUpGestureIsRecognized() throws IOException
         {
-        loadGestureData( "gesture_data_up.txt" );
-        for ( int idx = 0; idx < numberOfDataEntries(); idx++ )
-            {
-            setGestureDataEntry( idx );
-            createTouchGesturesObject();
-            sendGestureDataToObject();
-            assertEquals( "up gesture - index " + idx, "NORTH", resultingGesture() );
-            }
+        runGestureData( "gesture_data_up.txt", "NORTH" );
         }
 
     public final void testUpRightGestureIsRecognized() throws IOException
         {
-        loadGestureData( "gesture_data_up_right.txt" );
-        for ( int idx = 0; idx < numberOfDataEntries(); idx++ )
-            {
-            setGestureDataEntry( idx );
-            createTouchGesturesObject();
-            sendGestureDataToObject();
-            assertEquals( "up-right gesture - index " + idx, "NORTH_EAST", resultingGesture() );
-            }
+        runGestureData( "gesture_data_up_right.txt", "NORTH_EAST" );
         }
 
     public final void testUpLeftGestureIsRecognized() throws IOException
         {
-        loadGestureData( "gesture_data_up_left.txt" );
-        for ( int idx = 0; idx < numberOfDataEntries(); idx++ )
-            {
-            setGestureDataEntry( idx );
-            createTouchGesturesObject();
-            sendGestureDataToObject();
-            assertEquals( "up-left gesture - index " + idx, "NORTH_WEST", resultingGesture() );
-            }
+        runGestureData( "gesture_data_up_left.txt", "NORTH_WEST" );
         }
 
     public final void testRightGestureIsRecognized() throws IOException
         {
-        loadGestureData( "gesture_data_right.txt" );
-        for ( int idx = 0; idx < numberOfDataEntries(); idx++ )
-            {
-            setGestureDataEntry( idx );
-            createTouchGesturesObject();
-            sendGestureDataToObject();
-            assertEquals( "right gesture - index " + idx, "EAST", resultingGesture() );
-            }
+        runGestureData( "gesture_data_right.txt", "EAST" );
         }
 
     public final void testLeftGestureIsRecognized() throws IOException
         {
-        loadGestureData( "gesture_data_left.txt" );
+        runGestureData( "gesture_data_left.txt", "WEST" );
+        }
+
+    public final void testTapGestureIsRecognized() throws IOException
+        {
+        runGestureData( "gesture_data_tap.txt", "TAP" );
+        }
+
+    private void runGestureData( final String aResourcePath, final String aExpectedGesture ) throws IOException
+        {
+        loadGestureData( aResourcePath );
         for ( int idx = 0; idx < numberOfDataEntries(); idx++ )
             {
             setGestureDataEntry( idx );
             createTouchGesturesObject();
             sendGestureDataToObject();
-            assertEquals( "left gesture - index " + idx, "WEST", resultingGesture() );
+            assertEquals( aResourcePath + " - index " + idx, aExpectedGesture, resultingGesture() );
             }
         }
 
@@ -226,7 +208,7 @@ public final class TestTouchGestures extends TestCase
             buffer.append( myTouchGestures.gesture.get( idx ) );
             buffer.append( ',' );
             }
-        buffer.setLength( buffer.length() - 1 );
+        if ( buffer.length() > 0 ) buffer.setLength( buffer.length() - 1 );
         return buffer.toString();
         }
 

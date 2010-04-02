@@ -26,6 +26,8 @@ public final class TouchGestures implements TouchEventListener
 
     public static final String WAIT = "WAIT";
 
+    public static final String TAP = "TAP";
+
 
     public final Position lastEventPosition = new Position();
 
@@ -182,6 +184,8 @@ public final class TouchGestures implements TouchEventListener
             {
             gesture.add( myStrokes.objects[ idx ] );
             }
+
+        if ( gesture.size == 0 ) gesture.add( TAP );
 
         //#if DEBUG_TOUCH
         //# Log.info( "GESTURE: {}", gesture );
