@@ -91,10 +91,14 @@ public abstract class TouchHandler extends ScreenBase
 
     // Implementation
 
+    private long myPreviousTimestamp;
+
     private void processQueuedEvent( final TouchEvent aQueuedEvent )
         {
         //#if DEBUG_TOUCH
-        Log.info( "TOUCHEVENT {}", aQueuedEvent );
+        final long delta = aQueuedEvent.timestamp() - myPreviousTimestamp;
+        Log.info( "TOUCHEVENT {} delta=" + delta, aQueuedEvent );
+        myPreviousTimestamp = aQueuedEvent.timestamp();
         //#endif
 
         broadcastEvent( aQueuedEvent );
