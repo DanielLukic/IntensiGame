@@ -28,7 +28,21 @@ public final class TestTouchSlider extends TestCase
             setGestureDataEntry( idx );
             createTouchSliderObject();
             sendGestureDataToObject();
-            assertEquals( "gesture_data_left.txt" + " - index " + idx, new Position( -1, 0 ), myTouchSlider.slideSteps );
+            assertEquals( "gesture_data_left.txt" + " - index " + idx, -1, myTouchSlider.slideSteps.x );
+            }
+        }
+
+    public final void testRightIsRecognized() throws IOException
+        {
+        loadGestureData( "gesture_data_right.txt" );
+        for ( int idx = 0; idx < numberOfDataEntries(); idx++ )
+            {
+            Log.debug( "" );
+            Log.debug( "testRightIsRecognized " + idx );
+            setGestureDataEntry( idx );
+            createTouchSliderObject();
+            sendGestureDataToObject();
+            assertEquals( "gesture_data_right.txt" + " - index " + idx, +1, myTouchSlider.slideSteps.x );
             }
         }
 
