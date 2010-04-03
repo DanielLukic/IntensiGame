@@ -6,43 +6,37 @@ import java.io.IOException;
 
 public final class TestTouchSlider extends TestCase
     {
+    public static final int NO_HORIZONTAL_MOVEMENT = 0;
+
+    public static final int ONE_STEP_LEFT = -1;
+
+    public static final int ONE_STEP_RIGHT = +1;
+
+
     public final void testTapIsNoMovement() throws IOException
         {
-        loadGestureData( "gesture_data_tap.txt" );
-        for ( int idx = 0; idx < numberOfDataEntries(); idx++ )
-            {
-            setGestureDataEntry( idx );
-            createTouchSliderObject();
-            sendGestureDataToObject();
-            assertEquals( "gesture_data_tap.txt" + " - index " + idx, new Position( 0, 0 ), myTouchSlider.slideSteps );
-            }
+        runGestureData( "gesture_data_tap.txt", NO_HORIZONTAL_MOVEMENT );
         }
 
     public final void testLeftIsRecognized() throws IOException
         {
-        loadGestureData( "gesture_data_left.txt" );
-        for ( int idx = 0; idx < numberOfDataEntries(); idx++ )
-            {
-            Log.debug( "" );
-            Log.debug( "testLeftIsRecognized " + idx );
-            setGestureDataEntry( idx );
-            createTouchSliderObject();
-            sendGestureDataToObject();
-            assertEquals( "gesture_data_left.txt" + " - index " + idx, -1, myTouchSlider.slideSteps.x );
-            }
+        runGestureData( "gesture_data_left.txt", ONE_STEP_LEFT );
         }
 
     public final void testRightIsRecognized() throws IOException
         {
-        loadGestureData( "gesture_data_right.txt" );
+        runGestureData( "gesture_data_right.txt", ONE_STEP_RIGHT );
+        }
+
+    private void runGestureData( final String aResourcePath, final int aExpectedHorizontalSteps ) throws IOException
+        {
+        loadGestureData( aResourcePath );
         for ( int idx = 0; idx < numberOfDataEntries(); idx++ )
             {
-            Log.debug( "" );
-            Log.debug( "testRightIsRecognized " + idx );
             setGestureDataEntry( idx );
             createTouchSliderObject();
             sendGestureDataToObject();
-            assertEquals( "gesture_data_right.txt" + " - index " + idx, +1, myTouchSlider.slideSteps.x );
+            assertEquals( aResourcePath + " - index " + idx, aExpectedHorizontalSteps, myTouchSlider.slideSteps.x );
             }
         }
 
