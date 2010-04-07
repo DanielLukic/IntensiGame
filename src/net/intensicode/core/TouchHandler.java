@@ -10,38 +10,38 @@ public abstract class TouchHandler extends ScreenBase
     public boolean globalControlsActive = true;
 
 
-    public final void setGlobalControlsBlending( final int aAlpha256 )
+    public synchronized final void setGlobalControlsBlending( final int aAlpha256 )
         {
         myGlobalControls.setBlending( aAlpha256 );
         }
 
-    public final void addLocalControl( final Touchable aTouchable )
+    public synchronized final void addLocalControl( final Touchable aTouchable )
         {
         myLocalControls.add( aTouchable );
         }
 
-    public final void removeLocalControl( final Touchable aTouchable )
+    public synchronized final void removeLocalControl( final Touchable aTouchable )
         {
         myLocalControls.remove( aTouchable );
         }
 
-    public final void addGlobalControl( final Touchable aTouchable )
+    public synchronized final void addGlobalControl( final Touchable aTouchable )
         {
         myGlobalControls.add( aTouchable );
         }
 
-    public final void removeGlobalControl( final Touchable aTouchable )
+    public synchronized final void removeGlobalControl( final Touchable aTouchable )
         {
         myGlobalControls.remove( aTouchable );
         }
 
-    public final void purgePendingEvents()
+    public synchronized final void purgePendingEvents()
         {
         myGlobalControls.purgePendingEvents();
         myLocalControls.purgePendingEvents();
         }
 
-    public final void addListener( final TouchEventListener aListener )
+    public synchronized final void addListener( final TouchEventListener aListener )
         {
         myListeners.add( aListener );
         }
@@ -54,7 +54,7 @@ public abstract class TouchHandler extends ScreenBase
 
     // TODO: Move Internal API into internal class hidden from framework user.
 
-    public final void onControlTick() throws Exception
+    public synchronized final void onControlTick() throws Exception
         {
         while ( myQueuedEvents.size > 0 )
             {
@@ -65,7 +65,7 @@ public abstract class TouchHandler extends ScreenBase
         myLocalControls.removeAll();
         }
 
-    public final void onDrawFrame()
+    public synchronized final void onDrawFrame()
         {
         if ( globalControlsActive ) myGlobalControls.drawAllTouchables();
         myLocalControls.drawAllTouchables();
