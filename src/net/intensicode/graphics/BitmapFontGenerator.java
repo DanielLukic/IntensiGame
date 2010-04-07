@@ -98,7 +98,7 @@ public final class BitmapFontGenerator extends FontGenerator
 
     public final void blitString( final DirectGraphics aGraphics, final String aText, final int aStart, final int aEnd, final int aX, final int aY )
         {
-        if ( aText.length() == 0 ) return;
+        if ( aText == null || aText.length() == 0 ) return;
 
         if ( buffered )
             {
