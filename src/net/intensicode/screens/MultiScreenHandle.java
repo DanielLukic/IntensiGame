@@ -1,11 +1,10 @@
 package net.intensicode.screens;
 
-final class MultiScreenHandle
+public final class MultiScreenHandle
     {
-    final ScreenBase screen;
+    public final ScreenBase screen;
 
-    boolean visible = true;
-
+    public boolean visible = true;
 
 
     MultiScreenHandle( final ScreenBase aScreen )
