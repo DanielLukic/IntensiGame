@@ -111,17 +111,6 @@ public final class IntensiGameHelper
         Log.info( "DirectScreen: {}x{}", width, height );
         }
 
-    private int getViewportMode( final String aModeName )
-        {
-        if ( aModeName.equalsIgnoreCase( "system" ) ) return DirectScreen.VIEWPORT_MODE_SYSTEM;
-        if ( aModeName.equalsIgnoreCase( "fullscreen" ) ) return DirectScreen.VIEWPORT_MODE_FULLSCREEN;
-        //#if DEBUG
-        throw new IllegalArgumentException( aModeName );
-        //#else
-        //# return DirectScreen.VIEWPORT_MODE_SYSTEM;
-        //#endif
-        }
-
     private void applySkinConfiguration( final Configuration aConfiguration )
         {
         myGameSystem.skin.apply( aConfiguration );
@@ -133,6 +122,4 @@ public final class IntensiGameHelper
     private static final int DEFAULT_SCREEN_WIDTH = 240;
 
     private static final int DEFAULT_SCREEN_HEIGHT = 320;
-
-    private static final String DEFAULT_SCREEN_MODE = "system";
     }
