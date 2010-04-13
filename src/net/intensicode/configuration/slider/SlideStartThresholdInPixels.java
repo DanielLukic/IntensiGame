@@ -3,13 +3,13 @@
 package net.intensicode.configuration.slider;
 
 import net.intensicode.ConfigurableIntegerValue;
-import net.intensicode.core.TouchSlider;
+import net.intensicode.core.TouchSliderConfiguration;
 
 public final class SlideStartThresholdInPixels implements ConfigurableIntegerValue
     {
-    public SlideStartThresholdInPixels( final TouchSlider aTouchSlider )
+    public SlideStartThresholdInPixels( final TouchSliderConfiguration aConfiguration )
         {
-        myTouchSlider = aTouchSlider;
+        myConfiguration = aConfiguration;
         }
 
     // From SeekBarDialogBase
@@ -31,7 +31,7 @@ public final class SlideStartThresholdInPixels implements ConfigurableIntegerVal
 
     public final void setNewValue( final int aConfiguredValue )
         {
-        myTouchSlider.slideStartThresholdInPixels = aConfiguredValue;
+        myConfiguration.slideStartThresholdInPixels = aConfiguredValue;
         }
 
     public final int getMaxValue()
@@ -41,7 +41,7 @@ public final class SlideStartThresholdInPixels implements ConfigurableIntegerVal
 
     public final int getCurrentValue()
         {
-        return myTouchSlider.slideStartThresholdInPixels;
+        return myConfiguration.slideStartThresholdInPixels;
         }
 
     public final int getStepSize()
@@ -50,7 +50,7 @@ public final class SlideStartThresholdInPixels implements ConfigurableIntegerVal
         }
 
 
-    private final TouchSlider myTouchSlider;
+    private final TouchSliderConfiguration myConfiguration;
 
     private static final int MAXIMUM_THRESHOLD_IN_PIXELS = 50;
     }

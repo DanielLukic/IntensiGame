@@ -118,7 +118,8 @@ public final class TestTouchSlider extends TestCase
 
     private void createTouchSliderObject()
         {
-        myTouchSlider = new TouchSlider();
+        final TouchSliderConfiguration configuration = new TouchSliderConfiguration();
+        myTouchSlider = new TouchSlider( configuration );
         myTouchSlider.touchableArea.x = myTouchSlider.touchableArea.y = 0;
         myTouchSlider.touchableArea.width = 480;
         myTouchSlider.touchableArea.height = 800;
