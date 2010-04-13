@@ -126,7 +126,8 @@ public final class TestTouchGestures extends TestCase
 
     private void createTouchGesturesObject()
         {
-        myTouchGestures = new TouchGestures();
+        final TouchGesturesConfiguration configuration = new TouchGesturesConfiguration();
+        myTouchGestures = new TouchGestures( configuration );
         }
 
     private void sendGestureDataToObject()

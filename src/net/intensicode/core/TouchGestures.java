@@ -35,14 +35,11 @@ public final class TouchGestures implements TouchEventListener
 
     public Rectangle optionalHotzone;
 
-    public int breakTimeThresholdInMillis = 80;
 
-    public int samePositionThresholdInPixels = 12;
-
-    public int strokeThresholdInPixels = 6;
-
-    public int directionIgnoreFactorFixed = FixedMath.FIXED_1 + FixedMath.FIXED_0_5 + FixedMath.FIXED_0_25 + FixedMath.FIXED_0_1;
-
+    public TouchGestures( final TouchGesturesConfiguration aConfiguration )
+        {
+        myConfiguration = aConfiguration;
+        }
 
     public final void reset()
         {
@@ -123,15 +120,17 @@ public final class TouchGestures implements TouchEventListener
 
     private boolean isSamePosition( final Position aPosition, final TouchEvent aTouchEvent )
         {
-        if ( Math.abs( aPosition.x - aTouchEvent.getX() ) > samePositionThresholdInPixels ) return false;
-        if ( Math.abs( aPosition.y - aTouchEvent.getY() ) > samePositionThresholdInPixels ) return false;
+        if ( Math.abs( aPosition.x - aTouchEvent.getX() ) > myConfiguration.samePositionThresholdInPixels )
+            return false;
+        if ( Math.abs( aPosition.y - aTouchEvent.getY() ) > myConfiguration.samePositionThresholdInPixels )
+            return false;
         return true;
         }
 
     private boolean breakTimeThresholdReached( final TouchEvent aTouchEvent )
         {
         final long timestampDelta = aTouchEvent.timestamp() - myBreakTimingStart;
-        return timestampDelta > breakTimeThresholdInMillis;
+        return timestampDelta > myConfiguration.breakTimeThresholdInMillis;
         }
 
     private void startTimingBreak( final TouchEvent aTouchEvent )
@@ -158,8 +157,8 @@ public final class TouchGestures implements TouchEventListener
 
     private String recognize( int aDeltaX, int aDeltaY )
         {
-        final int xScaled = FixedMath.toInt( Math.abs( aDeltaX ) * directionIgnoreFactorFixed );
-        final int yScaled = FixedMath.toInt( Math.abs( aDeltaY ) * directionIgnoreFactorFixed );
+        final int xScaled = FixedMath.toInt( Math.abs( aDeltaX ) * myConfiguration.directionIgnoreFactorFixed );
+        final int yScaled = FixedMath.toInt( Math.abs( aDeltaY ) * myConfiguration.directionIgnoreFactorFixed );
         if ( Math.abs( aDeltaX ) > yScaled ) aDeltaY = 0;
         if ( Math.abs( aDeltaY ) > xScaled ) aDeltaX = 0;
         final int indexX = determineStrokeIndex( aDeltaX );
@@ -170,7 +169,7 @@ public final class TouchGestures implements TouchEventListener
 
     private int determineStrokeIndex( final int aDelta )
         {
-        final int delta = Math.abs( aDelta ) > strokeThresholdInPixels ? aDelta : 0;
+        final int delta = Math.abs( aDelta ) > myConfiguration.strokeThresholdInPixels ? aDelta : 0;
         if ( delta < 0 ) return 0;
         if ( delta > 0 ) return 2;
         return 1;
@@ -216,6 +215,8 @@ public final class TouchGestures implements TouchEventListener
         lastEventPosition.y = aTouchEvent.getY();
         }
 
+
+    private final TouchGesturesConfiguration myConfiguration;
 
     private final Position myStrokeStart = new Position();
 

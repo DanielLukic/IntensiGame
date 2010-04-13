@@ -3,13 +3,13 @@
 package net.intensicode.configuration.gestures;
 
 import net.intensicode.ConfigurableIntegerValue;
-import net.intensicode.core.TouchGestures;
+import net.intensicode.core.*;
 
 public final class SamePositionThresholdInPixels implements ConfigurableIntegerValue
     {
-    public SamePositionThresholdInPixels( final TouchGestures aTouchGestures )
+    public SamePositionThresholdInPixels( final TouchGesturesConfiguration aConfiguration )
         {
-        myTouchGestures = aTouchGestures;
+        myConfiguration = aConfiguration;
         }
 
     // From SeekBarDialogBase
@@ -31,7 +31,7 @@ public final class SamePositionThresholdInPixels implements ConfigurableIntegerV
 
     public final void setNewValue( final int aConfiguredValue )
         {
-        myTouchGestures.samePositionThresholdInPixels = aConfiguredValue;
+        myConfiguration.samePositionThresholdInPixels = aConfiguredValue;
         }
 
     public final int getMaxValue()
@@ -41,7 +41,7 @@ public final class SamePositionThresholdInPixels implements ConfigurableIntegerV
 
     public final int getCurrentValue()
         {
-        return myTouchGestures.samePositionThresholdInPixels;
+        return myConfiguration.samePositionThresholdInPixels;
         }
 
     public final int getStepSize()
@@ -50,7 +50,7 @@ public final class SamePositionThresholdInPixels implements ConfigurableIntegerV
         }
 
 
-    private final TouchGestures myTouchGestures;
+    private final TouchGesturesConfiguration myConfiguration;
 
     private static final int MAXIMUM_THRESHOLD_IN_PIXELS = 50;
     }

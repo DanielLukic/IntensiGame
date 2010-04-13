@@ -3,13 +3,13 @@
 package net.intensicode.configuration.gestures;
 
 import net.intensicode.ConfigurableIntegerValue;
-import net.intensicode.core.TouchGestures;
+import net.intensicode.core.TouchGesturesConfiguration;
 
 public final class BreakTimeThresholdInMillis implements ConfigurableIntegerValue
     {
-    public BreakTimeThresholdInMillis( final TouchGestures aTouchGestures )
+    public BreakTimeThresholdInMillis( final TouchGesturesConfiguration aConfiguration )
         {
-        myTouchGestures = aTouchGestures;
+        myConfiguration = aConfiguration;
         }
 
     // From SeekBarDialogBase
@@ -34,7 +34,7 @@ public final class BreakTimeThresholdInMillis implements ConfigurableIntegerValu
 
     public final void setNewValue( final int aConfiguredValue )
         {
-        myTouchGestures.breakTimeThresholdInMillis = aConfiguredValue;
+        myConfiguration.breakTimeThresholdInMillis = aConfiguredValue;
         }
 
     public final int getMaxValue()
@@ -44,7 +44,7 @@ public final class BreakTimeThresholdInMillis implements ConfigurableIntegerValu
 
     public final int getCurrentValue()
         {
-        return myTouchGestures.breakTimeThresholdInMillis;
+        return myConfiguration.breakTimeThresholdInMillis;
         }
 
     public final int getStepSize()
@@ -53,7 +53,7 @@ public final class BreakTimeThresholdInMillis implements ConfigurableIntegerValu
         }
 
 
-    private final TouchGestures myTouchGestures;
+    private final TouchGesturesConfiguration myConfiguration;
 
     private static final int MAXIMUM_SILENCE_IN_MILLIS = 250;
     }

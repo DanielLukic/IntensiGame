@@ -3,14 +3,14 @@
 package net.intensicode.configuration.gestures;
 
 import net.intensicode.ConfigurableIntegerValue;
-import net.intensicode.core.TouchGestures;
-import net.intensicode.util.*;
+import net.intensicode.core.TouchGesturesConfiguration;
+import net.intensicode.util.FixedMath;
 
 public final class GesturesDirectionIgnoreFactorFixed implements ConfigurableIntegerValue
     {
-    public GesturesDirectionIgnoreFactorFixed( final TouchGestures aTouchGestures )
+    public GesturesDirectionIgnoreFactorFixed( final TouchGesturesConfiguration aConfiguration )
         {
-        myTouchGestures = aTouchGestures;
+        myConfiguration = aConfiguration;
         }
 
     // From ConfigurableIntegerValue
@@ -40,9 +40,7 @@ public final class GesturesDirectionIgnoreFactorFixed implements ConfigurableInt
         final int fixedRange = FixedMath.FIXED_5 - FixedMath.FIXED_1;
         final int scaled = aConfiguredValue * fixedRange / MAXIMUM_DECI_STEPS;
         final int scaledAndTransposed = scaled + FixedMath.FIXED_1;
-        myTouchGestures.directionIgnoreFactorFixed = scaledAndTransposed;
-        Log.debug( "myTouchGestures.directionIgnoreFactorFixed = {}", scaledAndTransposed );
-        Log.debug( "myTouchGestures.directionIgnoreFactorFixed = " + scaledAndTransposed / (float) FixedMath.FIXED_MULTIPLIER );
+        myConfiguration.directionIgnoreFactorFixed = scaledAndTransposed;
         }
 
     public final int getMaxValue()
@@ -52,9 +50,7 @@ public final class GesturesDirectionIgnoreFactorFixed implements ConfigurableInt
 
     public final int getCurrentValue()
         {
-        Log.debug( "myTouchGestures.directionIgnoreFactorFixed = {}", myTouchGestures.directionIgnoreFactorFixed );
-        Log.debug( "myTouchGestures.directionIgnoreFactorFixed = " + myTouchGestures.directionIgnoreFactorFixed / (float) FixedMath.FIXED_MULTIPLIER );
-        final int valueFixed = myTouchGestures.directionIgnoreFactorFixed;
+        final int valueFixed = myConfiguration.directionIgnoreFactorFixed;
         final int deposed = valueFixed - FixedMath.FIXED_1;
         final int fixedRange = FixedMath.FIXED_5 - FixedMath.FIXED_1;
         final int deposedAndDescaled = deposed * MAXIMUM_DECI_STEPS / fixedRange;
@@ -67,7 +63,7 @@ public final class GesturesDirectionIgnoreFactorFixed implements ConfigurableInt
         }
 
 
-    private final TouchGestures myTouchGestures;
+    private final TouchGesturesConfiguration myConfiguration;
 
     private static final int MAXIMUM_DECI_STEPS = 50;
     }
