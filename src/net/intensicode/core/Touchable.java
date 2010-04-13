@@ -130,7 +130,8 @@ public abstract class Touchable
         {
         final StringBuffer buffer = new StringBuffer();
         buffer.append( "object=" );
-        buffer.append( associatedObject );
+        if ( associatedObject == this ) buffer.append( "this" );
+        else buffer.append( associatedObject );
         buffer.append( ",keyID=" );
         buffer.append( associatedKeyID );
         return buffer.toString();
