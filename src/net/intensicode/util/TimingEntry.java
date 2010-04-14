@@ -5,7 +5,7 @@ import java.util.Hashtable;
 
 public final class TimingEntry
     {
-    public final String tag;
+    public final Object tag;
 
     public long accumulated;
 
@@ -17,7 +17,7 @@ public final class TimingEntry
 
 
 
-    public TimingEntry( final String aTag )
+    public TimingEntry( final Object aTag )
         {
         tag = aTag;
         }
@@ -29,7 +29,7 @@ public final class TimingEntry
         myChildEntries.clear();
         }
 
-    public final TimingEntry getOrCreateChild( final String aTag )
+    public final TimingEntry getOrCreateChild( final Object aTag )
         {
         final TimingEntry entry = (TimingEntry) myChildEntries.get( aTag );
         if ( entry != null ) return entry;
@@ -50,7 +50,7 @@ public final class TimingEntry
         myStartCount--;
         if ( myStartCount > 0 ) return;
 
-        if ( myStartCount < 0 ) throw new IllegalStateException( tag );
+        if ( myStartCount < 0 ) throw new IllegalStateException( String.valueOf( tag ) );
 
         final long endTime = System.currentTimeMillis();
         final long delta = endTime - myStartTime;
@@ -91,11 +91,12 @@ public final class TimingEntry
 
         final long self = accumulated - childrenAccumulated;
 
-        aBuffer.append( tag );
+        final String tagString = String.valueOf( tag );
+        aBuffer.append( tagString );
 
         if ( count > 0 )
             {
-            final int indentFix = Timing.INDENT_OFFSET - aIndent.length() * aIndentLevel - tag.length();
+            final int indentFix = Timing.INDENT_OFFSET - aIndent.length() * aIndentLevel - tagString.length();
             for ( int idx = 0; idx < indentFix; idx++ ) aBuffer.append( ' ' );
 
             Timing.insertFixed( aBuffer, count );

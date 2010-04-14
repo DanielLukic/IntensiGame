@@ -12,7 +12,7 @@ public final class Timing
         //#endif
         }
 
-    public static void start( final String aTag )
+    public static void start( final Object aTag )
         {
         //#if TIMING
         synchronized ( theGlobalRootEntry )
@@ -23,7 +23,7 @@ public final class Timing
         //#endif
         }
 
-    public static void end( final String aTag )
+    public static void end( final Object aTag )
         {
         //#if TIMING
         getTimingByThread().doEnd( aTag );
@@ -58,7 +58,7 @@ public final class Timing
         //#endif
         }
 
-    public final void doStart( final String aTag )
+    public final void doStart( final Object aTag )
         {
         //#if TIMING
         final TimingEntry currentEntry = (TimingEntry) myEntryStack.last();
@@ -70,7 +70,7 @@ public final class Timing
         //#endif
         }
 
-    public final void doEnd( final String aTag )
+    public final void doEnd( final Object aTag )
         {
         //#if TIMING
         final TimingEntry currentEntry = (TimingEntry) myEntryStack.removeLast();
