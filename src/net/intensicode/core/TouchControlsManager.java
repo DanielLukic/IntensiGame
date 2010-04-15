@@ -27,12 +27,13 @@ public class TouchControlsManager
 
     public void remove( final Touchable aTouchable )
         {
+        Assert.isTrue( "really present", myTouchables.contains( aTouchable ));
         myTouchables.removeAll( aTouchable );
         }
 
     public void add( final Touchable aTouchable )
         {
-        remove( aTouchable );
+        Assert.isFalse( "added once only", myTouchables.contains( aTouchable ));
         myTouchables.add( aTouchable );
         }
 
