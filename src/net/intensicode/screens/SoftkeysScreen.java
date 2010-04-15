@@ -193,12 +193,6 @@ public class SoftkeysScreen extends ScreenBase
             }
         }
 
-    private void removeTouchableAreas()
-        {
-        touch().removeLocalControl( myLeftTouchRect );
-        touch().removeLocalControl( myRightTouchRect );
-        }
-
     //#endif
 
 
