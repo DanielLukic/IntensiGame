@@ -177,20 +177,15 @@ public class SoftkeysScreen extends ScreenBase
 
     private void updateTouchableArea( final TouchableArea aTouchableArea, final String aText, final int aHorizontalPosition )
         {
-        if ( aText == null || aText.length() == 0 )
-            {
-            touch().removeLocalControl( aTouchableArea );
-            }
-        else
-            {
-            setPosition( aHorizontalPosition, aText );
-            aTouchableArea.rectangle.x = myPosition.x;
-            aTouchableArea.rectangle.y = myPosition.y;
-            aTouchableArea.rectangle.width = getAlignWidth( aText );
-            aTouchableArea.rectangle.height = getAlignHeight( aText );
-            aTouchableArea.activateMode = Touchable.ACTIVATE_ONLY_ON_DOWN;
-            touch().addLocalControl( aTouchableArea );
-            }
+        if ( aText == null || aText.length() == 0 ) return;
+
+        setPosition( aHorizontalPosition, aText );
+        aTouchableArea.rectangle.x = myPosition.x;
+        aTouchableArea.rectangle.y = myPosition.y;
+        aTouchableArea.rectangle.width = getAlignWidth( aText );
+        aTouchableArea.rectangle.height = getAlignHeight( aText );
+        aTouchableArea.activateMode = Touchable.ACTIVATE_ONLY_ON_DOWN;
+        touch().addLocalControl( aTouchableArea );
         }
 
     //#endif
