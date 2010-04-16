@@ -6,7 +6,7 @@ public final class ClearScreen extends ScreenBase
 
     public ClearScreen()
         {
-        this( 0x000000 );
+        this( 0xFF000000 );
         }
 
     public ClearScreen( final int aARGB32 )
