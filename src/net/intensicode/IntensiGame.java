@@ -1,6 +1,6 @@
 package net.intensicode;
 
-import net.intensicode.core.*;
+import net.intensicode.core.GameSystem;
 
 public abstract class IntensiGame implements SystemContext
     {
