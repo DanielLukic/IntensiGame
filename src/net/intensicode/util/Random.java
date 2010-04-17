@@ -5,10 +5,9 @@ public final class Random
     public static final Random INSTANCE = new Random( 1704 );
 
 
-
     public Random()
         {
-        myCurrentSeed = System.currentTimeMillis();
+        this( System.currentTimeMillis() );
         }
 
     public Random( final long aSeed )
@@ -24,6 +23,7 @@ public final class Random
     public final void setSeed( final long aSeed )
         {
         myCurrentSeed = aSeed;
+        myRandom.setSeed( aSeed );
         }
 
     public final int nextInt()
@@ -37,6 +37,11 @@ public final class Random
         return value % aExclusiveMaxValue;
         }
 
+    public float nextFloat( final float aMaximum )
+        {
+        final float random = myRandom.nextFloat();
+        return random % aMaximum;
+        }
 
 
     private long myCurrentSeed;
@@ -46,4 +51,6 @@ public final class Random
     private static final long ADDEND = 11;
 
     private static final long MASK = 281474976710655L;
+
+    private final java.util.Random myRandom = new java.util.Random();
     }

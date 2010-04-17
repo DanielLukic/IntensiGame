@@ -125,7 +125,7 @@ public abstract class GameSystem
         trackball.addLeaf( new SilenceBeforeUpdateInMillis( this.trackball ) );
         trackball.addLeaf( new MultiEventThresholdInMillis( this.trackball ) );
         trackball.addLeaf( new ForcedSilenceBetweenEventsInMillis( this.trackball ) );
-        trackball.addLeaf( new TrackballDirectionIgnoreFactorFixed( this.trackball ) );
+        trackball.addLeaf( new TrackballDirectionIgnoreFactor( this.trackball ) );
         //#endif
 
         final ConfigurationElementsTree timing = system.addSubTree( "Timing" );

@@ -14,7 +14,7 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
 
     public int yOffset;
 
-    public int ySpacingFixed = FixedMath.FIXED_1 * 2;
+    public float ySpacingFixed = 2f;
 
 
     public MenuBase( final FontGenerator aMenuFont )
@@ -25,7 +25,7 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
 
     public final void setOffsetToVerticallyCentered()
         {
-        yOffset = ( screen().height() - ( entries.size - 1 ) * FixedMath.toInt( font.charHeight() * ySpacingFixed ) ) / 2;
+        yOffset = (int) ( ( screen().height() - ( entries.size - 1 ) * ( font.charHeight() * ySpacingFixed ) ) / 2 );
         }
 
     public final void updateEntryPositions()
@@ -33,7 +33,7 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
         for ( int idx = 0; idx < entries.size; idx++ )
             {
             final MenuEntry entry = getEntry( idx );
-            entry.position.y = yOffset + FixedMath.toInt( idx * font.charHeight() * ySpacingFixed );
+            entry.position.y = (int) ( yOffset + idx * font.charHeight() * ySpacingFixed );
             //#if TOUCH
             entry.updateTouchable();
             //#endif
@@ -137,7 +137,7 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
     protected final MenuEntry addMenuEntry( final int aID, final String aText ) throws Exception
         {
         final int x = screen().width() / 2;
-        final int y = yOffset + font.charHeight() * FixedMath.toInt( entries.size * ySpacingFixed );
+        final int y = (int) ( yOffset + font.charHeight() * entries.size * ySpacingFixed );
 
         final MenuEntry newEntry = new MenuEntry( font, aText, new Position( x, y ) );
         newEntry.id = aID;

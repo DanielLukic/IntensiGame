@@ -4,7 +4,7 @@ package net.intensicode.configuration.trackball;
 
 import net.intensicode.ConfigurableIntegerValue;
 import net.intensicode.core.TrackballController;
-import net.intensicode.util.*;
+import net.intensicode.util.Log;
 
 public final class TrackballPreset implements ConfigurableIntegerValue
     {
@@ -48,7 +48,7 @@ public final class TrackballPreset implements ConfigurableIntegerValue
         myTrackballController.initialTicksThreshold = 0;
         myTrackballController.multiTicksThreshold = 3;
         myTrackballController.additionalMultiTicksThreshold = 1;
-        myTrackballController.directionIgnoreFactorFixed = FixedMath.FIXED_1;
+        myTrackballController.directionIgnoreFactor = 1f;
         myTrackballController.forcedSilenceBetweenEventsInMillis = 0;
         myTrackballController.multiEventThresholdInMillis = 250;
         myTrackballController.silenceBeforeUpdateInMillis = 50;
@@ -59,7 +59,7 @@ public final class TrackballPreset implements ConfigurableIntegerValue
         myTrackballController.initialTicksThreshold = 0;
         myTrackballController.multiTicksThreshold = 0;
         myTrackballController.additionalMultiTicksThreshold = 1;
-        myTrackballController.directionIgnoreFactorFixed = FixedMath.FIXED_5;
+        myTrackballController.directionIgnoreFactor = 5f;
         myTrackballController.forcedSilenceBetweenEventsInMillis = 0;
         myTrackballController.multiEventThresholdInMillis = 250;
         myTrackballController.silenceBeforeUpdateInMillis = 0;
@@ -70,7 +70,7 @@ public final class TrackballPreset implements ConfigurableIntegerValue
         myTrackballController.initialTicksThreshold = 0;
         myTrackballController.multiTicksThreshold = 6;
         myTrackballController.additionalMultiTicksThreshold = 6;
-        myTrackballController.directionIgnoreFactorFixed = FixedMath.FIXED_5;
+        myTrackballController.directionIgnoreFactor = 5f;
         myTrackballController.forcedSilenceBetweenEventsInMillis = 0;
         myTrackballController.multiEventThresholdInMillis = 250;
         myTrackballController.silenceBeforeUpdateInMillis = 0;
@@ -81,7 +81,7 @@ public final class TrackballPreset implements ConfigurableIntegerValue
         myTrackballController.initialTicksThreshold = 0;
         myTrackballController.multiTicksThreshold = 4;
         myTrackballController.additionalMultiTicksThreshold = 2;
-        myTrackballController.directionIgnoreFactorFixed = FixedMath.FIXED_1;
+        myTrackballController.directionIgnoreFactor = 1f;
         myTrackballController.forcedSilenceBetweenEventsInMillis = 25;
         myTrackballController.multiEventThresholdInMillis = 125;
         myTrackballController.silenceBeforeUpdateInMillis = 50;
@@ -92,7 +92,7 @@ public final class TrackballPreset implements ConfigurableIntegerValue
         myTrackballController.initialTicksThreshold = 0;
         myTrackballController.multiTicksThreshold = 5;
         myTrackballController.additionalMultiTicksThreshold = 3;
-        myTrackballController.directionIgnoreFactorFixed = FixedMath.FIXED_1;
+        myTrackballController.directionIgnoreFactor = 1f;
         myTrackballController.forcedSilenceBetweenEventsInMillis = 50;
         myTrackballController.multiEventThresholdInMillis = 200;
         myTrackballController.silenceBeforeUpdateInMillis = 75;
@@ -103,7 +103,7 @@ public final class TrackballPreset implements ConfigurableIntegerValue
         myTrackballController.initialTicksThreshold = 0;
         myTrackballController.multiTicksThreshold = 6;
         myTrackballController.additionalMultiTicksThreshold = 4;
-        myTrackballController.directionIgnoreFactorFixed = FixedMath.FIXED_1;
+        myTrackballController.directionIgnoreFactor = 1f;
         myTrackballController.forcedSilenceBetweenEventsInMillis = 75;
         myTrackballController.multiEventThresholdInMillis = 250;
         myTrackballController.silenceBeforeUpdateInMillis = 125;

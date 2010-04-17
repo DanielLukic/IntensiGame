@@ -1,9 +1,8 @@
 package net.intensicode.screens;
 
-import net.intensicode.core.*;
-import net.intensicode.util.*;
+import net.intensicode.core.GameSystem;
 import net.intensicode.graphics.*;
-
+import net.intensicode.util.*;
 
 
 public final class StarField extends ScreenBase
@@ -22,16 +21,16 @@ public final class StarField extends ScreenBase
             }
 
         myNumberOfStars = aNumberOfStars;
-        myStarsX = new int[myNumberOfStars];
-        myStarsY = new int[myNumberOfStars];
-        myStarsZ = new int[myNumberOfStars];
+        myStarsX = new float[myNumberOfStars];
+        myStarsY = new float[myNumberOfStars];
+        myStarsZ = new float[myNumberOfStars];
 
         final Random random = new Random();
         for ( int idx = 0; idx < myNumberOfStars; idx++ )
             {
-            myStarsX[ idx ] = random.nextInt() % UNIVERSE_HALF;
-            myStarsY[ idx ] = random.nextInt() % UNIVERSE_HALF;
-            myStarsZ[ idx ] = random.nextInt() % UNIVERSE_HALF;
+            myStarsX[ idx ] = random.nextFloat( UNIVERSE_HALF );
+            myStarsY[ idx ] = random.nextFloat( UNIVERSE_HALF );
+            myStarsZ[ idx ] = random.nextFloat( UNIVERSE_HALF );
             }
 
         setAnimatedAxes( true, true, true );
@@ -59,15 +58,15 @@ public final class StarField extends ScreenBase
     public final void onControlTick()
         {
         final int tps = timing().ticksPerSecond * 64;
-        myAnimCounter += FixedMath.toFixed( Sinus.SIN_TABLE_SIZE ) / tps;
+        myAnimCounter += Sinus.SIN_TABLE_SIZE / (float) tps;
 
-        final int anim = FixedMath.toInt( myAnimCounter );
+        final int anim = (int) myAnimCounter;
         if ( anim > Sinus.SIN_TABLE_SIZE ) myAnimCounter = 0;
 
         myViewerX = myViewerY = myViewerZ = 0;
-        if ( myMoveX ) myViewerX = mySinus.sin( anim, UNIVERSE_SIZE / 2 );
-        if ( myMoveY ) myViewerY = mySinus.sin( anim * 3, UNIVERSE_SIZE / 5 );
-        if ( myMoveZ ) myViewerZ = mySinus.sin( anim * 2, UNIVERSE_SIZE / 3 );
+        if ( myMoveX ) myViewerX = MathExtended.sin( anim ) * UNIVERSE_SIZE / 2;
+        if ( myMoveY ) myViewerY = MathExtended.sin( anim * 3 ) * UNIVERSE_SIZE / 5;
+        if ( myMoveZ ) myViewerZ = MathExtended.sin( anim * 2 ) * UNIVERSE_SIZE / 3;
         }
 
     public final void onDrawFrame()
@@ -85,18 +84,18 @@ public final class StarField extends ScreenBase
             myPosition3d[ 1 ] = myStarsY[ idx ] + myViewerY;
             myPosition3d[ 2 ] = myStarsZ[ idx ] + myViewerZ;
 
-            final int[] xyz2d = doProjection( myPosition3d );
+            final float[] xyz2d = doProjection( myPosition3d );
 
-            final int x2d = xyz2d[ 0 ];
-            final int y2d = xyz2d[ 1 ];
+            final float x2d = xyz2d[ 0 ];
+            final float y2d = xyz2d[ 1 ];
             if ( x2d < 0 || x2d >= screenWidth ) continue;
             if ( y2d < 0 || y2d >= screenHeight ) continue;
 
-            final int zNew = xyz2d[ 2 ];
-            final int starIntensity = ( zNew * maxIntensity ) >> UNIVERSE_SHIFT;
-            final int shiftedIntensity = maxIntensity / 3 + starIntensity;
+            final float zNew = xyz2d[ 2 ];
+            final float starIntensity = ( zNew * maxIntensity ) / UNIVERSE_SIZE;
+            final int shiftedIntensity = (int) ( maxIntensity / 3 + starIntensity );
             final int intensity = Math.max( 0, Math.min( maxIntensity, shiftedIntensity ) );
-            myStars[ intensity ].blit( graphics(), x2d, y2d );
+            myStars[ intensity ].blit( graphics(), (int) x2d, (int) y2d );
 
             maxInt = Math.max( maxInt, intensity );
             minInt = Math.min( minInt, intensity );
@@ -105,17 +104,17 @@ public final class StarField extends ScreenBase
 
     // Implementation
 
-    private int[] doProjection( final int[] aPosition3D )
+    private float[] doProjection( final float[] aPosition3D )
         {
-        final int xTemp = aPosition3D[ 0 ] & UNIVERSE_MASK;
-        final int yTemp = aPosition3D[ 1 ] & UNIVERSE_MASK;
-        final int zTemp = aPosition3D[ 2 ] & UNIVERSE_MASK;
+        final float xTemp = aPosition3D[ 0 ] % UNIVERSE_SIZE;
+        final float yTemp = aPosition3D[ 1 ] % UNIVERSE_SIZE;
+        final float zTemp = aPosition3D[ 2 ] % UNIVERSE_SIZE;
 
-        int z = ( zTemp - UNIVERSE_HALF ) - VIEW_PLANE;
+        float z = ( zTemp - UNIVERSE_HALF ) - VIEW_PLANE;
         if ( z == 0 ) z = 1;
 
-        final int x = ( xTemp - UNIVERSE_HALF ) * myScreenWidth;
-        final int y = ( yTemp - UNIVERSE_HALF ) * myScreenHeight;
+        final float x = ( xTemp - UNIVERSE_HALF ) * myScreenWidth;
+        final float y = ( yTemp - UNIVERSE_HALF ) * myScreenHeight;
         myPosition2dPlusNewZ[ 0 ] = x / z + myScreenCenterX;
         myPosition2dPlusNewZ[ 1 ] = y / z + myScreenCenterY;
         myPosition2dPlusNewZ[ 2 ] = zTemp;
@@ -123,14 +122,13 @@ public final class StarField extends ScreenBase
         }
 
 
+    private float myAnimCounter;
 
-    private int myAnimCounter;
+    private float myViewerX;
 
-    private int myViewerX;
+    private float myViewerY;
 
-    private int myViewerY;
-
-    private int myViewerZ;
+    private float myViewerZ;
 
     private boolean myMoveX;
 
@@ -148,27 +146,21 @@ public final class StarField extends ScreenBase
 
     private int myNumberOfStars;
 
-    private final int[] myStarsX;
+    private final float[] myStarsX;
 
-    private final int[] myStarsY;
+    private final float[] myStarsY;
 
-    private final int[] myStarsZ;
+    private final float[] myStarsZ;
 
     private final CharData[] myStars;
 
-    private final int[] myPosition3d = new int[3];
+    private final float[] myPosition3d = new float[3];
 
-    private final int[] myPosition2dPlusNewZ = new int[3];
+    private final float[] myPosition2dPlusNewZ = new float[3];
 
-    private static final Sinus mySinus = Sinus.instance();
+    private static final float UNIVERSE_SIZE = 16f;
 
-    private static final int UNIVERSE_SHIFT = FixedMath.FIXED_SHIFT + 4;
+    private static final float UNIVERSE_HALF = UNIVERSE_SIZE / 2;
 
-    private static final int UNIVERSE_SIZE = 1 << UNIVERSE_SHIFT;
-
-    private static final int UNIVERSE_HALF = UNIVERSE_SIZE >> 1;
-
-    private static final int UNIVERSE_MASK = UNIVERSE_SIZE - 1;
-
-    private static final int VIEW_PLANE = UNIVERSE_SIZE * 2 / 3;
+    private static final float VIEW_PLANE = UNIVERSE_SIZE * 2 / 3;
     }

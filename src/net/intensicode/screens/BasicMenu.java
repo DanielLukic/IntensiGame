@@ -2,7 +2,7 @@ package net.intensicode.screens;
 
 import net.intensicode.core.*;
 import net.intensicode.graphics.*;
-import net.intensicode.util.*;
+import net.intensicode.util.DynamicArray;
 
 public class BasicMenu extends MultiScreen implements TouchableHandler
     {
@@ -14,7 +14,7 @@ public class BasicMenu extends MultiScreen implements TouchableHandler
 
     public int entryPositionsMode = ENTRY_POSITIONS_CENTERED;
 
-    public int lineSpacingFixed = FixedMath.FIXED_1 * 2;
+    public float lineSpacingFixed = 2f;
 
 
     public BasicMenu( final MenuHandler aMenuHandler, final FontGenerator aMenuFont )
@@ -177,7 +177,7 @@ public class BasicMenu extends MultiScreen implements TouchableHandler
 
     private void setOffsetToVerticallyCentered()
         {
-        myVerticalOffset = ( screen().height() - ( myEntries.size - 1 ) * FixedMath.toInt( myFont.charHeight() * lineSpacingFixed ) ) / 2;
+        myVerticalOffset = (int) ( ( screen().height() - ( myEntries.size - 1 ) * myFont.charHeight() * lineSpacingFixed ) / 2 );
         }
 
     private void updateEntryPositions()
@@ -187,7 +187,7 @@ public class BasicMenu extends MultiScreen implements TouchableHandler
             {
             final BasicMenuEntry entry = getEntry( idx );
             entry.position.x = xCenter;
-            entry.position.y = myVerticalOffset + FixedMath.toInt( idx * myFont.charHeight() * lineSpacingFixed );
+            entry.position.y = (int) ( myVerticalOffset + idx * myFont.charHeight() * lineSpacingFixed );
             //#if TOUCH
             entry.updateTouchable();
             //#endif

@@ -1,57 +1,57 @@
 package net.intensicode.util;
 
-public class Position
+public class PositionF
     {
-    public int x;
+    public float x;
 
-    public int y;
+    public float y;
 
 
-    public Position()
+    public PositionF()
         {
         }
 
-    public Position( final int aX, final int aY )
+    public PositionF( final float aX, final float aY )
         {
         x = aX;
         y = aY;
         }
 
-    public Position( final Position aPosition )
+    public PositionF( final PositionF aPosition )
         {
         x = aPosition.x;
         y = aPosition.y;
         }
 
-    public final void translate( final Position aPosition )
+    public final void translate( final PositionF aPosition )
         {
         x += aPosition.x;
         y += aPosition.y;
         }
 
-    public final void setTo( final Position aPosition )
+    public final void setTo( final PositionF aPosition )
         {
         x = aPosition.x;
         y = aPosition.y;
         }
 
-    public final void scaleFixed( final int aValueFixed )
+    public final void scale( final float aValue )
         {
-        x = FixedMath.mul( x, aValueFixed );
-        y = FixedMath.mul( y, aValueFixed );
+        x *= aValue;
+        y *= aValue;
         }
 
-    public final int distanceToFixed( final Position aPositionFixed )
+    public final float distanceTo( final PositionF aPositionFixed )
         {
-        return FixedMath.length( x - aPositionFixed.x, y - aPositionFixed.y );
+        return MathExtended.length( x - aPositionFixed.x, y - aPositionFixed.y );
         }
 
-    public final void normalizeFixed()
+    public final void normalize()
         {
-        final int length = FixedMath.length( x, y );
+        final float length = MathExtended.length( x, y );
         if ( length == 0 ) return;
-        x = FixedMath.div( x, length );
-        y = FixedMath.div( y, length );
+        x /= length;
+        y /= length;
         }
 
     public final boolean validDirection()
@@ -63,8 +63,8 @@ public class Position
 
     public final boolean equals( final Object aObject )
         {
-        if ( !( aObject instanceof Position ) ) return false;
-        final Position that = (Position) aObject;
+        if ( !( aObject instanceof PositionF ) ) return false;
+        final PositionF that = (PositionF) aObject;
         return x == that.x && y == that.y;
         }
 

@@ -4,9 +4,9 @@ package net.intensicode.core;
 
 public class Orientation
     {
-    public int azimuthFixed;
+    public float azimuth;
 
-    public int pitchFixed;
+    public float pitch;
 
-    public int rollFixed;
+    public float roll;
     }

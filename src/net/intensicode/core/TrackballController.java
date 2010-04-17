@@ -2,8 +2,6 @@
 
 package net.intensicode.core;
 
-import net.intensicode.util.FixedMath;
-
 public abstract class TrackballController
     {
     public int forcedSilenceBetweenEventsInMillis = 0;
@@ -12,7 +10,7 @@ public abstract class TrackballController
 
     public int multiEventThresholdInMillis = 250;
 
-    public int directionIgnoreFactorFixed = FixedMath.FIXED_1;
+    public float directionIgnoreFactor = 1f;
 
     public int initialTicksThreshold = 0;
 
@@ -71,14 +69,14 @@ public abstract class TrackballController
 
     public final boolean shouldIgnoreDeltaX()
         {
-        final int fixedScaledDeltaX = Math.abs( getDeltaX() ) * directionIgnoreFactorFixed;
-        return Math.abs( getDeltaY() ) > FixedMath.toInt( fixedScaledDeltaX );
+        final float scaledDeltaX = Math.abs( getDeltaX() ) * directionIgnoreFactor;
+        return Math.abs( getDeltaY() ) > scaledDeltaX;
         }
 
     public final boolean shouldIgnoreDeltaY()
         {
-        final int fixedScaledDeltaY = Math.abs( getDeltaY() ) * directionIgnoreFactorFixed;
-        return Math.abs( getDeltaX() ) > FixedMath.toInt( fixedScaledDeltaY );
+        final float scaledDeltaY = Math.abs( getDeltaY() ) * directionIgnoreFactor;
+        return Math.abs( getDeltaX() ) > scaledDeltaY;
         }
 
     public void reset()

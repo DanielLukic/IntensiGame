@@ -2,7 +2,7 @@
 
 package net.intensicode.core;
 
-import net.intensicode.util.*;
+import net.intensicode.util.Log;
 
 public final class TouchGesturesConfiguration
     {
@@ -24,19 +24,19 @@ public final class TouchGesturesConfiguration
                 breakTimeThresholdInMillis = 80;
                 samePositionThresholdInPixels = 12;
                 strokeThresholdInPixels = 6;
-                directionIgnoreFactorFixed = FixedMath.FIXED_1 + FixedMath.FIXED_0_5 + FixedMath.FIXED_0_25 + FixedMath.FIXED_0_1;
+                directionIgnoreFactor = 1.85f;
                 break;
             case SENSITIVITY_MEDIUM:
                 breakTimeThresholdInMillis = 60;
                 samePositionThresholdInPixels = 10;
                 strokeThresholdInPixels = 5;
-                directionIgnoreFactorFixed = FixedMath.FIXED_1 + FixedMath.FIXED_0_5 + FixedMath.FIXED_0_25;
+                directionIgnoreFactor = 1.75f;
                 break;
             case SENSITIVITY_HIGH:
                 breakTimeThresholdInMillis = 40;
                 samePositionThresholdInPixels = 8;
                 strokeThresholdInPixels = 4;
-                directionIgnoreFactorFixed = FixedMath.FIXED_1 + FixedMath.FIXED_0_5 + FixedMath.FIXED_0_1;
+                directionIgnoreFactor = 1.6f;
                 break;
             }
         }
@@ -47,5 +47,5 @@ public final class TouchGesturesConfiguration
 
     public int strokeThresholdInPixels = 6;
 
-    public int directionIgnoreFactorFixed = FixedMath.FIXED_1 + FixedMath.FIXED_0_5 + FixedMath.FIXED_0_25 + FixedMath.FIXED_0_1;
+    public float directionIgnoreFactor = 1.85f;
     }
