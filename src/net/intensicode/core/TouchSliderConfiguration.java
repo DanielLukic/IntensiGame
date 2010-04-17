@@ -6,6 +6,8 @@ import net.intensicode.util.*;
 
 public final class TouchSliderConfiguration
     {
+    public static final String[] SENSITIVITY_STRING_VALUES = { "LOW", "MED", "HI" };
+
     public static final int SENSITIVITY_LOW = 1;
 
     public static final int SENSITIVITY_MEDIUM = 2;
