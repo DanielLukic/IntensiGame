@@ -1,5 +1,3 @@
-//#condition CLDC11
-
 package net.intensicode.util;
 
 public class MathExtended
@@ -74,8 +72,8 @@ public class MathExtended
     public static double asin( final double value )
         {
         if ( value < -1.0 || value > 1.0 ) return Double.NaN;
-        if ( value == -1.0 ) return -Math.PI / 2;
-        if ( value == 1 ) return Math.PI / 2;
+        if ( value == -1.0 ) return PI_HALF_MINUS;
+        if ( value == 1 ) return PI_HALF;
         return atan( value / Math.sqrt( 1 - value * value ) );
         }
 
@@ -83,7 +81,7 @@ public class MathExtended
         {
         final double f = asin( value );
         if ( f == Double.NaN ) return f;
-        return Math.PI / 2 - f;
+        return PI_HALF - f;
         }
 
     public static double atan( double value )
@@ -106,7 +104,7 @@ public class MathExtended
             Invert = true;
             }
 
-        while ( value > Math.PI / 12 )
+        while ( value > PI_BY_12 )
             {
             sp++;
             a = value + SQRT3;
@@ -125,11 +123,11 @@ public class MathExtended
 
         while ( sp > 0 )
             {
-            a = a + Math.PI / 6;
+            a = a + PI_BY_6;
             sp--;
             }
 
-        if ( Invert ) a = Math.PI / 2 - a;
+        if ( Invert ) a = PI_HALF - a;
         if ( signChange ) a = -a;
 
         return a;
@@ -146,8 +144,8 @@ public class MathExtended
             else return Math.PI - atan( -y / x );
             }
 
-        if ( y < 0.0 ) return -Math.PI / 2.;
-        else return Math.PI / 2.;
+        if ( y < 0.0 ) return PI_HALF_MINUS;
+        else return PI_HALF;
         }
 
     public static double log( double value )
@@ -256,4 +254,12 @@ public class MathExtended
             else return Double.NaN;
             }
         }
+
+    private static final double PI_HALF = Math.PI / 2.;
+
+    private static final double PI_HALF_MINUS = -Math.PI / 2.;
+
+    private static final double PI_BY_6 = Math.PI / 6;
+
+    private static final double PI_BY_12 = Math.PI / 12;
     }
