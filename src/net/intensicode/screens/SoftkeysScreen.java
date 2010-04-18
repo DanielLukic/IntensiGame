@@ -6,6 +6,9 @@ import net.intensicode.util.Position;
 
 public class SoftkeysScreen extends ScreenBase
     {
+    public float touchableOutsetsFactor = 0.5f;
+
+
     public SoftkeysScreen( final FontGenerator aFont )
         {
         myFontGen = aFont;
@@ -186,6 +189,10 @@ public class SoftkeysScreen extends ScreenBase
         aTouchableArea.rectangle.height = getAlignHeight( aText );
         aTouchableArea.activateMode = Touchable.ACTIVATE_ONLY_ON_DOWN;
         touch().addLocalControl( aTouchableArea );
+
+        final int size = Math.min( aTouchableArea.rectangle.width, aTouchableArea.rectangle.height );
+        final float outsets = size * touchableOutsetsFactor;
+        aTouchableArea.rectangle.applyOutsets( (int) outsets );
         }
 
     //#endif
