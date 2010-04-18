@@ -6,7 +6,7 @@ import net.intensicode.util.Position;
 
 public class SoftkeysScreen extends ScreenBase
     {
-    public float touchableOutsetsFactor = 0.5f;
+    public float touchableOutsetsFactor = 0.25f;
 
 
     public SoftkeysScreen( final FontGenerator aFont )
