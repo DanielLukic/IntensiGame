@@ -6,7 +6,11 @@ import net.intensicode.util.Position;
 
 public final class EngineStats extends ScreenBase
     {
+    //#if FALSE
     public static boolean show = true;
+    //#else
+    //# public static boolean show = false;
+    //#endif
 
     public FontGenerator font;
 

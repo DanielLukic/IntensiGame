@@ -7,7 +7,11 @@ import net.intensicode.util.*;
 
 public final class ConsoleOverlay extends ScreenBase
     {
+    //#if FALSE
     public static boolean show = true;
+    //#else
+    //# public static boolean show = false;
+    //#endif
 
     public int defaultStayTimeInTicks = TICKS_NOT_SET_YET;
 
