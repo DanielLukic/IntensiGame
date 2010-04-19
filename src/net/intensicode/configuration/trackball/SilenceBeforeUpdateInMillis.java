@@ -3,13 +3,13 @@
 package net.intensicode.configuration.trackball;
 
 import net.intensicode.ConfigurableIntegerValue;
-import net.intensicode.core.TrackballController;
+import net.intensicode.core.TrackballConfiguration;
 
 public final class SilenceBeforeUpdateInMillis implements ConfigurableIntegerValue
     {
-    public SilenceBeforeUpdateInMillis( final TrackballController aTrackballController )
+    public SilenceBeforeUpdateInMillis( final TrackballConfiguration aConfiguration )
         {
-        myTrackballController = aTrackballController;
+        myConfiguration = aConfiguration;
         }
 
     // From SeekBarDialogBase
@@ -33,7 +33,7 @@ public final class SilenceBeforeUpdateInMillis implements ConfigurableIntegerVal
 
     public final void setNewValue( final int aConfiguredValue )
         {
-        myTrackballController.silenceBeforeUpdateInMillis = aConfiguredValue;
+        myConfiguration.silenceBeforeUpdateInMillis = aConfiguredValue;
         }
 
     public final int getMaxValue()
@@ -43,7 +43,7 @@ public final class SilenceBeforeUpdateInMillis implements ConfigurableIntegerVal
 
     public final int getCurrentValue()
         {
-        return myTrackballController.silenceBeforeUpdateInMillis;
+        return myConfiguration.silenceBeforeUpdateInMillis;
         }
 
     public final int getStepSize()
@@ -52,7 +52,7 @@ public final class SilenceBeforeUpdateInMillis implements ConfigurableIntegerVal
         }
 
 
-    private final TrackballController myTrackballController;
+    private final TrackballConfiguration myConfiguration;
 
     private static final int MAXIMUM_SILENCE_IN_MILLIS = 250;
     }

@@ -3,7 +3,6 @@ package net.intensicode.core;
 import net.intensicode.*;
 import net.intensicode.configuration.*;
 import net.intensicode.configuration.timing.*;
-import net.intensicode.configuration.trackball.*;
 import net.intensicode.graphics.*;
 import net.intensicode.screens.*;
 import net.intensicode.util.*;
@@ -20,10 +19,6 @@ public abstract class GameSystem
 
     public final SkinManager skin;
 
-    //#if TRACKBALL
-    public TrackballController trackball;
-    //#endif
-
     public ResourcesManager resources;
 
     public DirectGraphics graphics;
@@ -35,6 +30,10 @@ public abstract class GameSystem
     //#endif
 
     public DirectScreen screen;
+
+    //#ifdef TRACKBALL
+    public TrackballHandler trackball;
+    //#endif
 
     //#ifdef TOUCH
     public TouchHandler touch;
@@ -115,18 +114,6 @@ public abstract class GameSystem
     public final ConfigurationElementsTree getSystemValues()
         {
         final ConfigurationElementsTree system = new ConfigurationElementsTree( "Game System" );
-
-        //#if TRACKBALL
-        final ConfigurationElementsTree trackball = system.addSubTree( "Trackball" );
-        trackball.addLeaf( new TrackballPreset( this.trackball ) );
-        trackball.addLeaf( new InitialTicksThreshold( this.trackball ) );
-        trackball.addLeaf( new MultiTicksThreshold( this.trackball ) );
-        trackball.addLeaf( new AdditionalMultiTicksThreshold( this.trackball ) );
-        trackball.addLeaf( new SilenceBeforeUpdateInMillis( this.trackball ) );
-        trackball.addLeaf( new MultiEventThresholdInMillis( this.trackball ) );
-        trackball.addLeaf( new ForcedSilenceBetweenEventsInMillis( this.trackball ) );
-        trackball.addLeaf( new TrackballDirectionIgnoreFactor( this.trackball ) );
-        //#endif
 
         final ConfigurationElementsTree timing = system.addSubTree( "Timing" );
         timing.addLeaf( new TicksPerSecond( this.timing ) );
@@ -279,9 +266,6 @@ public abstract class GameSystem
         //#if SENSORS
         sensors.onControlTick();
         //#endif
-        //#if TRACKBALL
-        trackball.onControlTick();
-        //#endif
         keys.onControlTick();
 
         if ( stack.empty() ) throw new IllegalStateException( "no screen on stack" );
@@ -338,6 +322,9 @@ public abstract class GameSystem
         {
         //#if TOUCH
         stack.addGlobalHandler( touch );
+        //#endif
+        //#if TRACKBALL
+        stack.addGlobalHandler( trackball );
         //#endif
         //#if DEBUG
         debug = new DebugScreen( resources.getSmallDefaultFont() );

@@ -3,13 +3,13 @@
 package net.intensicode.configuration.trackball;
 
 import net.intensicode.ConfigurableFloatValue;
-import net.intensicode.core.TrackballController;
+import net.intensicode.core.TrackballConfiguration;
 
 public final class TrackballDirectionIgnoreFactor implements ConfigurableFloatValue
     {
-    public TrackballDirectionIgnoreFactor( final TrackballController aTrackballController )
+    public TrackballDirectionIgnoreFactor( final TrackballConfiguration aConfiguration )
         {
-        myTrackballController = aTrackballController;
+        myConfiguration = aConfiguration;
         }
 
     // From SeekBarDialogBase
@@ -32,7 +32,7 @@ public final class TrackballDirectionIgnoreFactor implements ConfigurableFloatVa
 
     public final void setNewValue( final float aConfiguredValue )
         {
-        myTrackballController.directionIgnoreFactor = aConfiguredValue + MINIMUM_VALUE;
+        myConfiguration.directionIgnoreFactor = aConfiguredValue + MINIMUM_VALUE;
         }
 
     public final float getValueRange()
@@ -42,7 +42,7 @@ public final class TrackballDirectionIgnoreFactor implements ConfigurableFloatVa
 
     public final float getCurrentValue()
         {
-        return myTrackballController.directionIgnoreFactor - MINIMUM_VALUE;
+        return myConfiguration.directionIgnoreFactor - MINIMUM_VALUE;
         }
 
     public final float getStepSize()
@@ -51,7 +51,7 @@ public final class TrackballDirectionIgnoreFactor implements ConfigurableFloatVa
         }
 
 
-    private final TrackballController myTrackballController;
+    private final TrackballConfiguration myConfiguration;
 
     private static final float MINIMUM_VALUE = 1f;
 
