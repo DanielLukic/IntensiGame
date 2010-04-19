@@ -29,6 +29,12 @@ public class Position
         y += aPosition.y;
         }
 
+    public final void setTo( final int aX, final int aY )
+        {
+        x = aX;
+        y = aY;
+        }
+
     public final void setTo( final Position aPosition )
         {
         x = aPosition.x;
