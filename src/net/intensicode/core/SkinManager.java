@@ -60,7 +60,7 @@ public final class SkinManager implements Runnable
         {
         myGameSystem = aGameSystem;
 
-        myLoaderThread = new Thread( this );
+        myLoaderThread = new Thread( this, "SkinManager" );
         myLoaderThread.start();
         }
 

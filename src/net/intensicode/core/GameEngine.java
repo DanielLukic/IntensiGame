@@ -68,7 +68,7 @@ public abstract class GameEngine implements Runnable
         //#if DEBUG
         Assert.isNull( "engine thread must not exist", myThread );
         //#endif
-        myThread = new Thread( this );
+        myThread = new Thread( this, "GameEngine" );
         }
 
     protected final void startEngineThread()
