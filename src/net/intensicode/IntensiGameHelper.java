@@ -4,6 +4,8 @@ import net.intensicode.core.*;
 import net.intensicode.graphics.BitmapFontGenerator;
 import net.intensicode.util.Log;
 
+import java.io.IOException;
+
 public final class IntensiGameHelper
     {
     static void toggleDebugScreen( final GameSystem aGameSystem )
@@ -58,9 +60,9 @@ public final class IntensiGameHelper
             {
             myGameSystem.storage.load( new ConfigurationElementsTreeIO( aTree ) );
             }
-        catch ( final Exception e )
+        catch ( final IOException e )
             {
-            Log.error( "failed loading configuration elements tree {}", aTree.label, e );
+            Log.info( "failed loading configuration elements tree {} - {} ignored", aTree.label, e );
             }
         }
 
