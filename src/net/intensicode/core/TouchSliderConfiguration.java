@@ -33,7 +33,7 @@ public final class TouchSliderConfiguration
                 slideStartThresholdInMillis = 40;
                 slideStartThresholdInPixels = 25;
                 slideMoveThresholdInPixels = 20;
-                newSlideStartThresholdInMillis = 100;
+                newSlideStartThresholdInMillis = 50;
                 initialStepThresholdInPixels = 25;
                 additionalStepThresholdInPixels = 120;
                 break;
@@ -41,7 +41,7 @@ public final class TouchSliderConfiguration
                 slideStartThresholdInMillis = 30;
                 slideStartThresholdInPixels = 25;
                 slideMoveThresholdInPixels = 15;
-                newSlideStartThresholdInMillis = 75;
+                newSlideStartThresholdInMillis = 45;
                 initialStepThresholdInPixels = 20;
                 additionalStepThresholdInPixels = 100;
                 break;
@@ -49,7 +49,7 @@ public final class TouchSliderConfiguration
                 slideStartThresholdInMillis = 25;
                 slideStartThresholdInPixels = 20;
                 slideMoveThresholdInPixels = 10;
-                newSlideStartThresholdInMillis = 50;
+                newSlideStartThresholdInMillis = 40;
                 initialStepThresholdInPixels = 10;
                 additionalStepThresholdInPixels = 100;
                 break;
@@ -57,7 +57,7 @@ public final class TouchSliderConfiguration
                 slideStartThresholdInMillis = 25;
                 slideStartThresholdInPixels = 15;
                 slideMoveThresholdInPixels = 8;
-                newSlideStartThresholdInMillis = 40;
+                newSlideStartThresholdInMillis = 35;
                 initialStepThresholdInPixels = 8;
                 additionalStepThresholdInPixels = 50;
                 break;
