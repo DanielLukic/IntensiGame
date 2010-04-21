@@ -1,3 +1,5 @@
+package core;
+
 import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
 

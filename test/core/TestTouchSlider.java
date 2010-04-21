@@ -1,3 +1,5 @@
+package core;
+
 import junit.framework.TestCase;
 import net.intensicode.core.*;
 import net.intensicode.util.*;

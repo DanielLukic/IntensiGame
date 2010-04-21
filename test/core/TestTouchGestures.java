@@ -1,3 +1,5 @@
+package core;
+
 import junit.framework.TestCase;
 import net.intensicode.core.*;
 import net.intensicode.util.*;
@@ -127,7 +129,7 @@ public final class TestTouchGestures extends TestCase
     private void createTouchGesturesObject()
         {
         final TouchGesturesConfiguration configuration = new TouchGesturesConfiguration();
-        myTouchGestures = new TouchGestures( configuration );
+        myTouchGestures = new TouchGestures( configuration, new FakePlatformContext() );
         }
 
     private void sendGestureDataToObject()
