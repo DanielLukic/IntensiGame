@@ -40,7 +40,7 @@ public final class Random
     public float nextFloat( final float aMaximum )
         {
         final float random = myRandom.nextFloat();
-        return random % aMaximum;
+        return random * aMaximum;
         }
 
 
