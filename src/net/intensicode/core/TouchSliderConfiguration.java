@@ -72,15 +72,15 @@ public final class TouchSliderConfiguration
             }
         }
 
-    public int slideStartThresholdInMillis = 25;
+    public int slideStartThresholdInMillis;
 
-    public int slideStartThresholdInPixels = 20;
+    public int slideStartThresholdInPixels;
 
-    public int slideMoveThresholdInPixels = 10;
+    public int slideMoveThresholdInPixels;
 
-    public int newSlideStartThresholdInMillis = 50;
+    public int newSlideStartThresholdInMillis;
 
-    public int initialStepThresholdInPixels = 10;
+    public int initialStepThresholdInPixels;
 
-    public int additionalStepThresholdInPixels = 100;
+    public int additionalStepThresholdInPixels;
     }

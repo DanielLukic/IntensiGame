@@ -30,30 +30,35 @@ public final class TouchGesturesConfiguration
             {
             default:
             case SENSITIVITY_VERY_LOW:
+                gestureStartThresholdInMillis = 40;
                 breakTimeThresholdInMillis = 120;
                 samePositionThresholdInPixels = 25;
-                strokeThresholdInPixels = 15;
+                strokeThresholdInPixels = 20;
                 directionIgnoreFactor = 2f;
                 break;
             case SENSITIVITY_LOW:
+                gestureStartThresholdInMillis = 30;
                 breakTimeThresholdInMillis = 100;
                 samePositionThresholdInPixels = 20;
                 strokeThresholdInPixels = 10;
                 directionIgnoreFactor = 1.9f;
                 break;
             case SENSITIVITY_MEDIUM:
+                gestureStartThresholdInMillis = 25;
                 breakTimeThresholdInMillis = 80;
                 samePositionThresholdInPixels = 12;
                 strokeThresholdInPixels = 6;
                 directionIgnoreFactor = 1.85f;
                 break;
             case SENSITIVITY_HIGH:
+                gestureStartThresholdInMillis = 25;
                 breakTimeThresholdInMillis = 60;
                 samePositionThresholdInPixels = 10;
                 strokeThresholdInPixels = 5;
                 directionIgnoreFactor = 1.75f;
                 break;
             case SENSITIVITY_VERY_HIGH:
+                gestureStartThresholdInMillis = 25;
                 breakTimeThresholdInMillis = 40;
                 samePositionThresholdInPixels = 8;
                 strokeThresholdInPixels = 4;
@@ -62,11 +67,13 @@ public final class TouchGesturesConfiguration
             }
         }
 
-    public int breakTimeThresholdInMillis = 80;
+    public int gestureStartThresholdInMillis;
 
-    public int samePositionThresholdInPixels = 12;
+    public int breakTimeThresholdInMillis;
 
-    public int strokeThresholdInPixels = 6;
+    public int samePositionThresholdInPixels;
 
-    public float directionIgnoreFactor = 1.85f;
+    public int strokeThresholdInPixels;
+
+    public float directionIgnoreFactor;
     }
