@@ -3,6 +3,7 @@
 package net.intensicode.core;
 
 import net.intensicode.util.*;
+import net.intensicode.PlatformContext;
 
 public final class TouchGestures implements TouchEventListener
     {
@@ -36,9 +37,10 @@ public final class TouchGestures implements TouchEventListener
     public Rectangle optionalHotzone;
 
 
-    public TouchGestures( final TouchGesturesConfiguration aConfiguration )
+    public TouchGestures( final TouchGesturesConfiguration aConfiguration, final PlatformContext aPlatformContext )
         {
         myConfiguration = aConfiguration;
+        myPlatformContext = aPlatformContext;
         }
 
     public final void reset()
@@ -179,6 +181,9 @@ public final class TouchGestures implements TouchEventListener
         {
         gesture.clear();
 
+        final long now = myPlatformContext.compatibleTimeInMillis();
+        if ( now - myStrokeStartTimestamp < myConfiguration.gestureStartThresholdInMillis ) return;
+
         for ( int idx = 0; idx < myStrokes.size; idx++ )
             {
             gesture.add( myStrokes.objects[ idx ] );
@@ -195,6 +200,7 @@ public final class TouchGestures implements TouchEventListener
         {
         setStrokeStart( aTouchEvent );
         addToStrokePath( aTouchEvent );
+        myStrokeStartTimestamp = aTouchEvent.timestamp();
         }
 
     private void setStrokeStart( final TouchEvent aTouchEvent )
@@ -215,6 +221,10 @@ public final class TouchGestures implements TouchEventListener
         lastEventPosition.y = aTouchEvent.getY();
         }
 
+
+    private long myStrokeStartTimestamp;
+
+    private final PlatformContext myPlatformContext;
 
     private final TouchGesturesConfiguration myConfiguration;
 
