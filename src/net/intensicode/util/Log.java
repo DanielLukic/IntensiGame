@@ -13,8 +13,6 @@ public class Log
         }
 
 
-
-
     public static void info( final String aMessage )
         {
         //#if INFO
@@ -58,6 +56,13 @@ public class Log
         }
 
     //#if !CLDC10
+    public static void info( final String aMessage, final double aValue )
+        {
+        //#if INFO
+        info( aMessage, new Object[]{ new Double( aValue ) } );
+        //#endif
+        }
+
     public static void info( final String aMessage, final double aValue1, final double aValue2 )
         {
         //#if INFO
@@ -73,8 +78,6 @@ public class Log
         theLog.doInfo( buffer );
         //#endif
         }
-
-
 
 
     public static void debug( final String aMessage )
