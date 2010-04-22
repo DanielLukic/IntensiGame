@@ -115,6 +115,8 @@ public abstract class GameSystem
         {
         final ConfigurationElementsTree system = new ConfigurationElementsTree( "Game System" );
 
+        //#if !RELEASE
+
         final ConfigurationElementsTree timing = system.addSubTree( "Timing" );
         timing.addLeaf( new TicksPerSecond( this.timing ) );
         timing.addLeaf( new MaxFramesPerSecond( this.timing ) );
@@ -131,6 +133,8 @@ public abstract class GameSystem
         system.addLeaf( new LoadConfiguration( context ) );
         system.addLeaf( new SaveConfiguration( context ) );
         system.addLeaf( new DeleteConfiguration( context ) );
+
+        //#endif
 
         return system;
         }
