@@ -5,4 +5,10 @@ public interface PlatformContext
     long compatibleTimeInMillis();
 
     void openWebBrowser( String aURL );
+
+    void sendEmail( EmailData aEmailData );
+
+    String getPlatformSpecString();
+
+    String getGraphicsSpecString();
     }
