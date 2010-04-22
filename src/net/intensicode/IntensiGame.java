@@ -50,6 +50,11 @@ public abstract class IntensiGame implements SystemContext
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
 
+    public void onInfoTriggered()
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
     public void onDebugTriggered()
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );

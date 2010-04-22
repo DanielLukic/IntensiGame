@@ -4,8 +4,6 @@ import net.intensicode.core.*;
 import net.intensicode.graphics.BitmapFontGenerator;
 import net.intensicode.util.Log;
 
-import java.io.IOException;
-
 public final class IntensiGameHelper
     {
     static void toggleDebugScreen( final GameSystem aGameSystem )

@@ -50,6 +50,11 @@ public interface SystemContext
     void onFramesDropped();
 
     /**
+     * Called when ControlSequenceHandler detects info sequence.
+     */
+    void onInfoTriggered();
+
+    /**
      * Called when ControlSequenceHandler detects debug sequence.
      */
     void onDebugTriggered();

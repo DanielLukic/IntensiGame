@@ -23,6 +23,8 @@ public final class InfoScreen extends MultiScreen
 
     public final void onInitOnce() throws Exception
         {
+        if ( mySoftkeys == null ) throw new IllegalStateException( "shareSoftkeys not called" );
+
         addScreen( new ClearScreen() );
         addScreen( mySoftkeys );
 

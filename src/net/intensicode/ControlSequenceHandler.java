@@ -13,6 +13,10 @@ public final class ControlSequenceHandler extends ScreenBase
 
     public static final int GRID_SIZE = 3;
 
+    public int[] infoSequence = { 0, 1, GRID_SIZE, GRID_SIZE + 1, GRID_SIZE * 2 + 2 };
+
+    public int[] configurationSequence = { GRID_SIZE * 2 + 2, GRID_SIZE * 2 + 1, GRID_SIZE * 2 + 0, GRID_SIZE };
+
     //#if CHEAT
 
     public int[] cheatSequence = { GRID_SIZE * 2, GRID_SIZE + 2, 0, GRID_SIZE + 2, GRID_SIZE + 1, GRID_SIZE };
@@ -30,8 +34,6 @@ public final class ControlSequenceHandler extends ScreenBase
     public int[] timingSequence = { 0, 1, 2, 3, 1 };
 
     //#endif
-
-    public int[] configurationSequence = { 6, 8, 1 };
 
 
     public final boolean isSequenceMatched( final int[] aSequence )
@@ -70,6 +72,12 @@ public final class ControlSequenceHandler extends ScreenBase
         {
         processLastKeyCode();
 
+        final boolean configurationMatched = isSequenceMatched( configurationSequence );
+        if ( configurationMatched ) system().context.triggerConfigurationMenu();
+
+        final boolean infoMatched = isSequenceMatched( infoSequence );
+        if ( infoMatched ) system().context.onInfoTriggered();
+
         //#if CHEAT
         final boolean cheatMatched = isSequenceMatched( cheatSequence );
         if ( cheatMatched ) system().context.onCheatTriggered();
@@ -89,9 +97,6 @@ public final class ControlSequenceHandler extends ScreenBase
             System.out.println( buffer );
             }
         //#endif
-
-        final boolean configurationMatched = isSequenceMatched( configurationSequence );
-        if ( configurationMatched ) system().context.triggerConfigurationMenu();
         }
 
     private void processLastKeyCode()
