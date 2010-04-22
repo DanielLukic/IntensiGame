@@ -60,7 +60,7 @@ public final class IntensiGameHelper
             {
             myGameSystem.storage.load( new ConfigurationElementsTreeIO( aTree ) );
             }
-        catch ( final IOException e )
+        catch ( final Exception e )
             {
             Log.info( "failed loading configuration elements tree {} - {} ignored", aTree.label, e );
             }
