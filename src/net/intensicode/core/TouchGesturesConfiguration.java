@@ -25,7 +25,6 @@ public final class TouchGesturesConfiguration
 
     public void setSensitivityPreset( final int aSensitivityId )
         {
-        Log.debug( "TouchGesturesConfiguration#setSensitivityPreset {}", aSensitivityId );
         switch ( aSensitivityId )
             {
             default:

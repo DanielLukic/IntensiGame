@@ -25,7 +25,6 @@ public final class TouchSliderConfiguration
 
     public void setSensitivityPreset( final int aSensitivityId )
         {
-        Log.debug( "TouchSliderConfiguration#setSensitivityPreset {}", aSensitivityId );
         switch ( aSensitivityId )
             {
             default:
