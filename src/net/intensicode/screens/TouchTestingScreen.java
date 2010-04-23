@@ -2,37 +2,31 @@ package net.intensicode.screens;
 
 import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
-import net.intensicode.util.Assert;
+import net.intensicode.util.*;
 
 public final class TouchTestingScreen extends MultiScreen
     {
-    public TouchTestingScreen( final FontGenerator aTitleFont, final FontGenerator aTextFont )
+    public TouchTestingScreen( final FontGenerator aFont )
         {
-        myTitleFont = aTitleFont;
-        myTextFont = aTextFont;
-        }
-
-    public final TouchTestingScreen shareSoftkeys( final SoftkeysScreen aSoftkeys )
-        {
-        mySoftkeys = aSoftkeys;
-        return this;
+        myFont = aFont;
         }
 
     // From AbstractScreen
 
     public final void onInitOnce() throws Exception
         {
-        Assert.notNull( "shared SoftkeysScreen", mySoftkeys );
+        addScreen( new ClearScreen( 0xFF95c03c ) );
+        addScreen( mySoftkeys = new SoftkeysScreen( myFont ) );
 
-        addScreen( new ClearScreen() );
-        addScreen( mySoftkeys );
-
-        mySliderConfiguration.setSensitivityPreset( TouchSliderConfiguration.SENSITIVITY_MEDIUM );
         myTouchSlider = new TouchSlider( mySliderConfiguration );
         myTouchSlider.stepSizeInPixels.setTo( 18, 18 );
+        touch().addListener( myTouchSlider );
 
-        myGesturesConfiguration.setSensitivityPreset( TouchGesturesConfiguration.SENSITIVITY_MEDIUM );
         myTouchGestures = new TouchGestures( myGesturesConfiguration, system().platform );
+        touch().addListener( myTouchGestures );
+
+        mySliderSensitivity = TouchSliderConfiguration.SENSITIVITY_MEDIUM;
+        myGesturesSensitivity = TouchGesturesConfiguration.SENSITIVITY_MEDIUM;
         }
 
     public final void onInitEverytime() throws Exception
@@ -62,8 +56,9 @@ public final class TouchTestingScreen extends MultiScreen
             myTouchSlider.touchableArea.x = 0;
             myTouchSlider.touchableArea.y = 0;
             myTouchSlider.touchableArea.width = halfWidth;
-            myTouchGestures.optionalHotzone.y = height;
+            myTouchSlider.touchableArea.height = height;
 
+            myTouchGestures.optionalHotzone = new Rectangle();
             myTouchGestures.optionalHotzone.x = halfWidth;
             myTouchGestures.optionalHotzone.y = 0;
             myTouchGestures.optionalHotzone.width = halfWidth;
@@ -75,8 +70,15 @@ public final class TouchTestingScreen extends MultiScreen
         {
         super.onControlTick();
 
+        mySliderConfiguration.setSensitivityPreset( mySliderSensitivity );
+        myGesturesConfiguration.setSensitivityPreset( myGesturesSensitivity );
+
         if ( keys().checkLeftSoftAndConsume() )
             {
+            if ( mySliderSensitivity < TouchSliderConfiguration.MAX_VALUE ) mySliderSensitivity++;
+            else mySliderSensitivity = 0;
+            if ( myGesturesSensitivity < TouchGesturesConfiguration.MAX_VALUE ) myGesturesSensitivity++;
+            else myGesturesSensitivity = 0;
             }
         if ( keys().checkRightSoftAndConsume() )
             {
@@ -88,8 +90,49 @@ public final class TouchTestingScreen extends MultiScreen
         {
         super.onDrawFrame();
 
+        graphics().setColorRGB24( 0xFFFFFF );
+
+        final Rectangle r1 = myTouchSlider.touchableArea;
+        graphics().drawRect( r1.x, r1.y, r1.width, r1.height );
+
+        final Rectangle r2 = myTouchGestures.optionalHotzone;
+        graphics().drawRect( r2.x, r2.y, r2.width, r2.height );
+
+        final String sliderLabel = getSliderSensitivityLabel();
+        setBlitPositionToCenter( myTouchSlider.touchableArea );
+        myFont.blitString( graphics(), sliderLabel, myBlitPos, FontGenerator.CENTER );
+
+        myBlitPos.y += myFont.charHeight();
+        myFont.blitString( graphics(), myTouchSlider.slideSteps.toString(), myBlitPos, FontGenerator.CENTER );
+
+        final String gesturesLabel = getGesturesSensitivityLabel();
+        setBlitPositionToCenter( myTouchGestures.optionalHotzone );
+        myFont.blitString( graphics(), gesturesLabel, myBlitPos, FontGenerator.CENTER );
+
+        myBlitPos.y += myFont.charHeight();
+        myFont.blitString( graphics(), myTouchGestures.gesture.toString(), myBlitPos, FontGenerator.CENTER );
         }
 
+    private void setBlitPositionToCenter( final Rectangle aRectangle )
+        {
+        myBlitPos.x = aRectangle.x + aRectangle.width / 2;
+        myBlitPos.y = aRectangle.y + aRectangle.height / 2;
+        }
+
+    private String getSliderSensitivityLabel()
+        {
+        return TouchSliderConfiguration.SENSITIVITY_STRING_VALUES[ mySliderSensitivity ];
+        }
+
+    private String getGesturesSensitivityLabel()
+        {
+        return TouchGesturesConfiguration.SENSITIVITY_STRING_VALUES[ myGesturesSensitivity ];
+        }
+
+
+    private int mySliderSensitivity;
+
+    private int myGesturesSensitivity;
 
     private SoftkeysScreen mySoftkeys;
 
@@ -97,9 +140,9 @@ public final class TouchTestingScreen extends MultiScreen
 
     private TouchGestures myTouchGestures;
 
-    private final FontGenerator myTextFont;
+    private final FontGenerator myFont;
 
-    private final FontGenerator myTitleFont;
+    private final Position myBlitPos = new Position();
 
     private final TouchSliderConfiguration mySliderConfiguration = new TouchSliderConfiguration();
 
