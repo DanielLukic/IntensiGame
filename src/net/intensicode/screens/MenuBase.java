@@ -4,7 +4,10 @@ import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.*;
 
-public abstract class MenuBase extends MultiScreen implements TouchableHandler
+public abstract class MenuBase extends MultiScreen
+        //#if TOUCH
+        implements TouchableHandler
+        //#endif
     {
     public final DynamicArray entries = new DynamicArray();
 

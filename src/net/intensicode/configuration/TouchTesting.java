@@ -1,3 +1,5 @@
+//#condition TOUCH
+
 package net.intensicode.configuration;
 
 import net.intensicode.ConfigurableActionValue;

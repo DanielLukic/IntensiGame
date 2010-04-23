@@ -4,7 +4,10 @@ import net.intensicode.core.*;
 import net.intensicode.graphics.*;
 import net.intensicode.util.DynamicArray;
 
-public class BasicMenu extends MultiScreen implements TouchableHandler
+public class BasicMenu extends MultiScreen
+        //#if TOUCH
+        implements TouchableHandler
+        //#endif
     {
     public static final int ENTRY_POSITIONS_CENTERED = 0;
 
