@@ -77,6 +77,8 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
 
     public final void onControlTick() throws Exception
         {
+        beforeControlTick();
+
         //#if TOUCH
         addTouchableAreas();
         //#endif
@@ -100,6 +102,8 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
             }
 
         super.onControlTick();
+
+        afterControlTick();
         }
 
     // Protected Interface
@@ -111,6 +115,14 @@ public abstract class MenuBase extends MultiScreen implements TouchableHandler
         }
 
     protected void afterInitEverytime() throws Exception
+        {
+        }
+
+    protected void beforeControlTick()
+        {
+        }
+
+    protected void afterControlTick() throws Exception
         {
         }
 
