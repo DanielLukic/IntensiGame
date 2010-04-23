@@ -1,6 +1,6 @@
 package core;
 
-import net.intensicode.PlatformContext;
+import net.intensicode.*;
 
 public final class FakePlatformContext implements PlatformContext
     {
@@ -11,5 +11,21 @@ public final class FakePlatformContext implements PlatformContext
 
     public void openWebBrowser( final String aURL )
         {
+        throw new RuntimeException( "nyi" );
+        }
+
+    public void sendEmail( final EmailData aEmailData )
+        {
+        throw new RuntimeException( "nyi" );
+        }
+
+    public String getPlatformSpecString()
+        {
+        throw new RuntimeException( "nyi" );
+        }
+
+    public String getGraphicsSpecString()
+        {
+        throw new RuntimeException( "nyi" );
         }
     }
