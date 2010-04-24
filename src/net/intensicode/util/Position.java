@@ -74,7 +74,6 @@ public class Position
         return x == that.x && y == that.y;
         }
 
-    //#if DEBUG
     public final String toString()
         {
         final StringBuffer buffer = new StringBuffer();
@@ -83,5 +82,4 @@ public class Position
         buffer.append( y );
         return buffer.toString();
         }
-    //#endif
     }
