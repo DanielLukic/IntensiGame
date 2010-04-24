@@ -31,13 +31,11 @@ public final class TouchSlider implements TouchEventListener
 
     public final void onTouchEvent( final TouchEvent aTouchEvent )
         {
-        if ( aTouchEvent.isRelease() ) startNewSlide();
-
-        if ( !isInsideHotzone( aTouchEvent ) ) return;
-
         setCurrentEvent( aTouchEvent );
 
         if ( isFirstPosition() ) setFirstPosition();
+
+        if ( !isInsideHotzone( aTouchEvent ) ) return;
 
         updateDeltasForThisEvent();
 
