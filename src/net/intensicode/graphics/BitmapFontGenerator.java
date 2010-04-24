@@ -100,7 +100,7 @@ public final class BitmapFontGenerator extends FontGenerator
         {
         if ( aText == null || aText.length() == 0 ) return;
 
-        if ( buffered )
+        if ( buffered && isBufferingAllowedFor( aText, aStart, aEnd ) )
             {
             blitStringBuffered( aGraphics, aText, aStart, aEnd, aX, aY );
             }
@@ -122,6 +122,14 @@ public final class BitmapFontGenerator extends FontGenerator
         }
 
     // Implementation
+
+    private boolean isBufferingAllowedFor( final String aText, final int aStart, final int aEnd )
+        {
+        final int width = substringWidth( aText, aStart, aEnd - aStart );
+        final int height = charHeight();
+        final int maxSize = resources.maxImageResourceSize();
+        return width <= maxSize && height <= maxSize;
+        }
 
     private void blitStringBuffered( final DirectGraphics aGraphics, final String aText, final int aStart, final int aEnd, final int aX, final int aY )
         {
