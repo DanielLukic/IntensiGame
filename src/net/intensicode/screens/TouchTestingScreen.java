@@ -44,8 +44,9 @@ public final class TouchTestingScreen extends MultiScreen
             myTouchSlider.touchableArea.x = 0;
             myTouchSlider.touchableArea.y = 0;
             myTouchSlider.touchableArea.width = width;
-            myTouchGestures.optionalHotzone.y = halfHeight;
+            myTouchSlider.touchableArea.height = halfHeight;
 
+            myTouchGestures.optionalHotzone = new Rectangle();
             myTouchGestures.optionalHotzone.x = 0;
             myTouchGestures.optionalHotzone.y = halfHeight;
             myTouchGestures.optionalHotzone.width = width;
