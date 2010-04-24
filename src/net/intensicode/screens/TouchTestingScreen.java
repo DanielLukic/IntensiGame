@@ -45,12 +45,14 @@ public final class TouchTestingScreen extends MultiScreen
             myTouchSlider.touchableArea.y = 0;
             myTouchSlider.touchableArea.width = width;
             myTouchSlider.touchableArea.height = halfHeight;
+            myTouchSlider.touchableArea.applyOutsets( -halfHeight / 10 );
 
             myTouchGestures.optionalHotzone = new Rectangle();
             myTouchGestures.optionalHotzone.x = 0;
             myTouchGestures.optionalHotzone.y = halfHeight;
             myTouchGestures.optionalHotzone.width = width;
             myTouchGestures.optionalHotzone.height = halfHeight;
+            myTouchGestures.optionalHotzone.applyOutsets( -halfHeight / 10 );
             }
         else
             {
@@ -60,12 +62,14 @@ public final class TouchTestingScreen extends MultiScreen
             myTouchSlider.touchableArea.y = 0;
             myTouchSlider.touchableArea.width = halfWidth;
             myTouchSlider.touchableArea.height = height;
+            myTouchSlider.touchableArea.applyOutsets( -halfWidth / 10 );
 
             myTouchGestures.optionalHotzone = new Rectangle();
             myTouchGestures.optionalHotzone.x = halfWidth;
             myTouchGestures.optionalHotzone.y = 0;
             myTouchGestures.optionalHotzone.width = halfWidth;
             myTouchGestures.optionalHotzone.height = height;
+            myTouchGestures.optionalHotzone.applyOutsets( -halfWidth / 10 );
             }
         }
 
