@@ -2,7 +2,7 @@ package net.intensicode.screens;
 
 import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
-import net.intensicode.util.Rectangle;
+import net.intensicode.util.*;
 
 public final class ErrorScreen extends ScreenBase
     {
@@ -100,40 +100,82 @@ public final class ErrorScreen extends ScreenBase
     public final void onDrawFrame()
         {
         final DirectGraphics gc = graphics();
+        gc.clearRGB24( 0 );
+        gc.setColorRGB24( 0xf00000 );
+
+        blitBlinkingBorder();
+        blitMessageIfAvailable();
+        blitCauseIfAvailable();
+
+        mySoftkeys.onDrawFrame();
+        }
+
+    private void blitBlinkingBorder()
+        {
+        if ( myAnimCounter >= timing().ticksPerSecond ) return;
+
+        final DirectGraphics gc = graphics();
 
         final int screenWidth = screen().width();
         final int screenHeight = screen().height();
 
-        gc.clearRGB24( 0 );
-        gc.setColorRGB24( 0xf00000 );
+        gc.fillRect( 0, 0, screenWidth, myBorderWidth );
+        gc.fillRect( 0, screenHeight - myBorderWidth, screenWidth, myBorderWidth );
+        gc.fillRect( 0, 0, myBorderWidth, screenHeight );
+        gc.fillRect( screenWidth - myBorderWidth, 0, myBorderWidth, screenHeight );
+        }
 
-        if ( myAnimCounter < timing().ticksPerSecond )
+    private void blitMessageIfAvailable()
+        {
+        try
             {
-            gc.fillRect( 0, 0, screenWidth, myBorderWidth );
-            gc.fillRect( 0, screenHeight - myBorderWidth, screenWidth, myBorderWidth );
-            gc.fillRect( 0, 0, myBorderWidth, screenHeight );
-            gc.fillRect( screenWidth - myBorderWidth, 0, myBorderWidth, screenHeight );
-            }
+            if ( message == null || message.length() == 0 ) return;
 
-        if ( message != null && message.length() > 0 )
-            {
+            final DirectGraphics gc = graphics();
+            final int screenWidth = screen().width();
+
             myTextRect.x = myMessageOffset;
             myTextRect.y = myMessageOffset;
             myTextRect.width = screenWidth - myMessageOffset * 2;
             myTextRect.height = myMesageBoxHeight;
             myFont.blitText( gc, message, myTextRect );
             }
-
-        if ( myCauseOrNull != null && myCauseOrNull.length() > 0 )
+        catch ( final Exception e )
             {
+            handleException( e );
+            }
+        }
+
+    private void blitCauseIfAvailable()
+        {
+        try
+            {
+            if ( myCauseOrNull == null || myCauseOrNull.length() == 0 ) return;
+
+            final DirectGraphics gc = graphics();
+            final int screenWidth = screen().width();
+            final int screenHeight = screen().height();
+
             myTextRect.x = myMessageOffset;
             myTextRect.y = myMessageOffset + myMesageBoxHeight + myBorderWidth;
             myTextRect.width = screenWidth - myMessageOffset * 2;
             myTextRect.height = screenHeight - myTextRect.y - myBorderWidth;
             myFont.blitText( gc, myCauseOrNull, myTextRect );
             }
+        catch ( final Exception e )
+            {
+            handleException( e );
+            }
+        }
 
-        mySoftkeys.onDrawFrame();
+    private void handleException( final Exception e )
+        {
+        //#if DEBUG
+        //# Log.error( "exception in ErrorScreen", e );
+        //#else
+        // Avoid messing up the log output:
+        Log.error( "exception in ErrorScreen: {}", e, null );
+        //#endif
         }
 
 
