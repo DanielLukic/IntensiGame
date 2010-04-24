@@ -12,6 +12,11 @@ public final class FakeResourcesManager extends ResourcesManager
         throw new RuntimeException( "nyi" );
         }
 
+    public int maxImageResourceSize()
+        {
+        throw new RuntimeException( "nyi" );
+        }
+
     public ImageResource createImageResource( final int aWidth, final int aHeight )
         {
         throw new RuntimeException( "nyi" );
