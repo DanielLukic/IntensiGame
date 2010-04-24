@@ -28,6 +28,8 @@ public abstract class ResourcesManager
 
     public abstract FontGenerator getSmallDefaultFont();
 
+    public abstract int maxImageResourceSize();
+
     public abstract ImageResource createImageResource( int aWidth, int aHeight );
 
     public abstract ImageResource loadImageResource( String aResourcePath ) throws IOException;
