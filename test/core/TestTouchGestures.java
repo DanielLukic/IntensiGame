@@ -11,6 +11,8 @@ public final class TestTouchGestures extends TestCase
     public final void testUpGestureIsRecognized() throws IOException
         {
         runGestureData( "gesture_data_up.txt", "NORTH" );
+        runGestureData( "gesture_data_up_2.txt", "NORTH" );
+        runGestureData( "gesture_data_up_3.txt", "NORTH" );
         }
 
     public final void testUpRightGestureIsRecognized() throws IOException
