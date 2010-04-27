@@ -25,6 +25,7 @@ public final class TouchableText extends Touchable
         myTouchableRect.y = aligned.y;
         myTouchableRect.width = width;
         myTouchableRect.height = height;
+        myTouchableRect.applyOutsets( 1 + myTouchableRect.height / 4 );
         }
 
     // From Touchable
