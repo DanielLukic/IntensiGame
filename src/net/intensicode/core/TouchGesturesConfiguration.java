@@ -22,6 +22,29 @@ public final class TouchGesturesConfiguration
 
     public static final int MAX_VALUE = SENSITIVITY_VERY_HIGH;
 
+    public static final float TARGET_SMOOTHING = 0.6f;
+
+
+    public void setDeviceParameters( final DirectScreen aScreen )
+        {
+        devicePixelFactorX = 1f;
+        devicePixelFactorY = 1f;
+
+        final float xSmoothing = aScreen.getTargetWidth() / (float) aScreen.getNativeWidth();
+        final float ySmoothing = aScreen.getTargetHeight() / (float) aScreen.getNativeHeight();
+        Log.info( "implicit native -> target factor: {}/{}", xSmoothing, ySmoothing );
+
+        devicePixelFactorX = TARGET_SMOOTHING / xSmoothing;
+        devicePixelFactorY = TARGET_SMOOTHING / ySmoothing;
+        Log.info( "device pixel factor: {}/{}", devicePixelFactorX, devicePixelFactorY );
+
+        devicePixelFactor = ( devicePixelFactorX + devicePixelFactorY ) / 2;
+        Log.info( "device pixel factor (avg): {}", devicePixelFactor );
+
+        final float xFactor = devicePixelFactorX * xSmoothing;
+        final float yFactor = devicePixelFactorY * ySmoothing;
+        Log.info( "resulting factor: {}/{}", xFactor, yFactor );
+        }
 
     public void setSensitivityPreset( final int aSensitivityId )
         {
@@ -33,7 +56,7 @@ public final class TouchGesturesConfiguration
                 breakTimeThresholdInMillis = 120;
                 samePositionThresholdInPixels = 25;
                 strokeThresholdInPixels = 20;
-                directionIgnoreFactor = 2f;
+                directionIgnoreFactor = 1.9f;
                 break;
             case SENSITIVITY_LOW:
                 gestureStartThresholdInMillis = 30;
@@ -61,10 +84,25 @@ public final class TouchGesturesConfiguration
                 breakTimeThresholdInMillis = 40;
                 samePositionThresholdInPixels = 8;
                 strokeThresholdInPixels = 4;
-                directionIgnoreFactor = 1.6f;
+                directionIgnoreFactor = 1.75f;
                 break;
             }
+
+        gestureStartThresholdInMillis *= deviceTimingFactor;
+        breakTimeThresholdInMillis *= deviceTimingFactor;
+
+        samePositionThresholdInPixels *= devicePixelFactor;
+        strokeThresholdInPixels *= devicePixelFactor;
         }
+
+
+    public float deviceTimingFactor = 1f;
+
+    public float devicePixelFactorX = 1f;
+
+    public float devicePixelFactorY = 1f;
+
+    public float devicePixelFactor = 1f;
 
     public int gestureStartThresholdInMillis;
 

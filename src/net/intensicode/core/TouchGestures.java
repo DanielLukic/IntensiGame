@@ -2,8 +2,8 @@
 
 package net.intensicode.core;
 
-import net.intensicode.util.*;
 import net.intensicode.PlatformContext;
+import net.intensicode.util.*;
 
 public final class TouchGestures implements TouchEventListener
     {
@@ -30,7 +30,7 @@ public final class TouchGestures implements TouchEventListener
     public static final String TAP = "TAP";
 
 
-    public final Position lastEventPosition = new Position();
+    public final PositionF lastEventPosition = new PositionF();
 
     public final DynamicArray gesture = new DynamicArray();
 
@@ -64,34 +64,43 @@ public final class TouchGestures implements TouchEventListener
 
     public final void onTouchEvent( final TouchEvent aTouchEvent )
         {
+        setCurrentEvent( aTouchEvent );
+
         if ( optionalHotzone != null )
             {
-            if ( !isInsideHotzone( aTouchEvent ) ) return;
-            if ( isStartedInsideHotzone( aTouchEvent ) ) return;
+            if ( !isInsideHotzone() ) return;
+            if ( isNotStartedInsideHotzone() ) return;
             }
 
-        if ( aTouchEvent.isPress() ) start( aTouchEvent );
-        else if ( aTouchEvent.isSwipe() ) move( aTouchEvent );
-        else if ( aTouchEvent.isRelease() ) end( aTouchEvent );
+        if ( aTouchEvent.isPress() ) start();
+        else if ( aTouchEvent.isSwipe() ) move();
+        else if ( aTouchEvent.isRelease() ) end();
         }
 
-    private boolean isInsideHotzone( final TouchEvent aTouchEvent )
+    private void setCurrentEvent( final TouchEvent aTouchEvent )
         {
-        return optionalHotzone.contains( aTouchEvent.getX(), aTouchEvent.getY() );
+        myTouchEvent = aTouchEvent;
+        myTouchX = aTouchEvent.getX() * myConfiguration.devicePixelFactorX;
+        myTouchY = aTouchEvent.getY() * myConfiguration.devicePixelFactorY;
         }
 
-    private boolean isStartedInsideHotzone( final TouchEvent aTouchEvent )
+    private boolean isInsideHotzone()
         {
-        return !aTouchEvent.isPress() && myStrokePath.empty();
+        return optionalHotzone.contains( myTouchEvent.getX(), myTouchEvent.getY() );
+        }
+
+    private boolean isNotStartedInsideHotzone()
+        {
+        return !myTouchEvent.isPress() && myStrokePath.empty();
         }
 
     // Implementation
 
-    private void start( final TouchEvent aTouchEvent )
+    private void start()
         {
         resetTemporaries();
-        startStrokePath( aTouchEvent );
-        startTimingBreak( aTouchEvent );
+        startStrokePath();
+        startTimingBreak();
         }
 
     private void resetTemporaries()
@@ -100,64 +109,60 @@ public final class TouchGestures implements TouchEventListener
         myStrokes.clear();
         }
 
-    private void move( final TouchEvent aTouchEvent )
+    private void move()
         {
-        if ( isSamePosition( lastEventPosition, aTouchEvent ) )
+        if ( isSamePosition( lastEventPosition ) )
             {
-            if ( breakTimeThresholdReached( aTouchEvent ) )
+            if ( breakTimeThresholdReached() )
                 {
-                addStroke( myStrokeStart, aTouchEvent );
-                startStrokePath( aTouchEvent );
-                startTimingBreak( aTouchEvent );
+                addStroke( myStrokeStart );
+                startStrokePath();
+                startTimingBreak();
                 return;
                 }
             }
         else
             {
-            startTimingBreak( aTouchEvent );
+            startTimingBreak();
             }
 
-        addToStrokePath( aTouchEvent );
+        addToStrokePath();
         }
 
-    private boolean isSamePosition( final Position aPosition, final TouchEvent aTouchEvent )
+    private boolean isSamePosition( final PositionF aPosition )
         {
-        if ( Math.abs( aPosition.x - aTouchEvent.getX() ) > myConfiguration.samePositionThresholdInPixels )
-            return false;
-        if ( Math.abs( aPosition.y - aTouchEvent.getY() ) > myConfiguration.samePositionThresholdInPixels )
-            return false;
+        if ( Math.abs( aPosition.x - myTouchX ) > myConfiguration.samePositionThresholdInPixels ) return false;
+        if ( Math.abs( aPosition.y - myTouchY ) > myConfiguration.samePositionThresholdInPixels ) return false;
         return true;
         }
 
-    private boolean breakTimeThresholdReached( final TouchEvent aTouchEvent )
+    private boolean breakTimeThresholdReached()
         {
-        final long timestampDelta = aTouchEvent.timestamp() - myBreakTimingStart;
+        final long timestampDelta = myTouchEvent.timestamp() - myBreakTimingStart;
         return timestampDelta > myConfiguration.breakTimeThresholdInMillis;
         }
 
-    private void startTimingBreak( final TouchEvent aTouchEvent )
+    private void startTimingBreak()
         {
-        myBreakTimingStart = aTouchEvent.timestamp();
+        myBreakTimingStart = myTouchEvent.timestamp();
         }
 
-    private long myBreakTimingStart;
-
-    private void end( final TouchEvent aTouchEvent )
+    private void end()
         {
-        addToStrokePath( aTouchEvent );
-        addStroke( myStrokeStart, aTouchEvent );
+        addToStrokePath();
+        addStroke( myStrokeStart );
         determineGesture();
         }
 
-    private void addStroke( final Position aStartPosition, final TouchEvent aTouchEvent )
+    private void addStroke( final PositionF aStartPosition )
         {
-        final int xDelta = aTouchEvent.getX() - aStartPosition.x;
-        final int yDelta = aTouchEvent.getY() - aStartPosition.y;
+        final float xDelta = myTouchX - aStartPosition.x;
+        final float yDelta = myTouchY - aStartPosition.y;
         final String stroke = recognize( xDelta, yDelta );
         if ( stroke != NO_STROKE ) myStrokes.add( stroke );
         }
 
-    private String recognize( int aDeltaX, int aDeltaY )
+    private String recognize( float aDeltaX, float aDeltaY )
         {
         final float xScaled = Math.abs( aDeltaX ) * myConfiguration.directionIgnoreFactor;
         final float yScaled = Math.abs( aDeltaY ) * myConfiguration.directionIgnoreFactor;
@@ -169,9 +174,9 @@ public final class TouchGestures implements TouchEventListener
         return STROKES[ strokeIndex ];
         }
 
-    private int determineStrokeIndex( final int aDelta )
+    private int determineStrokeIndex( final float aDelta )
         {
-        final int delta = Math.abs( aDelta ) > myConfiguration.strokeThresholdInPixels ? aDelta : 0;
+        final float delta = Math.abs( aDelta ) > myConfiguration.strokeThresholdInPixels ? aDelta : 0;
         if ( delta < 0 ) return 0;
         if ( delta > 0 ) return 2;
         return 1;
@@ -196,31 +201,41 @@ public final class TouchGestures implements TouchEventListener
         //#endif
         }
 
-    private void startStrokePath( final TouchEvent aTouchEvent )
+    private void startStrokePath()
         {
-        setStrokeStart( aTouchEvent );
-        addToStrokePath( aTouchEvent );
-        myStrokeStartTimestamp = aTouchEvent.timestamp();
+        setStrokeStart();
+        addToStrokePath();
+        myStrokeStartTimestamp = myTouchEvent.timestamp();
         }
 
-    private void setStrokeStart( final TouchEvent aTouchEvent )
+    private void setStrokeStart()
         {
-        myStrokeStart.x = aTouchEvent.getX();
-        myStrokeStart.y = aTouchEvent.getY();
+        myStrokeStart.x = myTouchX;
+        myStrokeStart.y = myTouchY;
         }
 
-    private void addToStrokePath( final TouchEvent aTouchEvent )
+    private void addToStrokePath()
         {
-        updateLastActionPosition( aTouchEvent );
-        myStrokePath.add( new Position( aTouchEvent.getX(), aTouchEvent.getY() ) );
+        updateLastActionPosition();
+
+        // TODO: Use object pool here..
+        myStrokePath.add( new PositionF( myTouchX, myTouchY ) );
         }
 
-    private void updateLastActionPosition( final TouchEvent aTouchEvent )
+    private void updateLastActionPosition()
         {
-        lastEventPosition.x = aTouchEvent.getX();
-        lastEventPosition.y = aTouchEvent.getY();
+        lastEventPosition.x = myTouchX;
+        lastEventPosition.y = myTouchY;
         }
 
+
+    private float myTouchX;
+
+    private float myTouchY;
+
+    private long myBreakTimingStart;
+
+    private TouchEvent myTouchEvent;
 
     private long myStrokeStartTimestamp;
 
@@ -228,7 +243,7 @@ public final class TouchGestures implements TouchEventListener
 
     private final TouchGesturesConfiguration myConfiguration;
 
-    private final Position myStrokeStart = new Position();
+    private final PositionF myStrokeStart = new PositionF();
 
     private final DynamicArray myStrokes = new DynamicArray();
 

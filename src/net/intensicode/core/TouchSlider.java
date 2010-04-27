@@ -6,8 +6,6 @@ import net.intensicode.util.*;
 
 public final class TouchSlider implements TouchEventListener
     {
-    public final TouchSliderConfiguration configuration;
-
     public final Rectangle touchableArea = new Rectangle();
 
     public final Size stepSizeInPixels = new Size( 1, 1 );
@@ -19,7 +17,7 @@ public final class TouchSlider implements TouchEventListener
 
     public TouchSlider( final TouchSliderConfiguration aConfiguration )
         {
-        configuration = aConfiguration;
+        myConfiguration = aConfiguration;
         }
 
     public final void clearSlideSteps()
@@ -53,7 +51,7 @@ public final class TouchSlider implements TouchEventListener
 
     private void setCurrentEvent( final TouchEvent aTouchEvent )
         {
-        this.myTouchEvent = aTouchEvent;
+        myTouchEvent = aTouchEvent;
         }
 
     private boolean isFirstPosition()
@@ -78,16 +76,18 @@ public final class TouchSlider implements TouchEventListener
         {
         myDeltaX = myTouchEvent.getX() - myLastPosition.x;
         myDeltaY = myTouchEvent.getY() - myLastPosition.y;
+        myDeltaX *= myConfiguration.devicePixelFactorX;
+        myDeltaY *= myConfiguration.devicePixelFactorY;
         myDeltaTimestamp = myTouchEvent.timestamp() - myLastPositionTimestamp;
         }
 
     private void onSliding()
         {
-        if ( Math.abs( myDeltaX ) >= configuration.slideMoveThresholdInPixels || Math.abs( myDeltaY ) >= configuration.slideMoveThresholdInPixels )
+        if ( Math.abs( myDeltaX ) >= myConfiguration.slideMoveThresholdInPixels || Math.abs( myDeltaY ) >= myConfiguration.slideMoveThresholdInPixels )
             {
-            updateSlideDeltas( configuration.slideMoveThresholdInPixels );
+            updateSlideDeltas( myConfiguration.slideMoveThresholdInPixels );
             }
-        else if ( myDeltaTimestamp > configuration.newSlideStartThresholdInMillis || myTouchEvent.isRelease() )
+        else if ( myDeltaTimestamp > myConfiguration.newSlideStartThresholdInMillis || myTouchEvent.isRelease() )
             {
             startNewSlide();
             }
@@ -124,14 +124,14 @@ public final class TouchSlider implements TouchEventListener
         final int sign = aRawDelta < 0 ? -1 : +1;
 
         int rawDelta = Math.abs( aRawDelta );
-        if ( rawDelta <= configuration.initialStepThresholdInPixels ) return 0;
-        rawDelta -= configuration.initialStepThresholdInPixels;
+        if ( rawDelta <= myConfiguration.initialStepThresholdInPixels ) return 0;
+        rawDelta -= myConfiguration.initialStepThresholdInPixels;
 
         // if more than the initial step size..
         if ( rawDelta > stepSizeInPixels.width )
             {
             // then subtract the additionalStepThresholdInPixels
-            rawDelta = Math.max( stepSizeInPixels.width, rawDelta - configuration.additionalStepThresholdInPixels );
+            rawDelta = Math.max( stepSizeInPixels.width, rawDelta - myConfiguration.additionalStepThresholdInPixels );
             }
 
         return sign * rawDelta / stepSizeInPixels.width;
@@ -159,15 +159,15 @@ public final class TouchSlider implements TouchEventListener
         mySlideStarted = true;
         myFirstPositionSet = true;
 
-        final int thresholdInPixels = configuration.slideStartThresholdInPixels;
+        final int thresholdInPixels = myConfiguration.slideStartThresholdInPixels;
         updateSlideDeltas( thresholdInPixels );
         }
 
     private boolean slideStartConditionsMet()
         {
-        final boolean slideTimeLongEnough = myDeltaTimestamp > configuration.slideStartThresholdInMillis;
-        final boolean horizontalMovementBigEnough = Math.abs( myDeltaX ) >= configuration.slideStartThresholdInPixels;
-        final boolean verticalMovementBigEnough = Math.abs( myDeltaY ) >= configuration.slideStartThresholdInPixels;
+        final boolean slideTimeLongEnough = myDeltaTimestamp > myConfiguration.slideStartThresholdInMillis;
+        final boolean horizontalMovementBigEnough = Math.abs( myDeltaX ) >= myConfiguration.slideStartThresholdInPixels;
+        final boolean verticalMovementBigEnough = Math.abs( myDeltaY ) >= myConfiguration.slideStartThresholdInPixels;
         return slideTimeLongEnough && ( horizontalMovementBigEnough || verticalMovementBigEnough );
         }
 
@@ -185,6 +185,8 @@ public final class TouchSlider implements TouchEventListener
     private boolean myFirstPositionSet;
 
     private long myLastPositionTimestamp;
+
+    private final TouchSliderConfiguration myConfiguration;
 
     private final Position mySlideDeltas = new Position();
 

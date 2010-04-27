@@ -2,7 +2,7 @@
 
 package net.intensicode.core;
 
-import net.intensicode.util.*;
+import net.intensicode.util.Log;
 
 public final class TouchSliderConfiguration
     {
@@ -22,6 +22,29 @@ public final class TouchSliderConfiguration
 
     public static final int MAX_VALUE = SENSITIVITY_VERY_HIGH;
 
+    public static final float TARGET_SMOOTHING = 0.6f;
+
+
+    public void setDeviceParameters( final DirectScreen aScreen )
+        {
+        devicePixelFactorX = 1f;
+        devicePixelFactorY = 1f;
+
+        final float xSmoothing = aScreen.getTargetWidth() / (float) aScreen.getNativeWidth();
+        final float ySmoothing = aScreen.getTargetHeight() / (float) aScreen.getNativeHeight();
+        Log.info( "implicit native -> target factor: {}/{}", xSmoothing, ySmoothing );
+
+        devicePixelFactorX = TARGET_SMOOTHING / xSmoothing;
+        devicePixelFactorY = TARGET_SMOOTHING / ySmoothing;
+        Log.info( "device pixel factor: {}/{}", devicePixelFactorX, devicePixelFactorY );
+
+        devicePixelFactor = ( devicePixelFactorX + devicePixelFactorY ) / 2;
+        Log.info( "device pixel factor (avg): {}", devicePixelFactor );
+
+        final float xFactor = devicePixelFactorX * xSmoothing;
+        final float yFactor = devicePixelFactorY * ySmoothing;
+        Log.info( "resulting factor: {}/{}", xFactor, yFactor );
+        }
 
     public void setSensitivityPreset( final int aSensitivityId )
         {
@@ -49,27 +72,44 @@ public final class TouchSliderConfiguration
                 slideStartThresholdInPixels = 20;
                 slideMoveThresholdInPixels = 10;
                 newSlideStartThresholdInMillis = 40;
-                initialStepThresholdInPixels = 10;
+                initialStepThresholdInPixels = 20;
                 additionalStepThresholdInPixels = 100;
                 break;
             case SENSITIVITY_HIGH:
                 slideStartThresholdInMillis = 25;
                 slideStartThresholdInPixels = 15;
-                slideMoveThresholdInPixels = 8;
+                slideMoveThresholdInPixels = 10;
                 newSlideStartThresholdInMillis = 35;
-                initialStepThresholdInPixels = 8;
-                additionalStepThresholdInPixels = 50;
+                initialStepThresholdInPixels = 20;
+                additionalStepThresholdInPixels = 60;
                 break;
             case SENSITIVITY_VERY_HIGH:
                 slideStartThresholdInMillis = 25;
                 slideStartThresholdInPixels = 10;
-                slideMoveThresholdInPixels = 6;
+                slideMoveThresholdInPixels = 8;
                 newSlideStartThresholdInMillis = 30;
-                initialStepThresholdInPixels = 6;
-                additionalStepThresholdInPixels = 30;
+                initialStepThresholdInPixels = 15;
+                additionalStepThresholdInPixels = 40;
                 break;
             }
+
+        slideStartThresholdInMillis *= deviceTimingFactor;
+        newSlideStartThresholdInMillis *= deviceTimingFactor;
+
+        slideStartThresholdInPixels *= devicePixelFactor;
+        slideMoveThresholdInPixels *= devicePixelFactor;
+        initialStepThresholdInPixels *= devicePixelFactor;
+        additionalStepThresholdInPixels *= devicePixelFactor;
         }
+
+
+    public float deviceTimingFactor = 1f;
+
+    public float devicePixelFactorX = 1f;
+
+    public float devicePixelFactorY = 1f;
+
+    public float devicePixelFactor = 1f;
 
     public int slideStartThresholdInMillis;
 
