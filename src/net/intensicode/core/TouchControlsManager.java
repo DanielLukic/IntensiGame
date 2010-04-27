@@ -140,6 +140,7 @@ public class TouchControlsManager
         {
         if ( aEvent.handler != null ) triggerHandlerEvent( aEvent );
         if ( aEvent.keyID != QueuedTouchEvent.NO_KEY_ID ) triggerKeyEvent( aEvent );
+        if ( aEvent.keyCode != QueuedTouchEvent.NO_KEY_CODE ) triggerKeyCodeEvent( aEvent );
         }
 
     private void triggerHandlerEvent( final QueuedTouchEvent aEvent )
@@ -165,6 +166,21 @@ public class TouchControlsManager
             {
             final KeysHandler keys = myGameSystem.keys;
             keys.queueClearEvent( aEvent.keyID );
+            }
+        }
+
+    private void triggerKeyCodeEvent( final QueuedTouchEvent aEvent )
+        {
+        final KeysHandler keys = myGameSystem.keys;
+        keys.lastAction = 0;
+
+        if ( aEvent.action == QueuedTouchEvent.TRIGGERED )
+            {
+            keys.lastCode = aEvent.keyCode;
+            }
+        else if ( aEvent.action == QueuedTouchEvent.RELEASED )
+            {
+            keys.lastCode = 0;
             }
         }
 

@@ -44,6 +44,8 @@ public abstract class Touchable
 
     public int associatedKeyID;
 
+    public int associatedKeyCode;
+
     public boolean triggered;
 
     public boolean activated;
