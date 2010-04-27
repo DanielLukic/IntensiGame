@@ -51,23 +51,32 @@ public final class SystemFontGenerator extends FontGenerator
         return mySystemFont.substringWidth( aString, aOffset, aLength );
         }
 
-    public void blitString( final DirectGraphics aGraphics, final String aText, final int aStart, final int aEnd, final int aX, final int aY )
-        {
-        aGraphics.setFont( mySystemFont );
-        aGraphics.drawSubstring( aText, aStart, aEnd, aX, aY );
-        }
-
     public final void blitChar( final DirectGraphics aGraphics, final int aX, final int aY, final int aAsciiCode )
         {
         aGraphics.setFont( mySystemFont );
         aGraphics.drawChar( (char) aAsciiCode, aX, aY );
         }
 
-    public final void blendChar( final DirectGraphics aGraphics, final int aX, final int aY, final char aAsciiCode, final int aAlpha8 )
+    public final void blendChar( final DirectGraphics aGraphics, final int aX, final int aY, final char aAsciiCode, final int aAlpha256 )
         {
         final int rgb24 = aGraphics.getColorRGB24();
-        aGraphics.setColorARGB32( aAlpha8 << 24 | rgb24 );
+        aGraphics.setColorARGB32( aAlpha256 << 24 | rgb24 );
+        aGraphics.setFont( mySystemFont );
         aGraphics.drawChar( (char) aAsciiCode, aX, aY );
+        }
+
+    public void blitString( final DirectGraphics aGraphics, final String aText, final int aStart, final int aEnd, final int aX, final int aY )
+        {
+        aGraphics.setFont( mySystemFont );
+        aGraphics.drawSubstring( aText, aStart, aEnd, aX, aY );
+        }
+
+    public void blendString( final DirectGraphics aGraphics, final String aText, final int aStart, final int aEnd, final int aX, final int aY, final int aAlpha256 )
+        {
+        final int rgb24 = aGraphics.getColorRGB24();
+        aGraphics.setColorARGB32( aAlpha256 << 24 | rgb24 );
+        aGraphics.setFont( mySystemFont );
+        aGraphics.drawSubstring( aText, aStart, aEnd, aX, aY );
         }
 
 

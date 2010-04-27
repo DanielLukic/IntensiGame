@@ -69,6 +69,13 @@ public abstract class FontGenerator
         blitString( aGraphics, aText, 0, textLength, alignedPosition.x, alignedPosition.y );
         }
 
+    public final void blendString( final DirectGraphics aGraphics, final String aText, final Position aPosition, final int aAlignment, final int aAlpha256 )
+        {
+        final int textLength = aText.length();
+        final Position alignedPosition = getAlignedPosition( aPosition, stringWidth( aText ), charHeight(), aAlignment );
+        blendString( aGraphics, aText, 0, textLength, alignedPosition.x, alignedPosition.y, aAlpha256 );
+        }
+
     public final void blitText( final DirectGraphics aGraphics, final String aText, final Rectangle aTextRect )
         {
         final int textLength = aText.length();
@@ -155,9 +162,11 @@ public abstract class FontGenerator
 
     public abstract void blitChar( DirectGraphics aGraphics, int aX, int aY, int aAsciiCode );
 
+    public abstract void blendChar( DirectGraphics aGraphics, int aX, int aY, char aAsciiCode, int aAlpha8 );
+
     public abstract void blitString( DirectGraphics aGraphics, String aText, int aStart, int aEnd, int aX, int aY );
 
-    public abstract void blendChar( DirectGraphics aGraphics, int aX, int aY, char aAsciiCode, int aAlpha8 );
+    public abstract void blendString( DirectGraphics aGraphics, String aText, int aStart, int aEnd, int aX, int aY, int aAlpha256 );
 
     private static final Position myBlitPos = new Position();
     }

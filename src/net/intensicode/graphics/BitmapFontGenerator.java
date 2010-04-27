@@ -96,6 +96,15 @@ public final class BitmapFontGenerator extends FontGenerator
         myCharGen.blit( aGraphics, aX, aY, index, width );
         }
 
+    public final void blendChar( final DirectGraphics aGraphics, final int aX, final int aY, final char aAsciiCode, final int aAlpha8 )
+        {
+        final int index = aAsciiCode - MIN_ASCII_CODE;
+        if ( index < 0 || index >= myCharWidths.length ) return;
+
+        final int width = myCharWidths[ index ];
+        myCharGen.blend( aGraphics, aX, aY, index, width, aAlpha8 );
+        }
+
     public final void blitString( final DirectGraphics aGraphics, final String aText, final int aStart, final int aEnd, final int aX, final int aY )
         {
         if ( aText == null || aText.length() == 0 ) return;
@@ -112,13 +121,17 @@ public final class BitmapFontGenerator extends FontGenerator
         if ( !buffered ) purgeCaches();
         }
 
-    public final void blendChar( final DirectGraphics aGraphics, final int aX, final int aY, final char aAsciiCode, final int aAlpha8 )
+    public final void blendString( final DirectGraphics aGraphics, final String aText, final int aStart, final int aEnd, final int aX, final int aY, final int aAlpha256 )
         {
-        final int index = aAsciiCode - MIN_ASCII_CODE;
-        if ( index < 0 || index >= myCharWidths.length ) return;
+        if ( aText == null || aText.length() == 0 ) return;
 
-        final int width = myCharWidths[ index ];
-        myCharGen.blend( aGraphics, aX, aY, index, width, aAlpha8 );
+        int x = aX;
+        for ( int idx = aStart; idx < aEnd; idx++ )
+            {
+            final char code = aText.charAt( idx );
+            blendChar( aGraphics, x, aY, code, aAlpha256 );
+            x += charWidth( code );
+            }
         }
 
     // Implementation
