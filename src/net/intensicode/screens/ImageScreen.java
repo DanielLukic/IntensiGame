@@ -18,6 +18,8 @@ public class ImageScreen extends ScreenBase
 
     public boolean clearOutside;
 
+    public int clearColorRGB24;
+
     public ImageResource image;
 
     public int positionMode;
@@ -58,7 +60,7 @@ public class ImageScreen extends ScreenBase
             final int bottom = position.y + image.getHeight();
             final int right = position.x + image.getWidth();
 
-            gc.setColorRGB24( 0 );
+            gc.setColorRGB24( clearColorRGB24 );
             gc.fillRect( 0, 0, screenWidth, position.y );
             gc.fillRect( 0, position.y, position.x, image.getHeight() );
             gc.fillRect( right, position.y, screenWidth - right, image.getHeight() );
