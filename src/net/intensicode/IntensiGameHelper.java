@@ -6,16 +6,33 @@ import net.intensicode.util.Log;
 
 public final class IntensiGameHelper
     {
-    static void toggleDebugScreen( final GameSystem aGameSystem )
+    public static void toggleDebugScreen( final GameSystem aGameSystem )
         {
         //#if DEBUG
         aGameSystem.debug.visible = !aGameSystem.debug.visible;
         //#endif
         }
 
-    static void toggleCheatScreen( final GameSystem aGameSystem )
+    public static void toggleCheatScreen( final GameSystem aGameSystem )
         {
         // TODO: Toggle system.cheat screen visibility..
+        }
+
+    public static void triggerConfigurationMenu( final GameSystem aGameSystem )
+        {
+        try
+            {
+            final SystemContext context = aGameSystem.context;
+            final ConfigurationMenu menu = new ConfigurationMenu( "CONFIGURATION", aGameSystem.systemFont );
+            menu.add( context.getApplicationValues() );
+            menu.add( context.getPlatformValues() );
+            menu.add( context.getSystemValues() );
+            aGameSystem.stack.pushOnce( menu );
+            }
+        catch ( Exception e )
+            {
+            aGameSystem.showError( "failed showing configuration menu", e );
+            }
         }
 
     public IntensiGameHelper( final GameSystem aGameSystem )
