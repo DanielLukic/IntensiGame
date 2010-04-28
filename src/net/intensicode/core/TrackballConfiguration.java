@@ -4,113 +4,121 @@ package net.intensicode.core;
 
 public final class TrackballConfiguration
     {
-    public static final String[] STRING_VALUES = { "DEFAULT", "DIRECT 1:1", "SYSTEM", "FAST", "MEDIUM", "SLOW" };
+    public TrackballConfiguration[] presets;
 
-    public static final int SENSITIVITY_DEFAULT = 0;
-
-    public static final int SENSITIVITY_DIRECT = 1;
-
-    public static final int SENSITIVITY_SYSTEM = 2;
-
-    public static final int SENSITIVITY_FAST = 3;
-
-    public static final int SENSITIVITY_MEDIUM = 4;
-
-    public static final int SENSITIVITY_SLOW = 5;
+    public String label;
 
 
-    public void setSensitivityPreset( final int aSensitivityId )
+    public final String[] getLabels()
         {
-        switch ( aSensitivityId )
+        final String[] labels = new String[presets.length];
+        for ( int idx = 0; idx < presets.length; idx++ )
             {
-            default:
-            case SENSITIVITY_DEFAULT:
-                applyDefaultPreset();
-                break;
-            case SENSITIVITY_DIRECT:
-                applyDirectPreset();
-                break;
-            case SENSITIVITY_SYSTEM:
-                applySystemPreset();
-                break;
-            case SENSITIVITY_FAST:
-                applyFastPreset();
-                break;
-            case SENSITIVITY_MEDIUM:
-                applyMediumPreset();
-                break;
-            case SENSITIVITY_SLOW:
-                applySlowPreset();
-                break;
+            labels[ idx ] = presets[ idx ].label;
             }
+        return labels;
         }
 
-    private void applyDefaultPreset()
+    public final void setTo( final TrackballConfiguration aNewConfiguration )
         {
-        initialTicksThreshold = 0;
-        multiTicksThreshold = 3;
-        additionalMultiTicksThreshold = 1;
-        directionIgnoreFactor = 1f;
-        forcedSilenceBetweenEventsInMillis = 0;
-        multiEventThresholdInMillis = 250;
-        silenceBeforeUpdateInMillis = 50;
+        label = aNewConfiguration.label;
+
+        initialTicksThreshold = aNewConfiguration.initialTicksThreshold;
+        multiTicksThreshold = aNewConfiguration.multiTicksThreshold;
+        additionalMultiTicksThreshold = aNewConfiguration.additionalMultiTicksThreshold;
+        directionIgnoreFactor = aNewConfiguration.directionIgnoreFactor;
+        forcedSilenceBetweenEventsInMillis = aNewConfiguration.forcedSilenceBetweenEventsInMillis;
+        multiEventThresholdInMillis = aNewConfiguration.multiEventThresholdInMillis;
+        silenceBeforeUpdateInMillis = aNewConfiguration.silenceBeforeUpdateInMillis;
         }
 
-    private void applyDirectPreset()
+    public final void initFromProperties( final Configuration aProperties, final String aPresetName )
         {
-        initialTicksThreshold = 0;
-        multiTicksThreshold = 0;
-        additionalMultiTicksThreshold = 1;
-        directionIgnoreFactor = 5f;
-        forcedSilenceBetweenEventsInMillis = 0;
-        multiEventThresholdInMillis = 250;
-        silenceBeforeUpdateInMillis = 0;
+        final String prefix = "gestures." + aPresetName;
+        label = aProperties.readString( prefix, "label", aPresetName );
+        initialTicksThreshold = aProperties.readInt( prefix, "initialTicksThreshold", 0 );
+        multiTicksThreshold = aProperties.readInt( prefix, "multiTicksThreshold", 3 );
+        additionalMultiTicksThreshold = aProperties.readInt( prefix, "additionalMultiTicksThreshold", 1 );
+        directionIgnoreFactor = aProperties.readFloat( prefix, "directionIgnoreFactor", 20 );
+        forcedSilenceBetweenEventsInMillis = aProperties.readInt( prefix, "forcedSilenceBetweenEventsInMillis", 0 );
+        multiEventThresholdInMillis = aProperties.readInt( prefix, "multiEventThresholdInMillis", 250 );
+        silenceBeforeUpdateInMillis = aProperties.readInt( prefix, "silenceBeforeUpdateInMillis", 50 );
         }
 
-    private void applySystemPreset()
+    public final void initDefaults()
         {
-        initialTicksThreshold = 0;
-        multiTicksThreshold = 6;
-        additionalMultiTicksThreshold = 6;
-        directionIgnoreFactor = 5f;
-        forcedSilenceBetweenEventsInMillis = 0;
-        multiEventThresholdInMillis = 250;
-        silenceBeforeUpdateInMillis = 0;
+        presets = new TrackballConfiguration[6];
+
+        final TrackballConfiguration p0 = presets[ 0 ] = new TrackballConfiguration();
+        p0.initialTicksThreshold = 0;
+        p0.multiTicksThreshold = 3;
+        p0.additionalMultiTicksThreshold = 1;
+        p0.directionIgnoreFactor = 1f;
+        p0.forcedSilenceBetweenEventsInMillis = 0;
+        p0.multiEventThresholdInMillis = 250;
+        p0.silenceBeforeUpdateInMillis = 50;
+
+        final TrackballConfiguration p1 = presets[ 1 ] = new TrackballConfiguration();
+        p1.initialTicksThreshold = 0;
+        p1.multiTicksThreshold = 0;
+        p1.additionalMultiTicksThreshold = 1;
+        p1.directionIgnoreFactor = 5f;
+        p1.forcedSilenceBetweenEventsInMillis = 0;
+        p1.multiEventThresholdInMillis = 250;
+        p1.silenceBeforeUpdateInMillis = 0;
+
+        final TrackballConfiguration p2 = presets[ 2 ] = new TrackballConfiguration();
+        p2.initialTicksThreshold = 0;
+        p2.multiTicksThreshold = 6;
+        p2.additionalMultiTicksThreshold = 6;
+        p2.directionIgnoreFactor = 5f;
+        p2.forcedSilenceBetweenEventsInMillis = 0;
+        p2.multiEventThresholdInMillis = 250;
+        p2.silenceBeforeUpdateInMillis = 0;
+
+        final TrackballConfiguration p3 = presets[ 3 ] = new TrackballConfiguration();
+        p3.initialTicksThreshold = 0;
+        p3.multiTicksThreshold = 4;
+        p3.additionalMultiTicksThreshold = 2;
+        p3.directionIgnoreFactor = 1f;
+        p3.forcedSilenceBetweenEventsInMillis = 25;
+        p3.multiEventThresholdInMillis = 125;
+        p3.silenceBeforeUpdateInMillis = 50;
+
+        final TrackballConfiguration p4 = presets[ 4 ] = new TrackballConfiguration();
+        p4.initialTicksThreshold = 0;
+        p4.multiTicksThreshold = 5;
+        p4.additionalMultiTicksThreshold = 3;
+        p4.directionIgnoreFactor = 1f;
+        p4.forcedSilenceBetweenEventsInMillis = 50;
+        p4.multiEventThresholdInMillis = 200;
+        p4.silenceBeforeUpdateInMillis = 75;
+
+        final TrackballConfiguration p5 = presets[ 5 ] = new TrackballConfiguration();
+        p5.initialTicksThreshold = 0;
+        p5.multiTicksThreshold = 6;
+        p5.additionalMultiTicksThreshold = 4;
+        p5.directionIgnoreFactor = 1f;
+        p5.forcedSilenceBetweenEventsInMillis = 75;
+        p5.multiEventThresholdInMillis = 250;
+        p5.silenceBeforeUpdateInMillis = 125;
         }
 
-    private void applyFastPreset()
+    public final boolean equals( final Object aThat )
         {
-        initialTicksThreshold = 0;
-        multiTicksThreshold = 4;
-        additionalMultiTicksThreshold = 2;
-        directionIgnoreFactor = 1f;
-        forcedSilenceBetweenEventsInMillis = 25;
-        multiEventThresholdInMillis = 125;
-        silenceBeforeUpdateInMillis = 50;
-        }
+        if ( !( aThat instanceof TrackballConfiguration ) ) return false;
 
-    private void applyMediumPreset()
-        {
-        initialTicksThreshold = 0;
-        multiTicksThreshold = 5;
-        additionalMultiTicksThreshold = 3;
-        directionIgnoreFactor = 1f;
-        forcedSilenceBetweenEventsInMillis = 50;
-        multiEventThresholdInMillis = 200;
-        silenceBeforeUpdateInMillis = 75;
-        }
+        final TrackballConfiguration that = (TrackballConfiguration) aThat;
+        if ( this.forcedSilenceBetweenEventsInMillis != that.forcedSilenceBetweenEventsInMillis ) return false;
+        if ( this.silenceBeforeUpdateInMillis != that.silenceBeforeUpdateInMillis ) return false;
+        if ( this.multiEventThresholdInMillis != that.multiEventThresholdInMillis ) return false;
+        if ( this.directionIgnoreFactor != that.directionIgnoreFactor ) return false;
+        if ( this.initialTicksThreshold != that.initialTicksThreshold ) return false;
+        if ( this.multiTicksThreshold != that.multiTicksThreshold ) return false;
+        if ( this.additionalMultiTicksThreshold != that.additionalMultiTicksThreshold ) return false;
 
-    private void applySlowPreset()
-        {
-        initialTicksThreshold = 0;
-        multiTicksThreshold = 6;
-        additionalMultiTicksThreshold = 4;
-        directionIgnoreFactor = 1f;
-        forcedSilenceBetweenEventsInMillis = 75;
-        multiEventThresholdInMillis = 250;
-        silenceBeforeUpdateInMillis = 125;
+        return true;
         }
-
 
     public int forcedSilenceBetweenEventsInMillis = 0;
 
