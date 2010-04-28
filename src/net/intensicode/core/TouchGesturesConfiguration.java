@@ -2,107 +2,82 @@
 
 package net.intensicode.core;
 
-import net.intensicode.util.Log;
-
-public final class TouchGesturesConfiguration
+public final class TouchGesturesConfiguration extends TouchConfiguration
     {
-    public static final String[] SENSITIVITY_STRING_VALUES = { "VERY LOW", "LOW", "MEDIUM", "HIGH", "VERY HIGH" };
-
-    public static final int SENSITIVITY_VERY_LOW = 0;
-
-    public static final int SENSITIVITY_LOW = 1;
-
-    public static final int SENSITIVITY_MEDIUM = 2;
-
-    public static final int SENSITIVITY_HIGH = 3;
-
-    public static final int SENSITIVITY_VERY_HIGH = 4;
-
-    public static final int MIN_VALUE = SENSITIVITY_VERY_LOW;
-
-    public static final int MAX_VALUE = SENSITIVITY_VERY_HIGH;
-
-    public static final float TARGET_SMOOTHING = 0.6f;
+    public static TouchGesturesConfiguration[] presets;
 
 
-    public void setDeviceParameters( final DirectScreen aScreen )
+    public final String[] getLabels()
         {
-        devicePixelFactorX = 1f;
-        devicePixelFactorY = 1f;
-
-        final float xSmoothing = aScreen.getTargetWidth() / (float) aScreen.getNativeWidth();
-        final float ySmoothing = aScreen.getTargetHeight() / (float) aScreen.getNativeHeight();
-        Log.info( "implicit native -> target factor: {}/{}", xSmoothing, ySmoothing );
-
-        devicePixelFactorX = TARGET_SMOOTHING / xSmoothing;
-        devicePixelFactorY = TARGET_SMOOTHING / ySmoothing;
-        Log.info( "device pixel factor: {}/{}", devicePixelFactorX, devicePixelFactorY );
-
-        devicePixelFactor = ( devicePixelFactorX + devicePixelFactorY ) / 2;
-        Log.info( "device pixel factor (avg): {}", devicePixelFactor );
-
-        final float xFactor = devicePixelFactorX * xSmoothing;
-        final float yFactor = devicePixelFactorY * ySmoothing;
-        Log.info( "resulting factor: {}/{}", xFactor, yFactor );
+        return super.getLabels( presets );
         }
 
-    public void setSensitivityPreset( final int aSensitivityId )
+    public final void setTo( final TouchGesturesConfiguration aNewConfiguration )
         {
-        switch ( aSensitivityId )
-            {
-            default:
-            case SENSITIVITY_VERY_LOW:
-                gestureStartThresholdInMillis = 40;
-                breakTimeThresholdInMillis = 120;
-                samePositionThresholdInPixels = 25;
-                strokeThresholdInPixels = 20;
-                directionIgnoreFactor = 1.9f;
-                break;
-            case SENSITIVITY_LOW:
-                gestureStartThresholdInMillis = 30;
-                breakTimeThresholdInMillis = 100;
-                samePositionThresholdInPixels = 20;
-                strokeThresholdInPixels = 10;
-                directionIgnoreFactor = 1.9f;
-                break;
-            case SENSITIVITY_MEDIUM:
-                gestureStartThresholdInMillis = 25;
-                breakTimeThresholdInMillis = 80;
-                samePositionThresholdInPixels = 12;
-                strokeThresholdInPixels = 6;
-                directionIgnoreFactor = 1.85f;
-                break;
-            case SENSITIVITY_HIGH:
-                gestureStartThresholdInMillis = 25;
-                breakTimeThresholdInMillis = 60;
-                samePositionThresholdInPixels = 10;
-                strokeThresholdInPixels = 5;
-                directionIgnoreFactor = 1.75f;
-                break;
-            case SENSITIVITY_VERY_HIGH:
-                gestureStartThresholdInMillis = 25;
-                breakTimeThresholdInMillis = 40;
-                samePositionThresholdInPixels = 8;
-                strokeThresholdInPixels = 4;
-                directionIgnoreFactor = 1.75f;
-                break;
-            }
+        label = aNewConfiguration.label;
+        gestureStartThresholdInMillis = aNewConfiguration.gestureStartThresholdInMillis;
+        breakTimeThresholdInMillis = aNewConfiguration.breakTimeThresholdInMillis;
+        samePositionThresholdInPixels = aNewConfiguration.samePositionThresholdInPixels;
+        strokeThresholdInPixels = aNewConfiguration.strokeThresholdInPixels;
+        directionIgnoreFactor = aNewConfiguration.directionIgnoreFactor;
 
         gestureStartThresholdInMillis *= deviceTimingFactor;
         breakTimeThresholdInMillis *= deviceTimingFactor;
-
         samePositionThresholdInPixels *= devicePixelFactor;
         strokeThresholdInPixels *= devicePixelFactor;
         }
 
+    public final void initFromProperties( final Configuration aProperties, final String aPresetName )
+        {
+        final String prefix = "gestures." + aPresetName;
+        label = aProperties.readString( prefix, "label", aPresetName );
+        gestureStartThresholdInMillis = aProperties.readInt( prefix, "gestureStartThresholdInMillis", 25 );
+        breakTimeThresholdInMillis = aProperties.readInt( prefix, "breakTimeThresholdInMillis", 20 );
+        samePositionThresholdInPixels = aProperties.readInt( prefix, "samePositionThresholdInPixels", 10 );
+        strokeThresholdInPixels = aProperties.readInt( prefix, "strokeThresholdInPixels", 40 );
+        directionIgnoreFactor = aProperties.readFloat( prefix, "directionIgnoreFactor", 20 );
+        }
 
-    public float deviceTimingFactor = 1f;
+    public final void initDefaults()
+        {
+        presets = new TouchGesturesConfiguration[5];
 
-    public float devicePixelFactorX = 1f;
+        presets[ 0 ] = new TouchGesturesConfiguration();
+        presets[ 0 ].gestureStartThresholdInMillis = 40;
+        presets[ 0 ].breakTimeThresholdInMillis = 120;
+        presets[ 0 ].samePositionThresholdInPixels = 25;
+        presets[ 0 ].strokeThresholdInPixels = 20;
+        presets[ 0 ].directionIgnoreFactor = 1.9f;
 
-    public float devicePixelFactorY = 1f;
+        presets[ 1 ] = new TouchGesturesConfiguration();
+        presets[ 1 ].gestureStartThresholdInMillis = 30;
+        presets[ 1 ].breakTimeThresholdInMillis = 100;
+        presets[ 1 ].samePositionThresholdInPixels = 20;
+        presets[ 1 ].strokeThresholdInPixels = 10;
+        presets[ 1 ].directionIgnoreFactor = 1.9f;
 
-    public float devicePixelFactor = 1f;
+        presets[ 2 ] = new TouchGesturesConfiguration();
+        presets[ 2 ].gestureStartThresholdInMillis = 25;
+        presets[ 2 ].breakTimeThresholdInMillis = 80;
+        presets[ 2 ].samePositionThresholdInPixels = 12;
+        presets[ 2 ].strokeThresholdInPixels = 6;
+        presets[ 2 ].directionIgnoreFactor = 1.85f;
+
+        presets[ 3 ] = new TouchGesturesConfiguration();
+        presets[ 3 ].gestureStartThresholdInMillis = 25;
+        presets[ 3 ].breakTimeThresholdInMillis = 60;
+        presets[ 3 ].samePositionThresholdInPixels = 10;
+        presets[ 3 ].strokeThresholdInPixels = 5;
+        presets[ 3 ].directionIgnoreFactor = 1.75f;
+
+        presets[ 4 ] = new TouchGesturesConfiguration();
+        presets[ 4 ].gestureStartThresholdInMillis = 25;
+        presets[ 4 ].breakTimeThresholdInMillis = 40;
+        presets[ 4 ].samePositionThresholdInPixels = 8;
+        presets[ 4 ].strokeThresholdInPixels = 4;
+        presets[ 4 ].directionIgnoreFactor = 1.75f;
+        }
+
 
     public int gestureStartThresholdInMillis;
 

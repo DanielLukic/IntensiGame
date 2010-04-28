@@ -20,6 +20,9 @@ public final class TouchTestingScreen extends MultiScreen
         addScreen( new ClearScreen( 0xFF95c03c ) );
         addScreen( mySoftkeys = new SoftkeysScreen( myFont ) );
 
+        mySliderConfiguration.initDefaults();
+        myGesturesConfiguration.initDefaults();
+
         myTouchSlider = new TouchSlider( mySliderConfiguration );
         myTouchSlider.stepSizeInPixels.setTo( 18, 18 );
         touch().addListener( myTouchSlider );
@@ -27,8 +30,8 @@ public final class TouchTestingScreen extends MultiScreen
         myTouchGestures = new TouchGestures( myGesturesConfiguration, system().platform );
         touch().addListener( myTouchGestures );
 
-        mySliderSensitivity = TouchSliderConfiguration.SENSITIVITY_MEDIUM;
-        myGesturesSensitivity = TouchGesturesConfiguration.SENSITIVITY_MEDIUM;
+        mySliderSensitivity = mySliderConfiguration.presets.length / 2;
+        myGesturesSensitivity = myGesturesConfiguration.presets.length / 2;
         }
 
     public final void onInitEverytime() throws Exception
@@ -77,14 +80,14 @@ public final class TouchTestingScreen extends MultiScreen
         {
         super.onControlTick();
 
-        mySliderConfiguration.setSensitivityPreset( mySliderSensitivity );
-        myGesturesConfiguration.setSensitivityPreset( myGesturesSensitivity );
+        mySliderConfiguration.setTo( mySliderConfiguration.presets[ mySliderSensitivity ] );
+        myGesturesConfiguration.setTo( myGesturesConfiguration.presets[ myGesturesSensitivity ] );
 
         if ( keys().checkLeftSoftAndConsume() )
             {
-            if ( mySliderSensitivity < TouchSliderConfiguration.MAX_VALUE ) mySliderSensitivity++;
+            if ( mySliderSensitivity < mySliderConfiguration.presets.length ) mySliderSensitivity++;
             else mySliderSensitivity = 0;
-            if ( myGesturesSensitivity < TouchGesturesConfiguration.MAX_VALUE ) myGesturesSensitivity++;
+            if ( myGesturesSensitivity < myGesturesConfiguration.presets.length ) myGesturesSensitivity++;
             else myGesturesSensitivity = 0;
             }
         if ( keys().checkRightSoftAndConsume() )
@@ -128,12 +131,12 @@ public final class TouchTestingScreen extends MultiScreen
 
     private String getSliderSensitivityLabel()
         {
-        return TouchSliderConfiguration.SENSITIVITY_STRING_VALUES[ mySliderSensitivity ];
+        return mySliderConfiguration.label;
         }
 
     private String getGesturesSensitivityLabel()
         {
-        return TouchGesturesConfiguration.SENSITIVITY_STRING_VALUES[ myGesturesSensitivity ];
+        return myGesturesConfiguration.label;
         }
 
 

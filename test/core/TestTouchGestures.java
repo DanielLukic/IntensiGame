@@ -131,7 +131,8 @@ public final class TestTouchGestures extends TestCase
     private void createTouchGesturesObject()
         {
         final TouchGesturesConfiguration configuration = new TouchGesturesConfiguration();
-        configuration.setSensitivityPreset( TouchGesturesConfiguration.SENSITIVITY_LOW );
+        configuration.initDefaults();
+        configuration.setTo( configuration.presets[1] );
         myTouchGestures = new TouchGestures( configuration, new FakePlatformContext() );
         }
 

@@ -2,114 +2,91 @@
 
 package net.intensicode.core;
 
-import net.intensicode.util.Log;
-
-public final class TouchSliderConfiguration
+public final class TouchSliderConfiguration extends TouchConfiguration
     {
-    public static final String[] SENSITIVITY_STRING_VALUES = { "VERY LOW", "LOW", "MEDIUM", "HIGH", "VERY HIGH" };
-
-    public static final int SENSITIVITY_VERY_LOW = 0;
-
-    public static final int SENSITIVITY_LOW = 1;
-
-    public static final int SENSITIVITY_MEDIUM = 2;
-
-    public static final int SENSITIVITY_HIGH = 3;
-
-    public static final int SENSITIVITY_VERY_HIGH = 4;
-
-    public static final int MIN_VALUE = SENSITIVITY_VERY_LOW;
-
-    public static final int MAX_VALUE = SENSITIVITY_VERY_HIGH;
-
-    public static final float TARGET_SMOOTHING = 0.6f;
+    public static TouchSliderConfiguration[] presets;
 
 
-    public void setDeviceParameters( final DirectScreen aScreen )
+    public final String[] getLabels()
         {
-        devicePixelFactorX = 1f;
-        devicePixelFactorY = 1f;
-
-        final float xSmoothing = aScreen.getTargetWidth() / (float) aScreen.getNativeWidth();
-        final float ySmoothing = aScreen.getTargetHeight() / (float) aScreen.getNativeHeight();
-        Log.info( "implicit native -> target factor: {}/{}", xSmoothing, ySmoothing );
-
-        devicePixelFactorX = TARGET_SMOOTHING / xSmoothing;
-        devicePixelFactorY = TARGET_SMOOTHING / ySmoothing;
-        Log.info( "device pixel factor: {}/{}", devicePixelFactorX, devicePixelFactorY );
-
-        devicePixelFactor = ( devicePixelFactorX + devicePixelFactorY ) / 2;
-        Log.info( "device pixel factor (avg): {}", devicePixelFactor );
-
-        final float xFactor = devicePixelFactorX * xSmoothing;
-        final float yFactor = devicePixelFactorY * ySmoothing;
-        Log.info( "resulting factor: {}/{}", xFactor, yFactor );
+        return super.getLabels( presets );
         }
 
-    public void setSensitivityPreset( final int aSensitivityId )
+    public final void setTo( final TouchSliderConfiguration aNewConfiguration )
         {
-        switch ( aSensitivityId )
-            {
-            default:
-            case SENSITIVITY_VERY_LOW:
-                slideStartThresholdInMillis = 40;
-                slideStartThresholdInPixels = 25;
-                slideMoveThresholdInPixels = 20;
-                newSlideStartThresholdInMillis = 50;
-                initialStepThresholdInPixels = 25;
-                additionalStepThresholdInPixels = 120;
-                break;
-            case SENSITIVITY_LOW:
-                slideStartThresholdInMillis = 30;
-                slideStartThresholdInPixels = 25;
-                slideMoveThresholdInPixels = 15;
-                newSlideStartThresholdInMillis = 45;
-                initialStepThresholdInPixels = 20;
-                additionalStepThresholdInPixels = 100;
-                break;
-            case SENSITIVITY_MEDIUM:
-                slideStartThresholdInMillis = 25;
-                slideStartThresholdInPixels = 20;
-                slideMoveThresholdInPixels = 10;
-                newSlideStartThresholdInMillis = 40;
-                initialStepThresholdInPixels = 20;
-                additionalStepThresholdInPixels = 100;
-                break;
-            case SENSITIVITY_HIGH:
-                slideStartThresholdInMillis = 25;
-                slideStartThresholdInPixels = 15;
-                slideMoveThresholdInPixels = 10;
-                newSlideStartThresholdInMillis = 35;
-                initialStepThresholdInPixels = 20;
-                additionalStepThresholdInPixels = 60;
-                break;
-            case SENSITIVITY_VERY_HIGH:
-                slideStartThresholdInMillis = 25;
-                slideStartThresholdInPixels = 10;
-                slideMoveThresholdInPixels = 8;
-                newSlideStartThresholdInMillis = 30;
-                initialStepThresholdInPixels = 15;
-                additionalStepThresholdInPixels = 40;
-                break;
-            }
+        label = aNewConfiguration.label;
+        slideStartThresholdInMillis = aNewConfiguration.slideStartThresholdInMillis;
+        slideStartThresholdInPixels = aNewConfiguration.slideStartThresholdInPixels;
+        slideMoveThresholdInPixels = aNewConfiguration.slideMoveThresholdInPixels;
+        newSlideStartThresholdInMillis = aNewConfiguration.newSlideStartThresholdInMillis;
+        initialStepThresholdInPixels = aNewConfiguration.initialStepThresholdInPixels;
+        additionalStepThresholdInPixels = aNewConfiguration.additionalStepThresholdInPixels;
 
         slideStartThresholdInMillis *= deviceTimingFactor;
         newSlideStartThresholdInMillis *= deviceTimingFactor;
-
         slideStartThresholdInPixels *= devicePixelFactor;
         slideMoveThresholdInPixels *= devicePixelFactor;
         initialStepThresholdInPixels *= devicePixelFactor;
         additionalStepThresholdInPixels *= devicePixelFactor;
         }
 
+    public final void initFromProperties( final Configuration aProperties, final String aPresetName )
+        {
+        final String prefix = "slider." + aPresetName;
+        label = aProperties.readString( prefix, "label", aPresetName );
+        slideStartThresholdInMillis = aProperties.readInt( prefix, "slideStartThresholdInMillis", 25 );
+        slideStartThresholdInPixels = aProperties.readInt( prefix, "slideStartThresholdInPixels", 20 );
+        slideMoveThresholdInPixels = aProperties.readInt( prefix, "slideMoveThresholdInPixels", 10 );
+        newSlideStartThresholdInMillis = aProperties.readInt( prefix, "newSlideStartThresholdInMillis", 40 );
+        initialStepThresholdInPixels = aProperties.readInt( prefix, "initialStepThresholdInPixels", 20 );
+        additionalStepThresholdInPixels = aProperties.readInt( prefix, "additionalStepThresholdInPixels", 100 );
+        }
 
-    public float deviceTimingFactor = 1f;
+    public final void initDefaults()
+        {
+        presets = new TouchSliderConfiguration[5];
 
-    public float devicePixelFactorX = 1f;
+        presets[ 0 ] = new TouchSliderConfiguration();
+        presets[ 0 ].slideStartThresholdInMillis = 40;
+        presets[ 0 ].slideStartThresholdInPixels = 25;
+        presets[ 0 ].slideMoveThresholdInPixels = 20;
+        presets[ 0 ].newSlideStartThresholdInMillis = 50;
+        presets[ 0 ].initialStepThresholdInPixels = 25;
+        presets[ 0 ].additionalStepThresholdInPixels = 120;
 
-    public float devicePixelFactorY = 1f;
+        presets[ 1 ] = new TouchSliderConfiguration();
+        presets[ 1 ].slideStartThresholdInMillis = 30;
+        presets[ 1 ].slideStartThresholdInPixels = 25;
+        presets[ 1 ].slideMoveThresholdInPixels = 15;
+        presets[ 1 ].newSlideStartThresholdInMillis = 45;
+        presets[ 1 ].initialStepThresholdInPixels = 20;
+        presets[ 1 ].additionalStepThresholdInPixels = 100;
 
-    public float devicePixelFactor = 1f;
+        presets[ 2 ] = new TouchSliderConfiguration();
+        presets[ 2 ].slideStartThresholdInMillis = 25;
+        presets[ 2 ].slideStartThresholdInPixels = 20;
+        presets[ 2 ].slideMoveThresholdInPixels = 10;
+        presets[ 2 ].newSlideStartThresholdInMillis = 40;
+        presets[ 2 ].initialStepThresholdInPixels = 20;
+        presets[ 2 ].additionalStepThresholdInPixels = 100;
+
+        presets[ 3 ] = new TouchSliderConfiguration();
+        presets[ 3 ].slideStartThresholdInMillis = 25;
+        presets[ 3 ].slideStartThresholdInPixels = 15;
+        presets[ 3 ].slideMoveThresholdInPixels = 10;
+        presets[ 3 ].newSlideStartThresholdInMillis = 35;
+        presets[ 3 ].initialStepThresholdInPixels = 20;
+        presets[ 3 ].additionalStepThresholdInPixels = 60;
+
+        presets[ 4 ] = new TouchSliderConfiguration();
+        presets[ 4 ].slideStartThresholdInMillis = 25;
+        presets[ 4 ].slideStartThresholdInPixels = 10;
+        presets[ 4 ].slideMoveThresholdInPixels = 8;
+        presets[ 4 ].newSlideStartThresholdInMillis = 30;
+        presets[ 4 ].initialStepThresholdInPixels = 15;
+        presets[ 4 ].additionalStepThresholdInPixels = 40;
+        }
+
 
     public int slideStartThresholdInMillis;
 
