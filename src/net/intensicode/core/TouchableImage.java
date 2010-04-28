@@ -48,11 +48,6 @@ public final class TouchableImage extends Touchable
         onDrawDebug( aGraphics, myTouchableRect );
         }
 
-    protected void onDrawActivated( final DirectGraphics aGraphics, final Rectangle aRectangle )
-        {
-        super.onDrawActivated( aGraphics, aRectangle );
-        }
-
     // From Object
 
     //#if DEBUG
