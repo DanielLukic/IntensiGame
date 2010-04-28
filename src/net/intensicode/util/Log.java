@@ -199,7 +199,7 @@ public class Log
     protected void doError( final StringBuffer aBufferWithMessage, final Throwable aThrowable )
         {
         aBufferWithMessage.insert( 0, "ERROR " );
-        System.out.println( aBufferWithMessage.toString() );
+        System.err.println( aBufferWithMessage.toString() );
 
         if ( aThrowable != null ) aThrowable.printStackTrace();
         }
