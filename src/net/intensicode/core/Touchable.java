@@ -2,7 +2,7 @@
 
 package net.intensicode.core;
 
-import net.intensicode.util.*;
+import net.intensicode.util.Rectangle;
 
 public abstract class Touchable
     {
@@ -148,7 +148,11 @@ public abstract class Touchable
     protected void onDrawActivated( final DirectGraphics aGraphics, final Rectangle aRectangle )
         {
         aGraphics.setColorARGB32( 0x60FFFFFF );
-        aGraphics.fillRect( aRectangle.x, aRectangle.y, aRectangle.width, aRectangle.height );
+        //#if J2ME
+        aGraphics.drawRect( aRectangle.x, aRectangle.y, aRectangle.width, aRectangle.height );
+        //#else
+        //# aGraphics.fillRect( aRectangle.x, aRectangle.y, aRectangle.width, aRectangle.height );
+        //#endif
         }
 
     protected void onDrawDebug( final DirectGraphics aGraphics, final Rectangle aRectangle )
