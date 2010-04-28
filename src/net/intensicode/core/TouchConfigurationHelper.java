@@ -1,3 +1,5 @@
+//#condition TOUCH
+
 package net.intensicode.core;
 
 import net.intensicode.util.Log;
