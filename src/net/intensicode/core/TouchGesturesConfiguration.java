@@ -4,7 +4,7 @@ package net.intensicode.core;
 
 public final class TouchGesturesConfiguration extends TouchConfiguration
     {
-    public static TouchGesturesConfiguration[] presets;
+    public TouchGesturesConfiguration[] presets;
 
 
     public final String[] getLabels()

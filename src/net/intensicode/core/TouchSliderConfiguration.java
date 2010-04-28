@@ -4,7 +4,7 @@ package net.intensicode.core;
 
 public final class TouchSliderConfiguration extends TouchConfiguration
     {
-    public static TouchSliderConfiguration[] presets;
+    public TouchSliderConfiguration[] presets;
 
 
     public final String[] getLabels()
