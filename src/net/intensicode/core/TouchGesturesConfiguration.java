@@ -20,11 +20,6 @@ public final class TouchGesturesConfiguration extends TouchConfiguration
         samePositionThresholdInPixels = aNewConfiguration.samePositionThresholdInPixels;
         strokeThresholdInPixels = aNewConfiguration.strokeThresholdInPixels;
         directionIgnoreFactor = aNewConfiguration.directionIgnoreFactor;
-
-        gestureStartThresholdInMillis *= deviceTimingFactor;
-        breakTimeThresholdInMillis *= deviceTimingFactor;
-        samePositionThresholdInPixels *= devicePixelFactor;
-        strokeThresholdInPixels *= devicePixelFactor;
         }
 
     public final void initFromProperties( final Configuration aProperties, final String aPresetName )

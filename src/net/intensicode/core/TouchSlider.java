@@ -123,18 +123,20 @@ public final class TouchSlider implements TouchEventListener
         {
         final int sign = aRawDelta < 0 ? -1 : +1;
 
-        int rawDelta = Math.abs( aRawDelta );
+        float rawDelta = Math.abs( aRawDelta );
         if ( rawDelta <= myConfiguration.initialStepThresholdInPixels ) return 0;
         rawDelta -= myConfiguration.initialStepThresholdInPixels;
+
+        final float stepPixels = stepSizeInPixels.width * myConfiguration.devicePixelFactor;
 
         // if more than the initial step size..
         if ( rawDelta > stepSizeInPixels.width )
             {
             // then subtract the additionalStepThresholdInPixels
-            rawDelta = Math.max( stepSizeInPixels.width, rawDelta - myConfiguration.additionalStepThresholdInPixels );
+            rawDelta = Math.max( stepPixels, rawDelta - myConfiguration.additionalStepThresholdInPixels );
             }
 
-        return sign * rawDelta / stepSizeInPixels.width;
+        return (int) (sign * rawDelta / stepPixels );
         }
 
     private void startNewSlide()

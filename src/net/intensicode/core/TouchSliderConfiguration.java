@@ -21,13 +21,6 @@ public final class TouchSliderConfiguration extends TouchConfiguration
         newSlideStartThresholdInMillis = aNewConfiguration.newSlideStartThresholdInMillis;
         initialStepThresholdInPixels = aNewConfiguration.initialStepThresholdInPixels;
         additionalStepThresholdInPixels = aNewConfiguration.additionalStepThresholdInPixels;
-
-        slideStartThresholdInMillis *= deviceTimingFactor;
-        newSlideStartThresholdInMillis *= deviceTimingFactor;
-        slideStartThresholdInPixels *= devicePixelFactor;
-        slideMoveThresholdInPixels *= devicePixelFactor;
-        initialStepThresholdInPixels *= devicePixelFactor;
-        additionalStepThresholdInPixels *= devicePixelFactor;
         }
 
     public final void initFromProperties( final Configuration aProperties, final String aPresetName )
