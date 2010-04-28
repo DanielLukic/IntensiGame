@@ -26,18 +26,23 @@ public abstract class GameSystem
     public StorageManager storage;
 
     //#if SENSORS
+
     public SensorsManager sensors;
+
     //#endif
 
     public DirectScreen screen;
 
     //#ifdef TRACKBALL
+
     public TrackballHandler trackball;
+
     //#endif
 
     //#ifdef TOUCH
 
     public TouchHandler touch;
+
     //#endif
 
     public AudioManager audio;
@@ -49,7 +54,9 @@ public abstract class GameSystem
     public KeysHandler keys;
 
     //#if DEBUG
+
     public DebugScreen debug;
+
     //#endif
 
     //#if CONSOLE
@@ -60,7 +67,10 @@ public abstract class GameSystem
     //#if STATS
 
     public EngineStats stats;
+
     //#endif
+
+    public FontGenerator systemFont;
 
 
     public GameSystem( final SystemContext aSystemContext, final PlatformContext aPlatformContext )
@@ -100,6 +110,8 @@ public abstract class GameSystem
 
     public final void setSystemFont( final FontGenerator aFontGenerator )
         {
+        systemFont = aFontGenerator;
+
         myErrorScreen.changeFont( aFontGenerator );
         //#if DEBUG
         debug.font = aFontGenerator;
@@ -350,6 +362,9 @@ public abstract class GameSystem
         stats = new EngineStats( resources.getSmallDefaultFont() );
         stack.addGlobalHandler( stats );
         //#endif
+
+        systemFont = resources.getSmallDefaultFont();
+
         initializeErrorScreen();
         initializeMainController();
 
