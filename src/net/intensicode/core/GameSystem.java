@@ -36,6 +36,7 @@ public abstract class GameSystem
     //#endif
 
     //#ifdef TOUCH
+
     public TouchHandler touch;
     //#endif
 
@@ -115,26 +116,33 @@ public abstract class GameSystem
         {
         final ConfigurationElementsTree system = new ConfigurationElementsTree( "Game System" );
 
-        //#if !RELEASE
+        try
+            {
+            //#if !RELEASE
 
-        final ConfigurationElementsTree timing = system.addSubTree( "Timing" );
-        timing.addLeaf( new TicksPerSecond( this.timing ) );
-        timing.addLeaf( new MaxFramesPerSecond( this.timing ) );
-        //#if TIMING
-        timing.addLeaf( new DumpTiming() );
-        //#endif
+            final ConfigurationElementsTree timing = system.addSubTree( "Timing" );
+            timing.addLeaf( new TicksPerSecond( this.timing ) );
+            timing.addLeaf( new MaxFramesPerSecond( this.timing ) );
+            //#if TIMING
+            timing.addLeaf( new DumpTiming() );
+            //#endif
 
-        //#if CONSOLE
-        final ConfigurationElementsTree console = system.addSubTree( "Console" );
-        console.addLeaf( new net.intensicode.configuration.console.ShowHideConsole( this.console ) );
-        console.addLeaf( new net.intensicode.configuration.console.ConsoleEntryStayTime( this.console ) );
-        //#endif
+            //#if CONSOLE
+            final ConfigurationElementsTree console = system.addSubTree( "Console" );
+            console.addLeaf( new net.intensicode.configuration.console.ShowHideConsole( this.console ) );
+            console.addLeaf( new net.intensicode.configuration.console.ConsoleEntryStayTime( this.console ) );
+            //#endif
 
-        system.addLeaf( new LoadConfiguration( context ) );
-        system.addLeaf( new SaveConfiguration( context ) );
-        system.addLeaf( new DeleteConfiguration( context ) );
+            system.addLeaf( new LoadConfiguration( context ) );
+            system.addLeaf( new SaveConfiguration( context ) );
+            system.addLeaf( new DeleteConfiguration( context ) );
 
-        //#endif
+            //#endif
+            }
+        catch ( final Exception e )
+            {
+            showError( "failed preparing system values for configuration menu. ignored.", e );
+            }
 
         return system;
         }
