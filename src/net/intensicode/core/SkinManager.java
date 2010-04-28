@@ -212,9 +212,6 @@ public final class SkinManager implements Runnable
             final String charWidthsResourceName = getCharWidthsResourcePath( aFontID );
 
             final boolean monospaced = mySkinConfiguration.readBoolean( aFontID, "monospaced", false );
-            //#if DEBUG
-            Log.debug( "Font {} monospaced? " + monospaced, aFontID );
-            //#endif
             if ( !monospaced && resources().doesResourceExist( charWidthsResourceName ) )
                 {
                 final byte[] widths = resources().loadData( charWidthsResourceName );

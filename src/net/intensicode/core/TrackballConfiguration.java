@@ -2,8 +2,6 @@
 
 package net.intensicode.core;
 
-import net.intensicode.util.Log;
-
 public final class TrackballConfiguration
     {
     public static final String[] STRING_VALUES = { "DEFAULT", "DIRECT 1:1", "SYSTEM", "FAST", "MEDIUM", "SLOW" };
@@ -23,7 +21,6 @@ public final class TrackballConfiguration
 
     public void setSensitivityPreset( final int aSensitivityId )
         {
-        Log.debug( "TouchGesturesConfiguration#setSensitivityPreset {}", aSensitivityId );
         switch ( aSensitivityId )
             {
             default:

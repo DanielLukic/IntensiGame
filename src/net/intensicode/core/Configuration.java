@@ -78,7 +78,6 @@ public final class Configuration
         try
             {
             final String value = extractValue( aEntry, null );
-            Log.debug( "readHex {} => {}", value, "" + Long.parseLong( value, 16 ) );
             if ( value == null ) return aDefault;
             return (int) Long.parseLong( value, 16 );
             }

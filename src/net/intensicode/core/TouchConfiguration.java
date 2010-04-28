@@ -38,17 +38,14 @@ public abstract class TouchConfiguration
 
         final float xSmoothing = aScreen.getTargetWidth() / (float) aScreen.getNativeWidth();
         final float ySmoothing = aScreen.getTargetHeight() / (float) aScreen.getNativeHeight();
-        Log.info( "implicit native -> target factor: {}/{}", xSmoothing, ySmoothing );
 
         devicePixelFactorX = targetSmoothing / xSmoothing;
         devicePixelFactorY = targetSmoothing / ySmoothing;
-        Log.info( "device pixel factor: {}/{}", devicePixelFactorX, devicePixelFactorY );
 
         devicePixelFactor = ( devicePixelFactorX + devicePixelFactorY ) / 2;
-        Log.info( "device pixel factor (avg): {}", devicePixelFactor );
 
         final float xFactor = devicePixelFactorX * xSmoothing;
         final float yFactor = devicePixelFactorY * ySmoothing;
-        Log.info( "resulting factor: {}/{}", xFactor, yFactor );
+        Log.info( "device pixel scaling factor: {}/{}", xFactor, yFactor );
         }
     }
