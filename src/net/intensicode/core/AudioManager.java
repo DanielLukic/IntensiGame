@@ -139,7 +139,7 @@ public abstract class AudioManager
             }
         catch ( final Exception e )
             {
-            Log.error( e );
+            Log.error( "failed loading music resource {}", aMusicName, e );
             return new SilentAudioResource();
             }
         }
@@ -159,7 +159,7 @@ public abstract class AudioManager
             }
         catch ( final Exception e )
             {
-            Log.error( e );
+            Log.error( "failed loading sound resource {}", aSoundName, e );
             return new SilentAudioResource();
             }
         }
