@@ -54,8 +54,8 @@ public final class TouchGestures implements TouchEventListener
         aGraphics.setColorARGB32( 0x40FF00FF );
         for ( int idx = 0; idx < myStrokePath.size; idx++ )
             {
-            final Position position = (Position) myStrokePath.get( idx );
-            aGraphics.fillRect( position.x - 1, position.y - 1, 3, 3 );
+            final PositionF position = (PositionF) myStrokePath.get( idx );
+            aGraphics.fillRect( (int) ( position.x - 1 ), (int) ( position.y - 1 ), 3, 3 );
             }
         //#endif
         }
