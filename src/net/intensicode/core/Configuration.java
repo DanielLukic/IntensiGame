@@ -107,6 +107,38 @@ public final class Configuration
             }
         }
 
+    //#if !CLDC10
+
+    public final float readFloat( final String aEntry, final float aDefault )
+        {
+        try
+            {
+            final String value = extractValue( aEntry, null );
+            if ( value == null ) return aDefault;
+            return Float.parseFloat( value );
+            }
+        catch ( final NumberFormatException e )
+            {
+            return aDefault;
+            }
+        }
+
+    public final float readFloat( final String aEntry, final String aSubEntry, final float aDefault )
+        {
+        try
+            {
+            final String value = extractValue( aEntry, aSubEntry );
+            if ( value == null ) return aDefault;
+            return Float.parseFloat( value );
+            }
+        catch ( final NumberFormatException e )
+            {
+            return aDefault;
+            }
+        }
+
+    //#endif
+
     public String makeKey( final String aPrefix, final int aIndex )
         {
         mySharedBuffer.setLength( 0 );
