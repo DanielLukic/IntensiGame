@@ -23,9 +23,6 @@ public final class StateDragging extends State
         {
         if ( gestureConditionMet() )
             {
-            Log.info( "GESTURE DURING DRAG" );
-            Log.info( "DRAG STEPS ALREADY EMITTED: {}/{}", myLastDragSteps.x, myLastDragSteps.y );
-            Log.info( "ABORTING DRAG - EMITTING GESTURE" );
             shared.gestureState.transition();
             shared.dragSteps.x = 0;
             shared.dragSteps.y = 0;
