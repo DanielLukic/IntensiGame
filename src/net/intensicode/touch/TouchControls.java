@@ -345,10 +345,12 @@ public final class TouchControls implements TouchEventListener
                 return;
                 }
 
-            final float speedX = Math.abs( shared.speedX ) + 0.5f;
-            final float speedY = Math.abs( shared.speedY ) + 0.5f;
-            myAccumulatedDeltas.x += MathExtended.round( shared.deltaFromPrevious.x * speedX );
-            myAccumulatedDeltas.y += MathExtended.round( shared.deltaFromPrevious.y * speedY );
+            final float speedX = Math.abs( shared.speedX ) + shared.configuration.speedLowBoundary;
+            final float speedY = Math.abs( shared.speedY ) + shared.configuration.speedLowBoundary;
+            final float limitedSpeedX = Math.min( speedX, shared.configuration.speedHighBoundary );
+            final float limitedSpeedY = Math.min( speedY, shared.configuration.speedHighBoundary );
+            myAccumulatedDeltas.x += MathExtended.round( shared.deltaFromPrevious.x * limitedSpeedX );
+            myAccumulatedDeltas.y += MathExtended.round( shared.deltaFromPrevious.y * limitedSpeedY );
 
             final Size dragStepSize = shared.configuration.dragStepSize;
             final int stepWidth = dragStepSize.width;
