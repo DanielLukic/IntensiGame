@@ -2,7 +2,7 @@
 
 package net.intensicode.touch;
 
-import net.intensicode.util.Size;
+import net.intensicode.util.*;
 import net.intensicode.core.Configuration;
 
 public final class TouchControlsConfiguration extends TouchConfiguration
@@ -51,6 +51,7 @@ public final class TouchControlsConfiguration extends TouchConfiguration
         presets = new TouchControlsConfiguration[1];
 
         presets[ 0 ] = new TouchControlsConfiguration();
+        presets[ 0 ].label = "DEFAULT";
         presets[ 0 ].deadZoneSize.setTo( 9, 9 );
         presets[ 0 ].dragStepSize.setTo( 18, 18 );
         presets[ 0 ].gestureDirectionIgnoreFactor = 1.8f;

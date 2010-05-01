@@ -42,6 +42,7 @@ public final class TouchSliderConfiguration extends TouchConfiguration
         presets = new TouchSliderConfiguration[5];
 
         presets[ 0 ] = new TouchSliderConfiguration();
+        presets[ 0 ].label = "LOWER";
         presets[ 0 ].slideStartThresholdInMillis = 40;
         presets[ 0 ].slideStartThresholdInPixels = 25;
         presets[ 0 ].slideMoveThresholdInPixels = 20;
@@ -50,6 +51,7 @@ public final class TouchSliderConfiguration extends TouchConfiguration
         presets[ 0 ].additionalStepThresholdInPixels = 120;
 
         presets[ 1 ] = new TouchSliderConfiguration();
+        presets[ 1 ].label = "LOW";
         presets[ 1 ].slideStartThresholdInMillis = 30;
         presets[ 1 ].slideStartThresholdInPixels = 25;
         presets[ 1 ].slideMoveThresholdInPixels = 15;
@@ -58,6 +60,7 @@ public final class TouchSliderConfiguration extends TouchConfiguration
         presets[ 1 ].additionalStepThresholdInPixels = 100;
 
         presets[ 2 ] = new TouchSliderConfiguration();
+        presets[ 2 ].label = "MEDIUM";
         presets[ 2 ].slideStartThresholdInMillis = 25;
         presets[ 2 ].slideStartThresholdInPixels = 20;
         presets[ 2 ].slideMoveThresholdInPixels = 10;
@@ -66,6 +69,7 @@ public final class TouchSliderConfiguration extends TouchConfiguration
         presets[ 2 ].additionalStepThresholdInPixels = 100;
 
         presets[ 3 ] = new TouchSliderConfiguration();
+        presets[ 3 ].label = "HIGH";
         presets[ 3 ].slideStartThresholdInMillis = 25;
         presets[ 3 ].slideStartThresholdInPixels = 15;
         presets[ 3 ].slideMoveThresholdInPixels = 10;
@@ -74,6 +78,7 @@ public final class TouchSliderConfiguration extends TouchConfiguration
         presets[ 3 ].additionalStepThresholdInPixels = 60;
 
         presets[ 4 ] = new TouchSliderConfiguration();
+        presets[ 4 ].label = "HIGHER";
         presets[ 4 ].slideStartThresholdInMillis = 25;
         presets[ 4 ].slideStartThresholdInPixels = 10;
         presets[ 4 ].slideMoveThresholdInPixels = 8;

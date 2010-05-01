@@ -40,6 +40,7 @@ public final class TouchGesturesConfiguration extends TouchConfiguration
         presets = new TouchGesturesConfiguration[5];
 
         presets[ 0 ] = new TouchGesturesConfiguration();
+        presets[ 0 ].label = "LOWER";
         presets[ 0 ].gestureStartThresholdInMillis = 40;
         presets[ 0 ].breakTimeThresholdInMillis = 120;
         presets[ 0 ].samePositionThresholdInPixels = 25;
@@ -47,6 +48,7 @@ public final class TouchGesturesConfiguration extends TouchConfiguration
         presets[ 0 ].directionIgnoreFactor = 1.9f;
 
         presets[ 1 ] = new TouchGesturesConfiguration();
+        presets[ 1 ].label = "LOW";
         presets[ 1 ].gestureStartThresholdInMillis = 30;
         presets[ 1 ].breakTimeThresholdInMillis = 100;
         presets[ 1 ].samePositionThresholdInPixels = 20;
@@ -54,6 +56,7 @@ public final class TouchGesturesConfiguration extends TouchConfiguration
         presets[ 1 ].directionIgnoreFactor = 1.9f;
 
         presets[ 2 ] = new TouchGesturesConfiguration();
+        presets[ 2 ].label = "MEDIUM";
         presets[ 2 ].gestureStartThresholdInMillis = 25;
         presets[ 2 ].breakTimeThresholdInMillis = 80;
         presets[ 2 ].samePositionThresholdInPixels = 12;
@@ -61,6 +64,7 @@ public final class TouchGesturesConfiguration extends TouchConfiguration
         presets[ 2 ].directionIgnoreFactor = 1.85f;
 
         presets[ 3 ] = new TouchGesturesConfiguration();
+        presets[ 3 ].label = "HIGH";
         presets[ 3 ].gestureStartThresholdInMillis = 25;
         presets[ 3 ].breakTimeThresholdInMillis = 60;
         presets[ 3 ].samePositionThresholdInPixels = 10;
@@ -68,6 +72,7 @@ public final class TouchGesturesConfiguration extends TouchConfiguration
         presets[ 3 ].directionIgnoreFactor = 1.75f;
 
         presets[ 4 ] = new TouchGesturesConfiguration();
+        presets[ 4 ].label = "HIGHER";
         presets[ 4 ].gestureStartThresholdInMillis = 25;
         presets[ 4 ].breakTimeThresholdInMillis = 40;
         presets[ 4 ].samePositionThresholdInPixels = 8;
