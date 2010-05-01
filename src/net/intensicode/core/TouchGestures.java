@@ -29,6 +29,11 @@ public final class TouchGestures implements TouchEventListener
 
     public static final String TAP = "TAP";
 
+    public static final String[] STROKES =
+            { NORTH_WEST, NORTH, NORTH_EAST,
+              WEST, NO_STROKE, EAST,
+              SOUTH_WEST, SOUTH, SOUTH_EAST };
+
 
     public final PositionF lastEventPosition = new PositionF();
 
@@ -248,9 +253,4 @@ public final class TouchGestures implements TouchEventListener
     private final DynamicArray myStrokes = new DynamicArray();
 
     private final DynamicArray myStrokePath = new DynamicArray();
-
-    private static final String[] STROKES =
-            { NORTH_WEST, NORTH, NORTH_EAST,
-              WEST, NO_STROKE, EAST,
-              SOUTH_WEST, SOUTH, SOUTH_EAST };
     }
