@@ -56,15 +56,15 @@ public final class TouchControlsConfiguration extends TouchConfiguration
 
         presets[ 0 ] = new TouchControlsConfiguration();
         presets[ 0 ].label = "DEFAULT";
-        presets[ 0 ].deadZoneSize.setTo( 9, 9 );
+        presets[ 0 ].deadZoneSize.setTo( 13, 13 );
         presets[ 0 ].dragStepSize.setTo( 18, 18 );
         presets[ 0 ].gestureDirectionIgnoreFactor = 1.8f;
         presets[ 0 ].gestureMinThresholdInMillis = 25;
         presets[ 0 ].gestureMaxThresholdInMillis = 333;
-        presets[ 0 ].dragThresholdInMillis = 125;
-        presets[ 0 ].dragThresholdInPixels.setTo( 80, 80 );
-        presets[ 0 ].speedLowBoundary = 0.5f;
-        presets[ 0 ].speedHighBoundary = 2.0f;
+        presets[ 0 ].dragThresholdInMillis = 100;
+        presets[ 0 ].dragThresholdInPixels.setTo( 75, 75 );
+        presets[ 0 ].speedLowBoundary = 0.3f;
+        presets[ 0 ].speedHighBoundary = 1.7f;
         presets[ 0 ].swipeStartsAction = true;
         }
 
