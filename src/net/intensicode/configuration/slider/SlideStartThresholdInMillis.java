@@ -3,7 +3,7 @@
 package net.intensicode.configuration.slider;
 
 import net.intensicode.ConfigurableIntegerValue;
-import net.intensicode.core.TouchSliderConfiguration;
+import net.intensicode.touch.TouchSliderConfiguration;
 
 public final class SlideStartThresholdInMillis implements ConfigurableIntegerValue
     {

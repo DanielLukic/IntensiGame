@@ -1,7 +1,7 @@
 package core;
 
 import junit.framework.TestCase;
-import net.intensicode.core.*;
+import net.intensicode.trackball.*;
 
 public final class TrackballControllerTest extends TestCase
     {

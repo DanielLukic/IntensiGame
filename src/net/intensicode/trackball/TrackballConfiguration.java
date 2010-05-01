@@ -1,6 +1,8 @@
 //#condition TRACKBALL
 
-package net.intensicode.core;
+package net.intensicode.trackball;
+
+import net.intensicode.core.Configuration;
 
 public final class TrackballConfiguration
     {

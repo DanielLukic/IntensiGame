@@ -1,8 +1,9 @@
 //#condition TOUCH
 
-package net.intensicode.core;
+package net.intensicode.touch;
 
 import net.intensicode.util.Rectangle;
+import net.intensicode.core.DirectGraphics;
 
 public abstract class Touchable
     {

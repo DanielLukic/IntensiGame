@@ -3,6 +3,7 @@ package net.intensicode.screens;
 import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.*;
+import net.intensicode.touch.TouchableArea;
 
 public final class MenuEntry extends ScreenBase
     {

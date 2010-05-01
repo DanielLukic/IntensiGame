@@ -1,6 +1,6 @@
 //#condition TOUCH
 
-package net.intensicode.core;
+package net.intensicode.touch;
 
 import net.intensicode.util.*;
 

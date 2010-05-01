@@ -3,7 +3,7 @@
 package net.intensicode.configuration.gestures;
 
 import net.intensicode.ConfigurableIntegerValue;
-import net.intensicode.core.TouchGesturesConfiguration;
+import net.intensicode.touch.TouchGesturesConfiguration;
 
 public final class BreakTimeThresholdInMillis implements ConfigurableIntegerValue
     {

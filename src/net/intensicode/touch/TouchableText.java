@@ -1,51 +1,50 @@
 //#condition TOUCH
 
-package net.intensicode.core;
+package net.intensicode.touch;
 
+import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.*;
+import net.intensicode.core.DirectGraphics;
 
-public final class TouchableImage extends Touchable
+public final class TouchableText extends Touchable
     {
     public final Position position = new Position();
 
-    public int imageAlignment = DirectGraphics.ALIGN_CENTER;
+    public int alignment = FontGenerator.CENTER;
 
-    public ImageResource image;
+    public FontGenerator font;
 
-    public ImageResource imageHover;
+    public String text;
 
 
     public final void updateTouchableRect()
         {
-        final int x = position.x;
-        final int y = position.y;
-        final int width = image.getWidth();
-        final int height = image.getHeight();
-        final Position aligned = DirectGraphics.getAlignedPosition( x, y, width, height, imageAlignment );
+        final int width = font.stringWidth( text );
+        final int height = font.charHeight();
+        final Position aligned = FontGenerator.getAlignedPosition( position, width, height, alignment );
         myTouchableRect.x = aligned.x;
         myTouchableRect.y = aligned.y;
         myTouchableRect.width = width;
         myTouchableRect.height = height;
+        myTouchableRect.applyOutsets( 1 + myTouchableRect.height / 4 );
         }
 
     // From Touchable
 
     public final void onDraw( final DirectGraphics aGraphics )
         {
-        if ( activated && imageHover != null )
-            {
-            aGraphics.blendImage( imageHover, myTouchableRect.x, myTouchableRect.y, alpha256 );
-            onDrawDebug( aGraphics, myTouchableRect );
-            }
-        if ( !activated || imageHover == null )
-            {
-            aGraphics.blendImage( image, myTouchableRect.x, myTouchableRect.y, alpha256 );
-            }
-        if ( activated && imageHover == null )
-            {
-            onDrawActivated( aGraphics, myTouchableRect );
-            }
+        if ( activated ) onDrawActivated( aGraphics, myTouchableRect );
+        drawText( aGraphics );
+        //#if DEBUG_TOUCH
         onDrawDebug( aGraphics, myTouchableRect );
+        //#endif
+        }
+
+    private void drawText( final DirectGraphics aGraphics )
+        {
+        if ( alpha256 == DirectGraphics.FULLY_TRANSPARENT ) return;
+        if ( alpha256 == DirectGraphics.FULLY_OPAQUE ) font.blitString( aGraphics, text, position, alignment );
+        else font.blendString( aGraphics, text, position, alignment, alpha256 );
         }
 
     // From Object
@@ -69,6 +68,7 @@ public final class TouchableImage extends Touchable
         {
         return myTouchableRect.contains( aTouchEvent.getX(), aTouchEvent.getY() );
         }
+
 
     private final Rectangle myTouchableRect = new Rectangle();
     }

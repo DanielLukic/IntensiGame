@@ -3,6 +3,7 @@ package net.intensicode;
 import net.intensicode.core.*;
 import net.intensicode.screens.ScreenBase;
 import net.intensicode.util.*;
+import net.intensicode.touch.*;
 
 public final class ControlSequenceHandler extends ScreenBase
 //#if TOUCH

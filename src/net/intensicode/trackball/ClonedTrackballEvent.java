@@ -1,6 +1,6 @@
 //#condition TRACKBALL
 
-package net.intensicode.core;
+package net.intensicode.trackball;
 
 final class ClonedTrackballEvent extends TrackballEvent
     {

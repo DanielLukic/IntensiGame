@@ -1,6 +1,9 @@
 //#condition TOUCH
 
-package net.intensicode.core;
+package net.intensicode.touch;
+
+import net.intensicode.touch.*;
+import net.intensicode.core.GameSystem;
 
 public final class GuardedTouchControlsManager extends TouchControlsManager
     {

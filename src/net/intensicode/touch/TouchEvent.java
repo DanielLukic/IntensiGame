@@ -1,8 +1,8 @@
-//#condition TRACKBALL
+//#condition TOUCH
 
-package net.intensicode.core;
+package net.intensicode.touch;
 
-public abstract class TrackballEvent
+public abstract class TouchEvent
     {
     public abstract long timestamp();
 
@@ -20,8 +20,8 @@ public abstract class TrackballEvent
 
     public final boolean equals( final Object aObject )
         {
-        if ( !( aObject instanceof TrackballEvent ) ) return false;
-        final TrackballEvent that = (TrackballEvent) aObject;
+        if ( !( aObject instanceof TouchEvent ) ) return false;
+        final TouchEvent that = (TouchEvent) aObject;
         if ( this.isPress() != that.isPress() ) return false;
         if ( this.isSwipe() != that.isSwipe() ) return false;
         if ( this.isRelease() != that.isRelease() ) return false;
@@ -33,7 +33,7 @@ public abstract class TrackballEvent
     public String toString()
         {
         final StringBuffer buffer = new StringBuffer();
-        buffer.append( "TrackballEvent(" );
+        buffer.append( "TouchEvent(" );
         buffer.append( isPress() ? "press" : isSwipe() ? "swipe" : isRelease() ? "release" : "unknown" );
         buffer.append( ',' );
         buffer.append( getX() );

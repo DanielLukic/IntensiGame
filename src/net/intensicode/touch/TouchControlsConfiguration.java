@@ -1,8 +1,9 @@
 //#condition TOUCH
 
-package net.intensicode.core;
+package net.intensicode.touch;
 
 import net.intensicode.util.Size;
+import net.intensicode.core.Configuration;
 
 public final class TouchControlsConfiguration extends TouchConfiguration
     {

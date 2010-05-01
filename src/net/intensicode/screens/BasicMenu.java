@@ -3,6 +3,7 @@ package net.intensicode.screens;
 import net.intensicode.core.*;
 import net.intensicode.graphics.*;
 import net.intensicode.util.DynamicArray;
+import net.intensicode.touch.*;
 
 public class BasicMenu extends MultiScreen
         //#if TOUCH

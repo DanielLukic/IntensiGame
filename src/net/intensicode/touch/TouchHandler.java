@@ -1,9 +1,10 @@
 //#condition TOUCH
 
-package net.intensicode.core;
+package net.intensicode.touch;
 
 import net.intensicode.util.*;
 import net.intensicode.screens.ScreenBase;
+import net.intensicode.core.*;
 
 public abstract class TouchHandler extends ScreenBase
     {

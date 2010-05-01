@@ -1,8 +1,9 @@
 //#condition TOUCH
 
-package net.intensicode.core;
+package net.intensicode.touch;
 
 import net.intensicode.PlatformContext;
+import net.intensicode.core.DirectGraphics;
 import net.intensicode.util.*;
 
 public final class TouchGestures implements TouchEventListener

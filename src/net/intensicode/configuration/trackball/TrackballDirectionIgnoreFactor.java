@@ -3,7 +3,7 @@
 package net.intensicode.configuration.trackball;
 
 import net.intensicode.ConfigurableFloatValue;
-import net.intensicode.core.TrackballConfiguration;
+import net.intensicode.trackball.TrackballConfiguration;
 
 public final class TrackballDirectionIgnoreFactor implements ConfigurableFloatValue
     {

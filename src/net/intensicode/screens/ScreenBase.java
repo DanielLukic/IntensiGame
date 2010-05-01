@@ -2,6 +2,7 @@ package net.intensicode.screens;
 
 import net.intensicode.core.*;
 import net.intensicode.util.Assert;
+import net.intensicode.touch.TouchHandler;
 
 public abstract class ScreenBase
     {

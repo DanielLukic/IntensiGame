@@ -1,6 +1,8 @@
 package net.intensicode.core;
 
 import net.intensicode.*;
+import net.intensicode.trackball.TrackballHandler;
+import net.intensicode.touch.TouchHandler;
 import net.intensicode.configuration.*;
 import net.intensicode.configuration.timing.*;
 import net.intensicode.graphics.*;

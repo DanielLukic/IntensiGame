@@ -3,6 +3,7 @@ package net.intensicode.screens;
 import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.Position;
+import net.intensicode.touch.*;
 
 public class SoftkeysScreen extends ScreenBase
     {

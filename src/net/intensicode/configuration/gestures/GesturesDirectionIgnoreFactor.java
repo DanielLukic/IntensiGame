@@ -3,7 +3,7 @@
 package net.intensicode.configuration.gestures;
 
 import net.intensicode.ConfigurableFloatValue;
-import net.intensicode.core.TouchGesturesConfiguration;
+import net.intensicode.touch.TouchGesturesConfiguration;
 
 public final class GesturesDirectionIgnoreFactor implements ConfigurableFloatValue
     {

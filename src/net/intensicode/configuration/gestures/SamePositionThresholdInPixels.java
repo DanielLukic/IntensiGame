@@ -3,7 +3,7 @@
 package net.intensicode.configuration.gestures;
 
 import net.intensicode.ConfigurableIntegerValue;
-import net.intensicode.core.*;
+import net.intensicode.touch.TouchGesturesConfiguration;
 
 public final class SamePositionThresholdInPixels implements ConfigurableIntegerValue
     {
