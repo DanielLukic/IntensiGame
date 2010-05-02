@@ -35,18 +35,18 @@ public final class TouchControlsConfiguration extends TouchConfiguration
         final String prefix = "gestures." + aPresetName;
         label = aProperties.readString( prefix, "label", aPresetName );
 
-        deadZoneSize.width = aProperties.readInt( prefix, "deadZoneSize.width", 9 );
-        deadZoneSize.height = aProperties.readInt( prefix, "deadZoneSize.height", 9 );
+        deadZoneSize.width = aProperties.readInt( prefix, "deadZoneSize.width", 13 );
+        deadZoneSize.height = aProperties.readInt( prefix, "deadZoneSize.height", 13 );
         dragStepSize.width = aProperties.readInt( prefix, "dragStepSize.width", 18 );
         dragStepSize.height = aProperties.readInt( prefix, "dragStepSize.height", 18 );
         gestureDirectionIgnoreFactor = aProperties.readFloat( prefix, "gestureDirectionIgnoreFactor", 1.8f );
         gestureMinThresholdInMillis = aProperties.readInt( prefix, "gestureMinThresholdInMillis", 25 );
         gestureMaxThresholdInMillis = aProperties.readInt( prefix, "gestureMaxThresholdInMillis", 333 );
-        dragThresholdInMillis = aProperties.readInt( prefix, "dragThresholdInMillis", 125 );
-        dragThresholdInPixels.width = aProperties.readInt( prefix, "dragThresholdInPixels.width", 80 );
-        dragThresholdInPixels.height = aProperties.readInt( prefix, "dragThresholdInPixels.height", 80 );
-        speedLowBoundary = aProperties.readFloat( prefix, "speedLowBoundary", 0.5f );
-        speedHighBoundary = aProperties.readFloat( prefix, "speedHighBoundary", 2.0f );
+        dragThresholdInMillis = aProperties.readInt( prefix, "dragThresholdInMillis", 100 );
+        dragThresholdInPixels.width = aProperties.readInt( prefix, "dragThresholdInPixels.width", 75 );
+        dragThresholdInPixels.height = aProperties.readInt( prefix, "dragThresholdInPixels.height", 75 );
+        speedLowBoundary = aProperties.readFloat( prefix, "speedLowBoundary", 0.3f );
+        speedHighBoundary = aProperties.readFloat( prefix, "speedHighBoundary", 1.7f );
         swipeStartsAction = aProperties.readBoolean( prefix, "swipeStartsAction", true );
         }
 
