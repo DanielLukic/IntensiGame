@@ -114,5 +114,15 @@ public class MultiScreen extends ScreenBase
         throw new IllegalArgumentException();
         }
 
+    protected final boolean hasScreen( final ScreenBase aScreen )
+        {
+        for ( int idx = 0; idx < myScreens.size; idx++ )
+            {
+            final MultiScreenHandle handle = screenHandle( idx );
+            if ( handle.screen == aScreen ) return true;
+            }
+        return false;
+        }
+
     private final DynamicArray myScreens = new DynamicArray();
     }
