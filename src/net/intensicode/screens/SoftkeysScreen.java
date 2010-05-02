@@ -26,6 +26,13 @@ public class SoftkeysScreen extends ScreenBase
         mySomethingChanged = true;
         }
 
+    public final int getButtonHeight()
+        {
+        if ( myButtonImage != null ) return myButtonImage.getHeight();
+        if ( myFontGen != null ) return myFontGen.charHeight();
+        return 0;
+        }
+
     public final void setSoftkeys( final String aLeftText, final String aRightText )
         {
         myLeftText = aLeftText;
