@@ -6,41 +6,41 @@ import net.intensicode.util.Log;
 
 public final class IntensiGameHelper
     {
-    public static void toggleDebugScreen( final GameSystem aGameSystem )
-        {
-        //#if DEBUG
-        aGameSystem.debug.visible = !aGameSystem.debug.visible;
-        //#endif
-        }
-
-    public static void toggleCheatScreen( final GameSystem aGameSystem )
-        {
-        // TODO: Toggle system.cheat screen visibility..
-        }
-
-    public static void triggerConfigurationMenu( final GameSystem aGameSystem )
-        {
-        try
-            {
-            final SystemContext context = aGameSystem.context;
-            final ConfigurationMenu menu = new ConfigurationMenu( "CONFIGURATION", aGameSystem.systemFont );
-            menu.add( context.getApplicationValues() );
-            menu.add( context.getPlatformValues() );
-            menu.add( context.getSystemValues() );
-            aGameSystem.stack.pushOnce( menu );
-            }
-        catch ( Exception e )
-            {
-            aGameSystem.showError( "failed showing configuration menu", e );
-            }
-        }
-
     public IntensiGameHelper( final GameSystem aGameSystem )
         {
         myGameSystem = aGameSystem;
         }
 
-    public void initGameSystemFromConfigurationFile()
+    public final void toggleDebugScreen()
+        {
+        //#if DEBUG
+        myGameSystem.debug.visible = !myGameSystem.debug.visible;
+        //#endif
+        }
+
+    public final void toggleCheatScreen()
+        {
+        // TODO: Toggle system.cheat screen visibility..
+        }
+
+    public final void triggerConfigurationMenu()
+        {
+        try
+            {
+            final SystemContext context = myGameSystem.context;
+            final ConfigurationMenu menu = new ConfigurationMenu( "CONFIGURATION", myGameSystem.systemFont );
+            menu.add( context.getApplicationValues() );
+            menu.add( context.getPlatformValues() );
+            menu.add( context.getSystemValues() );
+            myGameSystem.stack.pushOnce( menu );
+            }
+        catch ( Exception e )
+            {
+            myGameSystem.showError( "failed showing configuration menu", e );
+            }
+        }
+
+    public final void initGameSystemFromConfigurationFile()
         {
         final Configuration engineConfiguration = loadEngineConfiguration();
         if ( engineConfiguration != Configuration.NULL_CONFIGURATION )
@@ -55,7 +55,7 @@ public final class IntensiGameHelper
             }
         }
 
-    public void deleteConfiguration( final ConfigurationElementsTree aTree )
+    public final void deleteConfiguration( final ConfigurationElementsTree aTree )
         {
         if ( aTree == ConfigurationElementsTree.EMPTY ) return;
         try
@@ -68,7 +68,7 @@ public final class IntensiGameHelper
             }
         }
 
-    public void loadConfiguration( final ConfigurationElementsTree aTree )
+    public final void loadConfiguration( final ConfigurationElementsTree aTree )
         {
         if ( aTree == ConfigurationElementsTree.EMPTY ) return;
         try
@@ -81,7 +81,7 @@ public final class IntensiGameHelper
             }
         }
 
-    public void saveConfiguration( final ConfigurationElementsTree aTree )
+    public final void saveConfiguration( final ConfigurationElementsTree aTree )
         {
         if ( aTree == ConfigurationElementsTree.EMPTY ) return;
         try
