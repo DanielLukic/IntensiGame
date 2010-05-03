@@ -46,7 +46,7 @@ public final class TouchConfigurationHelper
             }
         catch ( final Exception e )
             {
-            Log.error( "failed loading slider configuration. falling back to defaults.", e );
+            Log.error( "failed loading slider configuration. falling back to defaults.", null );
             mySliderConfiguration.initDefaults();
             }
         }
@@ -60,7 +60,7 @@ public final class TouchConfigurationHelper
             }
         catch ( final Exception e )
             {
-            Log.error( "failed loading gestures configuration. falling back to defaults.", e );
+            Log.error( "failed loading gestures configuration. falling back to defaults.", null );
             myGesturesConfiguration.initDefaults();
             }
         }
@@ -74,7 +74,7 @@ public final class TouchConfigurationHelper
             }
         catch ( final Exception e )
             {
-            Log.error( "failed loading touch.properties. falling back to defaults.", e );
+            Log.error( "failed loading controls configuration. falling back to defaults.", null );
             myControlsConfiguration.initDefaults();
             }
         }
