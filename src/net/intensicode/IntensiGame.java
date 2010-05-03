@@ -15,10 +15,14 @@ public abstract class IntensiGame implements SystemContext
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
 
-    public boolean useOpenglIfPossible()
+    //#if FEEDBACK
+
+    public void fillEmailData( final EmailData aEmailData )
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
+
+    //#endif
 
     public ConfigurationElementsTree getPlatformValues()
         {

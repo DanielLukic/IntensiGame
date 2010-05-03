@@ -10,13 +10,15 @@ public interface SystemContext
      */
     GameSystem system();
 
+    //#if FEEDBACK
+
     /**
-     * Return true here if you want the game system to render everything with OpenGL/EGL (if this is available on the
-     * platform and device). Please note that you should do this only if you do not use the SystemFontGenerator at all.
-     * Please note that you should use graphics with sizes being powers of two only. Otherwise the game system will
-     * have to scale your graphics to make them compatible with OpenGL/EGL.
+     * Fill the given EmailData object's to and subject fields. This is used when the user chooses to send feedback or
+     * a bug report.
      */
-    boolean useOpenglIfPossible();
+    void fillEmailData( EmailData aEmailData );
+
+    //#endif
 
     /**
      * You have to return your main screen or main controller object in here. The game system will call this method
