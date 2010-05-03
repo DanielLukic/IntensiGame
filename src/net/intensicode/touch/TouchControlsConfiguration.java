@@ -3,10 +3,21 @@
 package net.intensicode.touch;
 
 import net.intensicode.core.Configuration;
-import net.intensicode.util.Size;
+import net.intensicode.util.*;
 
 public final class TouchControlsConfiguration extends TouchConfiguration
     {
+    public final void setPresetByIndex( final int aPresetIndex )
+        {
+        Assert.notNull( "presets initialized", presets );
+        Assert.notEquals( "presets filled", 0, presets.length );
+        if ( presets == null || presets.length == 0 ) return;
+
+        final int maximumIndex = presets.length - 1;
+        final int index = Math.max( 0, Math.min( maximumIndex, aPresetIndex ) );
+        setTo( presets[index] );
+        }
+
     public TouchControlsConfiguration[] presets;
 
 
