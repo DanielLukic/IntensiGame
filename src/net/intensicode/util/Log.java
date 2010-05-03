@@ -155,6 +155,11 @@ public class Log
         error( aMessage, new Object[]{ aObject }, aThrowable );
         }
 
+    public static void error( final String aMessage, final Object aObject1, final Object aObject2, final Throwable aThrowable )
+        {
+        error( aMessage, new Object[]{ aObject1, aObject2 }, aThrowable );
+        }
+
     public static void error( final String aMessage, final Object[] aObjects, final Throwable aThrowable )
         {
         final StringBuffer buffer = StringUtils.format( aMessage, aObjects );
