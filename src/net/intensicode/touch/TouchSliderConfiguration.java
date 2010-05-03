@@ -88,15 +88,33 @@ public final class TouchSliderConfiguration extends TouchConfiguration
         }
 
 
-    public int slideStartThresholdInMillis;
+    //#if J2ME
 
-    public int slideStartThresholdInPixels;
+    public int slideStartThresholdInMillis = 33;
 
-    public int slideMoveThresholdInPixels;
+    public int slideStartThresholdInPixels = 10;
 
-    public int newSlideStartThresholdInMillis;
+    public int slideMoveThresholdInPixels = 10;
 
-    public int initialStepThresholdInPixels;
+    public int newSlideStartThresholdInMillis = 50;
 
-    public int additionalStepThresholdInPixels;
+    public int initialStepThresholdInPixels = 10;
+
+    public int additionalStepThresholdInPixels = 30;
+
+    //#else
+
+    //# public int slideStartThresholdInMillis = 25;
+
+    //# public int slideStartThresholdInPixels = 20;
+
+    //# public int slideMoveThresholdInPixels = 10;
+
+    //# public int newSlideStartThresholdInMillis = 40;
+
+    //# public int initialStepThresholdInPixels = 20;
+
+    //# public int additionalStepThresholdInPixels = 100;
+
+    //#endif
     }
