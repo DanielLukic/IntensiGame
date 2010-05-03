@@ -138,6 +138,14 @@ public final class Assert
         //#endif
         }
 
+    public static void notEquals( final String aMessage, final long aExpected, final long aActual )
+        {
+        //#if ASSERT
+        if ( aExpected != aActual ) return;
+        fail( aMessage, "are equal", Long.toString( aExpected ), Long.toString( aActual ) );
+        //#endif
+        }
+
     public static void fail( final String aMessage, final String aErrorCondition, final Object aFirst, final Object aSecond )
         {
         //#if ASSERT
