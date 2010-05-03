@@ -2,9 +2,8 @@ package net.intensicode.screens;
 
 import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
-import net.intensicode.util.*;
 import net.intensicode.touch.*;
-import net.intensicode.configuration.SendFeedback;
+import net.intensicode.util.*;
 
 public final class ErrorScreen extends ScreenBase
         //#if TOUCH
@@ -212,7 +211,7 @@ public final class ErrorScreen extends ScreenBase
 
     public void onPressed( final Object aTouchable )
         {
-        final SendFeedback feedback = new SendFeedback( system() );
+        final net.intensicode.configuration.SendFeedback feedback = new net.intensicode.configuration.SendFeedback( system() );
         feedback.optionalMessageAddon = message + "\n" + myCauseOrNull;
         if ( myCauseOrNull != null )
             {
