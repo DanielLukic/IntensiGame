@@ -3,8 +3,13 @@ package net.intensicode.screens;
 import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.*;
+import net.intensicode.touch.*;
+import net.intensicode.configuration.SendFeedback;
 
 public final class ErrorScreen extends ScreenBase
+        //#if TOUCH
+        implements TouchableHandler
+        //#endif
     {
     public boolean critical;
 
@@ -31,7 +36,8 @@ public final class ErrorScreen extends ScreenBase
 
     public final void setCause( final Throwable aThrowable )
         {
-        if ( aThrowable != null ) myCauseOrNull = aThrowable.toString();
+        myCauseOrNull = aThrowable;
+        myCauseAsStringOrNull = String.valueOf( aThrowable );
         }
 
     // From ScreenBase
@@ -56,7 +62,25 @@ public final class ErrorScreen extends ScreenBase
         }
 
     //#if TOUCH
+
+    //#if FEEDBACK
+
+    public final void onInitEverytime() throws Exception
+        {
+        myTouchableFeedbackButton.text = "SEND BUG REPORT";
+        myTouchableFeedbackButton.associatedHandler = this;
+        myTouchableFeedbackButton.font = myFont;
+        myTouchableFeedbackButton.alignment = FontGenerator.CENTER;
+        myTouchableFeedbackButton.position.setTo( screen().width() / 2, screen().height() - myMessageOffset * 3 );
+        myTouchableFeedbackButton.updateTouchableRect();
+        }
+
+    private final TouchableText myTouchableFeedbackButton = new TouchableText();
+
+    //#endif
+
     private boolean myPreviousGlobalControlsState;
+
     //#endif
 
     public final void onTop()
@@ -80,6 +104,10 @@ public final class ErrorScreen extends ScreenBase
         {
         if ( critical ) mySoftkeys.setSoftkeys( null, "EXIT" );
         else mySoftkeys.setSoftkeys( "CONTINUE", "EXIT" );
+
+        //#if TOUCH && FEEDBACK
+        touch().addLocalControl( myTouchableFeedbackButton );
+        //#endif
 
         myAnimCounter++;
         if ( myAnimCounter >= timing().ticksPerSecond * 2 ) myAnimCounter = 0;
@@ -150,7 +178,7 @@ public final class ErrorScreen extends ScreenBase
         {
         try
             {
-            if ( myCauseOrNull == null || myCauseOrNull.length() == 0 ) return;
+            if ( myCauseAsStringOrNull == null || myCauseAsStringOrNull.length() == 0 ) return;
 
             final DirectGraphics gc = graphics();
             final int screenWidth = screen().width();
@@ -160,7 +188,7 @@ public final class ErrorScreen extends ScreenBase
             myTextRect.y = myMessageOffset + myMesageBoxHeight + myBorderWidth;
             myTextRect.width = screenWidth - myMessageOffset * 2;
             myTextRect.height = screenHeight - myTextRect.y - myBorderWidth;
-            myFont.blitText( gc, myCauseOrNull, myTextRect );
+            myFont.blitText( gc, myCauseAsStringOrNull, myTextRect );
             }
         catch ( final Exception e )
             {
@@ -178,6 +206,27 @@ public final class ErrorScreen extends ScreenBase
         //#endif
         }
 
+    //#if TOUCH && FEEDBACK
+
+    // From TouchableHandler
+
+    public void onPressed( final Object aTouchable )
+        {
+        final SendFeedback feedback = new SendFeedback( system() );
+        feedback.optionalMessageAddon = message + "\n" + myCauseOrNull;
+        if ( myCauseOrNull != null )
+            {
+            final String exceptionData = system().platform.getExtendedExceptionData( myCauseOrNull );
+            feedback.optionalMessageAddon += "\n" + exceptionData;
+            }
+        feedback.trigger();
+        }
+
+    public void onReleased( final Object aTouchable )
+        {
+        }
+
+    //#endif
 
     private int myAnimCounter;
 
@@ -187,7 +236,9 @@ public final class ErrorScreen extends ScreenBase
 
     private int myMesageBoxHeight;
 
-    private String myCauseOrNull;
+    private Throwable myCauseOrNull;
+
+    private String myCauseAsStringOrNull;
 
     private FontGenerator myFont;
 

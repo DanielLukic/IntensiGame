@@ -28,4 +28,9 @@ public final class FakePlatformContext implements PlatformContext
         {
         throw new RuntimeException( "nyi" );
         }
+
+    public String getExtendedExceptionData( final Throwable aException )
+        {
+        throw new RuntimeException( "nyi" );
+        }
     }

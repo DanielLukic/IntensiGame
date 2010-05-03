@@ -11,4 +11,6 @@ public interface PlatformContext
     String getPlatformSpecString();
 
     String getGraphicsSpecString();
+
+    String getExtendedExceptionData( Throwable aException );
     }
