@@ -205,12 +205,13 @@ public final class ErrorScreen extends ScreenBase
         //#endif
         }
 
-    //#if TOUCH && FEEDBACK
+    //#if TOUCH
 
     // From TouchableHandler
 
     public void onPressed( final Object aTouchable )
         {
+        //#if FEEDBACK
         final net.intensicode.configuration.SendFeedback feedback = new net.intensicode.configuration.SendFeedback( system() );
         feedback.optionalMessageAddon = message + "\n" + myCauseOrNull;
         if ( myCauseOrNull != null )
@@ -219,6 +220,7 @@ public final class ErrorScreen extends ScreenBase
             feedback.optionalMessageAddon += "\n" + exceptionData;
             }
         feedback.trigger();
+        //#endif
         }
 
     public void onReleased( final Object aTouchable )
