@@ -105,7 +105,9 @@ public abstract class FontGenerator
             final int eolIndex = aText.indexOf( "\n", start );
             if ( eolIndex >= start && eolIndex < end ) end = eolIndex;
 
-            blitString( aGraphics, aText, start, end, aTextRect.x, linePos );
+            final int textWidth = substringWidth( aText, start, end - start );
+            final int offsetX = ( aTextRect.width - textWidth ) / 2;
+            blitString( aGraphics, aText, start, end, aTextRect.x + offsetX, linePos );
             linePos += charHeight();
 
             if ( end < textLength && aText.charAt( end ) == '\n' )
