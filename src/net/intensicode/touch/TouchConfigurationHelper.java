@@ -30,7 +30,7 @@ public final class TouchConfigurationHelper
             }
         catch ( final IOException e )
             {
-            Log.error( "failed loading touch.properties. falling back to defaults.", e );
+            Log.error( "failed loading touch.properties. falling back to defaults.", null );
             mySliderConfiguration.initDefaults();
             myGesturesConfiguration.initDefaults();
             myControlsConfiguration.initDefaults();
