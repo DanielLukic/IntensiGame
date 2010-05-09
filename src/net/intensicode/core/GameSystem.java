@@ -206,6 +206,8 @@ public abstract class GameSystem
         {
         stop();
 
+        myInitializedFlag = false;
+
         context.onDestroyApplication();
 
         cleanUp();
