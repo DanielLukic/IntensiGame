@@ -9,6 +9,12 @@ public final class ChainedIOException extends IOException
         myCause = aCause;
         }
 
+    public ChainedIOException( final String aMessage, final Throwable aCause )
+        {
+        super( aMessage );
+        myCause = aCause;
+        }
+
     // From Throwable
 
     public final String toString()
