@@ -1,6 +1,6 @@
 package net.intensicode.core;
 
-import net.intensicode.util.Assert;
+import net.intensicode.util.*;
 
 public abstract class GameEngine implements Runnable
     {
@@ -29,7 +29,7 @@ public abstract class GameEngine implements Runnable
         }
 
     /**
-     * Call this to stop the engine in threaded mode after it has been started by a call to showNotify.
+     * Call this to stop the engine in threaded mode after it has been started by a call to startThreaded.
      */
     public final void stopThreaded()
         {
@@ -85,12 +85,10 @@ public abstract class GameEngine implements Runnable
 
         myShouldBailOutFlag = true;
 
+        if ( myThread == Thread.currentThread() ) return;
+
         final Thread thread = myThread;
         myThread = null;
-
-        //#if ANDROID
-        thread.interrupt();
-        //#endif
 
         try
             {
@@ -100,8 +98,6 @@ public abstract class GameEngine implements Runnable
             {
             // We can only assume everything is killed here..
             }
-
-        myShouldBailOutFlag = false;
         }
 
     // Implementation
@@ -113,6 +109,7 @@ public abstract class GameEngine implements Runnable
             {
             runLoopOrYieldIfTooSlow();
             }
+        myShouldBailOutFlag = false;
         }
 
     private void runLoopOrYieldIfTooSlow() throws InterruptedException
