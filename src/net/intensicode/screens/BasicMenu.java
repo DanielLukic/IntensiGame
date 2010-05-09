@@ -3,11 +3,10 @@ package net.intensicode.screens;
 import net.intensicode.core.*;
 import net.intensicode.graphics.*;
 import net.intensicode.util.DynamicArray;
-import net.intensicode.touch.*;
 
 public class BasicMenu extends MultiScreen
         //#if TOUCH
-        implements TouchableHandler
+        implements net.intensicode.touch.TouchableHandler
         //#endif
     {
     public static final int ENTRY_POSITIONS_CENTERED = 0;
@@ -202,7 +201,7 @@ public class BasicMenu extends MultiScreen
 
     private void addTouchableAreas()
         {
-        final TouchHandler touch = touch();
+        final net.intensicode.touch.TouchHandler touch = touch();
         final int numberOfMenuEntries = myEntries.size;
         for ( int idx = 0; idx < numberOfMenuEntries; idx++ )
             {

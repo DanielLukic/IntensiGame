@@ -3,7 +3,6 @@ package net.intensicode.screens;
 import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.Position;
-import net.intensicode.touch.*;
 
 public class SoftkeysScreen extends ScreenBase
     {
@@ -186,7 +185,7 @@ public class SoftkeysScreen extends ScreenBase
         if ( hasRightText() ) touch().addLocalControl( myRightTouchRect );
         }
 
-    private void updateTouchableArea( final TouchableArea aTouchableArea, final String aText, final int aHorizontalPosition )
+    private void updateTouchableArea( final net.intensicode.touch.TouchableArea aTouchableArea, final String aText, final int aHorizontalPosition )
         {
         if ( aText == null || aText.length() == 0 ) return;
 
@@ -195,7 +194,7 @@ public class SoftkeysScreen extends ScreenBase
         aTouchableArea.rectangle.y = myPosition.y;
         aTouchableArea.rectangle.width = getAlignWidth( aText );
         aTouchableArea.rectangle.height = getAlignHeight( aText );
-        aTouchableArea.activateMode = Touchable.ACTIVATE_ONLY_ON_DOWN;
+        aTouchableArea.activateMode = net.intensicode.touch.Touchable.ACTIVATE_ONLY_ON_DOWN;
         touch().addLocalControl( aTouchableArea );
 
         final int size = Math.min( aTouchableArea.rectangle.width, aTouchableArea.rectangle.height );
@@ -229,9 +228,9 @@ public class SoftkeysScreen extends ScreenBase
 
     //#if TOUCH
 
-    private final TouchableArea myLeftTouchRect = new TouchableArea();
+    private final net.intensicode.touch.TouchableArea myLeftTouchRect = new net.intensicode.touch.TouchableArea();
 
-    private final TouchableArea myRightTouchRect = new TouchableArea();
+    private final net.intensicode.touch.TouchableArea myRightTouchRect = new net.intensicode.touch.TouchableArea();
 
     //#endif
 

@@ -3,14 +3,13 @@ package net.intensicode.screens;
 import net.intensicode.core.*;
 import net.intensicode.graphics.*;
 import net.intensicode.util.*;
-import net.intensicode.touch.TouchableArea;
 
 public final class BasicMenuEntry extends ScreenBase
     {
     public static int selectorColor = 0x807F0000;
 
     //#if TOUCH
-    public final TouchableArea touchable = new TouchableArea();
+    public final net.intensicode.touch.TouchableArea touchable = new net.intensicode.touch.TouchableArea();
     //#endif
 
     public final Position position = new Position();

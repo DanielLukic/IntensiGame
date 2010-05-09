@@ -2,12 +2,11 @@ package net.intensicode.screens;
 
 import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
-import net.intensicode.touch.*;
 import net.intensicode.util.*;
 
 public final class ErrorScreen extends ScreenBase
         //#if TOUCH
-        implements TouchableHandler
+        implements net.intensicode.touch.TouchableHandler
         //#endif
     {
     public boolean critical;
@@ -74,7 +73,7 @@ public final class ErrorScreen extends ScreenBase
         myTouchableFeedbackButton.updateTouchableRect();
         }
 
-    private final TouchableText myTouchableFeedbackButton = new TouchableText();
+    private final net.intensicode.touch.TouchableText myTouchableFeedbackButton = new net.intensicode.touch.TouchableText();
 
     //#endif
 

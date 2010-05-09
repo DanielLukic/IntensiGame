@@ -3,11 +3,10 @@ package net.intensicode;
 import net.intensicode.core.*;
 import net.intensicode.screens.ScreenBase;
 import net.intensicode.util.*;
-import net.intensicode.touch.*;
 
 public final class ControlSequenceHandler extends ScreenBase
 //#if TOUCH
-        implements TouchEventListener
+        implements net.intensicode.touch.TouchEventListener
 //#endif
     {
     public static final int MAX_SEQUENCE_LENGTH = 16;
@@ -145,7 +144,7 @@ public final class ControlSequenceHandler extends ScreenBase
 
     //#if TOUCH
 
-    public final void onTouchEvent( final TouchEvent aTouchEvent )
+    public final void onTouchEvent( final net.intensicode.touch.TouchEvent aTouchEvent )
         {
         //#if DEBUG_TOUCH
         if ( myTouches.size > MAX_QUEUE_SIZE ) myTouches.remove( 0 );

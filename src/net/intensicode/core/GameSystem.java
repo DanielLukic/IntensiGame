@@ -1,7 +1,6 @@
 package net.intensicode.core;
 
 import net.intensicode.*;
-import net.intensicode.touch.TouchHandler;
 import net.intensicode.configuration.*;
 import net.intensicode.configuration.timing.*;
 import net.intensicode.graphics.*;
@@ -42,7 +41,7 @@ public abstract class GameSystem
 
     //#ifdef TOUCH
 
-    public TouchHandler touch;
+    public net.intensicode.touch.TouchHandler touch;
 
     //#endif
 

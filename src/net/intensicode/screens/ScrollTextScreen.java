@@ -3,7 +3,6 @@ package net.intensicode.screens;
 import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.*;
-import net.intensicode.touch.*;
 
 public final class ScrollTextScreen extends ScreenBase
     {
@@ -126,7 +125,7 @@ public final class ScrollTextScreen extends ScreenBase
         {
         if ( myTouchSlider != null ) return;
 
-        myTouchSlider = new TouchSlider( new TouchSliderConfiguration() );
+        myTouchSlider = new net.intensicode.touch.TouchSlider( new net.intensicode.touch.TouchSliderConfiguration() );
         touch().addListener( myTouchSlider );
         }
 
@@ -140,7 +139,7 @@ public final class ScrollTextScreen extends ScreenBase
                 {
                 myBlitPos.x = textRect.x + textRect.width / 2;
                 myBlitPos.y = textRect.y - font.charHeight();
-                myUpIndicator = new TouchableArea();
+                myUpIndicator = new net.intensicode.touch.TouchableArea();
                 myUpIndicator.associatedKeyID = KeysHandler.UP;
                 myUpIndicator.rectangle.setCenterAndSize( myBlitPos, font.stringWidth( UP_INDICATOR_LABEL ), font.charHeight() );
                 }
@@ -154,7 +153,7 @@ public final class ScrollTextScreen extends ScreenBase
                 {
                 myBlitPos.x = textRect.x + textRect.width / 2;
                 myBlitPos.y = textRect.y + textRect.height + font.charHeight();
-                myDownIndicator = new TouchableArea();
+                myDownIndicator = new net.intensicode.touch.TouchableArea();
                 myDownIndicator.associatedKeyID = KeysHandler.DOWN;
                 myDownIndicator.rectangle.setCenterAndSize( myBlitPos, font.stringWidth( DOWN_INDICATOR_LABEL ), font.charHeight() );
                 }
@@ -162,11 +161,11 @@ public final class ScrollTextScreen extends ScreenBase
             }
         }
 
-    private TouchSlider myTouchSlider;
+    private net.intensicode.touch.TouchSlider myTouchSlider;
 
-    private TouchableArea myUpIndicator;
+    private net.intensicode.touch.TouchableArea myUpIndicator;
 
-    private TouchableArea myDownIndicator;
+    private net.intensicode.touch.TouchableArea myDownIndicator;
 
     //#endif
 

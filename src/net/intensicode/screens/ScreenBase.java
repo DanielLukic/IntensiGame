@@ -2,7 +2,6 @@ package net.intensicode.screens;
 
 import net.intensicode.core.*;
 import net.intensicode.util.Assert;
-import net.intensicode.touch.TouchHandler;
 
 public abstract class ScreenBase
     {
@@ -128,7 +127,7 @@ public abstract class ScreenBase
         }
 
     //#if TOUCH
-    protected final TouchHandler touch()
+    protected final net.intensicode.touch.TouchHandler touch()
         {
         //#if DEBUG
         Assert.isNotNull( "system not initialized", myGameSystem );

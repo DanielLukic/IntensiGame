@@ -3,11 +3,10 @@ package net.intensicode.screens;
 import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.*;
-import net.intensicode.touch.*;
 
 public abstract class MenuBase extends MultiScreen
         //#if TOUCH
-        implements TouchableHandler
+        implements net.intensicode.touch.TouchableHandler
         //#endif
     {
     public final DynamicArray entries = new DynamicArray();
@@ -196,7 +195,7 @@ public abstract class MenuBase extends MultiScreen
 
     private void addTouchableAreas()
         {
-        final TouchHandler touch = touch();
+        final net.intensicode.touch.TouchHandler touch = touch();
         final int numberOfMenuEntries = entries.size;
         for ( int idx = 0; idx < numberOfMenuEntries; idx++ )
             {
