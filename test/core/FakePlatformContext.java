@@ -33,4 +33,14 @@ public final class FakePlatformContext implements PlatformContext
         {
         throw new RuntimeException( "nyi" );
         }
+
+    public void showError( final String aMessage, final Throwable aOptionalThrowable )
+        {
+        throw new RuntimeException( "nyi" );
+        }
+
+    public void showCriticalError( final String aMessage, final Throwable aOptionalThrowable )
+        {
+        throw new RuntimeException( "nyi" );
+        }
     }

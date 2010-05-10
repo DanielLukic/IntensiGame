@@ -92,15 +92,14 @@ public abstract class GameSystem
 
     public final void showCriticalError( final String aMessage, final Throwable aOptionalThrowable )
         {
-        Log.error( "critical system error", aOptionalThrowable );
-        updateAndShowErrorScreen( aMessage, aOptionalThrowable );
-        myErrorScreen.critical = true;
+        Log.error( "critical system error: {}", aMessage, aOptionalThrowable );
+        platform.showCriticalError( aMessage, aOptionalThrowable );
         }
 
     public final void showError( final String aMessage, final Throwable aOptionalThrowable )
         {
-        Log.error( "system error", aOptionalThrowable );
-        updateAndShowErrorScreen( aMessage, aOptionalThrowable );
+        Log.error( "system error: {}", aMessage, aOptionalThrowable );
+        platform.showError( aMessage, aOptionalThrowable );
         }
 
     public final void shutdownAndExit()
@@ -112,7 +111,6 @@ public abstract class GameSystem
         {
         systemFont = aFontGenerator;
 
-        myErrorScreen.changeFont( aFontGenerator );
         //#if DEBUG
         debug.font = aFontGenerator;
         //#endif
@@ -326,24 +324,6 @@ public abstract class GameSystem
 
     // Implementation
 
-    private void updateAndShowErrorScreen( final String aMessage, final Throwable aOptionalThrowable )
-        {
-        try
-            {
-            myErrorScreen.reset();
-            myErrorScreen.message = aMessage;
-            if ( aOptionalThrowable != null ) myErrorScreen.setCause( aOptionalThrowable );
-            stack.pushOnce( myErrorScreen );
-            }
-        catch ( final Exception e )
-            {
-            //#if DEBUG
-            Log.error( "showing error screen failed", e );
-            //#endif
-            throwWrappedExceptionToTellCallingSystemAboutBrokenGameSystem( e );
-            }
-        }
-
     private void initialize() throws Exception
         {
         //#if TOUCH
@@ -367,16 +347,9 @@ public abstract class GameSystem
 
         systemFont = resources.getSmallDefaultFont();
 
-        initializeErrorScreen();
         initializeMainController();
 
         myInitializedFlag = true;
-        }
-
-    private void initializeErrorScreen()
-        {
-        final FontGenerator font = resources.getSmallDefaultFont();
-        myErrorScreen = new ErrorScreen( font );
         }
 
     private void initializeMainController() throws Exception
@@ -399,8 +372,6 @@ public abstract class GameSystem
 
 
     private boolean myInitializedFlag;
-
-    private ErrorScreen myErrorScreen;
 
     protected final DynamicArray myInformationStrings = new DynamicArray();
 
