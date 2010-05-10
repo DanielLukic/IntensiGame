@@ -40,6 +40,7 @@ public abstract class GameEngine implements Runnable
 
     public final void run()
         {
+        waitSomeTimeForViewToStabilize();
         myGameSystem.screen.initialize();
         try
             {
@@ -54,6 +55,21 @@ public abstract class GameEngine implements Runnable
             myGameSystem.showCriticalError( "critical game engine failure", t );
             }
         myGameSystem.screen.cleanup();
+        }
+
+    private void waitSomeTimeForViewToStabilize()
+        {
+        try
+            {
+            // Encountered on the Nexus One: When in landscape mode, sometimes the portrait screen size is reported
+            // early when creating the view/surface. This lasts only for a few milliseconds. See the other part of this
+            // fix in AndroidGameView#onSurfaceChanged.
+            Thread.sleep( VIEW_STABILIZE_TIME_IN_MILLIS );
+            }
+        catch ( final InterruptedException e )
+            {
+            Log.error( "interrupted while waiting for view to stabilize", null );
+            }
         }
 
     // Protected Interface
@@ -232,4 +248,6 @@ public abstract class GameEngine implements Runnable
     private int myRemainingSlowDownTicks;
 
     protected final GameSystem myGameSystem;
+
+    private static final int VIEW_STABILIZE_TIME_IN_MILLIS = 100;
     }
