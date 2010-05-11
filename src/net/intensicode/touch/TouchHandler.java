@@ -8,7 +8,7 @@ import net.intensicode.core.*;
 
 public abstract class TouchHandler extends ScreenBase
     {
-    public boolean globalControlsActive = true;
+    public boolean globalControlsActive;
 
 
     public synchronized final void removeAllControls()
