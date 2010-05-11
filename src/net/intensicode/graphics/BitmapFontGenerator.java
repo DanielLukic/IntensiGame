@@ -138,6 +138,8 @@ public final class BitmapFontGenerator extends FontGenerator
 
     private boolean isBufferingAllowedFor( final String aText, final int aStart, final int aEnd )
         {
+        if ( resources == null ) return false;
+
         final int width = substringWidth( aText, aStart, aEnd - aStart );
         final int height = charHeight();
         final int maxSize = resources.maxImageResourceSize();
