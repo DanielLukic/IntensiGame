@@ -77,6 +77,8 @@ public interface SystemContext
      */
     void onDestroyApplication();
 
+    void onOrientationChanged();
+
     /**
      * Call this to trigger the game system configuration menu. This will include all configurable values provided by
      * getPlatformValues, getSystemValues and getApplicationValues.
