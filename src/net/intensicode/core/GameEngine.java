@@ -10,6 +10,8 @@ public abstract class GameEngine implements Runnable
 
     public boolean paused;
 
+    public boolean orientationChanged;
+
 
     public GameEngine( final GameSystem aGameSystem )
         {
@@ -151,6 +153,7 @@ public abstract class GameEngine implements Runnable
 
     private void doDrawFrame()
         {
+        notifyOrientationChangedIfNecessary();
         timing().notifyStartOfFrame();
         myGameSystem.doDrawFrame();
         }
@@ -205,6 +208,8 @@ public abstract class GameEngine implements Runnable
 
     private void doControlTick()
         {
+        notifyOrientationChangedIfNecessary();
+
         doSystemControlTick();
         if ( paused ) return;
 
@@ -213,6 +218,15 @@ public abstract class GameEngine implements Runnable
         if ( !singleStep ) return;
         paused = true;
         singleStep = false;
+        }
+
+    private void notifyOrientationChangedIfNecessary()
+        {
+        if ( orientationChanged )
+            {
+            orientationChanged = false;
+            myGameSystem.context.onOrientationChanged();
+            }
         }
 
     private void doSystemControlTick()
