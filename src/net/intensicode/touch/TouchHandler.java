@@ -53,10 +53,6 @@ public abstract class TouchHandler extends ScreenBase
         myListeners.add( aListener );
         }
 
-    // Abstract API
-
-    public abstract boolean supportsMultiTouch();
-
     // Internal API
 
     // TODO: Move Internal API into internal class hidden from framework user.
