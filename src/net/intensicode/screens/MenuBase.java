@@ -81,6 +81,7 @@ public abstract class MenuBase extends MultiScreen
 
     public void onOrientationChanged() throws Exception
         {
+        super.onOrientationChanged();
         setOffsetToVerticallyCentered();
         updateEntryPositions();
         }
