@@ -1,7 +1,7 @@
 package net.intensicode;
 
-import net.intensicode.screens.ScreenBase;
 import net.intensicode.core.GameSystem;
+import net.intensicode.screens.ScreenBase;
 
 public interface SystemContext
     {
@@ -77,7 +77,14 @@ public interface SystemContext
      */
     void onDestroyApplication();
 
+    //#if ORIENTATION_DYNAMIC
+
+    /**
+     * Called when screen orientation changes and dynamic screen orientation mode is activated for the build.
+     */
     void onOrientationChanged();
+
+    //#endif
 
     /**
      * Call this to trigger the game system configuration menu. This will include all configurable values provided by

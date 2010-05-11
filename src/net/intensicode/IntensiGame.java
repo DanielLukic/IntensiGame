@@ -79,10 +79,14 @@ public abstract class IntensiGame implements SystemContext
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
 
+    //#if ORIENTATION_DYNAMIC
+
     public void onOrientationChanged()
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
+
+    //#endif
 
     public void triggerConfigurationMenu()
         {
