@@ -11,6 +11,26 @@ public final class ScreenStack
         myGameSystem = aSystem;
         }
 
+    //#if ORIENTATION_DYNAMIC
+
+    public void onOrientationChanged()
+        {
+        for ( int idx = 0; idx < myScreenStack.size; idx++ )
+            {
+            try
+                {
+                final ScreenBase screen = (ScreenBase) myScreenStack.get( idx );
+                screen.onOrientationChanged();
+                }
+            catch ( final Exception e )
+                {
+                myGameSystem.showError( null, e );
+                }
+            }
+        }
+
+    //#endif
+
     public final void addGlobalHandler( final ScreenBase aGlobalHandler ) throws Exception
         {
         myGlobalHandler.onInit( myGameSystem );

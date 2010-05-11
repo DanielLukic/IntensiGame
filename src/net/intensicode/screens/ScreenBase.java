@@ -23,6 +23,14 @@ public abstract class ScreenBase
         {
         }
 
+    //#if ORIENTATION_DYNAMIC
+
+    public void onOrientationChanged() throws Exception
+        {
+        }
+
+    //#endif
+
     public void onTop()
         {
         }
