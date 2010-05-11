@@ -81,8 +81,9 @@ public interface SystemContext
 
     /**
      * Called when screen orientation changes and dynamic screen orientation mode is activated for the build. When this
-     * is called, the screen orientation has already changed. For all screens on the stack onOrientationChanged has been
-     * called. All touchables have been removed from GameSystem#touch already.
+     * is called, the screen orientation has already changed. You should call ScreenStack#onOrientationChanged to pass
+     * this info through to all stacked screens. (Unless you handle orientation changes differently in your screens.)
+     * You will probably also want to call TouchHandler#removeAllTouchables to avoid false touch areas.
      */
     void onOrientationChanged();
 
