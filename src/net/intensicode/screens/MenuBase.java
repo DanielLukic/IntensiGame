@@ -36,6 +36,7 @@ public abstract class MenuBase extends MultiScreen
         for ( int idx = 0; idx < entries.size; idx++ )
             {
             final MenuEntry entry = getEntry( idx );
+            entry.position.x = screen().width() / 2;
             entry.position.y = (int) ( yOffset + idx * font.charHeight() * ySpacingFixed );
             //#if TOUCH
             entry.updateTouchable();
@@ -76,6 +77,12 @@ public abstract class MenuBase extends MultiScreen
         updateEntryPositions();
 
         afterInitEverytime();
+        }
+
+    public void onOrientationChanged() throws Exception
+        {
+        setOffsetToVerticallyCentered();
+        updateEntryPositions();
         }
 
     public final void onControlTick() throws Exception
