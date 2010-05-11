@@ -68,6 +68,19 @@ public class MultiScreen extends ScreenBase
             }
         }
 
+    //#if ORIENTATION_DYNAMIC
+
+    public void onOrientationChanged() throws Exception
+        {
+        for ( int idx = 0; idx < myScreens.size; idx++ )
+            {
+            final MultiScreenHandle handle = screenHandle( idx );
+            handle.screen.onOrientationChanged();
+            }
+        }
+
+    //#endif
+
     public void onInit( final GameSystem aGameSystem ) throws Exception
         {
         super.onInit( aGameSystem );
