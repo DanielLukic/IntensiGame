@@ -80,7 +80,9 @@ public interface SystemContext
     //#if ORIENTATION_DYNAMIC
 
     /**
-     * Called when screen orientation changes and dynamic screen orientation mode is activated for the build.
+     * Called when screen orientation changes and dynamic screen orientation mode is activated for the build. When this
+     * is called, the screen orientation has already changed. For all screens on the stack onOrientationChanged has been
+     * called. All touchables have been removed from GameSystem#touch already.
      */
     void onOrientationChanged();
 
