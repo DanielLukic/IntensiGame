@@ -11,6 +11,12 @@ public abstract class TouchHandler extends ScreenBase
     public boolean globalControlsActive = true;
 
 
+    public synchronized final void removeAllControls()
+        {
+        myGlobalControls.removeAll();
+        myLocalControls.removeAll();
+        }
+
     public synchronized final void setGlobalControlsBlending( final int aAlpha256 )
         {
         myGlobalControls.setBlending( aAlpha256 );
