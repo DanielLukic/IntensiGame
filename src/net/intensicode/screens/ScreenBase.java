@@ -27,6 +27,7 @@ public abstract class ScreenBase
 
     public void onOrientationChanged() throws Exception
         {
+        onInitEverytime();
         }
 
     //#endif

@@ -72,6 +72,7 @@ public class MultiScreen extends ScreenBase
 
     public void onOrientationChanged() throws Exception
         {
+        onInitEverytime();
         for ( int idx = 0; idx < myScreens.size; idx++ )
             {
             final MultiScreenHandle handle = screenHandle( idx );
