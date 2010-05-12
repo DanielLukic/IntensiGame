@@ -1,12 +1,17 @@
 package core;
 
 import net.intensicode.*;
+import net.intensicode.util.DynamicArray;
 
 public final class FakePlatformContext implements PlatformContext
     {
+    public final DynamicArray timestamps = new DynamicArray();
+
     public long compatibleTimeInMillis()
         {
-        return System.currentTimeMillis();
+        if ( timestamps.size == 0 ) throw new IllegalStateException( "no more timestamps" );
+        final Object timestamp = timestamps.remove( 0 );
+        return Long.parseLong( String.valueOf( timestamp ) );
         }
 
     public void openWebBrowser( final String aURL )
