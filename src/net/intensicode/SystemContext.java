@@ -6,6 +6,19 @@ import net.intensicode.screens.ScreenBase;
 public interface SystemContext
     {
     /**
+     * Implement your logic for choosing a resources sub folder here or do not override this method to use the default
+     * behavior of reading a resources.properties file and letting IntensiGame choose the best resolution.
+     *
+     * Note: The chosen folder should have the p and l subfolders. It should not be one of them. But it may be.. :)
+     *
+     * Note: You may also return null here to tell the system to not use a subfolder at all.
+     *
+     * Note: In any case, the system will still look for p and l subfolders within whatever folder you may return here.
+     * When you return null here, the system will look for p and l in the root folder.
+     */
+    String determineResourcesFolder( final int aWidth, final int aHeight, final String aScreenOrientationId );
+
+    /**
      * Helper method to make the game system available to everyone who has access to the system context object.
      */
     GameSystem system();

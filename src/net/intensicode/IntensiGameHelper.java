@@ -11,6 +11,65 @@ public final class IntensiGameHelper
         myGameSystem = aGameSystem;
         }
 
+    public void updateResourcesSubfolder( final int aWidth, final int aHeight )
+        {
+        final String screenOrientationId = myGameSystem.platform.screenOrientationId();
+
+        final String resourcesFolder = determineResourcesFolder( aWidth, aHeight, screenOrientationId );
+        Log.info( "resources folder choosen: {}", resourcesFolder );
+
+        final ResourcesManager resources = myGameSystem.resources;
+        resources.clearSubfolders();
+        if ( resourcesFolder != null && resourcesFolder.length() > 0 )
+            {
+            final StringBuffer buffer = new StringBuffer();
+            buffer.append( resourcesFolder );
+            buffer.append( "/" );
+            buffer.append( screenOrientationId );
+
+            resources.addSubfolder( buffer.toString() );
+            resources.addSubfolder( resourcesFolder );
+            }
+        else
+            {
+            resources.addSubfolder( screenOrientationId );
+            }
+        }
+
+    public final String determineResourcesFolder( final int aWidth, final int aHeight, final String aScreenOrientationId )
+        {
+        Log.info( "choosing resources folder for {}x{} and orientation " + aScreenOrientationId, aWidth, aHeight );
+
+        String bestChoice = null;
+        int bestWidth = 0;
+        int bestHeight = 0;
+
+        final String defaultSubfolder = aWidth + "x" + aHeight;
+        final Configuration configuration = myGameSystem.resources.loadConfigurationOrUseDefaults( "resources.properties" );
+        final String[] resourcesFolders = configuration.readList( "subfolders", defaultSubfolder, "," );
+        for ( int idx = 0; idx < resourcesFolders.length; idx++ )
+            {
+            final String widthAndHeight = resourcesFolders[ idx ];
+            Log.info( "considering resources subfolder {}", widthAndHeight );
+            final int crossPos = widthAndHeight.indexOf( "x" );
+            if ( crossPos == -1 ) continue;
+            final int width = Integer.parseInt( widthAndHeight.substring( 0, crossPos ) );
+            final int height = Integer.parseInt( widthAndHeight.substring( crossPos + 1 ) );
+            if ( aScreenOrientationId == PlatformContext.SCREEN_ORIENTATION_LANDSCAPE && height <= aWidth && width <= aHeight )
+                {
+                if ( width > bestWidth && height > bestHeight ) bestChoice = widthAndHeight;
+                }
+            else if ( width <= aWidth && height <= aHeight )
+                {
+                if ( width > bestWidth && height > bestHeight ) bestChoice = widthAndHeight;
+                }
+            }
+
+        if ( bestChoice != null ) return bestChoice;
+
+        return null;
+        }
+
     public final void toggleDebugScreen()
         {
         //#if DEBUG

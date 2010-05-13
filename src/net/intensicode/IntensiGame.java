@@ -10,6 +10,11 @@ public abstract class IntensiGame implements SystemContext
 
     // From SystemContext
 
+    public String determineResourcesFolder( final int aWidth, final int aHeight, final String aScreenOrientationId )
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
     public GameSystem system()
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
