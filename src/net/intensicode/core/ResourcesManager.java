@@ -1,12 +1,22 @@
 package net.intensicode.core;
 
 import net.intensicode.graphics.FontGenerator;
-import net.intensicode.util.Log;
+import net.intensicode.util.*;
 
 import java.io.*;
 
 public abstract class ResourcesManager
     {
+    public final void clearSubfolders()
+        {
+        mySubfolders.clear();
+        }
+
+    public final void addSubfolder( final String aSubfolderPath )
+        {
+        mySubfolders.add( aSubfolderPath );
+        }
+
     public final boolean doesResourceExist( final String aResourcePath )
         {
         boolean exists = false;
@@ -32,14 +42,28 @@ public abstract class ResourcesManager
 
     public abstract ImageResource createImageResource( int aWidth, int aHeight );
 
-    public abstract ImageResource loadImageResource( String aResourcePath ) throws IOException;
+    public final ImageResource loadImageResource( final String aResourcePath ) throws IOException
+        {
+        final InputStream stream = openStream( aResourcePath );
+        if ( stream == null ) throw new IOException( "image resource not found: " + aResourcePath );
+        return loadImageResourceDo( aResourcePath, stream );
+        }
 
-    public abstract InputStream openStream( final String aResourcePath );
+    public final InputStream openStream( final String aResourcePath )
+        {
+        for ( int idx = 0; idx < mySubfolders.size; idx++ )
+            {
+            final String subfolderPath = makeSubfolderPath( mySubfolders.get( idx ), aResourcePath );
+            final InputStream stream = openStreamDo( subfolderPath );
+            if ( stream != null ) return stream;
+            }
+        return openStreamDo( aResourcePath );
+        }
 
     public final InputStream openStreamChecked( final String aResourcePath ) throws IOException
         {
         final InputStream resource = openStream( aResourcePath );
-        if ( resource == null ) throw new IOException( aResourcePath );
+        if ( resource == null ) throw new IOException( "resource does not exist: " + aResourcePath );
         return resource;
         }
 
@@ -89,6 +113,28 @@ public abstract class ResourcesManager
 
         return output.toByteArray();
         }
+
+    // Protected API
+
+    protected abstract ImageResource loadImageResourceDo( String aResourcePath, final InputStream aStream ) throws IOException;
+
+    protected abstract InputStream openStreamDo( final String aResourcePath );
+
+    // Implementation
+
+    private String makeSubfolderPath( final Object aSubfolderPath, final String aResourcePath )
+        {
+        myFolderBuffer.setLength( 0 );
+        myFolderBuffer.append( aSubfolderPath );
+        myFolderBuffer.append( "/" );
+        myFolderBuffer.append( aResourcePath );
+        return myFolderBuffer.toString();
+        }
+
+
+    private final DynamicArray mySubfolders = new DynamicArray();
+
+    private final StringBuffer myFolderBuffer = new StringBuffer();
 
     private static final int STREAM_COPY_BUFFER_SIZE_IN_BYTES = 4096;
     }

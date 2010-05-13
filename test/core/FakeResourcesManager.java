@@ -3,7 +3,7 @@ package core;
 import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
 
-import java.io.*;
+import java.io.InputStream;
 
 public final class FakeResourcesManager extends ResourcesManager
     {
@@ -22,12 +22,12 @@ public final class FakeResourcesManager extends ResourcesManager
         throw new RuntimeException( "nyi" );
         }
 
-    public ImageResource loadImageResource( final String aResourcePath ) throws IOException
+    public ImageResource loadImageResourceDo( final String aResourcePath, final InputStream aStream )
         {
         throw new RuntimeException( "nyi" );
         }
 
-    public InputStream openStream( final String aResourcePath )
+    public InputStream openStreamDo( final String aResourcePath )
         {
         return getClass().getResourceAsStream( aResourcePath );
         }
