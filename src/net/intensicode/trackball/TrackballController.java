@@ -117,11 +117,6 @@ public final class TrackballController implements TrackballEventListener
 
     // Protected API
 
-    protected final synchronized void onSystemUpdateEvent( final int aStepsX, final int aStepsY )
-        {
-        onSystemUpdateEvent( aStepsX, aStepsY, System.currentTimeMillis() );
-        }
-
     protected final synchronized void onSystemUpdateEvent( final int aStepsX, final int aStepsY, final long aTimestamp )
         {
         final long updateDeltaInMillis = myPlatformContext.compatibleTimeInMillis() - myLastUpdateTimeStamp;
