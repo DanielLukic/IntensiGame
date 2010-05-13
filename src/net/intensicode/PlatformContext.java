@@ -2,11 +2,19 @@ package net.intensicode;
 
 public interface PlatformContext
     {
+    public static final String SCREEN_ORIENTATION_PORTRAIT = "p";
+
+    public static final String SCREEN_ORIENTATION_LANDSCAPE = "l";
+
+    public static final String SCREEN_ORIENTATION_SQUARE = "s";
+
     long compatibleTimeInMillis();
 
     void openWebBrowser( String aURL );
 
     void sendEmail( EmailData aEmailData );
+
+    String screenOrientationId();
 
     String getPlatformSpecString();
 

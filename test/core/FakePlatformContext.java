@@ -24,6 +24,11 @@ public final class FakePlatformContext implements PlatformContext
         throw new RuntimeException( "nyi" );
         }
 
+    public String screenOrientationId()
+        {
+        throw new RuntimeException( "nyi" );
+        }
+
     public String getPlatformSpecString()
         {
         throw new RuntimeException( "nyi" );
