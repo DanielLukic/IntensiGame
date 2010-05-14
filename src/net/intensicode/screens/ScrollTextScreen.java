@@ -63,11 +63,11 @@ public final class ScrollTextScreen extends ScreenBase
 
         myScrollIndex++;
 
-        final Rectangle textRect = determineTextRect();
-        updateTextLinesIfNecessary( textRect.width );
+        updateTextLinesIfNecessary();
 
         final int textHeightFromNewIndex = determineTextHeight();
         final int maxLastLineHeight = font.charHeight() * 3 / 2;
+        final Rectangle textRect = determineTextRect();
         if ( textHeightFromNewIndex + maxLastLineHeight >= textRect.height ) return;
 
         myScrollIndex = previousIndex;
@@ -75,6 +75,8 @@ public final class ScrollTextScreen extends ScreenBase
 
     private int determineTextHeight()
         {
+        updateTextLinesIfNecessary();
+
         int textHeight = 0;
 
         final int fontHeight = font.charHeight();
@@ -109,7 +111,7 @@ public final class ScrollTextScreen extends ScreenBase
             myScrollIndex = 0;
             }
 
-        updateTextLinesIfNecessary( textRect.width );
+        updateTextLinesIfNecessary();
 
         final int textHeightFromNewIndex = determineTextHeight();
         final int maxLastLineHeight = font.charHeight() * 3 / 2;
@@ -173,9 +175,9 @@ public final class ScrollTextScreen extends ScreenBase
         {
         if ( someDataMissing() ) return;
 
-        final Rectangle textRect = determineTextRect();
-        updateTextLinesIfNecessary( textRect.width );
+        updateTextLinesIfNecessary();
 
+        final Rectangle textRect = determineTextRect();
         blitLines( textRect );
 
         if ( showIndicators ) blitIndicators( textRect );
@@ -223,13 +225,15 @@ public final class ScrollTextScreen extends ScreenBase
             }
         }
 
-    private void updateTextLinesIfNecessary( final int aRenderWidth )
+    private void updateTextLinesIfNecessary()
         {
-        if ( myKnownText == text ) return;
-        if ( text.equals( myKnownText ) ) return;
+        final Rectangle textRect = determineTextRect();
+        if ( myKnownWidth == textRect.width && font == myKnownFont && text.equals( myKnownText ) ) return;
         Log.debug( "breaking text into lines - GC heavy operation - avoid if possible" );
-        myTextLines = StringUtils.breakIntoLines( text, font, aRenderWidth );
+        myTextLines = StringUtils.breakIntoLines( text, font, textRect.width );
         myKnownText = text;
+        myKnownFont = font;
+        myKnownWidth = textRect.width;
         }
 
     private Rectangle determineTextRect()
@@ -243,7 +247,11 @@ public final class ScrollTextScreen extends ScreenBase
 
     private int myScrollIndex;
 
+    private int myKnownWidth;
+
     private String myKnownText;
+
+    private FontGenerator myKnownFont;
 
     private DynamicArray myTextLines;
 
