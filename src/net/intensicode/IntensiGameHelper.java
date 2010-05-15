@@ -44,9 +44,8 @@ public final class IntensiGameHelper
         int bestWidth = 0;
         int bestHeight = 0;
 
-        final String defaultSubfolder = aWidth + "x" + aHeight;
         final Configuration configuration = myGameSystem.resources.loadConfigurationOrUseDefaults( "resources.properties" );
-        final String[] resourcesFolders = configuration.readList( "subfolders", defaultSubfolder, "," );
+        final String[] resourcesFolders = configuration.readList( "subfolders", "", "," );
         for ( int idx = 0; idx < resourcesFolders.length; idx++ )
             {
             final String widthAndHeight = resourcesFolders[ idx ];
@@ -66,6 +65,8 @@ public final class IntensiGameHelper
             }
 
         if ( bestChoice != null ) return bestChoice;
+
+        if ( resourcesFolders.length > 0 ) return resourcesFolders[0];
 
         return null;
         }
