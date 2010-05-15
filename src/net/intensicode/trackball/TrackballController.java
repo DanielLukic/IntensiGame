@@ -147,12 +147,13 @@ public final class TrackballController implements TrackballEventListener
     protected final synchronized void updateDeltaValues()
         {
         processValues();
-        normalizeValues();
 
         leftDelta = myAccumulatedValues[ INDEX_LEFT ];
         rightDelta = myAccumulatedValues[ INDEX_RIGHT ];
         upDelta = myAccumulatedValues[ INDEX_UP ];
         downDelta = myAccumulatedValues[ INDEX_DOWN ];
+
+        normalizeDeltas();
 
         leftMax = myLargestValues[ INDEX_LEFT ];
         rightMax = myLargestValues[ INDEX_RIGHT ];
@@ -223,7 +224,7 @@ public final class TrackballController implements TrackballEventListener
         myAccumulatedValues[ aValueIndex ] = 2 + additionalMultiTicks;
         }
 
-    private void normalizeValues()
+    private void normalizeDeltas()
         {
         final int maxDelta = Math.max( leftDelta, Math.max( rightDelta, Math.max( upDelta, downDelta ) ) );
         final int threshold = maxDelta / 3;
