@@ -130,7 +130,8 @@ public final class TrackballController implements TrackballEventListener
         if ( myAccumulationTicks == 0 ) myFirstDataTimeStamp = aTimestamp;
         myLastDataTimeStamp = aTimestamp;
         myAccumulationTicks++;
-        myNewDataFlag = true;
+
+        myNewDataFlag |= aStepsX != 0 || aStepsY != 0;
         }
 
     protected final boolean hasNewData()
