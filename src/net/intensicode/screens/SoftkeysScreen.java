@@ -195,6 +195,8 @@ public class SoftkeysScreen extends ScreenBase
         aTouchableArea.rectangle.width = getAlignWidth( aText );
         aTouchableArea.rectangle.height = getAlignHeight( aText );
         aTouchableArea.activateMode = net.intensicode.touch.Touchable.ACTIVATE_ONLY_ON_DOWN;
+        aTouchableArea.triggerMode = net.intensicode.touch.Touchable.TRIGGER_ON_UP;
+        aTouchableArea.releaseMode = net.intensicode.touch.Touchable.RELEASE_IMMEDIATELY;
         touch().addLocalControl( aTouchableArea );
 
         final int size = Math.min( aTouchableArea.rectangle.width, aTouchableArea.rectangle.height );
