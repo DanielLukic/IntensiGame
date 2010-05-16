@@ -148,7 +148,7 @@ public final class BitmapFontGenerator extends FontGenerator
 
     private void blitStringBuffered( final DirectGraphics aGraphics, final String aText, final int aStart, final int aEnd, final int aX, final int aY )
         {
-        // TODO: Can the object allocation in #getPart be avoided somehow?
+        // TODO: Can the object allocation in #getPart be avoided somehow? It is required as the hash-key here..
         final String part = getPart( aText, aStart, aEnd );
 
         if ( !myBlittedStrings.containsKey( part ) )
