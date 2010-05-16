@@ -2,8 +2,6 @@
 
 package net.intensicode.touch;
 
-import net.intensicode.touch.TouchEvent;
-
 final class ClonedTouchEvent extends TouchEvent
     {
     public long timestamp;
@@ -19,7 +17,7 @@ final class ClonedTouchEvent extends TouchEvent
     public int y;
 
 
-    public ClonedTouchEvent( final TouchEvent aTouchEvent )
+    public final ClonedTouchEvent reinitializeWith( final TouchEvent aTouchEvent )
         {
         timestamp = aTouchEvent.timestamp();
         press = aTouchEvent.isPress();
@@ -27,6 +25,7 @@ final class ClonedTouchEvent extends TouchEvent
         release = aTouchEvent.isRelease();
         x = aTouchEvent.getX();
         y = aTouchEvent.getY();
+        return this;
         }
 
     // From TouchEvent

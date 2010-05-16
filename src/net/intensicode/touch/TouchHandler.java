@@ -2,9 +2,9 @@
 
 package net.intensicode.touch;
 
-import net.intensicode.util.*;
+import net.intensicode.core.GameSystem;
 import net.intensicode.screens.ScreenBase;
-import net.intensicode.core.*;
+import net.intensicode.util.*;
 
 public abstract class TouchHandler extends ScreenBase
     {
@@ -55,14 +55,13 @@ public abstract class TouchHandler extends ScreenBase
 
     // Internal API
 
-    // TODO: Move Internal API into internal class hidden from framework user.
-
     public synchronized final void onControlTick() throws Exception
         {
         while ( myQueuedEvents.size > 0 )
             {
             final TouchEvent queuedEvent = (TouchEvent) myQueuedEvents.remove( 0 );
             processQueuedEvent( queuedEvent );
+            myClonedEventPool.addReleasedInstance( queuedEvent );
             }
 
         myLocalControls.removeAll();
@@ -87,14 +86,17 @@ public abstract class TouchHandler extends ScreenBase
         {
         if ( isSameEventAgain( aTouchEvent ) ) return;
 
-        // TODO: Use pool for these objects..
-        if ( myQueuedEvents.size == MAX_QUEUED_EVENTS ) myQueuedEvents.remove( 0 );
-        myQueuedEvents.add( new ClonedTouchEvent( aTouchEvent ) );
+        if ( myQueuedEvents.size == MAX_QUEUED_EVENTS )
+            {
+            final Object removedEvent = myQueuedEvents.remove( 0 );
+            myClonedEventPool.addReleasedInstance( removedEvent );
+            }
+
+        final ClonedTouchEvent clonedEvent = (ClonedTouchEvent) myClonedEventPool.getOrCreateInstance();
+        myQueuedEvents.add( clonedEvent.reinitializeWith( aTouchEvent ) );
         }
 
     // Implementation
-
-    private long myPreviousTimestamp;
 
     private void processQueuedEvent( final TouchEvent aQueuedEvent )
         {
@@ -146,6 +148,8 @@ public abstract class TouchHandler extends ScreenBase
         }
 
 
+    private long myPreviousTimestamp;
+
     protected final GameSystem myGameSystem;
 
     private final TouchControlsManager myGlobalControls;
@@ -155,6 +159,8 @@ public abstract class TouchHandler extends ScreenBase
     private final DynamicArray myListeners = new DynamicArray();
 
     private final DynamicArray myQueuedEvents = new DynamicArray( MAX_QUEUED_EVENTS, 0 );
+
+    private final ObjectPool myClonedEventPool = new ObjectPool( ClonedTouchEvent.class );
 
     private static final int MAX_QUEUED_EVENTS = 32;
     }

@@ -2,8 +2,6 @@
 
 package net.intensicode.touch;
 
-import net.intensicode.touch.*;
-
 public final class QueuedTouchEvent
     {
     public static final int NO_KEY_ID = 0;

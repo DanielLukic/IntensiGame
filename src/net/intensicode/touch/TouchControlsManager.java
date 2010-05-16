@@ -2,8 +2,8 @@
 
 package net.intensicode.touch;
 
-import net.intensicode.util.*;
 import net.intensicode.core.*;
+import net.intensicode.util.*;
 
 public class TouchControlsManager
     {
@@ -28,13 +28,13 @@ public class TouchControlsManager
 
     public void remove( final Touchable aTouchable )
         {
-        Assert.isTrue( "really present", myTouchables.contains( aTouchable ));
+        Assert.isTrue( "really present", myTouchables.contains( aTouchable ) );
         myTouchables.removeAll( aTouchable );
         }
 
     public void add( final Touchable aTouchable )
         {
-        Assert.isFalse( "added once only", myTouchables.contains( aTouchable ));
+        Assert.isFalse( "added once only", myTouchables.contains( aTouchable ) );
         myTouchables.add( aTouchable );
         }
 
@@ -52,7 +52,10 @@ public class TouchControlsManager
         //#if DEBUG
         if ( myQueuedTouchEvents.size > 0 ) Log.debug( "purging {} pending touch events", myQueuedTouchEvents.size );
         //#endif
-        myQueuedTouchEvents.clear();
+        while ( myQueuedTouchEvents.size > 0 )
+            {
+            myPooledEvents.addReleasedInstance( myQueuedTouchEvents.removeLast() );
+            }
         }
 
     public final void processQueuedTouchEvents()
@@ -61,7 +64,7 @@ public class TouchControlsManager
             {
             final QueuedTouchEvent event = (QueuedTouchEvent) myQueuedTouchEvents.get( idx );
             trigger( event );
-            // TODO: myEventPool.deallocateEvent( event );
+            myPooledEvents.addReleasedInstance( event );
             }
         myQueuedTouchEvents.clear();
         }
@@ -187,30 +190,18 @@ public class TouchControlsManager
 
     private void enqueueTouchedTarget( final Touchable aTouchable )
         {
-        myQueuedTouchEvents.add( createTriggerEvent( aTouchable ) );
-        }
-
-    private QueuedTouchEvent createTriggerEvent( final Touchable aTouchable )
-        {
-        // TODO: final QueuedTouchEvent event = myEventPool.allocateEvent();
-        final QueuedTouchEvent event = new QueuedTouchEvent();
-        event.copyFrom( aTouchable );
+        final QueuedTouchEvent event = (QueuedTouchEvent) myPooledEvents.getOrCreateInstance();
         event.action = QueuedTouchEvent.TRIGGERED;
-        return event;
+        event.copyFrom( aTouchable );
+        myQueuedTouchEvents.add( event );
         }
 
     private void enqueueReleasedTarget( final Touchable aTouchable )
         {
-        myQueuedTouchEvents.add( createReleaseEvent( aTouchable ) );
-        }
-
-    private QueuedTouchEvent createReleaseEvent( final Touchable aTouchable )
-        {
-        // TODO: final QueuedTouchEvent event = myEventPool.allocateEvent();
-        final QueuedTouchEvent event = new QueuedTouchEvent();
+        final QueuedTouchEvent event = (QueuedTouchEvent) myPooledEvents.getOrCreateInstance();
         event.action = QueuedTouchEvent.RELEASED;
         event.copyFrom( aTouchable );
-        return event;
+        myQueuedTouchEvents.add( event );
         }
 
 
@@ -221,4 +212,6 @@ public class TouchControlsManager
     private final DynamicArray myTouchables = new DynamicArray();
 
     private final DynamicArray myQueuedTouchEvents = new DynamicArray();
+
+    private final ObjectPool myPooledEvents = new ObjectPool( QueuedTouchEvent.class );
     }

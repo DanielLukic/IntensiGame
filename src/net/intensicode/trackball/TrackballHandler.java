@@ -14,14 +14,13 @@ public abstract class TrackballHandler extends ScreenBase
 
     // Internal API
 
-    // TODO: Move Internal API into internal class hidden from framework user.
-
     public synchronized final void onControlTick() throws Exception
         {
         while ( myQueuedEvents.size > 0 )
             {
             final TrackballEvent queuedEvent = (TrackballEvent) myQueuedEvents.remove( 0 );
             processQueuedEvent( queuedEvent );
+            myClonedEventPool.addReleasedInstance( queuedEvent );
             }
         }
 
@@ -37,14 +36,17 @@ public abstract class TrackballHandler extends ScreenBase
 
     protected synchronized final void processTrackballEvent( final TrackballEvent aTrackballEvent )
         {
-        // TODO: Use pool for these objects..
-        if ( myQueuedEvents.size == MAX_QUEUED_EVENTS ) myQueuedEvents.remove( 0 );
-        myQueuedEvents.add( new ClonedTrackballEvent( aTrackballEvent ) );
+        if ( myQueuedEvents.size == MAX_QUEUED_EVENTS )
+            {
+            final Object removedInstance = myQueuedEvents.remove( 0 );
+            myClonedEventPool.addReleasedInstance( removedInstance );
+            }
+
+        final ClonedTrackballEvent clonedEvent = (ClonedTrackballEvent) myClonedEventPool.getOrCreateInstance();
+        myQueuedEvents.add( clonedEvent.reinitializeWith( aTrackballEvent ) );
         }
 
     // Implementation
-
-    private long myPreviousTimestamp;
 
     private void processQueuedEvent( final TrackballEvent aQueuedEvent )
         {
@@ -67,9 +69,13 @@ public abstract class TrackballHandler extends ScreenBase
         }
 
 
+    private long myPreviousTimestamp;
+
     private final DynamicArray myListeners = new DynamicArray();
 
     private final DynamicArray myQueuedEvents = new DynamicArray( MAX_QUEUED_EVENTS, 0 );
+
+    private final ObjectPool myClonedEventPool = new ObjectPool( ClonedTrackballEvent.class );
 
     private static final int MAX_QUEUED_EVENTS = 32;
     }

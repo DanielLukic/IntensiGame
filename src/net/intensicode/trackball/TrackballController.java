@@ -6,17 +6,6 @@ import net.intensicode.PlatformContext;
 
 public final class TrackballController implements TrackballEventListener
     {
-    // TODO: Integrate timing. Numbers given in example below are for medium(?) sensitivity.
-    //
-    // When delta < CONTINUE_EVENT_THRESHOLD_IN_MILLIS (= 25)
-    // Then accumulate but dont emit.
-    // When delta > SINGLE_STROKE_SILENCE_IN_MILLIS (= 25) and deltaFromStart < SINGLE_STROKE_THRESHOLD_IN_MILLIS (= 100)
-    // Then emit single step in smoothed ("ignore-delta") direction.
-    // When deltaFromStart > SINGLE_STROKE_THRESHOLD_IN_MILLIS
-    // Then emit multi steps according to sensitivity MULTI_STEP_THRESHOLD_IN_TICKS.
-    //
-    // What about first step of multi step? Make this a "big" step? Depending on sensitivity?
-
     public final TrackballConfiguration configuration;
 
     private final PlatformContext myPlatformContext;

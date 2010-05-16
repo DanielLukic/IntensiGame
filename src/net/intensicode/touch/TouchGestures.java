@@ -97,7 +97,7 @@ public final class TouchGestures implements TouchEventListener
 
     private boolean isNotStartedInsideHotzone()
         {
-        return !myTouchEvent.isPress() && myStrokePath.empty();
+        return !myTouchEvent.isPress() && !myStrokePathStarted;
         }
 
     // Implementation
@@ -111,7 +111,13 @@ public final class TouchGestures implements TouchEventListener
 
     private void resetTemporaries()
         {
-        myStrokePath.clear();
+        //#if DEBUG_TOUCH
+        while ( myStrokePath.size > 0 )
+            {
+            myPooledPositions.addReleasedInstance( myStrokePath.removeLast() );
+            }
+        //#endif
+        myStrokePathStarted = false;
         myStrokes.clear();
         }
 
@@ -224,8 +230,14 @@ public final class TouchGestures implements TouchEventListener
         {
         updateLastActionPosition();
 
-        // TODO: Use object pool here..
-        myStrokePath.add( new PositionF( myTouchX, myTouchY ) );
+        //#if DEBUG_TOUCH
+        final PositionF position = (PositionF) myPooledPositions.getOrCreateInstance();
+        position.x = myTouchX;
+        position.y = myTouchY;
+        myStrokePath.add( position );
+        //#endif
+
+        myStrokePathStarted = true;
         }
 
     private void updateLastActionPosition()
@@ -245,6 +257,8 @@ public final class TouchGestures implements TouchEventListener
 
     private long myStrokeStartTimestamp;
 
+    private boolean myStrokePathStarted;
+
     private final PlatformContext myPlatformContext;
 
     private final TouchGesturesConfiguration myConfiguration;
@@ -253,5 +267,11 @@ public final class TouchGestures implements TouchEventListener
 
     private final DynamicArray myStrokes = new DynamicArray();
 
+    //#if DEBUG_TOUCH
+
     private final DynamicArray myStrokePath = new DynamicArray();
+
+    //#endif
+
+    private final ObjectPool myPooledPositions = new ObjectPool( PositionF.class );
     }

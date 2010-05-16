@@ -17,7 +17,7 @@ final class ClonedTrackballEvent extends TrackballEvent
     public int y;
 
 
-    public ClonedTrackballEvent( final TrackballEvent aTrackballEvent )
+    public final ClonedTrackballEvent reinitializeWith( final TrackballEvent aTrackballEvent )
         {
         timestamp = aTrackballEvent.timestamp();
         press = aTrackballEvent.isPress();
@@ -25,6 +25,7 @@ final class ClonedTrackballEvent extends TrackballEvent
         release = aTrackballEvent.isRelease();
         x = aTrackballEvent.getX();
         y = aTrackballEvent.getY();
+        return this;
         }
 
     // From TrackballEvent
