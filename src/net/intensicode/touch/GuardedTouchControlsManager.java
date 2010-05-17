@@ -2,12 +2,11 @@
 
 package net.intensicode.touch;
 
-import net.intensicode.touch.*;
 import net.intensicode.core.GameSystem;
 
 public final class GuardedTouchControlsManager extends TouchControlsManager
     {
-    public GuardedTouchControlsManager( final GameSystem aGameSystem )
+    public GuardedTouchControlsManager( final GameSystem aGameSystem ) throws Exception
         {
         super( aGameSystem );
         }

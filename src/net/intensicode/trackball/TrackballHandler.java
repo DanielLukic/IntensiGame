@@ -30,8 +30,9 @@ public abstract class TrackballHandler extends ScreenBase
 
     // Protected API
 
-    protected TrackballHandler()
+    protected TrackballHandler() throws Exception
         {
+        myClonedEventPool = new ObjectPool( "net.intensicode.trackball.ClonedTrackballEvent" );
         }
 
     protected synchronized final void processTrackballEvent( final TrackballEvent aTrackballEvent )
@@ -75,7 +76,7 @@ public abstract class TrackballHandler extends ScreenBase
 
     private final DynamicArray myQueuedEvents = new DynamicArray( MAX_QUEUED_EVENTS, 0 );
 
-    private final ObjectPool myClonedEventPool = new ObjectPool( ClonedTrackballEvent.class );
+    private final ObjectPool myClonedEventPool;
 
     private static final int MAX_QUEUED_EVENTS = 32;
     }

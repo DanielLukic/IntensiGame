@@ -75,11 +75,12 @@ public abstract class TouchHandler extends ScreenBase
 
     // Protected API
 
-    protected TouchHandler( final GameSystem aGameSystem )
+    protected TouchHandler( final GameSystem aGameSystem ) throws Exception
         {
         myGameSystem = aGameSystem;
         myLocalControls = new GuardedTouchControlsManager( aGameSystem );
         myGlobalControls = new TouchControlsManager( aGameSystem );
+        myClonedEventPool = new ObjectPool( "net.intensicode.touch.ClonedTouchEvent" );
         }
 
     protected synchronized final void processTouchEvent( final TouchEvent aTouchEvent )
@@ -160,7 +161,7 @@ public abstract class TouchHandler extends ScreenBase
 
     private final DynamicArray myQueuedEvents = new DynamicArray( MAX_QUEUED_EVENTS, 0 );
 
-    private final ObjectPool myClonedEventPool = new ObjectPool( ClonedTouchEvent.class );
+    private final ObjectPool myClonedEventPool;
 
     private static final int MAX_QUEUED_EVENTS = 32;
     }

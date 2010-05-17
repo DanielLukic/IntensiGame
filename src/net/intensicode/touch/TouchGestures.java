@@ -43,10 +43,11 @@ public final class TouchGestures implements TouchEventListener
     public Rectangle optionalHotzone;
 
 
-    public TouchGestures( final TouchGesturesConfiguration aConfiguration, final PlatformContext aPlatformContext )
+    public TouchGestures( final TouchGesturesConfiguration aConfiguration, final PlatformContext aPlatformContext ) throws Exception
         {
         myConfiguration = aConfiguration;
         myPlatformContext = aPlatformContext;
+        myPooledPositions = new ObjectPool( "net.intensicode.util.PositionF" );
         }
 
     public final void reset()
@@ -273,5 +274,5 @@ public final class TouchGestures implements TouchEventListener
 
     //#endif
 
-    private final ObjectPool myPooledPositions = new ObjectPool( PositionF.class );
+    private final ObjectPool myPooledPositions;
     }

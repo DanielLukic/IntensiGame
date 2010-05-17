@@ -7,9 +7,10 @@ import net.intensicode.util.*;
 
 public class TouchControlsManager
     {
-    public TouchControlsManager( final GameSystem aGameSystem )
+    public TouchControlsManager( final GameSystem aGameSystem ) throws Exception
         {
         myGameSystem = aGameSystem;
+        myPooledEvents = new ObjectPool( "net.intensicode.touch.QueuedTouchEvent" );
         }
 
     public void setBlending( final int aAlpha256 )
@@ -213,5 +214,5 @@ public class TouchControlsManager
 
     private final DynamicArray myQueuedTouchEvents = new DynamicArray();
 
-    private final ObjectPool myPooledEvents = new ObjectPool( QueuedTouchEvent.class );
+    private final ObjectPool myPooledEvents;
     }

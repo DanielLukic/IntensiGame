@@ -1,46 +1,44 @@
 package core;
 
 import junit.framework.TestCase;
-import net.intensicode.util.*;
 import net.intensicode.touch.*;
-
-import java.io.IOException;
+import net.intensicode.util.*;
 
 public final class TestTouchGestures extends TestCase
     {
-    public final void testUpGestureIsRecognized() throws IOException
+    public final void testUpGestureIsRecognized() throws Exception
         {
         runGestureData( "gesture_data_up.txt", "NORTH" );
         runGestureData( "gesture_data_up_2.txt", "NORTH" );
         runGestureData( "gesture_data_up_3.txt", "NORTH" );
         }
 
-    public final void testUpRightGestureIsRecognized() throws IOException
+    public final void testUpRightGestureIsRecognized() throws Exception
         {
         runGestureData( "gesture_data_up_right.txt", "NORTH_EAST" );
         }
 
-    public final void testUpLeftGestureIsRecognized() throws IOException
+    public final void testUpLeftGestureIsRecognized() throws Exception
         {
         runGestureData( "gesture_data_up_left.txt", "NORTH_WEST" );
         }
 
-    public final void testRightGestureIsRecognized() throws IOException
+    public final void testRightGestureIsRecognized() throws Exception
         {
         runGestureData( "gesture_data_right.txt", "EAST" );
         }
 
-    public final void testLeftGestureIsRecognized() throws IOException
+    public final void testLeftGestureIsRecognized() throws Exception
         {
         runGestureData( "gesture_data_left.txt", "WEST" );
         }
 
-    public final void testTapGestureIsRecognized() throws IOException
+    public final void testTapGestureIsRecognized() throws Exception
         {
         runGestureData( "gesture_data_tap.txt", "TAP" );
         }
 
-    private void runGestureData( final String aResourcePath, final String aExpectedGesture ) throws IOException
+    private void runGestureData( final String aResourcePath, final String aExpectedGesture ) throws Exception
         {
         loadGestureData( aResourcePath );
         for ( int idx = 0; idx < numberOfDataEntries(); idx++ )
@@ -52,7 +50,7 @@ public final class TestTouchGestures extends TestCase
             }
         }
 
-    private void loadGestureData( final String aResourcePath ) throws IOException
+    private void loadGestureData( final String aResourcePath ) throws Exception
         {
         final String data = loadResourceIntoString( aResourcePath );
         final DynamicArray lines = StringUtils.splitString( data, true );
@@ -73,7 +71,7 @@ public final class TestTouchGestures extends TestCase
         myDataEntryStartIndexes.clear();
         }
 
-    private String loadResourceIntoString( final String aResourcePath ) throws IOException
+    private String loadResourceIntoString( final String aResourcePath ) throws Exception
         {
         return new FakeResourcesManager().loadString( aResourcePath );
         }
@@ -128,11 +126,11 @@ public final class TestTouchGestures extends TestCase
         myDataEntryLines.add( aLine );
         }
 
-    private void createTouchGesturesObject()
+    private void createTouchGesturesObject() throws Exception
         {
         final TouchGesturesConfiguration configuration = new TouchGesturesConfiguration();
         configuration.initDefaults();
-        configuration.setTo( configuration.presets[1] );
+        configuration.setTo( configuration.presets[ 1 ] );
         myTouchGestures = new TouchGestures( configuration, new FakePlatformContext() );
         }
 
