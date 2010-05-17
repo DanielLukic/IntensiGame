@@ -65,9 +65,8 @@ public class TouchControlsManager
             {
             final QueuedTouchEvent event = (QueuedTouchEvent) myQueuedTouchEvents.get( idx );
             trigger( event );
-            myPooledEvents.addReleasedInstance( event );
             }
-        myQueuedTouchEvents.clear();
+        purgePendingEvents();
         }
 
     public final void setCurrentTouchEvent( final TouchEvent aTouchEvent )
