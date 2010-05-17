@@ -2,7 +2,7 @@
 
 package net.intensicode.trackball;
 
-final class ClonedTrackballEvent extends TrackballEvent
+public final class ClonedTrackballEvent extends TrackballEvent
     {
     public long timestamp;
 

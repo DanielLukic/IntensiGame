@@ -2,7 +2,7 @@
 
 package net.intensicode.touch;
 
-final class ClonedTouchEvent extends TouchEvent
+public final class ClonedTouchEvent extends TouchEvent
     {
     public long timestamp;
 
