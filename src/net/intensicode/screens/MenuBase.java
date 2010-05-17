@@ -79,12 +79,16 @@ public abstract class MenuBase extends MultiScreen
         afterInitEverytime();
         }
 
+    //#if ORIENTATION_DYNAMIC
+
     public void onOrientationChanged() throws Exception
         {
         super.onOrientationChanged();
         setOffsetToVerticallyCentered();
         updateEntryPositions();
         }
+
+    //#endif
 
     public final void onControlTick() throws Exception
         {

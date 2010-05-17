@@ -10,7 +10,11 @@ public abstract class GameEngine implements Runnable
 
     public boolean paused;
 
+    //#if ORIENTATION_DYNAMIC
+
     public boolean orientationChanged;
+
+    //#endif
 
 
     public GameEngine( final GameSystem aGameSystem )
@@ -222,11 +226,11 @@ public abstract class GameEngine implements Runnable
 
     private void notifyOrientationChangedIfNecessary()
         {
-        if ( orientationChanged )
-            {
-            orientationChanged = false;
-            myGameSystem.context.onOrientationChanged();
-            }
+        //#if ORIENTATION_DYNAMIC
+        if ( !orientationChanged ) return;
+        orientationChanged = false;
+        myGameSystem.context.onOrientationChanged();
+        //#endif
         }
 
     private void doSystemControlTick()
