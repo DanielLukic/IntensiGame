@@ -2,7 +2,7 @@ package net.intensicode.screens;
 
 import net.intensicode.core.*;
 import net.intensicode.graphics.*;
-import net.intensicode.util.DynamicArray;
+import net.intensicode.util.*;
 
 public class BasicMenu extends MultiScreen
         //#if TOUCH
@@ -32,9 +32,14 @@ public class BasicMenu extends MultiScreen
         myEntryImageGenerator = aSpriteGenerator;
         }
 
-    public final BasicMenuEntry getEntry( final int aIndex )
+    public final int getSelectedEntryIndex()
         {
-        return (BasicMenuEntry) myEntries.get( aIndex );
+        return mySelectedEntryIndex;
+        }
+
+    public final void selectEntryByIndex( final int aIndex )
+        {
+        updateSelectedEntry( aIndex );
         }
 
     public final BasicMenuEntry addMenuEntry( final int aID, final String aText ) throws Exception
@@ -87,6 +92,11 @@ public class BasicMenu extends MultiScreen
         try
             {
             final BasicMenuEntry selected = (BasicMenuEntry) aTouchable;
+            for ( int idx = 0; idx < myEntries.size; idx++ )
+                {
+                final BasicMenuEntry entry = getEntry( idx );
+                if ( entry == selected ) updateSelectedEntry( idx );
+                }
             myMenuHandler.onSelected( selected );
             }
         catch ( final Exception e )
@@ -172,6 +182,11 @@ public class BasicMenu extends MultiScreen
         }
 
     // Implementation
+
+    private BasicMenuEntry getEntry( final int aIndex )
+        {
+        return (BasicMenuEntry) myEntries.get( aIndex );
+        }
 
     private void setOffsetToTopAligned()
         {
