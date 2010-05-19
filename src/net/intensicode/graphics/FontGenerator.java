@@ -102,7 +102,7 @@ public abstract class FontGenerator
                     }
                 }
 
-            final int eolIndex = aText.indexOf( "\n", start );
+            final int eolIndex = findEOL( aText, start );
             if ( eolIndex >= start && eolIndex < end ) end = eolIndex;
 
             final int textWidth = substringWidth( aText, start, end - start );
@@ -110,7 +110,7 @@ public abstract class FontGenerator
             blitString( aGraphics, aText, start, end, aTextRect.x + offsetX, linePos );
             linePos += charHeight();
 
-            if ( end < textLength && aText.charAt( end ) == '\n' )
+            if ( end < textLength && ( aText.charAt( end ) == '\n' || aText.charAt( end ) == '|' ) )
                 {
                 end++;
                 linePos += charHeight() / 2;
@@ -120,6 +120,15 @@ public abstract class FontGenerator
             start = end;
             }
         while ( end < textLength );
+        }
+
+    private int findEOL( final String aText, final int aStart )
+        {
+        final int eolIndex1 = aText.indexOf( "\n", aStart );
+        final int eolIndex2 = aText.indexOf( "|", aStart );
+        if ( eolIndex1 == -1 ) return eolIndex2;
+        if ( eolIndex2 == -1 ) return eolIndex1;
+        return Math.min( eolIndex1, eolIndex2 );
         }
 
     public final void blitNumber( final DirectGraphics aGraphics, final Position aPosition, final int aNumber, final int aAlignment )
