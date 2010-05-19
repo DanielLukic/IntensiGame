@@ -6,6 +6,14 @@ import net.intensicode.util.*;
 
 public final class ScrollTextScreen extends ScreenBase
     {
+    public static final int ALIGN_LEFT = 0;
+
+    public static final int ALIGN_RIGHT = 1;
+
+    public static final int ALIGN_CENTER = 2;
+
+    public int alignment = ALIGN_LEFT;
+
     public Rectangle optionalBoundingBox;
 
     public boolean showIndicators;
@@ -83,7 +91,7 @@ public final class ScrollTextScreen extends ScreenBase
         for ( int idx = myScrollIndex; idx < myTextLines.size; idx++ )
             {
             final String line = (String) myTextLines.get( idx );
-            if ( line.endsWith( "\n" ) ) textHeight += fontHeight * 3 / 2;
+            if ( line.endsWith( "\n" ) || line.endsWith( "|" ) ) textHeight += fontHeight * 3 / 2;
             else textHeight += fontHeight;
             }
 
@@ -197,9 +205,13 @@ public final class ScrollTextScreen extends ScreenBase
         for ( int idx = myScrollIndex; idx < myTextLines.size; idx++ )
             {
             final String line = (String) myTextLines.get( idx );
+
+            myBlitPos.x = aTextRect.x;
+            if ( alignment != ALIGN_LEFT ) myBlitPos.x += ( aTextRect.width - font.stringWidth( line ) ) / alignment;
+
             font.blitString( graphics, line, myBlitPos, FontGenerator.TOP_LEFT );
 
-            if ( line.endsWith( "\n" ) ) myBlitPos.y += fontHeight * 3 / 2;
+            if ( line.endsWith( "\n" ) || line.endsWith( "|" ) ) myBlitPos.y += fontHeight * 3 / 2;
             else myBlitPos.y += fontHeight;
 
             final int nextLowerBoundary = myBlitPos.y + fontHeight;
