@@ -6,43 +6,11 @@ public final class StringUtils
     {
     public static final DynamicArray breakIntoLines( final String aText, final FontGenerator aFont, final int aBlockWidth )
         {
-        final DynamicArray lines = new DynamicArray();
-
-        final int textLength = aText.length();
-
-        int start = 0;
-        int end = start;
-        do
-            {
-            final int nextSpaceOffset = aText.indexOf( " ", end + 1 );
-            if ( nextSpaceOffset == -1 )
-                {
-                final int newWidth = aFont.substringWidth( aText, start, textLength - start );
-                if ( newWidth <= aBlockWidth ) end = textLength;
-                if ( start == end ) end = textLength;
-                }
-            else
-                {
-                final int newWidth = aFont.substringWidth( aText, start, nextSpaceOffset - start );
-                if ( newWidth <= aBlockWidth )
-                    {
-                    end = nextSpaceOffset;
-                    continue;
-                    }
-                }
-
-            final int eolIndex = aText.indexOf( "\n", start );
-            if ( eolIndex >= start && eolIndex < end ) end = eolIndex + 1;
-
-            lines.add( aText.substring( start, end ) );
-
-            while ( end < textLength && aText.charAt( end ) == ' ' ) end++;
-
-            start = end;
-            }
-        while ( end < textLength );
-
-        return lines;
+        final TextBlockFormatter formatter = new TextBlockFormatter();
+        formatter.font = aFont;
+        formatter.blockWidth = aBlockWidth;
+        formatter.text = aText;
+        return formatter.getFormattedLines();
         }
 
     public static DynamicArray splitString( final String aString, final boolean aTrimLines )
