@@ -19,6 +19,8 @@ public class BasicMenu extends MultiScreen
 
     public float lineSpacingFixed = 2f;
 
+    public int verticalOffset;
+
 
     public BasicMenu( final MenuHandler aMenuHandler, final FontGenerator aMenuFont )
         {
@@ -190,12 +192,12 @@ public class BasicMenu extends MultiScreen
 
     private void setOffsetToTopAligned()
         {
-        myVerticalOffset = myFont.charHeight();
+        verticalOffset = myFont.charHeight();
         }
 
     private void setOffsetToVerticallyCentered()
         {
-        myVerticalOffset = (int) ( ( screen().height() - ( myEntries.size - 1 ) * myFont.charHeight() * lineSpacingFixed ) / 2 );
+        verticalOffset = (int) ( ( screen().height() - ( myEntries.size - 1 ) * myFont.charHeight() * lineSpacingFixed ) / 2 );
         }
 
     private void updateEntryPositions()
@@ -205,7 +207,7 @@ public class BasicMenu extends MultiScreen
             {
             final BasicMenuEntry entry = getEntry( idx );
             entry.position.x = xCenter;
-            entry.position.y = (int) ( myVerticalOffset + idx * myFont.charHeight() * lineSpacingFixed );
+            entry.position.y = (int) ( verticalOffset + idx * myFont.charHeight() * lineSpacingFixed );
             //#if TOUCH
             entry.updateTouchable();
             //#endif
@@ -226,8 +228,6 @@ public class BasicMenu extends MultiScreen
 
     //#endif
 
-
-    public int myVerticalOffset;
 
     private int mySelectedEntryIndex;
 
