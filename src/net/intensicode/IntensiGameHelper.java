@@ -173,13 +173,12 @@ public final class IntensiGameHelper
         timing.ticksPerSecond = aConfiguration.readInt( "GameTiming.ticksPerSecond", timing.ticksPerSecond );
         timing.maxFramesPerSecond = aConfiguration.readInt( "GameTiming.maxFramesPerSecond", timing.maxFramesPerSecond );
 
-        // TODO: Move to DirectScreen#apply(Configuration)        
+        // TODO: Move to DirectScreen#apply(Configuration)
         final int width = aConfiguration.readInt( "DirectScreen.width", DEFAULT_SCREEN_WIDTH );
         final int height = aConfiguration.readInt( "DirectScreen.height", DEFAULT_SCREEN_HEIGHT );
         myGameSystem.screen.setTargetSize( width, height );
 
-        // TODO: Move to BitmapFontGenerator#apply(Configuration)                
-        BitmapFontGenerator.buffered = aConfiguration.readBoolean( "BitmapFontGenerator.buffered", BitmapFontGenerator.buffered );
+        BitmapFontGenerator.apply( aConfiguration );
 
         // Register ResourcesManager with BitmapFontGenerator to make buffered blitting possible.
         BitmapFontGenerator.resources = myGameSystem.resources;

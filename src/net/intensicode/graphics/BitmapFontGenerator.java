@@ -9,8 +9,19 @@ public final class BitmapFontGenerator extends FontGenerator
     {
     public static ResourcesManager resources;
 
-    public static boolean buffered;
+    public static boolean buffered = false;
 
+    public static int maxBufferWidth = 256;
+
+    public static int maxBufferHeight = 64;
+
+
+    public static void apply( final Configuration aConfiguration )
+        {
+        buffered = aConfiguration.readBoolean( "BitmapFontGenerator.buffered", buffered );
+        maxBufferWidth = aConfiguration.readInt( "BitmapFontGenerator.maxBufferWidth", maxBufferWidth );
+        maxBufferHeight = aConfiguration.readInt( "BitmapFontGenerator.maxBufferHeight", maxBufferHeight );
+        }
 
     public static void purgeCaches()
         {
@@ -141,7 +152,11 @@ public final class BitmapFontGenerator extends FontGenerator
         if ( resources == null ) return false;
 
         final int width = substringWidth( aText, aStart, aEnd - aStart );
+        if ( width > maxBufferWidth ) return false;
+
         final int height = charHeight();
+        if ( height > maxBufferHeight ) return false;
+
         final int maxSize = resources.maxImageResourceSize();
         return width <= maxSize && height <= maxSize;
         }
