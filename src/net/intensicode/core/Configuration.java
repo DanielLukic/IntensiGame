@@ -1,8 +1,9 @@
-package net.intensicode.core;
+ package net.intensicode.core;
 
 import net.intensicode.util.*;
 
 import java.util.Hashtable;
+import java.io.IOException;
 
 public final class Configuration
     {
@@ -12,7 +13,12 @@ public final class Configuration
         {
         }
 
-    public Configuration( final String aConfigurationData )
+    public Configuration( final ResourcesManager aResourcesManager )
+        {
+        myResourcesManager = aResourcesManager;
+        }
+
+    public final Configuration consume( final String aConfigurationData ) throws IOException
         {
         final DynamicArray lines = StringUtils.splitString( aConfigurationData, true );
         for ( int idx = 0; idx < lines.size; idx++ )
@@ -21,8 +27,22 @@ public final class Configuration
             if ( line.length() < 3 ) continue;
             if ( line.startsWith( "//" ) ) continue;
             if ( line.startsWith( "#" ) ) continue;
-            consume( line );
+            if ( line.startsWith( "@load" ) ) includeUsing( line );
+            consumeSingleLine( line );
             }
+        return this;
+        }
+
+    private void includeUsing( final String aLoadDirectivePlusFilename ) throws IOException
+        {
+        if ( myResourcesManager == null ) throw new IllegalStateException( "no resources manager available" );
+
+        final int endOfDirective = StringUtils.findDelimiter( aLoadDirectivePlusFilename, " \t", 0 );
+        final String filename = aLoadDirectivePlusFilename.substring( endOfDirective );
+
+        Log.info( "including configuration data from {}", filename );
+
+        consume( myResourcesManager.loadString( filename ) );
         }
 
     public final boolean isEmpty()
@@ -149,7 +169,7 @@ public final class Configuration
 
     // Implementation
 
-    private void consume( final String aLine )
+    private void consumeSingleLine( final String aLine )
         {
         final int assignmentIndex = aLine.indexOf( '=' );
 
@@ -183,6 +203,8 @@ public final class Configuration
         return (String) myEntries.get( mySharedBuffer.toString() );
         }
 
+
+    private ResourcesManager myResourcesManager;
 
     private final Hashtable myEntries = new Hashtable();
 

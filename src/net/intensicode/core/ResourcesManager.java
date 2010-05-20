@@ -80,7 +80,7 @@ public abstract class ResourcesManager
     public final Configuration loadConfiguration( final String aResourcePath ) throws IOException
         {
         final String data = loadString( aResourcePath );
-        return new Configuration( data );
+        return new Configuration( this ).consume( data );
         }
 
     public final Configuration loadConfigurationOrUseDefaults( final String aResourcePath )
