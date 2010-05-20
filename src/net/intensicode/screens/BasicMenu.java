@@ -2,7 +2,7 @@ package net.intensicode.screens;
 
 import net.intensicode.core.*;
 import net.intensicode.graphics.*;
-import net.intensicode.util.*;
+import net.intensicode.util.DynamicArray;
 
 public class BasicMenu extends MultiScreen
         //#if TOUCH
@@ -197,6 +197,10 @@ public class BasicMenu extends MultiScreen
 
     private void setOffsetToVerticallyCentered()
         {
+        if ( myEntries.size == 0 ) return;
+
+        final float maxSpacing = screen().height() * 1f / ( myEntries.size * myFont.charHeight() );
+        lineSpacingFixed = Math.min( maxSpacing, lineSpacingFixed );
         verticalOffset = (int) ( ( screen().height() - ( myEntries.size - 1 ) * myFont.charHeight() * lineSpacingFixed ) / 2 );
         }
 
