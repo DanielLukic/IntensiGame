@@ -7,12 +7,14 @@ public final class GameTiming
     /**
      * The system will ensure that this many control ticks will be issued every second.
      */
-    public int ticksPerSecond = 64;
+    public int ticksPerSecond = 32;
 
     /**
      * The system will sleep instead of rendering more frames per second than this.
      */
     public int maxFramesPerSecond = 32;
+
+    public int maxTicksPerFrame = 2;
 
     public int measuredFramesPerSecond;
 
@@ -84,7 +86,7 @@ public final class GameTiming
         final long numberOfTicks = timeForTicks * ticksPerSecond / ONE_SECOND_IN_MS;
         myRemainingTickTime = timeForTicks - numberOfTicks * ONE_SECOND_IN_MS / ticksPerSecond;
 
-        return (int) numberOfTicks;
+        return Math.min( maxTicksPerFrame, (int) numberOfTicks );
         }
 
     final void notifyStartOfTick()
