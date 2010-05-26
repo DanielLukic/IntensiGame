@@ -154,6 +154,23 @@ public final class SkinManager implements Runnable
 
     public final ImageResource image( final String aImageID ) throws IOException
         {
+        try
+            {
+            return tryLoadingImage( aImageID );
+            }
+        catch ( final IOException e )
+            {
+            //#if DEBUG
+            Log.error( "failed loading image {}. ignored.", aImageID, e );
+            //#else
+            Log.info( "failed loading image {}. ignored.", aImageID );
+            //#endif
+            return NullImageResource.NULL;
+            }
+        }
+
+    private ImageResource tryLoadingImage( final String aImageID ) throws IOException
+        {
         if ( !myCachedImages.containsKey( aImageID ) )
             {
             final ImageResource image = loadImage( aImageID );
@@ -162,33 +179,57 @@ public final class SkinManager implements Runnable
         return (ImageResource) myCachedImages.get( aImageID );
         }
 
-    public final SpriteGenerator sprite( final String aImageID ) throws IOException
+    public final SpriteGenerator sprite( final String aImageID )
+        {
+        try
+            {
+            return tryLoadingSprite( aImageID );
+            }
+        catch ( final Exception e )
+            {
+            //#if DEBUG
+            Log.error( "failed loading sprite {}. ignored.", aImageID, e );
+            //#else
+            Log.info( "failed loading sprite {}. ignored.", aImageID );
+            //#endif
+            return SpriteGenerator.NULL;
+            }
+        }
+
+    private SpriteGenerator tryLoadingSprite( final String aImageID ) throws IOException
         {
         if ( !myCachedSprites.containsKey( aImageID ) )
             {
-            final ImageResource image = image( aImageID );
-            final int charsPerRow = mySkinConfiguration.readInt( aImageID, "chars_per_row", SPRITE_CHARS_PER_ROW );
-            final int charsPerCol = mySkinConfiguration.readInt( aImageID, "chars_per_col", SPRITE_CHARS_PER_COL );
-            final int frameWidth = image.getWidth() / charsPerRow;
-            final int frameHeight = image.getHeight() / charsPerCol;
-            final SpriteGenerator sprite = new SpriteGenerator( image, frameWidth, frameHeight );
-
-            final boolean cyclicFrames = mySkinConfiguration.readBoolean( aImageID, "cyclic_frames", cyclicFramesDefault );
-            if ( cyclicFrames )
-                {
-                final int[] sequence = createCyclicSequence( sprite );
-                sprite.setFrameSequence( sequence );
-                }
-
-            final boolean centeredReference = mySkinConfiguration.readBoolean( aImageID, "center_ref", centerRefDefault );
-            if ( centeredReference )
-                {
-                sprite.defineReferencePixel( frameWidth / 2, frameHeight / 2 );
-                }
-
+            final SpriteGenerator sprite = createSpriteGenerator( aImageID );
             myCachedSprites.put( aImageID, sprite );
             }
         return (SpriteGenerator) myCachedSprites.get( aImageID );
+        }
+
+    private SpriteGenerator createSpriteGenerator( final String aImageID ) throws IOException
+        {
+        final ImageResource image = image( aImageID );
+        if ( image == NullImageResource.NULL ) return SpriteGenerator.NULL;
+
+        final int charsPerRow = mySkinConfiguration.readInt( aImageID, "chars_per_row", SPRITE_CHARS_PER_ROW );
+        final int charsPerCol = mySkinConfiguration.readInt( aImageID, "chars_per_col", SPRITE_CHARS_PER_COL );
+        final int frameWidth = image.getWidth() / charsPerRow;
+        final int frameHeight = image.getHeight() / charsPerCol;
+        final SpriteGenerator sprite = new SpriteGenerator( image, frameWidth, frameHeight );
+
+        final boolean cyclicFrames = mySkinConfiguration.readBoolean( aImageID, "cyclic_frames", cyclicFramesDefault );
+        if ( cyclicFrames )
+            {
+            final int[] sequence = createCyclicSequence( sprite );
+            sprite.setFrameSequence( sequence );
+            }
+
+        final boolean centeredReference = mySkinConfiguration.readBoolean( aImageID, "center_ref", centerRefDefault );
+        if ( centeredReference )
+            {
+            sprite.defineReferencePixel( frameWidth / 2, frameHeight / 2 );
+            }
+        return sprite;
         }
 
     public final CharGenerator charGen( final String aImageID ) throws IOException
@@ -324,9 +365,14 @@ public final class SkinManager implements Runnable
             //#if DEBUG
             Log.debug( "ImageResource not found: {}", aImageID );
             //#endif
-            if ( imageNotFound == null ) imageNotFound = resources().createImageResource( 8, 8 );
-            return imageNotFound;
+            return getOrCreateImageNotFound();
             }
+        }
+
+    private ImageResource getOrCreateImageNotFound()
+        {
+        if ( imageNotFound == null ) imageNotFound = resources().createImageResource( 8, 8 );
+        return imageNotFound;
         }
 
     private ResourcesManager resources()
