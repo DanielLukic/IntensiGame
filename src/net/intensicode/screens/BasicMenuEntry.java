@@ -86,7 +86,7 @@ public final class BasicMenuEntry extends ScreenBase
         {
         final DirectGraphics graphics = graphics();
 
-        if ( imageGenerator != null )
+        if ( imageGenerator != null && imageGenerator != SpriteGenerator.NULL )
             {
             imageGenerator.paint( graphics, position.x, position.y, selectedState ? 1 : 0 );
             }

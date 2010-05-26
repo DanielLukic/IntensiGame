@@ -31,7 +31,8 @@ public class BasicMenu extends MultiScreen
 
     public final void setEntryImage( final SpriteGenerator aSpriteGenerator )
         {
-        myEntryImageGenerator = aSpriteGenerator;
+        if ( aSpriteGenerator == SpriteGenerator.NULL ) myEntryImageGenerator = null;
+        else myEntryImageGenerator = aSpriteGenerator;
         }
 
     public final int getSelectedEntryIndex()
