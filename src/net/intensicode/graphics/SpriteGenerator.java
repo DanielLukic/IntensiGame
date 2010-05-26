@@ -5,6 +5,8 @@ import net.intensicode.util.Position;
 
 public final class SpriteGenerator
     {
+    public static final SpriteGenerator NULL = new SpriteGenerator( NullImageResource.NULL, 1, 1 );
+
     public SpriteGenerator( final ImageResource aImage, final int aFrameWidth, final int aFrameHeight )
         {
         myFrameGenerator = CharGenerator.fromSize( aImage, aFrameWidth, aFrameHeight );
