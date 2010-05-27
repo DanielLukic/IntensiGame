@@ -5,6 +5,8 @@ import net.intensicode.core.*;
 
 public final class CharGenerator
     {
+    public static final CharGenerator NULL = new CharGenerator( NullImageResource.NULL, 1, 1 );
+
     public final int charWidth;
 
     public final int charHeight;

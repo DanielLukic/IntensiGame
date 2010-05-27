@@ -152,7 +152,7 @@ public final class SkinManager implements Runnable
         purgeImage( id, aRightNow );
         }
 
-    public final ImageResource image( final String aImageID ) throws IOException
+    public final ImageResource image( final String aImageID )
         {
         try
             {
@@ -232,7 +232,24 @@ public final class SkinManager implements Runnable
         return sprite;
         }
 
-    public final CharGenerator charGen( final String aImageID ) throws IOException
+    public final CharGenerator charGen( final String aImageID )
+        {
+        try
+            {
+            return tryLoadingCharGen( aImageID );
+            }
+        catch ( final Exception e )
+            {
+            //#if DEBUG
+            Log.error( "failed loading char generator {}. ignored.", aImageID, e );
+            //#else
+            Log.info( "failed loading char generator {}. ignored.", aImageID );
+            //#endif
+            return CharGenerator.NULL;
+            }
+        }
+
+    private CharGenerator tryLoadingCharGen( final String aImageID )
         {
         if ( !myCachedCharGens.containsKey( aImageID ) )
             {
@@ -244,7 +261,24 @@ public final class SkinManager implements Runnable
         return (CharGenerator) myCachedCharGens.get( aImageID );
         }
 
-    public final BitmapFontGenerator font( final String aFontID ) throws IOException
+    public final BitmapFontGenerator font( final String aFontID )
+        {
+        try
+            {
+            return tryLoadingFont( aFontID );
+            }
+        catch ( final Exception e )
+            {
+            //#if DEBUG
+            Log.error( "failed loading font {}. ignored.", aFontID, e );
+            //#else
+            Log.info( "failed loading font {}. ignored.", aFontID );
+            //#endif
+            return BitmapFontGenerator.NULL;
+            }
+        }
+
+    private BitmapFontGenerator tryLoadingFont( final String aFontID ) throws IOException
         {
         if ( !myCachedFontGens.containsKey( aFontID ) )
             {

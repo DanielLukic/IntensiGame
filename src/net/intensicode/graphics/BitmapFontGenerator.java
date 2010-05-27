@@ -7,6 +7,8 @@ import java.util.*;
 
 public final class BitmapFontGenerator extends FontGenerator
     {
+    public static final BitmapFontGenerator NULL = new BitmapFontGenerator( CharGenerator.NULL );
+
     public static ResourcesManager resources;
 
     public static boolean buffered = false;
