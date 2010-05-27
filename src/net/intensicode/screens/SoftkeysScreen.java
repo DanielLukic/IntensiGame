@@ -22,6 +22,7 @@ public class SoftkeysScreen extends ScreenBase
     public final void setButtonImage( final ImageResource aButtonImage )
         {
         myButtonImage = aButtonImage;
+        if ( myButtonImage == NullImageResource.NULL ) myButtonImage = null;
         mySomethingChanged = true;
         }
 

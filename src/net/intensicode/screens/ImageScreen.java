@@ -1,7 +1,6 @@
 package net.intensicode.screens;
 
-import net.intensicode.core.DirectGraphics;
-import net.intensicode.core.ImageResource;
+import net.intensicode.core.*;
 import net.intensicode.util.Position;
 
 
@@ -47,7 +46,7 @@ public class ImageScreen extends ScreenBase
 
     public void onDrawFrame()
         {
-        if ( image == null ) return;
+        if ( image == null || image == NullImageResource.NULL ) return;
 
         final Position position = getPosition();
         final DirectGraphics gc = graphics();
