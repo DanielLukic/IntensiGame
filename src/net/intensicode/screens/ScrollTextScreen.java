@@ -224,7 +224,7 @@ public final class ScrollTextScreen extends ScreenBase
         if ( myScrollIndex > 0 )
             {
             myBlitPos.x = aTextRect.x + aTextRect.width / 2;
-            myBlitPos.y = aTextRect.y - font.charHeight();
+            myBlitPos.y = aTextRect.y - font.charHeight() * 2 / 3;
             font.blitString( graphics(), UP_INDICATOR_LABEL, myBlitPos, FontGenerator.CENTER );
             }
 
@@ -232,7 +232,7 @@ public final class ScrollTextScreen extends ScreenBase
         if ( textHeightFromNewIndex >= aTextRect.height )
             {
             myBlitPos.x = aTextRect.x + aTextRect.width / 2;
-            myBlitPos.y = aTextRect.y + aTextRect.height + font.charHeight();
+            myBlitPos.y = aTextRect.y + aTextRect.height + font.charHeight() * 2 / 3;
             font.blitString( graphics(), DOWN_INDICATOR_LABEL, myBlitPos, FontGenerator.CENTER );
             }
         }
