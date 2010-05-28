@@ -8,10 +8,11 @@ public class EntryPositionerModeTopAligned extends EntryPositionerMode
 
     public final void update( final DynamicArray aEntries, final Rectangle aBounds, final FontGenerator aFont )
         {
-        final float spacing = calcSuitableSpacing( aBounds.height, aEntries.size, aFont.charHeight() );
+        final int availableHeight = aBounds.height - aFont.charHeight();
+        final float spacing = calcSuitableSpacing( availableHeight, aEntries.size - 1, aFont.charHeight() );
 
         final int offsetX = aBounds.x;
-        final int offsetY = (int) ( aBounds.y + aFont.charHeight() / 2 + spacing / 2 );
+        final int offsetY = aBounds.y + aFont.charHeight() / 2;
 
         final int numberOfEntries = aEntries.size;
         for ( int idx = 0; idx < numberOfEntries; idx++ )
