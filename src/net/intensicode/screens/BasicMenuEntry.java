@@ -4,7 +4,7 @@ import net.intensicode.core.*;
 import net.intensicode.graphics.*;
 import net.intensicode.util.*;
 
-public final class BasicMenuEntry extends ScreenBase implements PositionableEntry
+public class BasicMenuEntry extends ScreenBase implements PositionableEntry
     {
     public static int selectorColor = 0x807F0000;
 
@@ -14,36 +14,26 @@ public final class BasicMenuEntry extends ScreenBase implements PositionableEntr
 
     public final Position position = new Position();
 
-    public final FontGenerator fontGen;
-
-    public final String text;
-
-
     public SpriteGenerator imageGenerator;
+
+    public FontGenerator fontGen;
 
     public ImageResource image;
 
-    public boolean selectedState;
+    public boolean selected;
+
+    public String text;
 
     public int width;
 
     public int id;
 
 
-    public BasicMenuEntry( final int aId, final String aText, final FontGenerator aCharGen )
+    public BasicMenuEntry()
         {
-        id = aId;
-        text = aText;
-        fontGen = aCharGen;
         //#if TOUCH
         touchable.associatedObject = this;
-        updateTouchable();
         //#endif
-        }
-
-    public final void setSelected( boolean aSelectedFlag )
-        {
-        selectedState = aSelectedFlag;
         }
 
     //#if TOUCH
@@ -85,18 +75,18 @@ public final class BasicMenuEntry extends ScreenBase implements PositionableEntr
         return position;
         }
 
-    public void setAvailableWidth( final int aWidthInPixels )
+    public final void setAvailableWidth( final int aWidthInPixels )
         {
         width = aWidthInPixels;
         }
 
     // From ScreenBase
 
-    public final void onControlTick() throws Exception
+    public void onControlTick() throws Exception
         {
         }
 
-    public final void onDrawFrame()
+    public void onDrawFrame()
         {
         final DirectGraphics graphics = graphics();
 
@@ -104,13 +94,13 @@ public final class BasicMenuEntry extends ScreenBase implements PositionableEntr
 
         if ( imageGenerator != null && imageGenerator != SpriteGenerator.NULL )
             {
-            imageGenerator.paint( graphics, posX, position.y, selectedState ? 1 : 0 );
+            imageGenerator.paint( graphics, posX, position.y, selected ? 1 : 0 );
             }
         else if ( image != null )
             {
             graphics.drawImage( image, posX, position.y, DirectGraphics.ALIGN_CENTER );
             }
-        else if ( selectedState )
+        else if ( selected )
                 {
                 final int x = 0;
                 final int y = position.y - fontGen.charHeight() / 2;
@@ -120,10 +110,18 @@ public final class BasicMenuEntry extends ScreenBase implements PositionableEntr
                 graphics.fillRect( x, y, width, height );
                 }
 
-        myBlitPos.setTo( position );
-        myBlitPos.x += width / 2;
-        fontGen.blitString( graphics, text, myBlitPos, FontGenerator.CENTER );
+        blitText( graphics );
         }
 
-    private final Position myBlitPos = new Position();
+    // Protected API
+
+    protected void blitText( final DirectGraphics aGraphics )
+        {
+        myBlitPos.setTo( position );
+        myBlitPos.x += width / 2;
+        fontGen.blitString( aGraphics, text, myBlitPos, FontGenerator.CENTER );
+        }
+
+
+    protected final Position myBlitPos = new Position();
     }

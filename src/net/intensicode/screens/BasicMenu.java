@@ -18,10 +18,26 @@ public class BasicMenu extends MultiScreen
         myFont = aMenuFont;
         }
 
+    public final BasicMenuEntry getEntryById( final int aID )
+        {
+        for ( int idx = 0; idx < myEntries.size; idx++ )
+            {
+            final BasicMenuEntry entry = getEntry( idx );
+            if ( entry.id == aID ) return entry;
+            }
+        throw new IllegalArgumentException();
+        }
+
     public final void setEntryImage( final SpriteGenerator aSpriteGenerator )
         {
         if ( aSpriteGenerator == SpriteGenerator.NULL ) myEntryImageGenerator = null;
         else myEntryImageGenerator = aSpriteGenerator;
+
+        for ( int idx = 0; idx < myEntries.size; idx++ )
+            {
+            final BasicMenuEntry entry = getEntry( idx );
+            entry.imageGenerator = myEntryImageGenerator;
+            }
         }
 
     public final int getSelectedEntryIndex()
@@ -36,7 +52,10 @@ public class BasicMenu extends MultiScreen
 
     public final BasicMenuEntry addMenuEntry( final int aID, final String aText ) throws Exception
         {
-        final BasicMenuEntry entry = new BasicMenuEntry( aID, aText, myFont );
+        final BasicMenuEntry entry = new BasicMenuEntry();
+        entry.id = aID;
+        entry.text = aText;
+        entry.fontGen = myFont;
         entry.imageGenerator = myEntryImageGenerator;
         //#if TOUCH
         entry.touchable.associatedHandler = this;
@@ -47,6 +66,20 @@ public class BasicMenu extends MultiScreen
         updateSelectedEntry();
 
         return entry;
+        }
+
+    public final BasicMenuEntry addMenuEntry( final BasicMenuEntry aEntry ) throws Exception
+        {
+        aEntry.imageGenerator = myEntryImageGenerator;
+        //#if TOUCH
+        aEntry.touchable.associatedHandler = this;
+        //#endif
+        addScreen( aEntry );
+        myEntries.add( aEntry );
+
+        updateSelectedEntry();
+
+        return aEntry;
         }
 
     public final void removeAllEntries()
@@ -71,7 +104,7 @@ public class BasicMenu extends MultiScreen
         for ( int idx = 0; idx < numberOfEntries; idx++ )
             {
             final BasicMenuEntry menuEntry = getEntry( idx );
-            menuEntry.setSelected( idx == mySelectedEntryIndex );
+            menuEntry.selected = idx == mySelectedEntryIndex;
             }
         }
 
