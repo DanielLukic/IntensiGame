@@ -2,31 +2,20 @@ package net.intensicode.screens;
 
 import net.intensicode.core.*;
 import net.intensicode.graphics.*;
-import net.intensicode.util.DynamicArray;
+import net.intensicode.util.*;
 
 public class BasicMenu extends MultiScreen
         //#if TOUCH
         implements net.intensicode.touch.TouchableHandler
         //#endif
     {
-    public static final int ENTRY_POSITIONS_CENTERED = 0;
-
-    public static final int ENTRY_POSITIONS_TOP_ALIGNED = 1;
-
-    public static final int ENTRY_POSITIONS_MANUAL = 2;
-
-    public int entryPositionsMode = ENTRY_POSITIONS_CENTERED;
-
-    public float lineSpacingFixed = 2f;
-
-    public int verticalOffset;
+    public final EntryPositioner positioner = new EntryPositioner();
 
 
     public BasicMenu( final MenuHandler aMenuHandler, final FontGenerator aMenuFont )
         {
         myMenuHandler = aMenuHandler;
         myFont = aMenuFont;
-        setOffsetToTopAligned();
         }
 
     public final void setEntryImage( final SpriteGenerator aSpriteGenerator )
@@ -118,14 +107,9 @@ public class BasicMenu extends MultiScreen
 
     public final void onInitEverytime() throws Exception
         {
-        if ( entryPositionsMode == ENTRY_POSITIONS_CENTERED )
-            {
-            setOffsetToVerticallyCentered();
-            }
-        if ( entryPositionsMode != ENTRY_POSITIONS_MANUAL )
-            {
-            updateEntryPositions();
-            }
+        positioner.setFont( myFont );
+        positioner.shareDirectScreen( screen() );
+        positioner.updatePositions( myEntries );
         }
 
     public final void onControlTick() throws Exception
@@ -189,34 +173,6 @@ public class BasicMenu extends MultiScreen
     private BasicMenuEntry getEntry( final int aIndex )
         {
         return (BasicMenuEntry) myEntries.get( aIndex );
-        }
-
-    private void setOffsetToTopAligned()
-        {
-        verticalOffset = myFont.charHeight();
-        }
-
-    private void setOffsetToVerticallyCentered()
-        {
-        if ( myEntries.size == 0 ) return;
-
-        final float maxSpacing = screen().height() * 1f / ( myEntries.size * myFont.charHeight() );
-        lineSpacingFixed = Math.min( maxSpacing, lineSpacingFixed );
-        verticalOffset = (int) ( ( screen().height() - ( myEntries.size - 1 ) * myFont.charHeight() * lineSpacingFixed ) / 2 );
-        }
-
-    private void updateEntryPositions()
-        {
-        final int xCenter = screen().width() / 2;
-        for ( int idx = 0; idx < myEntries.size; idx++ )
-            {
-            final BasicMenuEntry entry = getEntry( idx );
-            entry.position.x = xCenter;
-            entry.position.y = (int) ( verticalOffset + idx * myFont.charHeight() * lineSpacingFixed );
-            //#if TOUCH
-            entry.updateTouchable();
-            //#endif
-            }
         }
 
     //#if TOUCH

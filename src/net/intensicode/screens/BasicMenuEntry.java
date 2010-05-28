@@ -4,7 +4,7 @@ import net.intensicode.core.*;
 import net.intensicode.graphics.*;
 import net.intensicode.util.*;
 
-public final class BasicMenuEntry extends ScreenBase
+public final class BasicMenuEntry extends ScreenBase implements PositionableEntry
     {
     public static int selectorColor = 0x807F0000;
 
@@ -24,6 +24,8 @@ public final class BasicMenuEntry extends ScreenBase
     public ImageResource image;
 
     public boolean selectedState;
+
+    public int width;
 
     public int id;
 
@@ -65,7 +67,7 @@ public final class BasicMenuEntry extends ScreenBase
             rectangle.height = fontGen.charHeight();
             }
 
-        rectangle.x = position.x - rectangle.width / 2;
+        rectangle.x = position.x + ( width - rectangle.width ) / 2;
         rectangle.y = position.y - rectangle.height / 2;
 
         if ( imageGenerator == null && image == null )
@@ -75,6 +77,18 @@ public final class BasicMenuEntry extends ScreenBase
         }
 
     //#endif
+
+    // From PositionableEntry
+
+    public final Position getPositionByReference()
+        {
+        return position;
+        }
+
+    public void setAvailableWidth( final int aWidthInPixels )
+        {
+        width = aWidthInPixels;
+        }
 
     // From ScreenBase
 
@@ -86,13 +100,15 @@ public final class BasicMenuEntry extends ScreenBase
         {
         final DirectGraphics graphics = graphics();
 
+        final int posX = position.x + width / 2;
+
         if ( imageGenerator != null && imageGenerator != SpriteGenerator.NULL )
             {
-            imageGenerator.paint( graphics, position.x, position.y, selectedState ? 1 : 0 );
+            imageGenerator.paint( graphics, posX, position.y, selectedState ? 1 : 0 );
             }
         else if ( image != null )
             {
-            graphics.drawImage( image, position.x, position.y, DirectGraphics.ALIGN_CENTER );
+            graphics.drawImage( image, posX, position.y, DirectGraphics.ALIGN_CENTER );
             }
         else if ( selectedState )
                 {
@@ -104,6 +120,10 @@ public final class BasicMenuEntry extends ScreenBase
                 graphics.fillRect( x, y, width, height );
                 }
 
-        fontGen.blitString( graphics, text, position, FontGenerator.CENTER );
+        myBlitPos.setTo( position );
+        myBlitPos.x += width / 2;
+        fontGen.blitString( graphics, text, myBlitPos, FontGenerator.CENTER );
         }
+
+    private final Position myBlitPos = new Position();
     }
