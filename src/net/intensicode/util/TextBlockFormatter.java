@@ -43,10 +43,11 @@ public final class TextBlockFormatter
 
             final char code = aText.charAt( index );
             if ( code == '\n' || code == '|' ) return index;
-            if ( code == ' ' ) lastStop = index;
 
             final int width = font.substringWidth( aText, aStartIndex, length );
             if ( width >= blockWidth ) return lastStop;
+
+            if ( code == ' ' ) lastStop = index;
 
             length++;
             }
