@@ -66,7 +66,7 @@ public final class IntensiGameHelper
 
         if ( bestChoice != null ) return bestChoice;
 
-        if ( resourcesFolders.length > 0 ) return resourcesFolders[0];
+        if ( resourcesFolders.length > 0 ) return resourcesFolders[ 0 ];
 
         return null;
         }
