@@ -54,6 +54,9 @@ public abstract class ResourcesManager
         for ( int idx = 0; idx < mySubfolders.size; idx++ )
             {
             final String subfolderPath = makeSubfolderPath( mySubfolders.get( idx ), aResourcePath );
+            //#if DEBUG_RESOURCES
+            Log.info( "trying to load resource from {}", subfolderPath );
+            //#endif
             final InputStream stream = openStreamDo( subfolderPath );
             if ( stream != null ) return stream;
             }
