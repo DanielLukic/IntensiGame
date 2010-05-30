@@ -87,8 +87,8 @@ public final class TouchGestures implements TouchEventListener
     private void setCurrentEvent( final TouchEvent aTouchEvent )
         {
         myTouchEvent = aTouchEvent;
-        myTouchX = aTouchEvent.getX() * myConfiguration.devicePixelFactorX;
-        myTouchY = aTouchEvent.getY() * myConfiguration.devicePixelFactorY;
+        myTouchX = aTouchEvent.getX();
+        myTouchY = aTouchEvent.getY();
         }
 
     private boolean isInsideHotzone()

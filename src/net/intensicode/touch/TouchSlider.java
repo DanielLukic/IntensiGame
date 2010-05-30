@@ -76,8 +76,6 @@ public final class TouchSlider implements TouchEventListener
         {
         myDeltaX = myTouchEvent.getX() - myLastPosition.x;
         myDeltaY = myTouchEvent.getY() - myLastPosition.y;
-        myDeltaX *= myConfiguration.devicePixelFactorX;
-        myDeltaY *= myConfiguration.devicePixelFactorY;
         myDeltaTimestamp = myTouchEvent.timestamp() - myLastPositionTimestamp;
         }
 
@@ -127,7 +125,7 @@ public final class TouchSlider implements TouchEventListener
         if ( rawDelta <= myConfiguration.initialStepThresholdInPixels ) return 0;
         rawDelta -= myConfiguration.initialStepThresholdInPixels;
 
-        final float stepPixels = stepSizeInPixels.width * myConfiguration.devicePixelFactor;
+        final float stepPixels = stepSizeInPixels.width;
 
         // if more than the initial step size..
         if ( rawDelta > stepSizeInPixels.width )
@@ -136,7 +134,7 @@ public final class TouchSlider implements TouchEventListener
             rawDelta = Math.max( stepPixels, rawDelta - myConfiguration.additionalStepThresholdInPixels );
             }
 
-        return (int) (sign * rawDelta / stepPixels );
+        return (int) ( sign * rawDelta / stepPixels );
         }
 
     private void startNewSlide()

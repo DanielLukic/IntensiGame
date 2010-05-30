@@ -2,51 +2,46 @@
 
 package net.intensicode.touch;
 
-import net.intensicode.util.Log;
-import net.intensicode.core.DirectScreen;
+import net.intensicode.util.Assert;
 
 public abstract class TouchConfiguration
     {
-    public static final float DEFAULT_TARGET_SMOOTHING = 0.6f;
+    public static final String[] NO_LABELS = new String[0];
 
-    public float targetSmoothing = DEFAULT_TARGET_SMOOTHING;
+    public TouchConfiguration[] presets;
 
-    public float deviceTimingFactor = 1f;
-
-    public float devicePixelFactorX = 1f;
-
-    public float devicePixelFactorY = 1f;
-
-    public float devicePixelFactor = 1f;
+    public int defaultPresetIndex;
 
     public String label;
 
 
-    public final String[] getLabels( final TouchConfiguration[] aConfigurations )
+    public final String[] getLabels()
         {
-        final String[] labels = new String[aConfigurations.length];
-        for ( int idx = 0; idx < aConfigurations.length; idx++ )
+        Assert.notNull( "presets initialized", presets );
+        if ( presets == null ) return NO_LABELS;
+
+        final String[] labels = new String[presets.length];
+        for ( int idx = 0; idx < presets.length; idx++ )
             {
-            labels[ idx ] = aConfigurations[ idx ].label;
+            labels[ idx ] = presets[ idx ].label;
             }
         return labels;
         }
 
-    public void setDeviceParameters( final DirectScreen aScreen )
+    public final void setDefaultPreset()
         {
-        devicePixelFactorX = 1f;
-        devicePixelFactorY = 1f;
-
-        final float xSmoothing = aScreen.getTargetWidth() / (float) aScreen.getNativeWidth();
-        final float ySmoothing = aScreen.getTargetHeight() / (float) aScreen.getNativeHeight();
-
-        devicePixelFactorX = targetSmoothing / xSmoothing;
-        devicePixelFactorY = targetSmoothing / ySmoothing;
-
-        devicePixelFactor = ( devicePixelFactorX + devicePixelFactorY ) / 2;
-
-        final float xFactor = devicePixelFactorX * xSmoothing;
-        final float yFactor = devicePixelFactorY * ySmoothing;
-        Log.info( "device pixel scaling factor: {}/{}", xFactor, yFactor );
+        setPresetByIndex( defaultPresetIndex );
         }
+
+    public final void setPresetByIndex( final int aPresetIndex )
+        {
+        Assert.notNull( "presets initialized", presets );
+        if ( presets == null || presets.length == 0 ) return;
+
+        final int maximumIndex = presets.length - 1;
+        final int index = Math.max( 0, Math.min( maximumIndex, aPresetIndex ) );
+        setTo( presets[ index ] );
+        }
+
+    public abstract void setTo( final TouchConfiguration aNewConfiguration );
     }

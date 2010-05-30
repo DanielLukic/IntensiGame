@@ -3,42 +3,24 @@
 package net.intensicode.touch;
 
 import net.intensicode.core.Configuration;
-import net.intensicode.util.*;
+import net.intensicode.util.Size;
 
 public final class TouchControlsConfiguration extends TouchConfiguration
     {
-    public final void setPresetByIndex( final int aPresetIndex )
-        {
-        Assert.notNull( "presets initialized", presets );
-        Assert.notEquals( "presets filled", 0, presets.length );
-        if ( presets == null || presets.length == 0 ) return;
-
-        final int maximumIndex = presets.length - 1;
-        final int index = Math.max( 0, Math.min( maximumIndex, aPresetIndex ) );
-        setTo( presets[index] );
-        }
-
-    public TouchControlsConfiguration[] presets;
-
-
-    public final String[] getLabels()
-        {
-        return super.getLabels( presets );
-        }
-
-    public final void setTo( final TouchControlsConfiguration aNewConfiguration )
+    public final void setTo( final TouchConfiguration aNewConfiguration )
         {
         label = aNewConfiguration.label;
-        deadZoneSize.setTo( aNewConfiguration.deadZoneSize );
-        dragStepSize.setTo( aNewConfiguration.dragStepSize );
-        gestureDirectionIgnoreFactor = aNewConfiguration.gestureDirectionIgnoreFactor;
-        gestureMinThresholdInMillis = aNewConfiguration.gestureMinThresholdInMillis;
-        gestureMaxThresholdInMillis = aNewConfiguration.gestureMaxThresholdInMillis;
-        dragThresholdInMillis = aNewConfiguration.dragThresholdInMillis;
-        dragThresholdInPixels.setTo( aNewConfiguration.dragThresholdInPixels );
-        speedLowBoundary = aNewConfiguration.speedLowBoundary;
-        speedHighBoundary = aNewConfiguration.speedHighBoundary;
-        swipeStartsAction = aNewConfiguration.swipeStartsAction;
+        final TouchControlsConfiguration newControlsConfiguration = (TouchControlsConfiguration) aNewConfiguration;
+        deadZoneSize.setTo( newControlsConfiguration.deadZoneSize );
+        dragStepSize.setTo( newControlsConfiguration.dragStepSize );
+        gestureDirectionIgnoreFactor = newControlsConfiguration.gestureDirectionIgnoreFactor;
+        gestureMinThresholdInMillis = newControlsConfiguration.gestureMinThresholdInMillis;
+        gestureMaxThresholdInMillis = newControlsConfiguration.gestureMaxThresholdInMillis;
+        dragThresholdInMillis = newControlsConfiguration.dragThresholdInMillis;
+        dragThresholdInPixels.setTo( newControlsConfiguration.dragThresholdInPixels );
+        speedLowBoundary = newControlsConfiguration.speedLowBoundary;
+        speedHighBoundary = newControlsConfiguration.speedHighBoundary;
+        swipeStartsAction = newControlsConfiguration.swipeStartsAction;
         }
 
     public final void initFromProperties( final Configuration aProperties, final String aPresetName )
@@ -64,19 +46,24 @@ public final class TouchControlsConfiguration extends TouchConfiguration
     public final void initDefaults()
         {
         presets = new TouchControlsConfiguration[1];
+        presets[ 0 ] = createDefaultConfiguration();
+        }
 
-        presets[ 0 ] = new TouchControlsConfiguration();
-        presets[ 0 ].label = "DEFAULT";
-        presets[ 0 ].deadZoneSize.setTo( 13, 13 );
-        presets[ 0 ].dragStepSize.setTo( 18, 18 );
-        presets[ 0 ].gestureDirectionIgnoreFactor = 1.8f;
-        presets[ 0 ].gestureMinThresholdInMillis = 25;
-        presets[ 0 ].gestureMaxThresholdInMillis = 333;
-        presets[ 0 ].dragThresholdInMillis = 100;
-        presets[ 0 ].dragThresholdInPixels.setTo( 75, 75 );
-        presets[ 0 ].speedLowBoundary = 0.3f;
-        presets[ 0 ].speedHighBoundary = 1.7f;
-        presets[ 0 ].swipeStartsAction = true;
+    public static TouchControlsConfiguration createDefaultConfiguration()
+        {
+        final TouchControlsConfiguration configuration = new TouchControlsConfiguration();
+        configuration.label = "DEFAULT";
+        configuration.deadZoneSize.setTo( 13, 13 );
+        configuration.dragStepSize.setTo( 18, 18 );
+        configuration.gestureDirectionIgnoreFactor = 1.8f;
+        configuration.gestureMinThresholdInMillis = 25;
+        configuration.gestureMaxThresholdInMillis = 333;
+        configuration.dragThresholdInMillis = 100;
+        configuration.dragThresholdInPixels.setTo( 75, 75 );
+        configuration.speedLowBoundary = 0.3f;
+        configuration.speedHighBoundary = 1.7f;
+        configuration.swipeStartsAction = true;
+        return configuration;
         }
 
 

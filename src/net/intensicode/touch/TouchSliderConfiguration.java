@@ -6,23 +6,16 @@ import net.intensicode.core.Configuration;
 
 public final class TouchSliderConfiguration extends TouchConfiguration
     {
-    public TouchSliderConfiguration[] presets;
-
-
-    public final String[] getLabels()
-        {
-        return super.getLabels( presets );
-        }
-
-    public final void setTo( final TouchSliderConfiguration aNewConfiguration )
+    public final void setTo( final TouchConfiguration aNewConfiguration )
         {
         label = aNewConfiguration.label;
-        slideStartThresholdInMillis = aNewConfiguration.slideStartThresholdInMillis;
-        slideStartThresholdInPixels = aNewConfiguration.slideStartThresholdInPixels;
-        slideMoveThresholdInPixels = aNewConfiguration.slideMoveThresholdInPixels;
-        newSlideStartThresholdInMillis = aNewConfiguration.newSlideStartThresholdInMillis;
-        initialStepThresholdInPixels = aNewConfiguration.initialStepThresholdInPixels;
-        additionalStepThresholdInPixels = aNewConfiguration.additionalStepThresholdInPixels;
+        final TouchSliderConfiguration newSliderConfiguration = (TouchSliderConfiguration) aNewConfiguration;
+        slideStartThresholdInMillis = newSliderConfiguration.slideStartThresholdInMillis;
+        slideStartThresholdInPixels = newSliderConfiguration.slideStartThresholdInPixels;
+        slideMoveThresholdInPixels = newSliderConfiguration.slideMoveThresholdInPixels;
+        newSlideStartThresholdInMillis = newSliderConfiguration.newSlideStartThresholdInMillis;
+        initialStepThresholdInPixels = newSliderConfiguration.initialStepThresholdInPixels;
+        additionalStepThresholdInPixels = newSliderConfiguration.additionalStepThresholdInPixels;
         }
 
     public final void initFromProperties( final Configuration aProperties, final String aPresetName )
@@ -39,52 +32,49 @@ public final class TouchSliderConfiguration extends TouchConfiguration
 
     public final void initDefaults()
         {
-        presets = new TouchSliderConfiguration[5];
+        presets = new TouchSliderConfiguration[3];
+        presets[ 0 ] = createLowSensitivityConfiguration();
+        presets[ 1 ] = createMediumSensitivityConfiguration();
+        presets[ 2 ] = createHighSensitivityConfiguration();
+        }
 
-        presets[ 0 ] = new TouchSliderConfiguration();
-        presets[ 0 ].label = "LOWER";
-        presets[ 0 ].slideStartThresholdInMillis = 40;
-        presets[ 0 ].slideStartThresholdInPixels = 25;
-        presets[ 0 ].slideMoveThresholdInPixels = 20;
-        presets[ 0 ].newSlideStartThresholdInMillis = 50;
-        presets[ 0 ].initialStepThresholdInPixels = 25;
-        presets[ 0 ].additionalStepThresholdInPixels = 120;
+    public static TouchSliderConfiguration createLowSensitivityConfiguration()
+        {
+        final TouchSliderConfiguration configuration = new TouchSliderConfiguration();
+        configuration.label = "LOW";
+        configuration.slideStartThresholdInMillis = 30;
+        configuration.slideStartThresholdInPixels = 25;
+        configuration.slideMoveThresholdInPixels = 15;
+        configuration.newSlideStartThresholdInMillis = 45;
+        configuration.initialStepThresholdInPixels = 20;
+        configuration.additionalStepThresholdInPixels = 100;
+        return configuration;
+        }
 
-        presets[ 1 ] = new TouchSliderConfiguration();
-        presets[ 1 ].label = "LOW";
-        presets[ 1 ].slideStartThresholdInMillis = 30;
-        presets[ 1 ].slideStartThresholdInPixels = 25;
-        presets[ 1 ].slideMoveThresholdInPixels = 15;
-        presets[ 1 ].newSlideStartThresholdInMillis = 45;
-        presets[ 1 ].initialStepThresholdInPixels = 20;
-        presets[ 1 ].additionalStepThresholdInPixels = 100;
+    public static TouchSliderConfiguration createMediumSensitivityConfiguration()
+        {
+        final TouchSliderConfiguration configuration = new TouchSliderConfiguration();
+        configuration.label = "MEDIUM";
+        configuration.slideStartThresholdInMillis = 25;
+        configuration.slideStartThresholdInPixels = 20;
+        configuration.slideMoveThresholdInPixels = 10;
+        configuration.newSlideStartThresholdInMillis = 40;
+        configuration.initialStepThresholdInPixels = 20;
+        configuration.additionalStepThresholdInPixels = 100;
+        return configuration;
+        }
 
-        presets[ 2 ] = new TouchSliderConfiguration();
-        presets[ 2 ].label = "MEDIUM";
-        presets[ 2 ].slideStartThresholdInMillis = 25;
-        presets[ 2 ].slideStartThresholdInPixels = 20;
-        presets[ 2 ].slideMoveThresholdInPixels = 10;
-        presets[ 2 ].newSlideStartThresholdInMillis = 40;
-        presets[ 2 ].initialStepThresholdInPixels = 20;
-        presets[ 2 ].additionalStepThresholdInPixels = 100;
-
-        presets[ 3 ] = new TouchSliderConfiguration();
-        presets[ 3 ].label = "HIGH";
-        presets[ 3 ].slideStartThresholdInMillis = 25;
-        presets[ 3 ].slideStartThresholdInPixels = 15;
-        presets[ 3 ].slideMoveThresholdInPixels = 10;
-        presets[ 3 ].newSlideStartThresholdInMillis = 35;
-        presets[ 3 ].initialStepThresholdInPixels = 20;
-        presets[ 3 ].additionalStepThresholdInPixels = 60;
-
-        presets[ 4 ] = new TouchSliderConfiguration();
-        presets[ 4 ].label = "HIGHER";
-        presets[ 4 ].slideStartThresholdInMillis = 25;
-        presets[ 4 ].slideStartThresholdInPixels = 10;
-        presets[ 4 ].slideMoveThresholdInPixels = 8;
-        presets[ 4 ].newSlideStartThresholdInMillis = 30;
-        presets[ 4 ].initialStepThresholdInPixels = 15;
-        presets[ 4 ].additionalStepThresholdInPixels = 40;
+    public static TouchSliderConfiguration createHighSensitivityConfiguration()
+        {
+        final TouchSliderConfiguration configuration = new TouchSliderConfiguration();
+        configuration.label = "HIGH";
+        configuration.slideStartThresholdInMillis = 25;
+        configuration.slideStartThresholdInPixels = 15;
+        configuration.slideMoveThresholdInPixels = 10;
+        configuration.newSlideStartThresholdInMillis = 35;
+        configuration.initialStepThresholdInPixels = 20;
+        configuration.additionalStepThresholdInPixels = 60;
+        return configuration;
         }
 
 

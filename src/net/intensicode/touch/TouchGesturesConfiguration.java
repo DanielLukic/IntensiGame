@@ -6,22 +6,15 @@ import net.intensicode.core.Configuration;
 
 public final class TouchGesturesConfiguration extends TouchConfiguration
     {
-    public TouchGesturesConfiguration[] presets;
-
-
-    public final String[] getLabels()
-        {
-        return super.getLabels( presets );
-        }
-
-    public final void setTo( final TouchGesturesConfiguration aNewConfiguration )
+    public final void setTo( final TouchConfiguration aNewConfiguration )
         {
         label = aNewConfiguration.label;
-        gestureStartThresholdInMillis = aNewConfiguration.gestureStartThresholdInMillis;
-        breakTimeThresholdInMillis = aNewConfiguration.breakTimeThresholdInMillis;
-        samePositionThresholdInPixels = aNewConfiguration.samePositionThresholdInPixels;
-        strokeThresholdInPixels = aNewConfiguration.strokeThresholdInPixels;
-        directionIgnoreFactor = aNewConfiguration.directionIgnoreFactor;
+        final TouchGesturesConfiguration newGesturesConfiguration = (TouchGesturesConfiguration) aNewConfiguration;
+        gestureStartThresholdInMillis = newGesturesConfiguration.gestureStartThresholdInMillis;
+        breakTimeThresholdInMillis = newGesturesConfiguration.breakTimeThresholdInMillis;
+        samePositionThresholdInPixels = newGesturesConfiguration.samePositionThresholdInPixels;
+        strokeThresholdInPixels = newGesturesConfiguration.strokeThresholdInPixels;
+        directionIgnoreFactor = newGesturesConfiguration.directionIgnoreFactor;
         }
 
     public final void initFromProperties( final Configuration aProperties, final String aPresetName )
@@ -37,57 +30,56 @@ public final class TouchGesturesConfiguration extends TouchConfiguration
 
     public final void initDefaults()
         {
-        presets = new TouchGesturesConfiguration[5];
+        presets = new TouchGesturesConfiguration[3];
+        presets[ 0 ] = createLowSensitivityConfiguration();
+        presets[ 2 ] = createMediumSensitivityConfiguration();
+        presets[ 2 ] = createHighSensitivityConfiguration();
+        }
 
-        presets[ 0 ] = new TouchGesturesConfiguration();
-        presets[ 0 ].label = "LOWER";
-        presets[ 0 ].gestureStartThresholdInMillis = 40;
-        presets[ 0 ].breakTimeThresholdInMillis = 120;
-        presets[ 0 ].samePositionThresholdInPixels = 25;
-        presets[ 0 ].strokeThresholdInPixels = 20;
-        presets[ 0 ].directionIgnoreFactor = 1.9f;
+    public static TouchGesturesConfiguration createLowSensitivityConfiguration()
+        {
+        final TouchGesturesConfiguration configuration = new TouchGesturesConfiguration();
+        configuration.label = "LOW";
+        configuration.gestureStartThresholdInMillis = 40;
+        configuration.breakTimeThresholdInMillis = 120;
+        configuration.samePositionThresholdInPixels = 25;
+        configuration.strokeThresholdInPixels = 20;
+        configuration.directionIgnoreFactor = 1.9f;
+        return configuration;
+        }
 
-        presets[ 1 ] = new TouchGesturesConfiguration();
-        presets[ 1 ].label = "LOW";
-        presets[ 1 ].gestureStartThresholdInMillis = 30;
-        presets[ 1 ].breakTimeThresholdInMillis = 100;
-        presets[ 1 ].samePositionThresholdInPixels = 20;
-        presets[ 1 ].strokeThresholdInPixels = 10;
-        presets[ 1 ].directionIgnoreFactor = 1.9f;
+    public static TouchGesturesConfiguration createMediumSensitivityConfiguration()
+        {
+        final TouchGesturesConfiguration configuration = new TouchGesturesConfiguration();
+        configuration.label = "MEDIUM";
+        configuration.gestureStartThresholdInMillis = 25;
+        configuration.breakTimeThresholdInMillis = 80;
+        configuration.samePositionThresholdInPixels = 12;
+        configuration.strokeThresholdInPixels = 6;
+        configuration.directionIgnoreFactor = 1.85f;
+        return configuration;
+        }
 
-        presets[ 2 ] = new TouchGesturesConfiguration();
-        presets[ 2 ].label = "MEDIUM";
-        presets[ 2 ].gestureStartThresholdInMillis = 25;
-        presets[ 2 ].breakTimeThresholdInMillis = 80;
-        presets[ 2 ].samePositionThresholdInPixels = 12;
-        presets[ 2 ].strokeThresholdInPixels = 6;
-        presets[ 2 ].directionIgnoreFactor = 1.85f;
-
-        presets[ 3 ] = new TouchGesturesConfiguration();
-        presets[ 3 ].label = "HIGH";
-        presets[ 3 ].gestureStartThresholdInMillis = 25;
-        presets[ 3 ].breakTimeThresholdInMillis = 60;
-        presets[ 3 ].samePositionThresholdInPixels = 10;
-        presets[ 3 ].strokeThresholdInPixels = 5;
-        presets[ 3 ].directionIgnoreFactor = 1.75f;
-
-        presets[ 4 ] = new TouchGesturesConfiguration();
-        presets[ 4 ].label = "HIGHER";
-        presets[ 4 ].gestureStartThresholdInMillis = 25;
-        presets[ 4 ].breakTimeThresholdInMillis = 40;
-        presets[ 4 ].samePositionThresholdInPixels = 8;
-        presets[ 4 ].strokeThresholdInPixels = 4;
-        presets[ 4 ].directionIgnoreFactor = 1.75f;
+    public static TouchGesturesConfiguration createHighSensitivityConfiguration()
+        {
+        final TouchGesturesConfiguration configuration = new TouchGesturesConfiguration();
+        configuration.label = "HIGH";
+        configuration.gestureStartThresholdInMillis = 25;
+        configuration.breakTimeThresholdInMillis = 40;
+        configuration.samePositionThresholdInPixels = 8;
+        configuration.strokeThresholdInPixels = 4;
+        configuration.directionIgnoreFactor = 1.75f;
+        return configuration;
         }
 
 
-    public int gestureStartThresholdInMillis;
+    public int gestureStartThresholdInMillis = 25;
 
-    public int breakTimeThresholdInMillis;
+    public int breakTimeThresholdInMillis = 80;
 
-    public int samePositionThresholdInPixels;
+    public int samePositionThresholdInPixels = 12;
 
-    public int strokeThresholdInPixels;
+    public int strokeThresholdInPixels = 6;
 
-    public float directionIgnoreFactor;
+    public float directionIgnoreFactor = 1.85f;
     }
