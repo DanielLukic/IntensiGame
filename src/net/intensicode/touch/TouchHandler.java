@@ -8,8 +8,15 @@ import net.intensicode.util.*;
 
 public abstract class TouchHandler extends ScreenBase
     {
+    public final TouchSliderConfiguration sharedSliderConfiguration = new TouchSliderConfiguration();
+
     public boolean globalControlsActive;
 
+
+    public final TouchSlider createNewSlider()
+        {
+        return new TouchSlider( sharedSliderConfiguration );
+        }
 
     public synchronized final void removeAllControls()
         {
