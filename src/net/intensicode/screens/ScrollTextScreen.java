@@ -1,10 +1,10 @@
 package net.intensicode.screens;
 
-import net.intensicode.core.*;
+import net.intensicode.core.DirectGraphics;
 import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.*;
 
-public final class ScrollTextScreen extends ScreenBase
+public final class ScrollTextScreen extends MultiScreen
     {
     public static final int ALIGN_LEFT = 0;
 
@@ -26,10 +26,27 @@ public final class ScrollTextScreen extends ScreenBase
 
     public boolean handleKeys;
 
-    public FontGenerator font;
-
     public String text;
 
+
+    public ScrollTextScreen( final FontGenerator aTextFont )
+        {
+        Assert.notNull( "valid font", aTextFont );
+        myFont = aTextFont;
+        myIndicators = new ScrollTextIndicators( myFont );
+        }
+
+    public final void changeIndicatorFont( final FontGenerator aFontGenerator )
+        {
+        myIndicators.changeFont( aFontGenerator );
+        }
+
+    // From MultiScreen
+
+    public void onInitOnce() throws Exception
+        {
+        addScreen( myIndicators );
+        }
 
     public void onInitEverytime() throws Exception
         {
@@ -42,16 +59,21 @@ public final class ScrollTextScreen extends ScreenBase
         {
         if ( someDataMissing() ) return;
 
+        super.onControlTick();
+
+        setVisibility( myIndicators, showIndicators );
+
+        updateIndicators();
+
         if ( handleKeys ) scrollWithKeys();
         //#if TOUCH
         if ( useTouchSlider ) scrollWithSlider();
-        if ( showIndicators ) tickTouchableIndicators();
         //#endif
         }
 
     private boolean someDataMissing()
         {
-        return font == null || text == null || text.length() == 0;
+        return myFont == null || text == null || text.length() == 0;
         }
 
     private void scrollWithKeys()
@@ -67,184 +89,20 @@ public final class ScrollTextScreen extends ScreenBase
 
     private void scrollDown()
         {
-        final int previousIndex = myScrollIndex;
+        final int linesOnScreen = determineTextRect().height / myFont.charHeight();
+        final int maxIndex = myTextLines.size - linesOnScreen + ( showIndicators ? 2 : 0 );
 
-        myScrollIndex++;
-
-        updateTextLinesIfNecessary();
-
-        final int textHeightFromNewIndex = determineTextHeight();
-        final int maxLastLineHeight = font.charHeight() * 3 / 2;
-        final Rectangle textRect = determineTextRect();
-        if ( textHeightFromNewIndex + maxLastLineHeight >= textRect.height ) return;
-
-        myScrollIndex = previousIndex;
-        }
-
-    private int determineTextHeight()
-        {
-        updateTextLinesIfNecessary();
-
-        int textHeight = 0;
-
-        final int fontHeight = font.charHeight();
-        for ( int idx = myScrollIndex; idx < myTextLines.size; idx++ )
-            {
-            final String line = (String) myTextLines.get( idx );
-            if ( line.endsWith( "\n" ) || line.endsWith( "|" ) ) textHeight += fontHeight * 3 / 2;
-            else textHeight += fontHeight;
-            }
-
-        return textHeight;
-        }
-
-    //#if TOUCH
-
-    private void scrollWithSlider()
-        {
-        if ( myTouchSlider == null ) initTouchSliderIfNecessary();
-
-        final int fontHeight = font.charHeight();
-        myTouchSlider.stepSizeInPixels.setTo( fontHeight, fontHeight );
-
-        final Rectangle textRect = determineTextRect();
-        myTouchSlider.touchableArea.setTo( textRect );
-
-        final int steps = myTouchSlider.slideSteps.y;
-        if ( steps == 0 ) return;
-
-        myScrollIndex -= steps;
-        if ( myScrollIndex < 0 )
-            {
-            myScrollIndex = 0;
-            }
-
-        updateTextLinesIfNecessary();
-
-        final int textHeightFromNewIndex = determineTextHeight();
-        final int maxLastLineHeight = font.charHeight() * 3 / 2;
-        if ( textHeightFromNewIndex + maxLastLineHeight < textRect.height )
-            {
-            myScrollIndex += steps;
-            }
-
-        myTouchSlider.clearSlideSteps();
-        }
-
-    private void initTouchSliderIfNecessary()
-        {
-        if ( myTouchSlider != null ) return;
-
-        myTouchSlider = new net.intensicode.touch.TouchSlider( new net.intensicode.touch.TouchSliderConfiguration() );
-        touch().addListener( myTouchSlider );
-        }
-
-    private void tickTouchableIndicators()
-        {
-        final Rectangle textRect = determineTextRect();
-
-        if ( myScrollIndex > 0 )
-            {
-            if ( myUpIndicator == null )
-                {
-                myBlitPos.x = textRect.x + textRect.width / 2;
-                myBlitPos.y = textRect.y - font.charHeight();
-                myUpIndicator = new net.intensicode.touch.TouchableArea();
-                myUpIndicator.associatedKeyID = KeysHandler.UP;
-                myUpIndicator.rectangle.setCenterAndSize( myBlitPos, font.stringWidth( UP_INDICATOR_LABEL ), font.charHeight() );
-                }
-            touch().addLocalControl( myUpIndicator );
-            }
-
-        final int textHeightFromNewIndex = determineTextHeight();
-        if ( textHeightFromNewIndex >= textRect.height )
-            {
-            if ( myDownIndicator == null )
-                {
-                myBlitPos.x = textRect.x + textRect.width / 2;
-                myBlitPos.y = textRect.y + textRect.height + font.charHeight();
-                myDownIndicator = new net.intensicode.touch.TouchableArea();
-                myDownIndicator.associatedKeyID = KeysHandler.DOWN;
-                myDownIndicator.rectangle.setCenterAndSize( myBlitPos, font.stringWidth( DOWN_INDICATOR_LABEL ), font.charHeight() );
-                }
-            touch().addLocalControl( myDownIndicator );
-            }
-        }
-
-    private net.intensicode.touch.TouchSlider myTouchSlider;
-
-    private net.intensicode.touch.TouchableArea myUpIndicator;
-
-    private net.intensicode.touch.TouchableArea myDownIndicator;
-
-    //#endif
-
-    public final void onDrawFrame()
-        {
-        if ( someDataMissing() ) return;
-
-        updateTextLinesIfNecessary();
-
-        final Rectangle textRect = determineTextRect();
-        blitLines( textRect );
-
-        if ( showIndicators ) blitIndicators( textRect );
-        }
-
-    private void blitLines( final Rectangle aTextRect )
-        {
-        final int maxLowerBoundary = aTextRect.y + aTextRect.height;
-
-        final int fontHeight = font.charHeight();
-
-        final DirectGraphics graphics = graphics();
-
-        myBlitPos.x = aTextRect.x;
-        myBlitPos.y = aTextRect.y;
-
-        for ( int idx = myScrollIndex; idx < myTextLines.size; idx++ )
-            {
-            final String line = (String) myTextLines.get( idx );
-
-            myBlitPos.x = aTextRect.x;
-            if ( alignment != ALIGN_LEFT ) myBlitPos.x += ( aTextRect.width - font.stringWidth( line ) ) / alignment;
-
-            font.blitString( graphics, line, myBlitPos, FontGenerator.TOP_LEFT );
-
-            if ( line.endsWith( "\n" ) || line.endsWith( "|" ) ) myBlitPos.y += fontHeight * 3 / 2;
-            else myBlitPos.y += fontHeight;
-
-            final int nextLowerBoundary = myBlitPos.y + fontHeight;
-            if ( nextLowerBoundary >= maxLowerBoundary ) break;
-            }
-        }
-
-    private void blitIndicators( final Rectangle aTextRect )
-        {
-        if ( myScrollIndex > 0 )
-            {
-            myBlitPos.x = aTextRect.x + aTextRect.width / 2;
-            myBlitPos.y = aTextRect.y - font.charHeight() * 2 / 3;
-            font.blitString( graphics(), UP_INDICATOR_LABEL, myBlitPos, FontGenerator.CENTER );
-            }
-
-        final int textHeightFromNewIndex = determineTextHeight();
-        if ( textHeightFromNewIndex >= aTextRect.height )
-            {
-            myBlitPos.x = aTextRect.x + aTextRect.width / 2;
-            myBlitPos.y = aTextRect.y + aTextRect.height + font.charHeight() * 2 / 3;
-            font.blitString( graphics(), DOWN_INDICATOR_LABEL, myBlitPos, FontGenerator.CENTER );
-            }
+        if ( myScrollIndex < maxIndex ) myScrollIndex++;
+        else myScrollIndex = maxIndex;
         }
 
     private void updateTextLinesIfNecessary()
         {
         final Rectangle textRect = determineTextRect();
-        if ( myKnownWidth == textRect.width && font == myKnownFont && text.equals( myKnownText ) ) return;
+        if ( myKnownWidth == textRect.width && text.equals( myKnownText ) ) return;
         Log.debug( "breaking text into lines - GC heavy operation - avoid if possible" );
-        myTextLines = StringUtils.breakIntoLines( text, font, textRect.width );
+        myTextLines = StringUtils.breakIntoLines( text, myFont, textRect.width );
         myKnownText = text;
-        myKnownFont = font;
         myKnownWidth = textRect.width;
         }
 
@@ -256,6 +114,112 @@ public final class ScrollTextScreen extends ScreenBase
         return myFullScreenRect;
         }
 
+    //#if TOUCH
+
+    private void scrollWithSlider()
+        {
+        if ( myTouchSlider == null ) initTouchSliderIfNecessary();
+
+        final int fontHeight = myFont.charHeight();
+        myTouchSlider.stepSizeInPixels.setTo( fontHeight, fontHeight );
+
+        final Rectangle textRect = determineTextRect();
+        myTouchSlider.touchableArea.setTo( textRect );
+
+        final int steps = myTouchSlider.slideSteps.y;
+        if ( steps == 0 ) return;
+
+        updateTextLinesIfNecessary();
+
+        if ( steps > 0 )
+            {
+            for ( int idx = 0; idx < steps; idx++ )
+                {
+                scrollUp();
+                }
+            }
+        else if ( steps < 0 )
+            {
+            for ( int idx = 0; idx < Math.abs( steps ); idx++ )
+                {
+                scrollDown();
+                }
+            }
+
+        myTouchSlider.clearSlideSteps();
+        }
+
+    private void initTouchSliderIfNecessary()
+        {
+        if ( myTouchSlider != null ) return;
+
+        myTouchSlider = touch().createNewSlider();
+
+        touch().addListener( myTouchSlider );
+        }
+
+    private net.intensicode.touch.TouchSlider myTouchSlider;
+
+    //#endif
+
+    private void updateIndicators()
+        {
+        final Rectangle rect = determineTextRect();
+        myIndicators.upPosition.x = rect.x + rect.width / 2;
+        myIndicators.upPosition.y = rect.y + myFont.charHeight() / 2;
+
+        myIndicators.downPosition.x = rect.x + rect.width / 2;
+        myIndicators.downPosition.y = rect.y + rect.height - myFont.charHeight() / 2;
+
+        updateTextLinesIfNecessary();
+
+        final int linesOnScreen = determineTextRect().height / myFont.charHeight();
+        final int maxIndex = myTextLines.size - linesOnScreen + ( showIndicators ? 2 : 0 );
+
+        myIndicators.showUpIndicator = myScrollIndex > 0;
+        myIndicators.showDownIndicator = myScrollIndex < maxIndex;
+        }
+
+    public final void onDrawFrame()
+        {
+        if ( someDataMissing() ) return;
+
+        super.onDrawFrame();
+
+        updateTextLinesIfNecessary();
+
+        final Rectangle textRect = determineTextRect();
+        blitLines( textRect );
+        }
+
+    private void blitLines( final Rectangle aTextRect )
+        {
+        final int fontHeight = myFont.charHeight();
+
+        final DirectGraphics graphics = graphics();
+
+        myBlitPos.x = aTextRect.x;
+        myBlitPos.y = aTextRect.y;
+
+        if ( showIndicators ) myBlitPos.y += myFont.charHeight();
+
+        final int maxLowerBoundary = aTextRect.y + aTextRect.height - ( showIndicators ? fontHeight : 0 );
+
+        for ( int idx = myScrollIndex; idx < myTextLines.size; idx++ )
+            {
+            final String line = (String) myTextLines.get( idx );
+
+            myBlitPos.x = aTextRect.x;
+            if ( alignment != ALIGN_LEFT ) myBlitPos.x += ( aTextRect.width - myFont.stringWidth( line ) ) / alignment;
+
+            myFont.blitString( graphics, line, myBlitPos, FontGenerator.TOP_LEFT );
+            myBlitPos.y += fontHeight;
+
+            final int nextLowerBoundary = myBlitPos.y + fontHeight;
+            if ( nextLowerBoundary >= maxLowerBoundary ) break;
+            }
+        }
+
 
     private int myScrollIndex;
 
@@ -263,15 +227,13 @@ public final class ScrollTextScreen extends ScreenBase
 
     private String myKnownText;
 
-    private FontGenerator myKnownFont;
-
     private DynamicArray myTextLines;
 
     private Rectangle myFullScreenRect;
 
+    private ScrollTextIndicators myIndicators;
+
+    private final FontGenerator myFont;
+
     private final Position myBlitPos = new Position();
-
-    private static final String UP_INDICATOR_LABEL = "[UP]";
-
-    private static final String DOWN_INDICATOR_LABEL = "[DOWN]";
     }
