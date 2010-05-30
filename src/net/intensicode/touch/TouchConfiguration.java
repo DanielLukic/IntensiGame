@@ -10,7 +10,7 @@ public abstract class TouchConfiguration
 
     public TouchConfiguration[] presets;
 
-    public int defaultPresetIndex;
+    public String defaultPreset;
 
     public String label;
 
@@ -30,7 +30,10 @@ public abstract class TouchConfiguration
 
     public final void setDefaultPreset()
         {
-        setPresetByIndex( defaultPresetIndex );
+        for ( int idx = 0; idx < presets.length; idx++ )
+            {
+            if ( presets[ idx ].label.equals( defaultPreset ) ) setTo( presets[ idx ] );
+            }
         }
 
     public final void setPresetByIndex( final int aPresetIndex )
