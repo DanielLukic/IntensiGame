@@ -25,7 +25,7 @@ public final class TouchControlsConfiguration extends TouchConfiguration
 
     public final void initFromProperties( final Configuration aProperties, final String aPresetName )
         {
-        final String prefix = "gestures." + aPresetName;
+        final String prefix = "controls." + aPresetName;
         label = aProperties.readString( prefix, "label", aPresetName );
 
         deadZoneSize.width = aProperties.readInt( prefix, "deadZoneSize.width", 13 );
