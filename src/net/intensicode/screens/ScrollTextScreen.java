@@ -3,6 +3,7 @@ package net.intensicode.screens;
 import net.intensicode.core.DirectGraphics;
 import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.*;
+import net.intensicode.touch.*;
 
 public final class ScrollTextScreen extends MultiScreen
     {
@@ -153,7 +154,15 @@ public final class ScrollTextScreen extends MultiScreen
         {
         if ( myTouchSlider != null ) return;
 
-        myTouchSlider = touch().createNewSlider();
+        final TouchSliderConfiguration configuration = new TouchSliderConfiguration();
+        configuration.setTo( touch().sharedSliderConfiguration );
+        configuration.additionalStepThresholdInPixels = myFont.charHeight();
+        configuration.initialStepThresholdInPixels = 0;
+        configuration.newSlideStartThresholdInMillis = 2500;
+        configuration.slideMoveThresholdInPixels = 0;
+        configuration.slideStartThresholdInMillis = 25;
+        configuration.slideStartThresholdInPixels = 0;
+        myTouchSlider = new TouchSlider( configuration );
 
         touch().addListener( myTouchSlider );
         }
