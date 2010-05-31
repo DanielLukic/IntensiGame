@@ -16,7 +16,7 @@ public final class DragThresholdInPixels implements ConfigurableIntegerValue
 
     public final String getTitle()
         {
-        return "Stroke Threshold";
+        return "dragThresholdInPixels";
         }
 
     public final String getInfoText()
