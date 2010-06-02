@@ -225,11 +225,11 @@ public class BasicMenu extends MultiScreen
 
     private int mySelectedEntryIndex;
 
+    private SpriteGenerator myEntryImageGenerator;
+
     private final FontGenerator myFont;
 
     private final MenuHandler myMenuHandler;
 
     private final DynamicArray myEntries = new DynamicArray();
-
-    private SpriteGenerator myEntryImageGenerator;
     }
