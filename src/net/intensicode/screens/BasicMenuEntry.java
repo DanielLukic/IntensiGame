@@ -94,11 +94,17 @@ public class BasicMenuEntry extends ScreenBase implements PositionableEntry
 
         if ( imageGenerator != null && imageGenerator != SpriteGenerator.NULL )
             {
-            imageGenerator.paint( graphics, posX, position.y, selected ? 1 : 0 );
+            final int x = posX - imageGenerator.getWidth() / 2;
+            final int y = position.y - imageGenerator.getHeight() / 2;
+
+            imageGenerator.paint( graphics, x, y, selected ? 1 : 0 );
             }
         else if ( image != null )
             {
-            graphics.drawImage( image, posX, position.y, DirectGraphics.ALIGN_CENTER );
+            final int x = posX - image.getWidth() / 2;
+            final int y = position.y - image.getHeight() / 2;
+
+            graphics.drawImage( image, x, y, DirectGraphics.ALIGN_CENTER );
             }
         else if ( selected )
                 {
