@@ -2,7 +2,7 @@ package net.intensicode.screens;
 
 import net.intensicode.core.*;
 import net.intensicode.graphics.FontGenerator;
-import net.intensicode.util.Position;
+import net.intensicode.util.*;
 
 public class SoftkeysScreen extends ScreenBase
     {
@@ -11,6 +11,8 @@ public class SoftkeysScreen extends ScreenBase
 
     public SoftkeysScreen( final FontGenerator aFont )
         {
+        Assert.notNull( "font must not be null", aFont );
+
         myFontGen = aFont;
         //#if TOUCH
         myLeftTouchRect.associatedKeyID = KeysHandler.LEFT_SOFT;
