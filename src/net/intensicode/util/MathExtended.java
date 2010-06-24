@@ -25,6 +25,11 @@ public class MathExtended
         return aDegrees * TO_RADIANSd;
         }
 
+    public static float frac( final float aValue )
+        {
+        return aValue - (int) aValue;
+        }
+
     public static int round( final float aValue )
         {
         if ( aValue > 0 ) return (int) ( aValue + 0.5f );
