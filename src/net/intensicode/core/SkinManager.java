@@ -211,8 +211,8 @@ public final class SkinManager implements Runnable
         final ImageResource image = image( aImageID );
         if ( image == NullImageResource.NULL ) return SpriteGenerator.NULL;
 
-        final int charsPerRow = mySkinConfiguration.readInt( aImageID, "chars_per_row", SPRITE_CHARS_PER_ROW );
-        final int charsPerCol = mySkinConfiguration.readInt( aImageID, "chars_per_col", SPRITE_CHARS_PER_COL );
+        final int charsPerRow = mySkinConfiguration.readInt( aImageID, "columns", SPRITE_CHARS_PER_ROW );
+        final int charsPerCol = mySkinConfiguration.readInt( aImageID, "rows", SPRITE_CHARS_PER_COL );
         final int frameWidth = image.getWidth() / charsPerRow;
         final int frameHeight = image.getHeight() / charsPerCol;
         final SpriteGenerator sprite = new SpriteGenerator( image, frameWidth, frameHeight );
@@ -254,8 +254,8 @@ public final class SkinManager implements Runnable
         if ( !myCachedCharGens.containsKey( aImageID ) )
             {
             final ImageResource charData = image( aImageID );
-            final int charsPerRow = mySkinConfiguration.readInt( aImageID, "chars_per_row", CHARGEN_CHARS_PER_ROW );
-            final int charsPerCol = mySkinConfiguration.readInt( aImageID, "chars_per_col", CHARGEN_CHARS_PER_COL );
+            final int charsPerRow = mySkinConfiguration.readInt( aImageID, "columns", CHARGEN_CHARS_PER_ROW );
+            final int charsPerCol = mySkinConfiguration.readInt( aImageID, "rows", CHARGEN_CHARS_PER_COL );
             myCachedCharGens.put( aImageID, CharGenerator.fromLayout( charData, charsPerRow, charsPerCol ) );
             }
         return (CharGenerator) myCachedCharGens.get( aImageID );
