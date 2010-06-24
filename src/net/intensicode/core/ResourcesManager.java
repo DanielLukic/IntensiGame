@@ -94,7 +94,7 @@ public abstract class ResourcesManager
             }
         catch ( final IOException e )
             {
-            Log.error( "Failed loading {} configuration. Returning empty configuration.", aResourcePath, e );
+            Log.error( "Failed loading {} configuration. Returning empty configuration.", aResourcePath, null );
             return Configuration.NULL_CONFIGURATION;
             }
         }
