@@ -1,7 +1,6 @@
 package net.intensicode.screens;
 
 import net.intensicode.graphics.FontGenerator;
-import net.intensicode.screens.SoftkeysScreen;
 
 public final class AutohideSoftkeysScreen extends SoftkeysScreen
     {
@@ -19,7 +18,7 @@ public final class AutohideSoftkeysScreen extends SoftkeysScreen
 
     // From ScreenBase
 
-    public final void onControlTick()
+    public final void onControlTick() throws Exception
         {
         super.onControlTick();
         if ( myVisibleTicks > 0 ) myVisibleTicks--;

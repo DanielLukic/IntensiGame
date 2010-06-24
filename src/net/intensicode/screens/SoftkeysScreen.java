@@ -21,6 +21,11 @@ public class SoftkeysScreen extends ScreenBase
         setPositionInPercent( 100 );
         }
 
+    public void setHandler( final SoftkeysHandler aHandler )
+        {
+        myHandlerOrNull = aHandler;
+        }
+
     public final void setButtonImage( final ImageResource aButtonImage )
         {
         myButtonImage = aButtonImage;
@@ -65,13 +70,19 @@ public class SoftkeysScreen extends ScreenBase
 
     // From ScreenBase
 
-    public void onControlTick()
+    public void onControlTick() throws Exception
         {
         //#if TOUCH
         if ( mySomethingChanged ) updateTouchableAreas();
         else tickTouchableAreas();
         //#endif
         mySomethingChanged = false;
+
+        if ( myHandlerOrNull != null )
+            {
+            if ( keys().checkLeftSoftAndConsume() ) myHandlerOrNull.onLeftSoftkeyPressed();
+            if ( keys().checkRightSoftAndConsume() ) myHandlerOrNull.onRightSoftkeyPressed();
+            }
         }
 
     public void onDrawFrame()
@@ -218,13 +229,15 @@ public class SoftkeysScreen extends ScreenBase
 
     private String myRightText;
 
-    protected ImageResource myButtonImage;
+    private boolean mySomethingChanged;
 
     private int myVerticalPositionMode;
 
     private int myVerticalPositionValue;
 
-    private boolean mySomethingChanged;
+    protected ImageResource myButtonImage;
+
+    private SoftkeysHandler myHandlerOrNull;
 
 
     protected final FontGenerator myFontGen;
