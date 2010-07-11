@@ -3,7 +3,6 @@ package net.intensicode.screens;
 import net.intensicode.core.DirectGraphics;
 import net.intensicode.graphics.FontGenerator;
 import net.intensicode.util.*;
-import net.intensicode.touch.*;
 
 public final class ScrollTextScreen extends MultiScreen
     {
@@ -121,8 +120,8 @@ public final class ScrollTextScreen extends MultiScreen
         {
         if ( myTouchSlider == null ) initTouchSliderIfNecessary();
 
-        final int fontHeight = myFont.charHeight();
-        myTouchSlider.stepSizeInPixels.setTo( fontHeight, fontHeight );
+        final int fontCharSize = myFont.charHeight();
+        myTouchSlider.stepSizeInPixels.setTo( fontCharSize, fontCharSize );
 
         final Rectangle textRect = determineTextRect();
         myTouchSlider.touchableArea.setTo( textRect );
@@ -154,7 +153,7 @@ public final class ScrollTextScreen extends MultiScreen
         {
         if ( myTouchSlider != null ) return;
 
-        final TouchSliderConfiguration configuration = new TouchSliderConfiguration();
+        final net.intensicode.touch.TouchSliderConfiguration configuration = new net.intensicode.touch.TouchSliderConfiguration();
         configuration.setTo( touch().sharedSliderConfiguration );
         configuration.additionalStepThresholdInPixels = myFont.charHeight();
         configuration.initialStepThresholdInPixels = 0;
@@ -162,7 +161,7 @@ public final class ScrollTextScreen extends MultiScreen
         configuration.slideMoveThresholdInPixels = 0;
         configuration.slideStartThresholdInMillis = 25;
         configuration.slideStartThresholdInPixels = 0;
-        myTouchSlider = new TouchSlider( configuration );
+        myTouchSlider = new net.intensicode.touch.TouchSlider( configuration );
 
         touch().addListener( myTouchSlider );
         }
