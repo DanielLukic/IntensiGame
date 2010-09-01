@@ -133,20 +133,28 @@ public abstract class FontGenerator
 
     public final void blitNumber( final DirectGraphics aGraphics, final Position aPosition, final int aNumber, final int aAlignment )
         {
-        final int digitWidth = maxDigitCharWidth();
         final int digits = getNumberOfDigits( aNumber );
-        final Position alignedPosition = getAlignedPosition( aPosition, digits * digitWidth, charHeight(), aAlignment );
-
         int value = Math.abs( aNumber );
-        int x = alignedPosition.x + digitWidth * ( digits - 1 );
+        int width = aNumber < 0 ? charWidth( '-' ) : 0;
         for ( int idx = 0; idx < digits; idx++ )
             {
             final int digit = value % 10;
-            blitChar( aGraphics, x, alignedPosition.y, '0' + digit );
-            x -= digitWidth;
+            width += charWidth( (char) ('0' + digit ));
             value /= 10;
             }
-        if ( aNumber < 0 ) blitChar( aGraphics, x, alignedPosition.y, '-' );
+
+        final Position alignedPosition = getAlignedPosition( aPosition, width, charHeight(), aAlignment );
+
+        value = Math.abs( aNumber );
+        int x = alignedPosition.x + width;
+        for ( int idx = 0; idx < digits; idx++ )
+            {
+            final int digit = value % 10;
+            x -= charWidth( (char) ('0' + digit ));
+            blitChar( aGraphics, x, alignedPosition.y, '0' + digit );
+            value /= 10;
+            }
+        if ( aNumber < 0 ) blitChar( aGraphics, x - charWidth( '-' ), alignedPosition.y, '-' );
         }
 
     public final void blitNumber( final DirectGraphics aGraphics, final Position aPosition, final int aNumber, final int aAlignment, final int aNumberOfDigits )
