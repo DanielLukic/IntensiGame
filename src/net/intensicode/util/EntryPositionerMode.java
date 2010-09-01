@@ -2,11 +2,9 @@ package net.intensicode.util;
 
 import net.intensicode.graphics.FontGenerator;
 
-abstract class EntryPositionerMode
+public abstract class EntryPositionerMode
     {
-    public void update( final DynamicArray aEntries, final Rectangle aBounds, final FontGenerator aFont )
-        {
-        }
+    public abstract void update( final DynamicArray aEntries, final Rectangle aBounds, final FontGenerator aFont );
 
     // Protected API
 
