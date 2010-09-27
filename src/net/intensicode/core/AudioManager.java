@@ -139,7 +139,7 @@ public abstract class AudioManager
             }
         catch ( final Exception e )
             {
-            Log.error( "failed loading music resource {}: {}", aMusicName, e.toString(), null );
+            Log.error( "failed loading music resource {}: {}", aMusicName, e.toString(), e );
             return new SilentAudioResource();
             }
         }
