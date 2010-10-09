@@ -1,6 +1,7 @@
 package core;
 
-import net.intensicode.*;
+import net.intensicode.EmailData;
+import net.intensicode.PlatformContext;
 import net.intensicode.util.DynamicArray;
 
 public final class FakePlatformContext implements PlatformContext
@@ -50,6 +51,11 @@ public final class FakePlatformContext implements PlatformContext
         }
 
     public void showCriticalError( final String aMessage, final Throwable aOptionalThrowable )
+        {
+        throw new RuntimeException( "nyi" );
+        }
+
+    public void storePreferences( final String aPreferencesId, final String aPropertyKey, final boolean aValue )
         {
         throw new RuntimeException( "nyi" );
         }

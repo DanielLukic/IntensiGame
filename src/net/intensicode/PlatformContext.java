@@ -25,4 +25,6 @@ public interface PlatformContext
     void showError( String aMessage, Throwable aOptionalThrowable );
 
     void showCriticalError( String aMessage, Throwable aOptionalThrowable );
+
+    void storePreferences( String aPreferencesId, String aPropertyKey, boolean aValue );
     }
