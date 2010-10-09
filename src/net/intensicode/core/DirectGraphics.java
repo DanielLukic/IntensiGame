@@ -77,5 +77,11 @@ public abstract class DirectGraphics
 
     public abstract void drawChar( char aCharCode, int aX, int aY );
 
+    // Internal API
+
+    public abstract void beginFrame();
+
+    public abstract void endFrame();
+
     private static final Position theAlignedXY = new Position();
     }

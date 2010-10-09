@@ -87,4 +87,12 @@ public final class NullDirectGraphics extends DirectGraphics
     public void drawChar( final char aCharCode, final int aX, final int aY )
         {
         }
+
+    public void beginFrame()
+        {
+        }
+
+    public void endFrame()
+        {
+        }
     }
