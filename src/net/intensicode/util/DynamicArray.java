@@ -75,6 +75,14 @@ public final class DynamicArray
         objects[ size++ ] = aObject;
         }
 
+    public final void addAll( final DynamicArray aArray )
+        {
+        for ( int idx = 0; idx < aArray.size; idx++ )
+            {
+            add( aArray.objects[ idx ] );
+            }
+        }
+
     public final void insert( final int aIndex, final Object aObject )
         {
         if ( size == objects.length ) increaseSize();
@@ -85,6 +93,14 @@ public final class DynamicArray
             objects[ idx ] = objects[ idx - 1 ];
             }
         objects[ aIndex ] = aObject;
+        }
+
+    public final void insertAll( final int aIndex, final DynamicArray aArray )
+        {
+        for ( int idx = aArray.size - 1; idx >= 0; idx-- )
+            {
+            insert( aIndex, aArray.objects[ idx ] );
+            }
         }
 
     public final Object removeLast()
