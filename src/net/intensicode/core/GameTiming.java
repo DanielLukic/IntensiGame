@@ -14,7 +14,7 @@ public final class GameTiming
      */
     public int maxFramesPerSecond = 32;
 
-    public int maxTicksPerFrame = 2;
+    public int maxTicksPerFrame = 3;
 
     public int measuredFramesPerSecond;
 

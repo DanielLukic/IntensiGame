@@ -244,7 +244,7 @@ public abstract class GameEngine implements Runnable
             {
             final long frameWaitTime = timing().frameWaitTime();
             if ( frameWaitTime <= 0 ) break;
-            Thread.sleep( frameWaitTime / 3 );
+            Thread.sleep( frameWaitTime * 2 / 3 );
             }
         }
 
