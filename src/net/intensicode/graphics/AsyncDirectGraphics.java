@@ -46,10 +46,7 @@ public final class AsyncDirectGraphics extends DirectGraphics
         {
         myCurrentColorARGB32 = 0xabbadada;
         myCurrentFontResource = null;
-        }
 
-    public final void endFrame()
-        {
         try
             {
             waitForRenderQueueToBeEmpty();
@@ -61,6 +58,10 @@ public final class AsyncDirectGraphics extends DirectGraphics
             {
             // Simply bail out here..
             }
+        }
+
+    public final void endFrame()
+        {
         }
 
     private void waitForRenderQueueToBeEmpty() throws InterruptedException
