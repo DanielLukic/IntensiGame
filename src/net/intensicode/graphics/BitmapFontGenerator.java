@@ -13,6 +13,8 @@ public final class BitmapFontGenerator extends FontGenerator
 
     public static boolean buffered = false;
 
+    public static boolean forceUnbuffered = false;
+
     public static int maxBufferWidth = 256;
 
     public static int maxBufferHeight = 64;
@@ -21,6 +23,7 @@ public final class BitmapFontGenerator extends FontGenerator
     public static void apply( final Configuration aConfiguration )
         {
         buffered = aConfiguration.readBoolean( "BitmapFontGenerator.buffered", buffered );
+        forceUnbuffered = aConfiguration.readBoolean( "BitmapFontGenerator.forceUnbuffered", buffered );
         maxBufferWidth = aConfiguration.readInt( "BitmapFontGenerator.maxBufferWidth", maxBufferWidth );
         maxBufferHeight = aConfiguration.readInt( "BitmapFontGenerator.maxBufferHeight", maxBufferHeight );
         }
@@ -151,6 +154,7 @@ public final class BitmapFontGenerator extends FontGenerator
 
     private boolean isBufferingAllowedFor( final String aText, final int aStart, final int aEnd )
         {
+        if ( forceUnbuffered ) return false;
         if ( resources == null ) return false;
 
         final int width = substringWidth( aText, aStart, aEnd - aStart );
