@@ -2,6 +2,8 @@ package net.intensicode.util;
 
 public class Rectangle
     {
+    public static final Rectangle NULL = new Rectangle();
+
     public int x;
 
     public int y;
@@ -15,7 +17,7 @@ public class Rectangle
         {
         }
 
-    public Rectangle( int aX, int aY, int aWidth, int aHeight )
+    public Rectangle( final int aX, final int aY, final int aWidth, final int aHeight )
         {
         //#if DEBUG
         if ( aWidth < 0 || aHeight < 0 ) throw new IllegalArgumentException();
@@ -124,6 +126,7 @@ public class Rectangle
 
     public final boolean equals( final Object aThat )
         {
+        if ( this == aThat ) return true;
         if ( !( aThat instanceof Rectangle ) ) return false;
 
         final Rectangle that = (Rectangle) aThat;
