@@ -15,6 +15,16 @@ public class MathExtended
     public final static double LOGdiv2 = -0.6931471805599453094;
 
 
+    public static float toDegrees( final float aRadians )
+        {
+        return aRadians / TO_RADIANSf;
+        }
+
+    public static double toDegrees( final double aRadians )
+        {
+        return aRadians / TO_RADIANSd;
+        }
+
     public static float toRadians( final float aDegrees )
         {
         return aDegrees * TO_RADIANSf;
