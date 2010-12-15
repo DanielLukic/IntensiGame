@@ -4,7 +4,7 @@ import net.intensicode.util.*;
 
 public interface Path
     {
-    int getPathLength();
+    float getPathLength();
 
     PositionF getPosition( float aPathPos );
 

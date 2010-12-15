@@ -35,7 +35,7 @@ public class MathExtended
         return aDegrees * TO_RADIANSd;
         }
 
-    public static float frac( final float aValue )
+    public static float fraction( final float aValue )
         {
         return aValue - (int) aValue;
         }

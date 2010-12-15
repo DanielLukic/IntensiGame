@@ -44,7 +44,7 @@ public final class LinearPath implements Path, PositionList
     public final void end()
         {
         myPathLength = 0;
-        myAccumulatedSegmentLengths = new int[myInputPositions.size];
+        myAccumulatedSegmentLengths = new float[myInputPositions.size];
 
         final Object[] positions = myInputPositions.objects;
         for ( int idx = 1; idx < myAccumulatedSegmentLengths.length; idx++ )
@@ -59,7 +59,7 @@ public final class LinearPath implements Path, PositionList
 
     // From Path
 
-    public final int getPathLength()
+    public final float getPathLength()
         {
         return myPathLength;
         }
@@ -68,7 +68,7 @@ public final class LinearPath implements Path, PositionList
         {
         for ( int idx = 1; idx < myInputPositions.size; idx++ )
             {
-            final int pathLengthSoFar = myAccumulatedSegmentLengths[ idx ];
+            final float pathLengthSoFar = myAccumulatedSegmentLengths[ idx ];
             if ( aPathPos >= pathLengthSoFar ) continue;
 
             final float pathLengthBefore = myAccumulatedSegmentLengths[ idx - 1 ];
@@ -85,7 +85,7 @@ public final class LinearPath implements Path, PositionList
         {
         for ( int idx = 1; idx < myInputPositions.size; idx++ )
             {
-            final int pathLengthSoFar = myAccumulatedSegmentLengths[ idx ];
+            final float pathLengthSoFar = myAccumulatedSegmentLengths[ idx ];
             if ( aPathPos >= pathLengthSoFar ) continue;
 
             final float pathLengthBefore = myAccumulatedSegmentLengths[ idx - 1 ];
@@ -149,9 +149,9 @@ public final class LinearPath implements Path, PositionList
         }
 
 
-    private int myPathLength;
+    private float myPathLength;
 
-    private int[] myAccumulatedSegmentLengths;
+    private float[] myAccumulatedSegmentLengths;
 
 
     private final PositionF myTempPosition = new PositionF();

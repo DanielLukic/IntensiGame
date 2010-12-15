@@ -102,7 +102,7 @@ public class SmoothPath implements PathWithDirection, PositionList
             }
         myTempPositions.end();
 
-        final int pathLength = myTempPositions.getPathLength();
+        final float pathLength = myTempPositions.getPathLength();
         for ( int idx = 0; idx <= PATH_STEPS; idx++ )
             {
             final float pos = idx * pathLength / PATH_STEPS;
@@ -115,7 +115,7 @@ public class SmoothPath implements PathWithDirection, PositionList
 
     // From Path
 
-    public final int getPathLength()
+    public final float getPathLength()
         {
         return myPositions.getPathLength();
         }
