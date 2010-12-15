@@ -123,6 +123,13 @@ public class Log
         }
 
     //#if !CLDC10
+    public static void debug( final String aMessage, final double aValue )
+        {
+        //#if DEBUG
+        debug( aMessage, new Object[]{ new Double( aValue ) } );
+        //#endif
+        }
+
     public static void debug( final String aMessage, final double aValue1, final double aValue2 )
         {
         //#if DEBUG
