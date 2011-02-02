@@ -5,6 +5,12 @@ import net.intensicode.screens.ScreenBase;
 
 public interface SystemContext
     {
+    //#if ANAL
+    void trackState( String aNewState );
+
+    void trackPageView( String aPageId );
+    //#endif
+
     /**
      * Implement your logic for choosing a resources sub folder here or do not override this method to use the default
      * behavior of reading a resources.properties file and letting IntensiGame choose the best resolution.

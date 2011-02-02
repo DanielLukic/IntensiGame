@@ -96,6 +96,10 @@ public final class ScreenStack
         aScreen.onInit( myGameSystem );
         aScreen.onTop();
 
+        //#if ANAL
+        myGameSystem.context.trackPageView( aScreen.getClass().getName() );
+        //#endif
+
         //#if DEBUG
         Log.debug( "New active handler: {}", activeScreen() );
         //#endif
