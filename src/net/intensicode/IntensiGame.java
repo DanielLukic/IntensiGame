@@ -10,6 +10,16 @@ public abstract class IntensiGame implements SystemContext
 
     // From SystemContext
 
+    public void trackPageView( final String aPageId )
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
+    public void trackState( final String aNewState )
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
     public String determineResourcesFolder( final int aWidth, final int aHeight, final String aScreenOrientationId )
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
