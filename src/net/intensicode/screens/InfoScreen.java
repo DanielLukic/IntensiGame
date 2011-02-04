@@ -65,10 +65,6 @@ public final class InfoScreen extends MultiScreen
         myTextLines.add( ReleaseProperties.MUSIC_FORMAT_SUFFIX );
         myTextLines.add( ReleaseProperties.MUSIC_FORMAT_MIME_TYPE );
 
-        myTextLines.add( "" );
-        myTextLines.add( "HISCORE ID" );
-        myTextLines.add( ReleaseProperties.HISCORE_ID );
-
         final KeysConfiguration config = keys.platformKeysConfiguration;
         myTextLines.add( "" );
         myTextLines.add( "PLATFORM/KEYCODES" );

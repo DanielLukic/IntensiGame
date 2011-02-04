@@ -73,10 +73,6 @@ public final class SendFeedback implements ConfigurableActionValue
         buffer.append( ReleaseProperties.MUSIC_FORMAT_MIME_TYPE );
         buffer.append( NEWLINE );
 
-        buffer.append( "HISCORE ID " );
-        buffer.append( ReleaseProperties.HISCORE_ID );
-        buffer.append( NEWLINE );
-
         buffer.append( "PLATFORM " );
         buffer.append( myGameSystem.platform.getPlatformSpecString() );
         buffer.append( NEWLINE );

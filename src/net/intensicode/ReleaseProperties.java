@@ -85,12 +85,4 @@ public final class ReleaseProperties
     public static final int KEYCODES_PAUSEKEY = 80;
 
     //#endif
-
-    //#if "${target.hiscore_id}"
-    //# public static final String HISCORE_ID = "${target.hiscore_id}";
-    //#else
-
-    public static final String HISCORE_ID = "[Dev:Dev:Dev]";
-
-    //#endif
     }
