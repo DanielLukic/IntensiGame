@@ -20,6 +20,16 @@ public abstract class IntensiGame implements SystemContext
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
 
+    public void triggerNewBannerAd()
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
+    public void triggerNewFullscreenAd()
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
     public String determineResourcesFolder( final int aWidth, final int aHeight, final String aScreenOrientationId )
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
