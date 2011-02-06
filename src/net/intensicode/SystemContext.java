@@ -11,6 +11,10 @@ public interface SystemContext
     void trackPageView( String aPageId );
     //#endif
 
+    void triggerNewBannerAd();
+
+    void triggerNewFullscreenAd();
+
     /**
      * Implement your logic for choosing a resources sub folder here or do not override this method to use the default
      * behavior of reading a resources.properties file and letting IntensiGame choose the best resolution.
