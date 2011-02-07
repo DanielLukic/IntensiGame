@@ -159,6 +159,12 @@ public final class DynamicArray
         aVisitor.done();
         }
 
+    public Object[] toArray( final Object[] aArray )
+        {
+        System.arraycopy( objects, 0, aArray, 0, Math.min( size, aArray.length ) );
+        return aArray;
+        }
+
     // From Object
 
     public String toString()

@@ -1,6 +1,10 @@
 package net.intensicode.hiscore;
 
 import net.intensicode.core.*;
+import net.intensicode.util.Log;
+import org.json.me.*;
+
+import java.io.UnsupportedEncodingException;
 
 public final class SimpleLeaderboardService
     {
@@ -18,7 +22,15 @@ public final class SimpleLeaderboardService
         {
         public final void onReceived( final byte[] aBytes )
             {
-            aCallback.onScores( aBytes );
+            try
+                {
+                final Score[] scores = extractScores( aBytes );
+                aCallback.onScores( scores );
+                }
+            catch ( Throwable t )
+                {
+                onError( t );
+                }
             }
 
         public final void onError( final Throwable aThrowable )
@@ -26,6 +38,28 @@ public final class SimpleLeaderboardService
             aCallback.onError( aThrowable );
             }
         } );
+        }
+
+    private Score[] extractScores( final byte[] aBytes ) throws UnsupportedEncodingException, JSONException
+        {
+        final String body = new String( aBytes, "UTF-8" );
+
+        final JSONArray array = new JSONArray( body );
+        final Score[] scores = new Score[array.length()];
+
+        Log.info( "scores: {}", array.length() );
+        for ( int idx = 0; idx < array.length(); idx++ )
+            {
+            // [{"CountryCode":"DE","DateTimeAchievedUTC":"2011-02-07 10:20:53Z","PlayerHash":"lrmwjowoncqp0lc3bbgo99vsl9w=","PlayerName":"TEST","Points":3000000,"Region":"Berlin","Tags":["UserAgent:JamJam Free\/2.1.24 (Android)","Level:22"]},{"CountryCode":"US","DateTimeAchievedUTC":"2011-02-07 10:18:07Z","PlayerHash":"lrmwjowoncqp0lc3bbgo99vsl9w=","PlayerName":"Toaster","Points":2000000,"Region":"Washington","Tags":["UserAgent:JamJam FREE","Level:22"]},{"CountryCode":"US","DateTimeAchievedUTC":"2011-02-07 10:10:12Z","PlayerHash":"lrmwjowoncqp0lc3bbgo99vsl9w=","PlayerName":"TheFrenchDJ","Points":1049100,"Region":"Washington","Tags":["UserAgent:JamJam FREE","Level:22"]},{"CountryCode":"DE","DateTimeAchievedUTC":"2011-02-07 11:03:32Z","PlayerHash":"lrmwjowoncqp0lc3bbgo99vsl9w=","PlayerName":"TFDJ","Points":50000,"Region":"Berlin","Tags":["UserAgent:JamJam Free\/2.1.24 (Android)","Level:5"]},{"CountryCode":"DE","DateTimeAchievedUTC":"2011-02-07 11:00:34Z","PlayerHash":"lrmwjowoncqp0lc3bbgo99vsl9w=","PlayerName":"Try","Points":10000,"Region":"Berlin","Tags":["UserAgent:JamJam FREE","Level:1"]}]
+            final JSONObject object = array.getJSONObject( idx );
+            final String name = object.getString( "PlayerName" );
+            final int points = object.getInt( "Points" );
+            final JSONArray tags = object.getJSONArray( "Tags" );
+            final Score score = new Score( name, points, 0 );
+            scores[ idx ] = score;
+            }
+
+        return scores;
         }
 
     public final void submitScore( final Score aScore, final GammetaCallback aCallback )
@@ -38,7 +72,7 @@ public final class SimpleLeaderboardService
 
         final GammetaSalt salt = new GammetaSalt( mySettings );
         salt.update( aScore );
-        request.setSaltBase64(salt.toBase64Sha1());
+        request.setSaltBase64( salt.toBase64Sha1() );
 
         myNetworkIO.process( request, new NetworkCallback()
         {
