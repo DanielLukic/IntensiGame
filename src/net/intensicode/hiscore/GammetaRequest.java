@@ -30,8 +30,15 @@ public final class GammetaRequest implements NetworkRequest
         */
         }
 
+    public void setDate( final String aDateString )
+        {
+        if ( myDate == null || myDate.length() == 0 ) throw new IllegalArgumentException();
+        myDate = aDateString;
+        }
+
     public void setSaltBase64( final String aSaltBase64 )
         {
+        if ( aSaltBase64 == null || aSaltBase64.length() == 0 ) throw new IllegalArgumentException();
         mySaltBase64OrNull = aSaltBase64;
         }
 
@@ -46,7 +53,7 @@ public final class GammetaRequest implements NetworkRequest
         while ( variables.hasMoreElements() )
             {
             final String key = (String) variables.nextElement();
-            final String value = (String) myVariables.get( key );
+            final Object value = myVariables.get( key );
             salt.append( value );
             salt.append( "\n" );
             }
@@ -70,8 +77,9 @@ public final class GammetaRequest implements NetworkRequest
         myQuery.append( URLEncoder.encode( aValue ) );
         }
 
-    public final void addVariable( final String aVariable, final String aValue )
+    public final void addVariable( final String aVariable, final Object aValue )
         {
+        myOrderedVariables.add( aVariable );
         myVariables.put( aVariable, aValue );
         }
 
@@ -94,7 +102,7 @@ public final class GammetaRequest implements NetworkRequest
 
     public final Enumeration headers()
         {
-        updateHeaders();
+        if ( myHeaders.isEmpty() ) updateHeaders();
         return myHeaders.keys();
         }
 
@@ -123,6 +131,7 @@ public final class GammetaRequest implements NetworkRequest
 
     public final String headerValue( final String aHeaderKey )
         {
+        if ( myHeaders.isEmpty() ) updateHeaders();
         return String.valueOf( myHeaders.get( aHeaderKey ) );
         }
 
@@ -131,17 +140,16 @@ public final class GammetaRequest implements NetworkRequest
         final StringBuffer body = new StringBuffer();
         body.append( "{\n" );
 
-        final Enumeration variables = myVariables.keys();
-        while ( variables.hasMoreElements() )
+        for ( int idx = 0; idx < myOrderedVariables.size; idx++ )
             {
-            final String key = (String) variables.nextElement();
-            final String value = (String) myVariables.get( key );
+            final String key = (String) myOrderedVariables.get( idx );
+            final Object value = myVariables.get( key );
             append( body, key, value );
             }
 
         if ( !myTags.empty() )
             {
-            body.append( "\"Tags\": [" );
+            body.append( "\t\"Tags\": [" );
             for ( int idx = 0; idx < myTags.size; idx++ )
                 {
                 final String tag = (String) myTags.get( idx );
@@ -159,22 +167,34 @@ public final class GammetaRequest implements NetworkRequest
             body.append( "\n" );
             }
 
-        body.append( "}\n" );
+        body.append( "}" );
 
         Log.info( "GammetaRequest BODY:\n{}", body );
 
         return body.toString().getBytes();
         }
 
-    private void append( final StringBuffer aBody, final String aKey, final String aValue )
+    private void append( final StringBuffer aBody, final String aKey, final Object aValue )
         {
+        aBody.append( '\t' );
         aBody.append( '"' );
         aBody.append( aKey );
-        aBody.append( "\": " );
-        aBody.append( '"' );
-        aBody.append( aValue );
-        aBody.append( "\",\n" );
+        aBody.append( "\"" );
+        aBody.append( ": " );
+        if ( aValue instanceof String )
+            {
+            aBody.append( '"' );
+            aBody.append( aValue );
+            aBody.append( '"' );
+            }
+        else
+            {
+            aBody.append( aValue );
+            }
+        aBody.append( ",\n" );
         }
+
+    private String myDate;
 
     private String mySaltBase64OrNull;
 
@@ -194,7 +214,7 @@ public final class GammetaRequest implements NetworkRequest
 
     private final DynamicArray myTags = new DynamicArray();
 
-    private final String myDate;
+    private final DynamicArray myOrderedVariables = new DynamicArray();
 
     private static final String EMPTY_SALT_STRING = "";
     }

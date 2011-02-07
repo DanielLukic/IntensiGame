@@ -33,8 +33,8 @@ public final class SimpleLeaderboardService
         final GammetaRequest request = new GammetaRequest( mySettings, SERVICE_HOST, mySettings.gameId, NetworkRequest.METHOD_POST );
         request.addVariable( "PlayerHash", mySettings.playerIdBase64 );
         request.addVariable( "PlayerName", aScore.name );
-        request.addVariable( "Points", String.valueOf( aScore.points ) );
-        request.addTag( String.valueOf( aScore.level ) );
+        request.addVariable( "Points", new Integer( aScore.points ) );
+        request.addTag( "Level:" + aScore.level );
 
         final GammetaSalt salt = new GammetaSalt( mySettings );
         salt.update( aScore );
