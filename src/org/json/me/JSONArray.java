@@ -188,18 +188,18 @@ public class JSONArray {
      */
     public boolean getBoolean(int index) throws JSONException {
         Object o = get(index);
-//#if CLDC!="1.0"
+//#if !CLDC1.0
 //#         if (o.equals(Boolean.FALSE) ||
 //#else
-            if (o.equals(JSONObject.FALSE) ||
+    if (o.equals(JSONObject.FALSE) ||
 //#endif
                 (o instanceof String &&
                 ((String)o).toLowerCase().equals("false"))) {
             return false;
-//#if CLDC!="1.0"
+//#if !CLDC1.0
 //#         } else if (o.equals(Boolean.TRUE) ||
 //#else
-        } else if (o.equals(JSONObject.TRUE) ||
+    } else if (o.equals(JSONObject.TRUE) ||
 //#endif
                 (o instanceof String &&
                 ((String)o).toLowerCase().equals("true"))) {
@@ -208,7 +208,7 @@ public class JSONArray {
         throw new JSONException("JSONArray[" + index + "] is not a Boolean.");
     }
 
-//#if CLDC!="1.0"
+//#if !CLDC1.0
 //#     /**
 //#      * Get the double value associated with an index.
 //#      *
@@ -228,7 +228,7 @@ public class JSONArray {
 //#     }
 //#endif
 
-//#if CLDC!="1.0"
+//#if !CLDC1.0
 //#     /**
 //#      * Get the int value associated with an index.
 //#      *
@@ -278,7 +278,7 @@ public class JSONArray {
     }
 
 
-//#if CLDC!="1.0"
+//#if !CLDC1.0
 //#     /**
 //#      * Get the long value associated with an index.
 //#      *
@@ -386,7 +386,7 @@ public class JSONArray {
         }
     }
 
-//#if CLDC!="1.0"
+//#if !CLDC10
 //#     /**
 //#      * Get the optional double value associated with an index.
 //#      * NaN is returned if there is no value for the index,
@@ -400,7 +400,7 @@ public class JSONArray {
 //#     }
 //#endif
 
-//#if CLDC!="1.0"
+//#if !CLDC10
 //#     /**
 //#      * Get the optional double value associated with an index.
 //#      * The defaultValue is returned if there is no value for the index,
@@ -419,7 +419,7 @@ public class JSONArray {
 //#     }
 //#endif
 
-//#if CLDC!="1.0"
+//#if !CLDC10
 //#     /**
 //#      * Get the optional int value associated with an index.
 //#      * Zero is returned if there is no value for the index,
@@ -433,7 +433,7 @@ public class JSONArray {
 //#     }
 //#endif
 
-//#if CLDC!="1.0"
+//#if !CLDC10
 //#     /**
 //#      * Get the optional int value associated with an index.
 //#      * The defaultValue is returned if there is no value for the index,
@@ -476,7 +476,7 @@ public class JSONArray {
         return o instanceof JSONObject ? (JSONObject)o : null;
     }
 
-//#if CLDC!="1.0"
+//#if !CLDC10
 //#     /**
 //#      * Get the optional long value associated with an index.
 //#      * Zero is returned if there is no value for the index,
@@ -490,7 +490,7 @@ public class JSONArray {
 //#     }
 //#endif
 
-//#if CLDC!="1.0"
+//#if !CLDC10
 //#     /**
 //#      * Get the optional long value associated with an index.
 //#      * The defaultValue is returned if there is no value for the index,
@@ -542,7 +542,7 @@ public class JSONArray {
      * @return this.
      */
     public JSONArray put(boolean value) {
-//#if CLDC!="1.0"
+//#if !CLDC10
 //#         put(value ? Boolean.TRUE : Boolean.FALSE);
 //#else
         put(value ? JSONObject.TRUE : JSONObject.FALSE);
@@ -562,7 +562,7 @@ public class JSONArray {
     }
     
 
-//#if CLDC!="1.0"
+//#if !CLDC10
 //#     /**
 //#      * Append a double value. This increases the array's length by one.
 //#      *
@@ -638,7 +638,7 @@ public class JSONArray {
      * @throws JSONException If the index is negative.
      */
     public JSONArray put(int index, boolean value) throws JSONException {
-//#if CLDC!="1.0"
+//#if !CLDC10
 //#         put(index, value ? Boolean.TRUE : Boolean.FALSE);
 //#else
         put(index, value ? JSONObject.TRUE : JSONObject.FALSE);
@@ -661,7 +661,7 @@ public class JSONArray {
     }
 
     
-//#if CLDC!="1.0"
+//#if !CLDC10
 //#     /**
 //#      * Put or replace a double value. If the index is greater than the length of
 //#      *  the JSONArray, then null elements will be added as necessary to pad

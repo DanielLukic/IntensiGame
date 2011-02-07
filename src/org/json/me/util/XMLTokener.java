@@ -185,7 +185,7 @@ public class XMLTokener extends JSONTokener {
                     throw syntaxError("Unterminated string.");
                 }
                 if (c == q) {
-//#if CLDC!="1.0"
+//#if !CLDC10
 //#                     return Boolean.TRUE;
 //#else
                     return JSONObject.TRUE;
@@ -196,7 +196,7 @@ public class XMLTokener extends JSONTokener {
             for (;;) {
                 c = next();
                 if (isWhitespace(c)) {
-//#if CLDC!="1.0"
+//#if !CLDC10
 //#                     return Boolean.TRUE;
 //#else
                     return JSONObject.TRUE;
@@ -213,7 +213,7 @@ public class XMLTokener extends JSONTokener {
                 case '"':
                 case '\'':
                     back();
-//#if CLDC!="1.0"
+//#if !CLDC10
 //#                     return Boolean.TRUE;
 //#else
                     return JSONObject.TRUE;

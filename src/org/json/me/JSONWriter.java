@@ -283,7 +283,7 @@ public class JSONWriter {
         return this.append(b ? "true" : "false");
     }
 
-//#if CLDC!="1.0"
+//#if !CLDC10
 //#     /**
 //#      * Append a double value.
 //#      * @param d A double.
