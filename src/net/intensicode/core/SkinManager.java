@@ -161,7 +161,7 @@ public final class SkinManager implements Runnable
         catch ( final IOException e )
             {
             //#if DEBUG
-            Log.error( "failed loading image {}. ignored.", aImageID, e );
+            //# Log.error( "failed loading image {}. ignored.", aImageID, e );
             //#else
             Log.info( "failed loading image {}. ignored.", aImageID );
             //#endif
