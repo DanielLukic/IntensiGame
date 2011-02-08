@@ -24,7 +24,7 @@ public final class SimpleLeaderboardService
             {
             try
                 {
-                final Score[] scores = extractScores( aBytes );
+                final GammetaScore[] scores = extractScores( aBytes );
                 aCallback.onScores( scores );
                 }
             catch ( Throwable t )
@@ -40,12 +40,12 @@ public final class SimpleLeaderboardService
         } );
         }
 
-    private Score[] extractScores( final byte[] aBytes ) throws UnsupportedEncodingException, JSONException
+    private GammetaScore[] extractScores( final byte[] aBytes ) throws UnsupportedEncodingException, JSONException
         {
         final String body = new String( aBytes, "UTF-8" );
 
         final JSONArray array = new JSONArray( body );
-        final Score[] scores = new Score[array.length()];
+        final GammetaScore[] scores = new GammetaScore[array.length()];
 
         Log.info( "scores: {}", array.length() );
         for ( int idx = 0; idx < array.length(); idx++ )
@@ -55,14 +55,14 @@ public final class SimpleLeaderboardService
             final String name = object.getString( "PlayerName" );
             final int points = object.getInt( "Points" );
             final JSONArray tags = object.getJSONArray( "Tags" );
-            final Score score = new Score( name, points, 0 );
+            final GammetaScore score = new GammetaScore( name, points, 0 );
             scores[ idx ] = score;
             }
 
         return scores;
         }
 
-    public final void submitScore( final Score aScore, final GammetaCallback aCallback )
+    public final void submitScore( final GammetaScore aScore, final GammetaCallback aCallback )
         {
         final GammetaRequest request = new GammetaRequest( mySettings, SERVICE_HOST, mySettings.gameId, NetworkRequest.METHOD_POST );
         request.addVariable( "PlayerHash", mySettings.playerIdBase64 );

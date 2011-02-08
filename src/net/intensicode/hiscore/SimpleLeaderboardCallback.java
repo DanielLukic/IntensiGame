@@ -2,7 +2,7 @@ package net.intensicode.hiscore;
 
 public interface SimpleLeaderboardCallback
     {
-    void onScores( Score[] aBytes );
+    void onScores( GammetaScore[] aBytes );
 
     void onError( Throwable aThrowable );
     }

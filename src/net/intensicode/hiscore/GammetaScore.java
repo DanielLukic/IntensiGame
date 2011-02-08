@@ -1,6 +1,6 @@
 package net.intensicode.hiscore;
 
-public final class Score
+public final class GammetaScore
     {
     public final String name;
 
@@ -8,7 +8,7 @@ public final class Score
 
     public final int level;
 
-    public Score( final String aName, final int aPoints, final int aLevel )
+    public GammetaScore( final String aName, final int aPoints, final int aLevel )
         {
         name = aName;
         points = aPoints;

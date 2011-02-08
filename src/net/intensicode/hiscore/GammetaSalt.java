@@ -9,7 +9,7 @@ public final class GammetaSalt
         mySettings = aSettings;
         }
 
-    public final void update( final Score aScore )
+    public final void update( final GammetaScore aScore )
         {
         final StringBuffer buffer = new StringBuffer();
         buffer.append( aScore.name );
