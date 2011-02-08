@@ -51,6 +51,12 @@ public abstract class GameSystem
 
     public NetworkIO network;
 
+    //#if ONLINE
+
+    public OnlineAPI online;
+
+    //#endif
+
     public KeysHandler keys;
 
     //#if DEBUG
