@@ -1,6 +1,7 @@
 package net.intensicode.core;
 
-import net.intensicode.util.*;
+import net.intensicode.util.Assert;
+import net.intensicode.util.Log;
 
 public abstract class GameEngine implements Runnable
     {
@@ -114,7 +115,15 @@ public abstract class GameEngine implements Runnable
 
         try
             {
-            thread.join();
+            final int waitTries = 5;
+            for ( int idx = 0; idx < waitTries; idx++ )
+                {
+                if ( !thread.isAlive() ) break;
+                Log.debug( "waiting for engine thread to terminate.." );
+                Thread.sleep( 250 );
+                if ( idx > waitTries / 2 ) thread.interrupt();
+                }
+            Log.debug( "engine thread terminated" );
             }
         catch ( final InterruptedException e )
             {
