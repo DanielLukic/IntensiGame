@@ -12,5 +12,7 @@ public interface OnlineAPI
 
     void showLeaderboard();
 
+    void retrieveHighscores( LeaderboardCallback aCallback );
+
     void submitScore( int aScore, int aLevelNumberStartingAt1 );
     }
