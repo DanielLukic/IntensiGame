@@ -4,7 +4,7 @@ package net.intensicode.core;
 
 public interface ScoreSubmissionCallback
     {
-    void onScoreSubmitted();
+    void onScoreSubmitted( boolean aIsNewHighscore );
 
     void onScoreSubmissionFailed( Throwable t );
     }
