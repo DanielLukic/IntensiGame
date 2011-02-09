@@ -1,3 +1,5 @@
+//#condition ONLINE
+
 package net.intensicode.core;
 
 public interface LeaderboardCallback

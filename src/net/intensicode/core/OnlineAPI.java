@@ -1,3 +1,5 @@
+//#condition ONLINE
+
 package net.intensicode.core;
 
 public interface OnlineAPI
@@ -14,5 +16,5 @@ public interface OnlineAPI
 
     void retrieveHighscores( LeaderboardCallback aCallback );
 
-    void submitScore( int aScore, int aLevelNumberStartingAt1 );
+    void submitScore( int aScore, int aLevelNumberStartingAt1, ScoreSubmissionCallback aCallback );
     }
