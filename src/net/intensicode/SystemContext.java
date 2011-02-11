@@ -6,14 +6,20 @@ import net.intensicode.screens.ScreenBase;
 public interface SystemContext
     {
     //#if ANAL
+
     void trackState( String aNewState );
 
     void trackPageView( String aPageId );
+
     //#endif
+
+    //#if ADS
 
     void triggerNewBannerAd();
 
     void triggerNewFullscreenAd();
+
+    //#endif
 
     /**
      * Implement your logic for choosing a resources sub folder here or do not override this method to use the default
