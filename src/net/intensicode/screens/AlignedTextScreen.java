@@ -9,13 +9,18 @@ public final class AlignedTextScreen extends ScreenBase
 
     public int alignment = FontGenerator.CENTER;
 
+    public FontGenerator font;
+
     public String text;
 
 
+    public AlignedTextScreen()
+        {
+        }
 
     public AlignedTextScreen( final FontGenerator aFontGen )
         {
-        myFontGen = aFontGen;
+        font = aFontGen;
         }
 
     public AlignedTextScreen( final FontGenerator aFontGen, final String aText )
@@ -32,6 +37,30 @@ public final class AlignedTextScreen extends ScreenBase
         alignment = aAlignment;
         }
 
+    public final AlignedTextScreen font( final FontGenerator aFontGenerator )
+        {
+        font = aFontGenerator;
+        return this;
+        }
+
+    public final AlignedTextScreen text( final String aText )
+        {
+        text = aText;
+        return this;
+        }
+
+    public final AlignedTextScreen align( final int aAlignment )
+        {
+        alignment = aAlignment;
+        return this;
+        }
+
+    public final AlignedTextScreen position( final Position aPosition )
+        {
+        position.setTo( aPosition );
+        return this;
+        }
+
     // From ScreenBase
 
     public final void onControlTick() throws Exception
@@ -40,8 +69,6 @@ public final class AlignedTextScreen extends ScreenBase
 
     public final void onDrawFrame()
         {
-        if ( text != null ) myFontGen.blitString( graphics(), text, position, alignment );
+        if ( text != null ) font.blitString( graphics(), text, position, alignment );
         }
-
-    private final FontGenerator myFontGen;
     }
