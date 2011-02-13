@@ -32,13 +32,15 @@ public final class I18n
         //#if DEBUG
         if ( !myConfiguration.isEmpty() )
             {
-            //#if CONSOLE
-            net.intensicode.screens.ConsoleOverlay.addMessage( "Missing translation for " + aString );
-            //#endif
-            Log.debug( "Missing translation for {}", aString );
             //#if TRANSLATE
+            //#if CONSOLE
+            //# net.intensicode.screens.ConsoleOverlay.addMessage( "Missing translation for " + aString );
+            //#endif
+            //# Log.debug( "Missing translation for {}", aString );
             //# myConfiguration.store( aString, "MISSING TRANSLATION" );
             //# return lookup( "MISSING TRANSLATION" );
+            //#else
+            myConfiguration.store( aString, aString );
             //#endif
             }
         //#endif
