@@ -28,7 +28,7 @@ public final class Configuration
             if ( line.startsWith( "//" ) ) continue;
             if ( line.startsWith( "#" ) ) continue;
             if ( line.startsWith( "@load" ) ) includeUsing( line );
-            consumeSingleLine( line );
+            else consumeSingleLine( line );
             }
         return this;
         }
@@ -38,7 +38,7 @@ public final class Configuration
         if ( myResourcesManager == null ) throw new IllegalStateException( "no resources manager available" );
 
         final int endOfDirective = StringUtils.findDelimiter( aLoadDirectivePlusFilename, " \t", 0 );
-        final String filename = aLoadDirectivePlusFilename.substring( endOfDirective );
+        final String filename = aLoadDirectivePlusFilename.substring( endOfDirective + 1 );
 
         Log.info( "including configuration data from {}", filename );
 
