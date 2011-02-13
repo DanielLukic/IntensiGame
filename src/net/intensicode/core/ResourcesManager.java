@@ -1,7 +1,8 @@
 package net.intensicode.core;
 
 import net.intensicode.graphics.FontGenerator;
-import net.intensicode.util.*;
+import net.intensicode.util.DynamicArray;
+import net.intensicode.util.Log;
 
 import java.io.*;
 
@@ -94,7 +95,11 @@ public abstract class ResourcesManager
             }
         catch ( final IOException e )
             {
-            Log.error( "Failed loading {} configuration. Returning empty configuration.", aResourcePath, null );
+            //#if DEBUG
+            Log.error( "Failed loading {} configuration. Returning empty configuration.", aResourcePath, e );
+            //#else
+            Log.info( "Failed loading {} configuration. Returning empty configuration.", aResourcePath );
+            //#endif
             return Configuration.NULL_CONFIGURATION;
             }
         }
