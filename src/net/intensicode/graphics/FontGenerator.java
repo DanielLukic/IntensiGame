@@ -5,17 +5,17 @@ import net.intensicode.util.*;
 
 public abstract class FontGenerator
     {
-    public static final int HCENTER = 1;
+    public static final int TOP = 0;
 
-    public static final int VCENTER = 2;
+    public static final int LEFT = 0;
 
-    public static final int LEFT = 4;
+    public static final int BOTTOM = 1;
 
-    public static final int RIGHT = 8;
+    public static final int RIGHT = 2;
 
-    public static final int TOP = 16;
+    public static final int HCENTER = 4;
 
-    public static final int BOTTOM = 32;
+    public static final int VCENTER = 8;
 
     public static final int TOP_LEFT = TOP | LEFT;
 
