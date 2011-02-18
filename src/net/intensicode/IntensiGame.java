@@ -1,6 +1,7 @@
 package net.intensicode;
 
 import net.intensicode.core.GameSystem;
+import net.intensicode.screens.ScreenBase;
 
 public abstract class IntensiGame implements SystemContext
     {
@@ -16,6 +17,41 @@ public abstract class IntensiGame implements SystemContext
         }
 
     public void trackState( final String aNewState )
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
+    public int getBannerAdHeight()
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
+    public boolean hasBannerAds()
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
+    public boolean hasFullscreenAds()
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
+    public void hideBannerAd()
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
+    public void positionAdBanner( final int aVerticalPosition )
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
+    public void preloadFullscreenAd()
+        {
+        throw new RuntimeException( PLACEHOLDER_MESSAGE );
+        }
+
+    public void showBannerAd()
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
