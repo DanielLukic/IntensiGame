@@ -1,5 +1,3 @@
-//#condition CONSOLE
-
 package net.intensicode.screens;
 
 import net.intensicode.graphics.FontGenerator;
@@ -7,6 +5,8 @@ import net.intensicode.util.*;
 
 public final class ConsoleOverlay extends ScreenBase
     {
+    //#if CONSOLE
+
     //#if FALSE
     public static boolean show = true;
     //#else
@@ -92,4 +92,9 @@ public final class ConsoleOverlay extends ScreenBase
     private static final int MAX_STAY_TIME_IN_SECONDS = 5;
 
     private static final int DEFAULT_STAY_TIME_IN_SECONDS = 5;
+
+    //#else
+    //# public final void onControlTick() throws Exception {};
+    //# public final void onDrawFrame() {};
+    //#endif
     }
