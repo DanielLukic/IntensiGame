@@ -14,9 +14,13 @@ public interface OnlineAPI
 
     void showLeaderboard();
 
+    void showAchievements();
+
     void retrieveHighscores( LeaderboardCallback aCallback );
 
     void submitScore( int aScore, int aLevelNumberStartingAt1, ScoreSubmissionCallback aCallback );
+
+    boolean isUnlocked( String aAchievementId );
 
     void progressAchievement( String aAchievementId, int aProgressInPercent );
 
