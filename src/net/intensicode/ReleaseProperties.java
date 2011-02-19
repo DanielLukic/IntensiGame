@@ -2,6 +2,14 @@ package net.intensicode;
 
 public final class ReleaseProperties
     {
+    //#if "${midlet.package}"
+    //# public static final String PACKAGE = "${midlet.package}";
+    //#else
+
+    public static final String PACKAGE = "net.intensicode";
+
+    //#endif
+
     //#if "${version}"
     //# public static final String VERSION = "${version}";
     //#else
