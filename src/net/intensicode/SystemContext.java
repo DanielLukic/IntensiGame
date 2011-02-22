@@ -7,7 +7,7 @@ public interface SystemContext
     {
     //#if ANAL
 
-    void trackState( String aNewState );
+    void trackState( String aCategory, String aAction, String aLabel );
 
     void trackPageView( String aPageId );
 

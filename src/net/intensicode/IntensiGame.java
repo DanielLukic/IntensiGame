@@ -1,7 +1,6 @@
 package net.intensicode;
 
 import net.intensicode.core.GameSystem;
-import net.intensicode.screens.ScreenBase;
 
 public abstract class IntensiGame implements SystemContext
     {
@@ -16,7 +15,7 @@ public abstract class IntensiGame implements SystemContext
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
 
-    public void trackState( final String aNewState )
+    public void trackState( final String aCategory, final String aAction, final String aLabel )
         {
         throw new RuntimeException( PLACEHOLDER_MESSAGE );
         }
