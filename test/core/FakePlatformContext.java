@@ -59,4 +59,14 @@ public final class FakePlatformContext implements PlatformContext
         {
         throw new RuntimeException( "nyi" );
         }
+
+    public void register( final String aComponentName, final String aClassName )
+        {
+        throw new RuntimeException( "nyi" );
+        }
+
+    public Object component( final String aComponentName )
+        {
+        throw new RuntimeException( "nyi" );
+        }
     }

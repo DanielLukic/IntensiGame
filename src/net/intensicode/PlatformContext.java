@@ -27,4 +27,8 @@ public interface PlatformContext
     void showCriticalError( String aMessage, Throwable aOptionalThrowable );
 
     void storePreferences( String aPreferencesId, String aPropertyKey, boolean aValue );
+
+    void register( String aComponentName, String aClassName );
+
+    Object component( String aComponentName );
     }
