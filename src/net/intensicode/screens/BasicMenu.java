@@ -1,10 +1,12 @@
 package net.intensicode.screens;
 
-import net.intensicode.core.*;
-import net.intensicode.graphics.*;
-import net.intensicode.util.*;
+import net.intensicode.core.GameSystem;
+import net.intensicode.core.KeysHandler;
+import net.intensicode.graphics.FontGenerator;
+import net.intensicode.util.DynamicArray;
+import net.intensicode.util.EntryPositioner;
 
-public class BasicMenu extends MultiScreen
+public abstract class BasicMenu extends MultiScreen
         //#if TOUCH
         implements net.intensicode.touch.TouchableHandler
         //#endif
@@ -23,21 +25,9 @@ public class BasicMenu extends MultiScreen
         for ( int idx = 0; idx < myEntries.size; idx++ )
             {
             final BasicMenuEntry entry = getEntry( idx );
-            if ( entry.id == aID ) return entry;
+            if ( entry.id() == aID ) return entry;
             }
         throw new IllegalArgumentException();
-        }
-
-    public final void setEntryImage( final SpriteGenerator aSpriteGenerator )
-        {
-        if ( aSpriteGenerator == SpriteGenerator.NULL ) myEntryImageGenerator = null;
-        else myEntryImageGenerator = aSpriteGenerator;
-
-        for ( int idx = 0; idx < myEntries.size; idx++ )
-            {
-            final BasicMenuEntry entry = getEntry( idx );
-            entry.imageGenerator = myEntryImageGenerator;
-            }
         }
 
     public final int getSelectedEntryIndex()
@@ -50,31 +40,12 @@ public class BasicMenu extends MultiScreen
         updateSelectedEntry( aIndex );
         }
 
-    public final BasicMenuEntry addMenuEntry( final int aID, final String aText ) throws Exception
-        {
-        final BasicMenuEntry entry = new BasicMenuEntry();
-        entry.id = aID;
-        entry.text = aText;
-        entry.fontGen = myFont;
-        entry.imageGenerator = myEntryImageGenerator;
-        //#if TOUCH
-        entry.touchable.associatedHandler = this;
-        //#endif
-        addScreen( entry );
-        myEntries.add( entry );
-
-        updateSelectedEntry();
-
-        return entry;
-        }
-
     public final BasicMenuEntry addMenuEntry( final BasicMenuEntry aEntry ) throws Exception
         {
-        aEntry.imageGenerator = myEntryImageGenerator;
         //#if TOUCH
-        aEntry.touchable.associatedHandler = this;
+        aEntry.touchable().associatedHandler = this;
         //#endif
-        addScreen( aEntry );
+        addScreen( aEntry.visual() );
         myEntries.add( aEntry );
 
         updateSelectedEntry();
@@ -104,7 +75,7 @@ public class BasicMenu extends MultiScreen
         for ( int idx = 0; idx < numberOfEntries; idx++ )
             {
             final BasicMenuEntry menuEntry = getEntry( idx );
-            menuEntry.selected = idx == mySelectedEntryIndex;
+            menuEntry.setSelected( idx == mySelectedEntryIndex );
             }
         }
 
@@ -152,11 +123,11 @@ public class BasicMenu extends MultiScreen
         //#endif
 
         final KeysHandler keys = system().keys;
-        if ( keys.checkUpAndConsume() )
+        if ( keys.checkUpAndConsume() || keys.checkLeftAndConsume() )
             {
             updateSelectedEntry( mySelectedEntryIndex - 1 );
             }
-        if ( keys.checkDownAndConsume() )
+        if ( keys.checkDownAndConsume() || keys.checkRightAndConsume() )
             {
             updateSelectedEntry( mySelectedEntryIndex + 1 );
             }
@@ -173,6 +144,11 @@ public class BasicMenu extends MultiScreen
         }
 
     // Protected Interface
+
+    protected BasicMenuEntry getEntry( final int aIndex )
+        {
+        return (BasicMenuEntry) myEntries.get( aIndex );
+        }
 
     protected void onLeftSoftKey( final BasicMenuEntry aSelectedEntry ) throws Exception
         {
@@ -203,11 +179,6 @@ public class BasicMenu extends MultiScreen
 
     // Implementation
 
-    private BasicMenuEntry getEntry( final int aIndex )
-        {
-        return (BasicMenuEntry) myEntries.get( aIndex );
-        }
-
     //#if TOUCH
 
     private void addTouchableAreas()
@@ -216,7 +187,7 @@ public class BasicMenu extends MultiScreen
         final int numberOfMenuEntries = myEntries.size;
         for ( int idx = 0; idx < numberOfMenuEntries; idx++ )
             {
-            touch.addLocalControl( getEntry( idx ).touchable );
+            touch.addLocalControl( getEntry( idx ).touchable() );
             }
         }
 
@@ -225,11 +196,9 @@ public class BasicMenu extends MultiScreen
 
     private int mySelectedEntryIndex;
 
-    private SpriteGenerator myEntryImageGenerator;
-
-    private final FontGenerator myFont;
+    protected final FontGenerator myFont;
 
     private final MenuHandler myMenuHandler;
 
-    private final DynamicArray myEntries = new DynamicArray();
+    protected final DynamicArray myEntries = new DynamicArray();
     }
