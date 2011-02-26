@@ -11,7 +11,7 @@ public abstract class StorageByID extends StorageIO
 
     // From StorageIO
 
-    public final void loadFrom( final DataInputStream aInput ) throws IOException
+    public void loadFrom( final DataInputStream aInput ) throws IOException
         {
         while ( true )
             {
