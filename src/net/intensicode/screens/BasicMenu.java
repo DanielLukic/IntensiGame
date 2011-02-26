@@ -79,6 +79,24 @@ public abstract class BasicMenu extends MultiScreen
             }
         }
 
+    public final void moveSelectedEntry( final int aDirection )
+        {
+        final int numberOfEntries = myEntries.size;
+        final int abortIndex = mySelectedEntryIndex;
+        do
+            {
+            mySelectedEntryIndex = ( mySelectedEntryIndex + aDirection + numberOfEntries ) % numberOfEntries;
+            if ( abortIndex == mySelectedEntryIndex ) return;
+            }
+        while ( !getEntry( mySelectedEntryIndex ).selectable() );
+
+        for ( int idx = 0; idx < numberOfEntries; idx++ )
+            {
+            final BasicMenuEntry menuEntry = getEntry( idx );
+            menuEntry.setSelected( idx == mySelectedEntryIndex );
+            }
+        }
+
     //#ifdef TOUCH
 
     // From TouchableHandler
@@ -91,7 +109,9 @@ public abstract class BasicMenu extends MultiScreen
             for ( int idx = 0; idx < myEntries.size; idx++ )
                 {
                 final BasicMenuEntry entry = getEntry( idx );
-                if ( entry == selected ) updateSelectedEntry( idx );
+                if ( entry != selected ) continue;
+                if ( !entry.selectable() ) return;
+                updateSelectedEntry( idx );
                 }
             myMenuHandler.onSelected( selected );
             }
@@ -125,11 +145,11 @@ public abstract class BasicMenu extends MultiScreen
         final KeysHandler keys = system().keys;
         if ( keys.checkUpAndConsume() || keys.checkLeftAndConsume() )
             {
-            updateSelectedEntry( mySelectedEntryIndex - 1 );
+            moveSelectedEntry( -1 );
             }
         if ( keys.checkDownAndConsume() || keys.checkRightAndConsume() )
             {
-            updateSelectedEntry( mySelectedEntryIndex + 1 );
+            moveSelectedEntry( +1 );
             }
         if ( keys.checkLeftSoftAndConsume() || keys.checkStickDownAndConsume() || keys.checkFireAndConsume() )
             {

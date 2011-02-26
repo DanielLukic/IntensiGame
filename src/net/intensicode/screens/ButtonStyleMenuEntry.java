@@ -20,6 +20,8 @@ public class ButtonStyleMenuEntry extends ScreenBase implements ButtonStyleEntry
 
     public FontGenerator fontGen;
 
+    public boolean selectable = true;
+
     public boolean selected;
 
     public String text;
@@ -48,6 +50,11 @@ public class ButtonStyleMenuEntry extends ScreenBase implements ButtonStyleEntry
     public final int id()
         {
         return id;
+        }
+
+    public final boolean selectable()
+        {
+        return selectable;
         }
 
     public final void setSelected( final boolean aSelectedFlag )
