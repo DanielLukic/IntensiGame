@@ -4,7 +4,6 @@ import net.intensicode.core.*;
 import net.intensicode.util.Position;
 
 
-
 public class ImageScreen extends ScreenBase
     {
     public static final int MODE_ABSOLUTE = 0;
@@ -24,6 +23,9 @@ public class ImageScreen extends ScreenBase
     public int positionMode;
 
 
+    public ImageScreen()
+        {
+        }
 
     public ImageScreen( final ImageResource aImage )
         {
@@ -88,7 +90,6 @@ public class ImageScreen extends ScreenBase
             }
         return myBlitPosition;
         }
-
 
 
     private final Position myBlitPosition = new Position();
