@@ -1,12 +1,16 @@
 package core;
 
-import net.intensicode.EmailData;
-import net.intensicode.PlatformContext;
+import net.intensicode.*;
 import net.intensicode.util.DynamicArray;
 
 public final class FakePlatformContext implements PlatformContext
     {
     public final DynamicArray timestamps = new DynamicArray();
+
+    public PlatformHooks hooks()
+        {
+        throw new RuntimeException( "nyi" );
+        }
 
     public long compatibleTimeInMillis()
         {

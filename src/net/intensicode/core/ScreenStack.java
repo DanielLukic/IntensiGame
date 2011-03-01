@@ -97,7 +97,7 @@ public final class ScreenStack
         aScreen.onTop();
 
         //#if ANAL
-        myGameSystem.context.trackPageView( aScreen.getClass().getName() );
+        myGameSystem.hooks.trackPageView( aScreen.getClass().getName() );
         //#endif
 
         //#if DEBUG

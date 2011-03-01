@@ -9,15 +9,17 @@ import net.intensicode.util.*;
 
 public abstract class GameSystem
     {
-    public final PlatformContext platform;
-
-    public final SystemContext context;
-
     public final GameTiming timing;
 
     public final ScreenStack stack;
 
     public final SkinManager skin;
+
+    public PlatformContext platform;
+
+    public SystemContext context;
+
+    public PlatformHooks hooks;
 
     public ResourcesManager resources;
 
@@ -79,10 +81,8 @@ public abstract class GameSystem
     public FontGenerator systemFont;
 
 
-    public GameSystem( final SystemContext aSystemContext, final PlatformContext aPlatformContext )
+    public GameSystem()
         {
-        context = aSystemContext;
-        platform = aPlatformContext;
         stack = new ScreenStack( this );
         skin = new SkinManager( this );
         timing = new GameTiming();
@@ -98,13 +98,11 @@ public abstract class GameSystem
 
     public final void showCriticalError( final String aMessage, final Throwable aOptionalThrowable )
         {
-        Log.error( "critical system error: {}", aMessage, aOptionalThrowable );
         platform.showCriticalError( aMessage, aOptionalThrowable );
         }
 
     public final void showError( final String aMessage, final Throwable aOptionalThrowable )
         {
-        Log.error( "system error: {}", aMessage, aOptionalThrowable );
         platform.showError( aMessage, aOptionalThrowable );
         }
 
@@ -151,7 +149,7 @@ public abstract class GameSystem
 
             system.addLeaf( new LoadConfiguration( context ) );
             system.addLeaf( new SaveConfiguration( context ) );
-            system.addLeaf( new DeleteConfiguration( context ) );
+            system.addLeaf( new DeleteConfiguration( context, this ) );
 
             //#endif
             }

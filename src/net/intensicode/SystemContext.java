@@ -5,36 +5,6 @@ import net.intensicode.screens.ScreenBase;
 
 public interface SystemContext
     {
-    //#if ANAL
-
-    void trackState( String aCategory, String aAction, String aLabel );
-
-    void trackPageView( String aPageId );
-
-    //#endif
-
-    //#if ADS
-
-    void showBannerAd();
-
-    void hideBannerAd();
-
-    boolean hasBannerAds();
-
-    int getBannerAdHeight();
-
-    void positionAdBanner( int aVerticalPosition );
-
-    void triggerNewBannerAd();
-
-    boolean hasFullscreenAds();
-
-    void preloadFullscreenAd();
-
-    void triggerNewFullscreenAd();
-
-    //#endif
-
     /**
      * Implement your logic for choosing a resources sub folder here or do not override this method to use the default
      * behavior of reading a resources.properties file and letting IntensiGame choose the best resolution.
@@ -47,11 +17,6 @@ public interface SystemContext
      * When you return null here, the system will look for p and l in the root folder.
      */
     String determineResourcesFolder( final int aWidth, final int aHeight, final String aScreenOrientationId );
-
-    /**
-     * Helper method to make the game system available to everyone who has access to the system context object.
-     */
-    GameSystem system();
 
     //#if FEEDBACK
 

@@ -31,4 +31,6 @@ public interface PlatformContext
     void register( String aComponentName, String aClassName );
 
     Object component( String aComponentName );
+
+    PlatformHooks hooks();
     }

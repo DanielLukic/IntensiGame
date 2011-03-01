@@ -44,6 +44,8 @@ public final class IntensiGameHelper
         int bestWidth = 0;
         int bestHeight = 0;
 
+        // TODO: FIX THIS!
+
         final Configuration configuration = myGameSystem.resources.loadConfigurationOrUseDefaults( "resources.properties" );
         final String[] resourcesFolders = configuration.readList( "subfolders", "", "," );
         for ( int idx = 0; idx < resourcesFolders.length; idx++ )
