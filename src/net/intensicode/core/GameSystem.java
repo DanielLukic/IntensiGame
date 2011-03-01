@@ -3,13 +3,18 @@ package net.intensicode.core;
 import net.intensicode.*;
 import net.intensicode.configuration.*;
 import net.intensicode.configuration.timing.*;
-import net.intensicode.graphics.BitmapFontGenerator;
-import net.intensicode.graphics.FontGenerator;
+import net.intensicode.graphics.*;
 import net.intensicode.screens.*;
 import net.intensicode.util.*;
 
 public abstract class GameSystem
     {
+    //#if RENDER_ASYNC
+
+    public net.intensicode.graphics.AsyncRenderThread renderThread;
+
+    //#endif
+
     public final GameTiming timing;
 
     public final ScreenStack stack;
@@ -183,6 +188,9 @@ public abstract class GameSystem
 
         engine.startThreaded();
         audio.resumePlayback();
+        //#if RENDER_ASYNC
+        renderThread.start();
+        //#endif
         //#if SENSORS
         sensors.enable();
         //#endif
@@ -200,6 +208,9 @@ public abstract class GameSystem
 
         //#if SENSORS
         sensors.disable();
+        //#endif
+        //#if RENDER_ASYNC
+        renderThread.stop();
         //#endif
         audio.haltPlayback();
         engine.stopThreaded();

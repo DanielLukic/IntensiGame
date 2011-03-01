@@ -1,3 +1,5 @@
+//#conditon RENDER_ASYNC
+
 package net.intensicode.graphics;
 
 import net.intensicode.core.*;

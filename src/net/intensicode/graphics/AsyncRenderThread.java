@@ -1,15 +1,31 @@
+//#conditon RENDER_ASYNC
+
 package net.intensicode.graphics;
 
 import net.intensicode.core.DirectGraphics;
 import net.intensicode.util.DynamicArray;
 
-public final class AsyncRenderThread extends Thread
+public final class AsyncRenderThread implements Runnable
     {
     public AsyncRenderThread( final DynamicArray aRenderQueue, final DirectGraphics aGraphics )
         {
-        super( "AsyncRenderThread" );
         myRenderQueue = aRenderQueue;
         myGraphics = aGraphics;
+        }
+
+    private Thread myThreadOrNull;
+
+    public synchronized final void start()
+        {
+        if ( myThreadOrNull == null ) myThreadOrNull = new Thread( this, "AsyncRenderThread" );
+        if ( !myThreadOrNull.isAlive() ) myThreadOrNull.start();
+        }
+
+    public synchronized final void stop()
+        {
+        if ( myThreadOrNull == null ) return;
+        if ( myThreadOrNull.isAlive() ) myThreadOrNull.interrupt();
+        myThreadOrNull = null;
         }
 
     public final void run()
@@ -28,8 +44,10 @@ public final class AsyncRenderThread extends Thread
         while ( true )
             {
             waitForRenderData();
+            myGraphics.beginFrame();
             renderQueuedData();
             clearRenderQueue();
+            myGraphics.endFrame();
             }
         }
 
@@ -40,13 +58,11 @@ public final class AsyncRenderThread extends Thread
 
     private void renderQueuedData()
         {
-        myGraphics.beginFrame();
         for ( int idx = 0; idx < myRenderQueue.size; idx++ )
             {
             final GraphicsCommand command = (GraphicsCommand) myRenderQueue.get( idx );
             command.execute( myGraphics );
             }
-        myGraphics.endFrame();
         }
 
     private void clearRenderQueue()
