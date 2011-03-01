@@ -3,7 +3,8 @@ package net.intensicode.core;
 import net.intensicode.*;
 import net.intensicode.configuration.*;
 import net.intensicode.configuration.timing.*;
-import net.intensicode.graphics.*;
+import net.intensicode.graphics.BitmapFontGenerator;
+import net.intensicode.graphics.FontGenerator;
 import net.intensicode.screens.*;
 import net.intensicode.util.*;
 
@@ -98,11 +99,13 @@ public abstract class GameSystem
 
     public final void showCriticalError( final String aMessage, final Throwable aOptionalThrowable )
         {
+        Log.error( "critical system error: {}", aMessage, aOptionalThrowable );
         platform.showCriticalError( aMessage, aOptionalThrowable );
         }
 
     public final void showError( final String aMessage, final Throwable aOptionalThrowable )
         {
+        Log.error( "system error: {}", aMessage, aOptionalThrowable );
         platform.showError( aMessage, aOptionalThrowable );
         }
 
