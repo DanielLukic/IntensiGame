@@ -1,4 +1,4 @@
-//#conditon RENDER_ASYNC
+//#condition RENDER_ASYNC
 
 package net.intensicode.graphics;
 
