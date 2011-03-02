@@ -6,9 +6,13 @@ import net.intensicode.util.Rectangle;
 
 public final class GraphicsCommand
     {
+    public static final int NUMBER_OF_IDS = 14;
+
+    public int id;
+
     public GraphicsCommand blendImage( final ImageResource aImage, final int aX, final int aY, final int aAlpha256 )
         {
-        myId = BLEND_IMAGE;
+        id = BLEND_IMAGE;
         myImage = aImage;
         myX = aX;
         myY = aY;
@@ -18,7 +22,7 @@ public final class GraphicsCommand
 
     public final GraphicsCommand blendImageRect( final ImageResource aImage, final Rectangle aSourceRect, final int aX, final int aY, final int aAlpha256 )
         {
-        myId = BLEND_IMAGE_RECT;
+        id = BLEND_IMAGE_RECT;
         myImage = aImage;
         mySourceRect = aSourceRect;
         myX = aX;
@@ -29,28 +33,28 @@ public final class GraphicsCommand
 
     public final GraphicsCommand changeColor( final int aColorARGB32 )
         {
-        myId = CHANGE_COLOR;
+        id = CHANGE_COLOR;
         myColorARGB32 = aColorARGB32;
         return this;
         }
 
     public final GraphicsCommand changeFont( final FontResource aFontResource )
         {
-        myId = CHANGE_FONT;
+        id = CHANGE_FONT;
         myFontResource = aFontResource;
         return this;
         }
 
     public final GraphicsCommand clear( final int aColorARGB32 )
         {
-        myId = CLEAR;
+        id = CLEAR;
         myColorARGB32 = aColorARGB32;
         return this;
         }
 
     public final GraphicsCommand drawChar( final char aCharCode, final int aX, final int aY )
         {
-        myId = DRAW_CHAR;
+        id = DRAW_CHAR;
         myCharCode = aCharCode;
         myX = aX;
         myY = aY;
@@ -64,7 +68,7 @@ public final class GraphicsCommand
 
     public final GraphicsCommand drawImage( final ImageResource aImage, final int aX, final int aY, final int aAlignment )
         {
-        myId = DRAW_IMAGE;
+        id = DRAW_IMAGE;
         myImage = aImage;
         myX = aX;
         myY = aY;
@@ -74,7 +78,7 @@ public final class GraphicsCommand
 
     public final GraphicsCommand drawImageRect( final ImageResource aImage, final Rectangle aSourceRect, final int aX, final int aY )
         {
-        myId = DRAW_IMAGE_RECT;
+        id = DRAW_IMAGE_RECT;
         myImage = aImage;
         mySourceRect = aSourceRect;
         myX = aX;
@@ -84,7 +88,7 @@ public final class GraphicsCommand
 
     public final GraphicsCommand drawLine( final int aX1, final int aY1, final int aX2, final int aY2 )
         {
-        myId = DRAW_LINE;
+        id = DRAW_LINE;
         myX1 = aX1;
         myY1 = aY1;
         myX2 = aX2;
@@ -94,7 +98,7 @@ public final class GraphicsCommand
 
     public final GraphicsCommand drawRect( final int aX, final int aY, final int aWidth, final int aHeight )
         {
-        myId = DRAW_RECT;
+        id = DRAW_RECT;
         myX = aX;
         myY = aY;
         myWidth = aWidth;
@@ -104,7 +108,7 @@ public final class GraphicsCommand
 
     public final GraphicsCommand drawRGB( final int[] aARGB32, final int aOffsetX, final int aScanlineSize, final int aX, final int aY, final int aWidth, final int aHeight, final boolean aUseAlpha )
         {
-        myId = DRAW_RGB;
+        id = DRAW_RGB;
         myARGB32 = aARGB32;
         myOffsetX = aOffsetX;
         myScanlineSize = aScanlineSize;
@@ -118,7 +122,7 @@ public final class GraphicsCommand
 
     public final GraphicsCommand drawSubstring( final String aText, final int aStart, final int aEnd, final int aX, final int aY )
         {
-        myId = DRAW_SUBSTRING;
+        id = DRAW_SUBSTRING;
         myText = aText;
         myStart = aStart;
         myEnd = aEnd;
@@ -129,7 +133,7 @@ public final class GraphicsCommand
 
     public final GraphicsCommand fillRect( final int aX, final int aY, final int aWidth, final int aHeight )
         {
-        myId = FILL_RECT;
+        id = FILL_RECT;
         myX = aX;
         myY = aY;
         myWidth = aWidth;
@@ -139,7 +143,7 @@ public final class GraphicsCommand
 
     public final GraphicsCommand fillTriangle( final int aX1, final int aY1, final int aX2, final int aY2, final int aX3, final int aY3 )
         {
-        myId = FILL_TRIANGLE;
+        id = FILL_TRIANGLE;
         myX1 = aX1;
         myY1 = aY1;
         myX2 = aX2;
@@ -151,7 +155,7 @@ public final class GraphicsCommand
 
     public final void execute( final DirectGraphics aGraphics )
         {
-        switch ( myId )
+        switch ( id )
             {
             case BLEND_IMAGE:
                 blendImage( aGraphics );
@@ -196,7 +200,7 @@ public final class GraphicsCommand
                 fillTriangle( aGraphics );
                 break;
             default:
-                Log.debug( "unknown GraphicsCommand id: {}", myId );
+                Log.debug( "unknown GraphicsCommand id: {}", id );
                 break;
             }
         }
@@ -271,8 +275,6 @@ public final class GraphicsCommand
         aGraphics.fillTriangle( myX1, myY1, myX2, myY2, myX3, myY3 );
         }
 
-
-    private int myId;
 
     private ImageResource myImage;
 
