@@ -6,7 +6,11 @@ import net.intensicode.util.Rectangle;
 
 public final class GraphicsCommand
     {
-    public static final int NUMBER_OF_IDS = 14;
+    public static final int BEGIN_FRAME = 14;
+
+    public static final int END_FRAME = 15;
+
+    public static final int NUMBER_OF_IDS = 16;
 
     public int id;
 

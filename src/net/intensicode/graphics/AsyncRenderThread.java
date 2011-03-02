@@ -2,18 +2,18 @@
 
 package net.intensicode.graphics;
 
+import net.intensicode.PlatformContext;
 import net.intensicode.core.DirectGraphics;
 import net.intensicode.util.DynamicArray;
-import net.intensicode.PlatformContext;
 
 public final class AsyncRenderThread implements Runnable
     {
-    public AsyncRenderThread( final DynamicArray aRenderQueue, final DirectGraphics aGraphics, final PlatformContext aPlatformContext )
+    public AsyncRenderThread( final AsyncRenderQueue aRenderQueue, final DirectGraphics aGraphics, final PlatformContext aPlatformContext )
         {
         myRenderQueue = aRenderQueue;
         myGraphics = aGraphics;
         //#if RENDER_STATS
-        myStats = new AsyncRenderStats( aPlatformContext,  GraphicsCommand.NUMBER_OF_IDS );
+        myStats = new AsyncRenderStats( aPlatformContext, GraphicsCommand.NUMBER_OF_IDS );
         //#endif
         }
 
@@ -63,24 +63,23 @@ public final class AsyncRenderThread implements Runnable
         {
         while ( true )
             {
-            waitForRenderData();
+            myCommandQueue = myRenderQueue.waitForFilledQueue();
+            myStats.start( GraphicsCommand.BEGIN_FRAME );
             myGraphics.beginFrame();
+            myStats.end( GraphicsCommand.BEGIN_FRAME );
             renderQueuedData();
-            clearRenderQueue();
+            myStats.start( GraphicsCommand.END_FRAME );
             myGraphics.endFrame();
+            myStats.end( GraphicsCommand.END_FRAME );
+            myRenderQueue.postCompletedQueue( myCommandQueue );
             }
-        }
-
-    private void waitForRenderData() throws InterruptedException
-        {
-        synchronized ( myRenderQueue ) { while ( myRenderQueue.empty() ) myRenderQueue.wait(); }
         }
 
     private void renderQueuedData()
         {
-        for ( int idx = 0; idx < myRenderQueue.size; idx++ )
+        for ( int idx = 0; idx < myCommandQueue.size; idx++ )
             {
-            final GraphicsCommand command = (GraphicsCommand) myRenderQueue.get( idx );
+            final GraphicsCommand command = (GraphicsCommand) myCommandQueue.get( idx );
             try
                 {
                 //#if RENDER_STATS
@@ -100,22 +99,15 @@ public final class AsyncRenderThread implements Runnable
             }
         }
 
-    private void clearRenderQueue()
-        {
-        synchronized ( myRenderQueue )
-            {
-            myRenderQueue.clear();
-            myRenderQueue.notify();
-            }
-        }
-
-    private final DynamicArray myRenderQueue;
-
-    private final DirectGraphics myGraphics;
+    private DynamicArray myCommandQueue;
 
     //#if RENDER_STATS
 
     private final AsyncRenderStats myStats;
 
     //#endif
+
+    private final DirectGraphics myGraphics;
+
+    private final AsyncRenderQueue myRenderQueue;
     }

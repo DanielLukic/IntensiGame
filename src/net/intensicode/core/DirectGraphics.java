@@ -79,7 +79,7 @@ public abstract class DirectGraphics
 
     // Internal API
 
-    public abstract void beginFrame();
+    public abstract void beginFrame() throws InterruptedException;
 
     public abstract void endFrame();
 

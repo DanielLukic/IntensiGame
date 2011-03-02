@@ -8,61 +8,29 @@ import net.intensicode.util.Rectangle;
 
 public final class AsyncDirectGraphics extends DirectGraphics
     {
-    public AsyncDirectGraphics( final DynamicArray aRenderQueue )
+    public AsyncDirectGraphics( final AsyncRenderQueue aRenderQueue )
         {
         myRenderQueue = aRenderQueue;
         }
 
-    public final void beginFrame()
+    public final void beginFrame() throws InterruptedException
         {
         myCurrentColorARGB32 = 0xabbadada;
         myCurrentFontResource = null;
 
-        try
-            {
-            waitForRenderQueueToBeEmpty();
-            fillRenderQueue();
-            switchQueues();
-            freeQueuedObjects();
-            }
-        catch ( final InterruptedException e )
-            {
-            // Simply bail out here..
-            }
+        myCommandQueue = myRenderQueue.waitForCompletedQueue();
+        freeQueuedObjects();
         }
 
     public final void endFrame()
         {
-        }
-
-    private void waitForRenderQueueToBeEmpty() throws InterruptedException
-        {
-        synchronized ( myRenderQueue )
-            {
-            while ( !myRenderQueue.empty() ) myRenderQueue.wait();
-            }
-        }
-
-    private void fillRenderQueue()
-        {
-        synchronized ( myRenderQueue )
-            {
-            myRenderQueue.addAll( myPrimaryQueue );
-            myRenderQueue.notify();
-            }
-        }
-
-    private void switchQueues()
-        {
-        final DynamicArray swappedQueue = myPrimaryQueue;
-        myPrimaryQueue = mySecondaryQueue;
-        mySecondaryQueue = swappedQueue;
+        myRenderQueue.postFilledQueue( myCommandQueue );
         }
 
     private void freeQueuedObjects()
         {
-        myPooledCommands.addAll( myPrimaryQueue );
-        myPrimaryQueue.clear();
+        myPooledCommands.addAll( myCommandQueue );
+        myCommandQueue.clear();
         }
 
     public final int getColorRGB24()
@@ -96,7 +64,7 @@ public final class AsyncDirectGraphics extends DirectGraphics
 
     private void queue( final GraphicsCommand aCommand )
         {
-        myPrimaryQueue.add( aCommand );
+        myCommandQueue.add( aCommand );
         }
 
     private long myCurrentColorARGB32;
@@ -207,11 +175,9 @@ public final class AsyncDirectGraphics extends DirectGraphics
         }
 
 
-    private DynamicArray myPrimaryQueue = new DynamicArray();
-
-    private DynamicArray mySecondaryQueue = new DynamicArray();
+    private DynamicArray myCommandQueue = new DynamicArray();
 
     private final DynamicArray myPooledCommands = new DynamicArray();
 
-    private final DynamicArray myRenderQueue;
+    private final AsyncRenderQueue myRenderQueue;
     }

@@ -38,7 +38,7 @@ public interface DirectScreen
 
     int getNativeHeight();
 
-    void beginFrame();
+    void beginFrame() throws InterruptedException;
 
     void endFrame();
 

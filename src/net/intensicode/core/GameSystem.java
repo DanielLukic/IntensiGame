@@ -3,7 +3,8 @@ package net.intensicode.core;
 import net.intensicode.*;
 import net.intensicode.configuration.*;
 import net.intensicode.configuration.timing.*;
-import net.intensicode.graphics.*;
+import net.intensicode.graphics.BitmapFontGenerator;
+import net.intensicode.graphics.FontGenerator;
 import net.intensicode.screens.*;
 import net.intensicode.util.*;
 
@@ -287,11 +288,15 @@ public abstract class GameSystem
             }
         }
 
-    final void doDrawFrame()
+    final void doDrawFrame() throws InterruptedException
         {
         try
             {
             doDrawFrameUnsafe();
+            }
+        catch ( final InterruptedException e )
+            {
+            throw e;
             }
         catch ( final Exception e )
             {

@@ -164,7 +164,7 @@ public abstract class GameEngine implements Runnable
         updateTimingStatsIfPossible();
         }
 
-    private void doDrawFrame()
+    private void doDrawFrame() throws InterruptedException
         {
         notifyOrientationChangedIfNecessary();
         timing().notifyStartOfFrame();
