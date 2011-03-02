@@ -27,6 +27,9 @@ public abstract class TouchEvent
         if ( this.isRelease() != that.isRelease() ) return false;
         if ( this.getX() != that.getX() ) return false;
         if ( this.getY() != that.getY() ) return false;
+        //#if DEBUG_TOUCH
+        if ( this.timestamp() != that.timestamp() ) throw new IllegalStateException( "TouchEvent matches except for timestamp");
+        //#endif
         return true;
         }
 

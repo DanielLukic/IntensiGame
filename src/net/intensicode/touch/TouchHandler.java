@@ -98,6 +98,10 @@ public abstract class TouchHandler extends ScreenBase
             {
             final Object removedEvent = myQueuedEvents.remove( 0 );
             myClonedEventPool.addReleasedInstance( removedEvent );
+
+            //#if DEBUG_TOUCH
+            throw new IllegalStateException( "MAX_QUEUED_EVENTS for TouchHandler");
+            //#endif
             }
 
         final ClonedTouchEvent clonedEvent = (ClonedTouchEvent) myClonedEventPool.getOrCreateInstance();
