@@ -3,7 +3,6 @@
 package net.intensicode.graphics;
 
 import net.intensicode.util.DynamicArray;
-import net.intensicode.util.Log;
 
 public final class AsyncRenderQueue
     {
@@ -26,8 +25,7 @@ public final class AsyncRenderQueue
         {
         while ( myCompletedQueues.size == 0 )
             {
-            wait( 1000 / 25 );
-            if ( !myCompletedQueues.empty() ) Log.info( "NO COMPLETED QUEUE IN TIME" );
+            wait();
             }
         return (DynamicArray) myCompletedQueues.remove( 0 );
         }
