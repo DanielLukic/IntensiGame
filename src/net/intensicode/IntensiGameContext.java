@@ -12,4 +12,20 @@ public interface IntensiGameContext
     IntensiGameHelper helper();
 
     ScreenBase createMainScreen() throws Exception;
+
+    ConfigurationElementsTree getApplicationValues();
+
+    void onFramesDropped();
+
+    void onInfoTriggered();
+
+    void onPauseApplication();
+
+    void onDestroyApplication();
+
+    //#if ORIENTATION_DYNAMIC
+
+    void onOrientationChanged();
+
+    //#endif
     }
