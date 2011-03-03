@@ -133,6 +133,10 @@ public final class ScreenStack
         if ( active != null ) active.onInit( myGameSystem );
         if ( active != null ) active.onTop();
 
+        //#if ANAL
+        if ( active != null ) myGameSystem.hooks.trackPageView( active.getClass().getName() );
+        //#endif
+
         //#if DEBUG
         Log.debug( "New active handler: {}", active );
         //#endif
