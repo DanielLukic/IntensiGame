@@ -51,4 +51,10 @@ public interface DirectScreen
      * primarly by IntensiGame itself to convert for example touch event coordinates.
      */
     Position toTarget( int aNativeX, int aNativeY );
+
+    /**
+     * This will translate a target x/y coordinate into the native coordinate space defined by the device. Used
+     * primarly to position banner ad views properly ontop of the game screen.
+     */
+    Position toNative( int aTargetX, int aTargetY );
     }
