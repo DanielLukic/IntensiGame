@@ -29,7 +29,7 @@ public abstract class GameEngine implements Runnable
      * Call this to start the engine in threaded mode. The engine will then issue control ticks and draw frames
      * continously. It expects a GameView with proper beginFrame and endFrame implementation.
      */
-    public final void startThreaded()
+    public synchronized final void startThreaded()
         {
         if ( !engineThreadCreated() ) createEngineThread();
         startEngineThread();
@@ -38,7 +38,7 @@ public abstract class GameEngine implements Runnable
     /**
      * Call this to stop the engine in threaded mode after it has been started by a call to startThreaded.
      */
-    public final void stopThreaded()
+    public synchronized final void stopThreaded()
         {
         stopAndReleaseEngineThread();
         }
@@ -99,7 +99,14 @@ public abstract class GameEngine implements Runnable
         //#if DEBUG
         Assert.isNotNull( "engine thread must exist", myThread );
         //#endif
-        if ( !myThread.isAlive() ) myThread.start();
+        try
+            {
+            if ( !myThread.isAlive() ) myThread.start();
+            }
+        catch ( final IllegalThreadStateException e )
+            {
+            Log.error( "ignored", e );
+            }
         }
 
     protected final void stopAndReleaseEngineThread()
