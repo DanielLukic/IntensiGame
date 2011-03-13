@@ -17,8 +17,6 @@ public final class AsyncRenderThread implements Runnable
         //#endif
         }
 
-    private Thread myThreadOrNull;
-
     public synchronized final void start()
         {
         if ( myThreadOrNull == null ) myThreadOrNull = new Thread( this, "AsyncRenderThread" );
@@ -64,13 +62,7 @@ public final class AsyncRenderThread implements Runnable
         while ( true )
             {
             myCommandQueue = myRenderQueue.waitForFilledQueue();
-            myStats.start( GraphicsCommand.BEGIN_FRAME );
-            myGraphics.beginFrame();
-            myStats.end( GraphicsCommand.BEGIN_FRAME );
             renderQueuedData();
-            myStats.start( GraphicsCommand.END_FRAME );
-            myGraphics.endFrame();
-            myStats.end( GraphicsCommand.END_FRAME );
             myRenderQueue.postCompletedQueue( myCommandQueue );
             }
         }
@@ -98,6 +90,9 @@ public final class AsyncRenderThread implements Runnable
                 }
             }
         }
+
+
+    private Thread myThreadOrNull;
 
     private DynamicArray myCommandQueue;
 

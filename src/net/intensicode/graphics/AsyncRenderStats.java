@@ -3,7 +3,6 @@
 package net.intensicode.graphics;
 
 import net.intensicode.PlatformContext;
-import net.intensicode.util.DynamicArray;
 
 public final class AsyncRenderStats
     {

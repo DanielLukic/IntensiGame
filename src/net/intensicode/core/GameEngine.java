@@ -48,9 +48,9 @@ public abstract class GameEngine implements Runnable
     public final void run()
         {
         waitSomeTimeForViewToStabilize();
-        myGameSystem.screen.initialize();
         try
             {
+            myGameSystem.screen.initialize();
             runInterruptible();
             }
         catch ( final InterruptedException e )

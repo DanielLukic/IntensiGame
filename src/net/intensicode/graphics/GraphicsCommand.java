@@ -6,13 +6,69 @@ import net.intensicode.util.Rectangle;
 
 public final class GraphicsCommand
     {
-    public static final int BEGIN_FRAME = 14;
+    public static final int BLEND_IMAGE = 0;
 
-    public static final int END_FRAME = 15;
+    public static final int BLEND_IMAGE_RECT = 1;
 
-    public static final int NUMBER_OF_IDS = 16;
+    public static final int CHANGE_COLOR = 2;
+
+    public static final int CHANGE_FONT = 3;
+
+    public static final int CLEAR = 4;
+
+    public static final int DRAW_CHAR = 5;
+
+    public static final int DRAW_IMAGE = 6;
+
+    public static final int DRAW_IMAGE_RECT = 7;
+
+    public static final int DRAW_LINE = 8;
+
+    public static final int DRAW_RECT = 9;
+
+    public static final int DRAW_RGB = 10;
+
+    public static final int DRAW_SUBSTRING = 11;
+
+    public static final int FILL_RECT = 12;
+
+    public static final int FILL_TRIANGLE = 13;
+
+    public static final int INITIALIZE = 14;
+
+    public static final int BEGIN_FRAME = 15;
+
+    public static final int END_FRAME = 16;
+
+    public static final int DESTROY = 17;
+
+    public static final int NUMBER_OF_IDS = 18;
 
     public int id;
+
+    public final GraphicsCommand initialize()
+        {
+        id = INITIALIZE;
+        return this;
+        }
+
+    public final GraphicsCommand beginFrame()
+        {
+        id = BEGIN_FRAME;
+        return this;
+        }
+
+    public final GraphicsCommand endFrame()
+        {
+        id = END_FRAME;
+        return this;
+        }
+
+    public final GraphicsCommand destroy()
+        {
+        id = DESTROY;
+        return this;
+        }
 
     public GraphicsCommand blendImage( final ImageResource aImage, final int aX, final int aY, final int aAlpha256 )
         {
@@ -157,126 +213,70 @@ public final class GraphicsCommand
         return this;
         }
 
-    public final void execute( final DirectGraphics aGraphics )
+    public final void execute( final DirectGraphics aGraphics ) throws Exception
         {
         switch ( id )
             {
+            case INITIALIZE:
+                Log.info( "EXECUTING INITIALIZE COMMAND" );
+                aGraphics.initialize();
+                break;
+            case BEGIN_FRAME:
+                aGraphics.beginFrame();
+                break;
+            case END_FRAME:
+                aGraphics.endFrame();
+                break;
+            case DESTROY:
+                Log.info( "EXECUTING CLEANUP COMMAND" );
+                aGraphics.cleanup();
+                break;
             case BLEND_IMAGE:
-                blendImage( aGraphics );
+                aGraphics.blendImage( myImage, myX, myY, myAlpha256 );
                 break;
             case BLEND_IMAGE_RECT:
-                blendImageRect( aGraphics );
+                aGraphics.blendImage( myImage, mySourceRect, myX, myY, myAlpha256 );
                 break;
             case CHANGE_COLOR:
-                changeColor( aGraphics );
+                aGraphics.setColorARGB32( myColorARGB32 );
                 break;
             case CHANGE_FONT:
-                changeFont( aGraphics );
+                aGraphics.setFont( myFontResource );
                 break;
             case CLEAR:
-                clear( aGraphics );
+                aGraphics.clearARGB32( myColorARGB32 );
                 break;
             case DRAW_CHAR:
-                drawChar( aGraphics );
+                aGraphics.drawChar( myCharCode, myX, myY );
                 break;
             case DRAW_IMAGE:
-                drawImage( aGraphics );
+                aGraphics.drawImage( myImage, myX, myY, myAlignment );
                 break;
             case DRAW_IMAGE_RECT:
-                drawImageRect( aGraphics );
+                aGraphics.drawImage( myImage, mySourceRect, myX, myY );
                 break;
             case DRAW_LINE:
-                drawLine( aGraphics );
+                aGraphics.drawLine( myX1, myY1, myX2, myY2 );
                 break;
             case DRAW_RECT:
-                drawRect( aGraphics );
+                aGraphics.drawRect( myX, myY, myWidth, myHeight );
                 break;
             case DRAW_RGB:
-                drawRGB( aGraphics );
+                aGraphics.drawRGB( myARGB32, myOffsetX, myScanlineSize, myX, myY, myWidth, myHeight, myUseAlpha );
                 break;
             case DRAW_SUBSTRING:
-                drawSubstring( aGraphics );
+                aGraphics.drawSubstring( myText, myStart, myEnd, myX, myY );
                 break;
             case FILL_RECT:
-                fillRect( aGraphics );
+                aGraphics.fillRect( myX, myY, myWidth, myHeight );
                 break;
             case FILL_TRIANGLE:
-                fillTriangle( aGraphics );
+                aGraphics.fillTriangle( myX1, myY1, myX2, myY2, myX3, myY3 );
                 break;
             default:
                 Log.debug( "unknown GraphicsCommand id: {}", id );
                 break;
             }
-        }
-
-    private void blendImage( final DirectGraphics aGraphics )
-        {
-        aGraphics.blendImage( myImage, myX, myY, myAlpha256 );
-        }
-
-    private void blendImageRect( final DirectGraphics aGraphics )
-        {
-        aGraphics.blendImage( myImage, mySourceRect, myX, myY, myAlpha256 );
-        }
-
-    private void changeColor( final DirectGraphics aGraphics )
-        {
-        aGraphics.setColorARGB32( myColorARGB32 );
-        }
-
-    private void changeFont( final DirectGraphics aGraphics )
-        {
-        aGraphics.setFont( myFontResource );
-        }
-
-    private void clear( final DirectGraphics aGraphics )
-        {
-        aGraphics.clearARGB32( myColorARGB32 );
-        }
-
-    private void drawChar( final DirectGraphics aGraphics )
-        {
-        aGraphics.drawChar( myCharCode, myX, myY );
-        }
-
-    private void drawImage( final DirectGraphics aGraphics )
-        {
-        aGraphics.drawImage( myImage, myX, myY, myAlignment );
-        }
-
-    private void drawImageRect( final DirectGraphics aGraphics )
-        {
-        aGraphics.drawImage( myImage, mySourceRect, myX, myY );
-        }
-
-    private void drawLine( final DirectGraphics aGraphics )
-        {
-        aGraphics.drawLine( myX1, myY1, myX2, myY2 );
-        }
-
-    private void drawRect( final DirectGraphics aGraphics )
-        {
-        aGraphics.drawRect( myX, myY, myWidth, myHeight );
-        }
-
-    private void drawRGB( final DirectGraphics aGraphics )
-        {
-        aGraphics.drawRGB( myARGB32, myOffsetX, myScanlineSize, myX, myY, myWidth, myHeight, myUseAlpha );
-        }
-
-    private void drawSubstring( final DirectGraphics aGraphics )
-        {
-        aGraphics.drawSubstring( myText, myStart, myEnd, myX, myY );
-        }
-
-    private void fillRect( final DirectGraphics aGraphics )
-        {
-        aGraphics.fillRect( myX, myY, myWidth, myHeight );
-        }
-
-    private void fillTriangle( final DirectGraphics aGraphics )
-        {
-        aGraphics.fillTriangle( myX1, myY1, myX2, myY2, myX3, myY3 );
         }
 
 
@@ -327,32 +327,4 @@ public final class GraphicsCommand
     private int myX3;
 
     private int myY3;
-
-    private static final int BLEND_IMAGE = 0;
-
-    private static final int BLEND_IMAGE_RECT = 1;
-
-    private static final int CHANGE_COLOR = 2;
-
-    private static final int CHANGE_FONT = 3;
-
-    private static final int CLEAR = 4;
-
-    private static final int DRAW_CHAR = 5;
-
-    private static final int DRAW_IMAGE = 6;
-
-    private static final int DRAW_IMAGE_RECT = 7;
-
-    private static final int DRAW_LINE = 8;
-
-    private static final int DRAW_RECT = 9;
-
-    private static final int DRAW_RGB = 10;
-
-    private static final int DRAW_SUBSTRING = 11;
-
-    private static final int FILL_RECT = 12;
-
-    private static final int FILL_TRIANGLE = 13;
     }

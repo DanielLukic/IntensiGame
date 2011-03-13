@@ -3,8 +3,7 @@
 package net.intensicode.graphics;
 
 import net.intensicode.core.*;
-import net.intensicode.util.DynamicArray;
-import net.intensicode.util.Rectangle;
+import net.intensicode.util.*;
 
 public final class AsyncDirectGraphics extends DirectGraphics
     {
@@ -13,18 +12,58 @@ public final class AsyncDirectGraphics extends DirectGraphics
         myRenderQueue = aRenderQueue;
         }
 
+    public final void initialize() throws Exception
+        {
+        Log.info( "QUEUING ASYNC INIT" );
+
+        final GraphicsCommand command = command().initialize();
+        if ( myInFrameState ) queue( command );
+        else postDirectly( command );
+        }
+
+    private void postDirectly( final GraphicsCommand aCommand )
+        {
+        try
+            {
+            myCommandQueue = myRenderQueue.waitForCompletedQueue();
+            freeQueuedObjects();
+            queue( aCommand );
+            myRenderQueue.postFilledQueue( myCommandQueue );
+            }
+        catch ( final InterruptedException e )
+            {
+            // Simply bail out here..
+            }
+        }
+
     public final void beginFrame() throws InterruptedException
         {
+        myInFrameState = true;
+
         myCurrentColorARGB32 = 0xabbadada;
         myCurrentFontResource = null;
 
         myCommandQueue = myRenderQueue.waitForCompletedQueue();
         freeQueuedObjects();
+
+        queue( command().beginFrame() );
         }
 
     public final void endFrame()
         {
+        queue( command().endFrame() );
         myRenderQueue.postFilledQueue( myCommandQueue );
+
+        myInFrameState = false;
+        }
+
+    public final void cleanup()
+        {
+        Log.info( "QUEUING ASYNC CLEANUP" );
+
+        final GraphicsCommand command = command().destroy();
+        if ( myInFrameState ) queue( command );
+        else postDirectly( command );
         }
 
     private void freeQueuedObjects()
@@ -53,21 +92,15 @@ public final class AsyncDirectGraphics extends DirectGraphics
         myColorARGB32 = aARGB32;
         }
 
-    private int myColorARGB32;
-
     public final void setFont( final FontResource aFont )
         {
         myFont = aFont;
         }
 
-    private FontResource myFont;
-
     private void queue( final GraphicsCommand aCommand )
         {
         myCommandQueue.add( aCommand );
         }
-
-    private long myCurrentColorARGB32;
 
     private void queueColorChangeIfNecessary( final int aColorARGB32 )
         {
@@ -75,8 +108,6 @@ public final class AsyncDirectGraphics extends DirectGraphics
         queue( command().changeColor( aColorARGB32 ) );
         myCurrentColorARGB32 = aColorARGB32;
         }
-
-    private FontResource myCurrentFontResource;
 
     private void queueFontChangeIfNecessary( final FontResource aFontResource )
         {
@@ -174,6 +205,16 @@ public final class AsyncDirectGraphics extends DirectGraphics
             }
         }
 
+
+    private boolean myInFrameState;
+
+    private int myColorARGB32;
+
+    private FontResource myFont;
+
+    private long myCurrentColorARGB32;
+
+    private FontResource myCurrentFontResource;
 
     private DynamicArray myCommandQueue = new DynamicArray();
 

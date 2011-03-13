@@ -88,11 +88,19 @@ public final class NullDirectGraphics extends DirectGraphics
         {
         }
 
+    public void initialize() throws Exception
+        {
+        }
+
     public void beginFrame()
         {
         }
 
     public void endFrame()
+        {
+        }
+
+    public void cleanup()
         {
         }
     }

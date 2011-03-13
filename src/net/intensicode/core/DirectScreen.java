@@ -38,11 +38,11 @@ public interface DirectScreen
 
     int getNativeHeight();
 
+    void initialize() throws Exception;
+
     void beginFrame() throws InterruptedException;
 
     void endFrame();
-
-    void initialize();
 
     void cleanup();
 
