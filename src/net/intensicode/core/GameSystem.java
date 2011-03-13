@@ -111,8 +111,7 @@ public abstract class GameSystem
 
     public final void showError( final String aMessage, final Throwable aOptionalThrowable )
         {
-        Log.error( "system error: {}", aMessage, aOptionalThrowable );
-        platform.showError( aMessage, aOptionalThrowable );
+        showCriticalError( aMessage, aOptionalThrowable );
         }
 
     public final void shutdownAndExit()
