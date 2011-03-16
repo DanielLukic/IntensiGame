@@ -48,6 +48,12 @@ public final class SendFeedback implements ConfigurableActionValue
         buffer.append( "-------------------------------" );
         buffer.append( NEWLINE );
 
+        buffer.append( "APP" );
+        buffer.append( " package " + "${midlet.package}" );
+        buffer.append( " main " + "${midlet.classname}" );
+        buffer.append( " name " + "${android.application.name}" );
+        buffer.append( NEWLINE );
+
         buffer.append( "RELEASE" );
         buffer.append( " version " + ReleaseProperties.VERSION );
         buffer.append( " build " + ReleaseProperties.BUILD );
@@ -57,7 +63,7 @@ public final class SendFeedback implements ConfigurableActionValue
         buffer.append( "SCREEN" );
         buffer.append( " size " + myGameSystem.screen.width() );
         buffer.append( "x" + myGameSystem.screen.height() );
-        buffer.append( " target  " + myGameSystem.screen.getTargetWidth() );
+        buffer.append( " target " + myGameSystem.screen.getTargetWidth() );
         buffer.append( "x" + myGameSystem.screen.getTargetHeight() );
         buffer.append( " native " + myGameSystem.screen.getNativeWidth() );
         buffer.append( "x" + myGameSystem.screen.getNativeHeight() );
