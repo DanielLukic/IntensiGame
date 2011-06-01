@@ -2,6 +2,8 @@ package net.intensicode;
 
 public interface PlatformHooks
     {
+    void checkForUpdate( String aUpdateUrl, int aVersionNumber, UpdateCallback aCallback );
+
     void trackState( String aCategory, String aAction, String aLabel );
 
     void trackPageView( String aPageId );

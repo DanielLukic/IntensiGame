@@ -10,6 +10,14 @@ public final class ReleaseProperties
 
     //#endif
 
+    //#if "${update.url}"
+    //# public static final String UPDATE_URL = "${update.url}" + PACKAGE + ".json";
+    //#else
+
+    public static final String UPDATE_URL = "http://www.intensicode.net/update/" + PACKAGE + ".json";
+
+    //#endif
+
     //#if "${version}"
     //# public static final String VERSION = "${version}";
     //#else
