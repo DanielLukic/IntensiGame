@@ -1,23 +1,24 @@
 package net.intensicode;
 
 import net.intensicode.core.GameSystem;
+import net.intensicode.util.Log;
 import org.json.me.JSONObject;
 
 public class BasicUpdateContext implements UpdateContext
     {
-    public BasicUpdateContext( final GameSystem aGameSystem, final JSONObject aUpdateData )
+    public BasicUpdateContext( final JSONObject aUpdateData )
         {
-        myGameSystem = aGameSystem;
         myUpdateData = aUpdateData;
         }
 
-    public void triggerUpdate()
+    public void triggerUpdate(final GameSystem aGameSystem)
         {
+        Log.info( "myUpdateData: {}", myUpdateData );
+        Log.info( "myGameSystem: {}", aGameSystem );
+        Log.info( "platform: {}", aGameSystem.platform );
         final String infoOrNull = myUpdateData.optString( "url" );
-        if ( infoOrNull != null ) myGameSystem.platform.openWebBrowser( infoOrNull );
+        if ( infoOrNull != null ) aGameSystem.platform.openWebBrowser( infoOrNull );
         }
-
-    private final GameSystem myGameSystem;
 
     private final JSONObject myUpdateData;
     }
