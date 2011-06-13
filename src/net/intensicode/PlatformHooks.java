@@ -8,6 +8,8 @@ public interface PlatformHooks
 
     void trackPageView( String aPageId );
 
+    void trackException( String aErrorId, String aMessage, Throwable aOptionalThrowable );
+
     void showBannerAd();
 
     void hideBannerAd();
