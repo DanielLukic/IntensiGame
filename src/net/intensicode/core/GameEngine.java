@@ -115,10 +115,10 @@ public abstract class GameEngine implements Runnable
 
         myShouldBailOutFlag = true;
 
-        if ( myThread == Thread.currentThread() ) return;
-
         final Thread thread = myThread;
         myThread = null;
+
+        if ( thread == Thread.currentThread() ) return;
 
         try
             {
